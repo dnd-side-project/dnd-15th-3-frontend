@@ -10,7 +10,8 @@
     "preview": "vp preview",
     "prepare": "vp config",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest run --project unit"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",
