@@ -1,8 +1,17 @@
+// https://vite.dev/config/
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+/// <reference types="vitest/config" />
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig, lazyPlugins } from "vite-plus";
+import { playwright } from "vite-plus/test/browser-playwright";
+const dirname =
+  typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-// https://vite.dev/config/
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
@@ -36,11 +45,41 @@ export default defineConfig({
       },
     ],
   },
+  plugins: lazyPlugins(() => [react(), vanillaExtractPlugin({})]),
   test: {
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
     coverage: {
       reporter: ["text", "html"],
     },
+    projects: [
+      {
+        extends: true,
+        test: {
+          include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          // The plugin will run tests for the stories defined in your Storybook config
+          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+          storybookTest({
+            configDir: path.join(dirname, ".storybook"),
+          }),
+        ],
+        test: {
+          name: "storybook",
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [
+              {
+                browser: "chromium",
+              },
+            ],
+          },
+        },
+      },
+    ],
   },
-  plugins: lazyPlugins(() => [react(), vanillaExtractPlugin({})]),
 });
