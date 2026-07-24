@@ -1,12 +1,16 @@
-import { defineConfig, lazyPlugins } from "vite-plus";
 import react from "@vitejs/plugin-react";
+import { defineConfig, lazyPlugins } from "vite-plus";
 
 // https://vite.dev/config/
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  fmt: {},
+  fmt: {
+    ignorePatterns: ["dist/**"],
+    sortImports: true,
+    semi: true,
+  },
   lint: {
     plugins: ["react", "typescript", "oxc"],
     rules: {
@@ -19,6 +23,7 @@ export default defineConfig({
       ],
       "vite-plus/prefer-vite-plus-imports": "error",
     },
+    ignorePatterns: ["dist/**"],
     options: {
       typeAware: true,
       typeCheck: true,
