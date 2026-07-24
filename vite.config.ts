@@ -2,53 +2,58 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import babel from "@rolldown/plugin-babel";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
-/// <reference types="vitest/config" />
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
-import react from "@vitejs/plugin-react";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig, lazyPlugins } from "vite-plus";
 import { playwright } from "vite-plus/test/browser-playwright";
 const dirname =
   typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  staged: {
-    "*": "vp check --fix",
-  },
   fmt: {
     ignorePatterns: ["dist/**"],
-    sortImports: true,
     semi: true,
+    sortImports: true,
   },
   lint: {
-    plugins: ["react", "typescript", "oxc"],
-    rules: {
-      "react/rules-of-hooks": "error",
-      "react/only-export-components": [
-        "warn",
-        {
-          allowConstantExport: true,
-        },
-      ],
-      "vite-plus/prefer-vite-plus-imports": "error",
-    },
     ignorePatterns: ["dist/**"],
-    options: {
-      typeAware: true,
-      typeCheck: true,
-    },
     jsPlugins: [
       {
         name: "vite-plus",
         specifier: "vite-plus/oxlint-plugin",
       },
     ],
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
+    plugins: ["oxc", "react", "typescript"],
+    rules: {
+      "react/exhaustive-deps": "warn",
+      "react/only-export-components": [
+        "warn",
+        {
+          allowConstantExport: true,
+        },
+      ],
+      "react/react-compiler": "error",
+      "react/rules-of-hooks": "error",
+      "vite-plus/prefer-vite-plus-imports": "error",
+    },
   },
-  plugins: lazyPlugins(() => [react(), vanillaExtractPlugin({})]),
+  plugins: lazyPlugins(() => [
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
+    vanillaExtractPlugin({}),
+  ]),
+  staged: {
+    "*": "vp check --fix",
+  },
   test: {
     coverage: {
-      reporter: ["text", "html"],
+      reporter: ["html", "text"],
     },
     projects: [
       {
@@ -67,17 +72,17 @@ export default defineConfig({
           }),
         ],
         test: {
-          name: "storybook",
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright({}),
             instances: [
               {
                 browser: "chromium",
               },
             ],
+            provider: playwright({}),
           },
+          name: "storybook",
         },
       },
     ],
