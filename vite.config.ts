@@ -18,7 +18,7 @@ export default defineConfig({
     sortImports: true,
   },
   lint: {
-    ignorePatterns: ["dist/**"],
+    ignorePatterns: [".direnv/**", "dist/**"],
     jsPlugins: [
       {
         name: "vite-plus",
@@ -60,6 +60,7 @@ export default defineConfig({
         extends: true,
         test: {
           include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+          name: "unit",
         },
       },
       {
