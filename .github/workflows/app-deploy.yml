@@ -1,0 +1,48 @@
+name: app-deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.17.0
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run build
+
+      - id: deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: pages deploy dist --project-name=dnd-15th-3-frontend
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: moojing/cf-preview-bot@v1
+        if: github.event_name == 'pull_request'
+        with:
+          deployment_url: ${{ steps.deploy.outputs.deployment-url }}
+          branch_preview_url: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
