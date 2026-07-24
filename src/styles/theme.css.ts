@@ -1,8 +1,6 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
 
-/**
- * 전역 디자인 토큰. `:root`에 CSS 변수로 정의되어 어디서든 `vars.*`로 참조합니다.
- */
+// 전역 디자인 토큰
 export const vars = createGlobalTheme(":root", {
   color: {
     background: "#ffffff",
