@@ -35,5 +35,11 @@ export default defineConfig({
       },
     ],
   },
+  test: {
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    coverage: {
+      reporter: ["text", "html"],
+    },
+  },
   plugins: lazyPlugins(() => [react()]),
 });
