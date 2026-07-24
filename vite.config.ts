@@ -1,3 +1,4 @@
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig, lazyPlugins } from "vite-plus";
 
@@ -41,5 +42,5 @@ export default defineConfig({
       reporter: ["text", "html"],
     },
   },
-  plugins: lazyPlugins(() => [react()]),
+  plugins: lazyPlugins(() => [react(), vanillaExtractPlugin({})]),
 });
