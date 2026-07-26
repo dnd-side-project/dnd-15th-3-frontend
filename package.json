@@ -21,7 +21,8 @@
     "@vanilla-extract/recipes": "^0.5.7",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-hook-form": "^7.82.0"
+    "react-hook-form": "^7.82.0",
+    "react-router": "^8.3.0"
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",
