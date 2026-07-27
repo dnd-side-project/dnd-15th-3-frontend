@@ -3,11 +3,13 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import { HomePage } from "./domains/home/pages";
 import { StartPage } from "./domains/home/pages/start";
 import { JoinPage } from "./domains/join/pages";
+import { meetingLayout } from "./domains/meeting/layout";
 import { MeetingPage } from "./domains/meeting/pages/[id]";
 import { ChoicePage } from "./domains/meeting/pages/[id]/choice";
 import { CoursePage } from "./domains/meeting/pages/[id]/course";
 import { CourseDetailPage } from "./domains/meeting/pages/[id]/course/[courseId]";
 import { MyPage } from "./domains/meeting/pages/[id]/my";
+import { newMeetingLayout } from "./domains/new/layout";
 import { CompletePage } from "./domains/new/pages/complete";
 import { MeetingCoursePage } from "./domains/new/pages/meeting-course";
 import { MeetingInfoPage } from "./domains/new/pages/meeting-info";
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/new",
+    Component: newMeetingLayout,
     children: [
       {
         path: "profile",
@@ -54,8 +57,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/meeting/:id",
-    Component: MeetingPage,
+    Component: meetingLayout,
     children: [
+      {
+        index: true,
+        Component: MeetingPage,
+      },
       {
         path: "my",
         Component: MyPage,
