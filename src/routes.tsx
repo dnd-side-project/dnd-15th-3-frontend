@@ -14,7 +14,7 @@ import { MeetingInfoPage } from "./domains/new/pages/meeting-info";
 import { MeetingSchedulePage } from "./domains/new/pages/meeting-schedule";
 import { ProfilePage } from "./domains/new/pages/profile";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     Component: HomePage,
