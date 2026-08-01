@@ -8,7 +8,6 @@ type SheetProps = Omit<ComponentProps<typeof Sheet>, "unstyled" | "detent" | "cl
 interface BottomSheetProps extends SheetProps {
   topBorderRadius?: "sm" | "md";
   onTapBackdrop?: () => void;
-  maxHeight?: number;
 }
 
 export function BottomSheet({
