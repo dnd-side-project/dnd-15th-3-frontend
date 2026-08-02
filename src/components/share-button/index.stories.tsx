@@ -29,8 +29,6 @@ export const CopyLink: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const copyButton = canvas.getByRole("button", { name: "링크 복사" });
-    // 테스트(headless) 환경은 클립보드 권한이 없을 수 있어, 클릭이
-    // 에러 없이 처리되고 버튼이 계속 접근 가능한지만 확인한다.
     await userEvent.click(copyButton);
     await expect(copyButton).toBeInTheDocument();
   },
