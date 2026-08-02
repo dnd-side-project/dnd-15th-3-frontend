@@ -1,0 +1,13 @@
+<!-- Filled variant of lucide-static v1.28.0 message-circle (fill 대신 stroke만 있던 아이콘을
+     Figma 공유 button의 카카오톡 아이콘(채워진 말풍선)과 일치시키기 위해 fill로 전환) -->
+<svg
+  class="lucide lucide-message-circle-fill"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  stroke="none"
+>
+  <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+</svg>
