@@ -2,13 +2,11 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-// Figma 와이어프레임 기준 로컬 컬러값 (공용 theme 토큰 미확정으로 로컬에 둠)
 const colors = {
   like: "#5CA7FF",
   dislike: "#FF46CE",
   inactiveBackground: "#CCCDCE",
-  inactiveForeground: "#ffffff",
-  activeForeground: "#ffffff",
+  foreground: "#ffffff",
 };
 
 export const preferenceButton = recipe({
@@ -22,6 +20,7 @@ export const preferenceButton = recipe({
     fontFamily: vars.font.body,
     fontSize: vars.fontSize.sm,
     fontWeight: vars.fontWeight.medium,
+    color: colors.foreground,
     cursor: "pointer",
     selectors: {
       "&:disabled": {
@@ -37,26 +36,17 @@ export const preferenceButton = recipe({
     },
     selected: {
       true: {},
-      false: {
-        backgroundColor: colors.inactiveBackground,
-        color: colors.inactiveForeground,
-      },
+      false: { backgroundColor: colors.inactiveBackground },
     },
   },
   compoundVariants: [
     {
       variants: { type: "like", selected: true },
-      style: {
-        backgroundColor: colors.like,
-        color: colors.activeForeground,
-      },
+      style: { backgroundColor: colors.like },
     },
     {
       variants: { type: "dislike", selected: true },
-      style: {
-        backgroundColor: colors.dislike,
-        color: colors.activeForeground,
-      },
+      style: { backgroundColor: colors.dislike },
     },
   ],
   defaultVariants: {
