@@ -1,6 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-// Figma 와이어프레임 기준 로컬 색상값 (공용 theme.css.ts 토큰과는 별개)
 const colors = {
   background: "#eaf2ff",
   text: "#3182f6",
