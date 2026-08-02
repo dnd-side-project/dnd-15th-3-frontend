@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router";
 
+import { ApiTestPage } from "./domains/debug/pages/api-test";
 import { HomePage } from "./domains/home/pages";
 import { StartPage } from "./domains/home/pages/start";
 import { JoinPage } from "./domains/join/pages";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/join",
     Component: JoinPage,
+  },
+  {
+    path: "/debug/api-test",
+    Component: ApiTestPage,
   },
   {
     path: "/new",
