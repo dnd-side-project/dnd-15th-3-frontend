@@ -6,8 +6,8 @@ import { vars } from "../../styles/theme.css";
 const colors = {
   like: "#5CA7FF",
   dislike: "#FF46CE",
-  inactiveBackground: "#F1F1F2",
-  inactiveForeground: "#CCCDCE",
+  inactiveBackground: "#CCCDCE",
+  inactiveForeground: "#ffffff",
   activeForeground: "#ffffff",
 };
 
