@@ -3,7 +3,6 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-// 공용 테마 토큰에 없는 칩 전용 색상은 로컬로 정의한다.
 const chipColor = {
   unselectedBackground: "#F0F0F0",
   unselectedBorder: "#E0E0E0",

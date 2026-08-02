@@ -18,7 +18,6 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-/** 미선택 상태: 연회색 배경, 어두운 텍스트, 아이콘 없음 */
 export const Unselected: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
@@ -32,7 +31,6 @@ export const Unselected: Story = {
   },
 };
 
-/** 미선택 상태에서 onRemove가 전달돼도 × 아이콘은 절대 보이지 않아야 한다 */
 export const UnselectedWithOnRemoveIgnored: Story = {
   args: {
     selected: false,
@@ -49,7 +47,6 @@ export const UnselectedWithOnRemoveIgnored: Story = {
   },
 };
 
-/** 선택 + 삭제 가능 상태: 진회색 배경, 흰 텍스트, 우측 × 아이콘 */
 export const SelectedRemovable: Story = {
   args: {
     selected: true,
@@ -64,12 +61,10 @@ export const SelectedRemovable: Story = {
 
     await userEvent.click(remove);
     await expect(args.onRemove).toHaveBeenCalledTimes(1);
-    // × 클릭이 라벨의 onClick까지 트리거하지 않아야 한다.
     await expect(args.onClick).not.toHaveBeenCalled();
   },
 };
 
-/** "전체" 상태: 선택 스타일과 동일하지만 삭제 불가(× 없음) */
 export const SelectedNotRemovable: Story = {
   args: {
     children: "전체",
@@ -85,7 +80,6 @@ export const SelectedNotRemovable: Story = {
   },
 };
 
-/** 카테고리 필터처럼 여러 칩을 flex-wrap으로 나열한 그룹 예시 */
 export const Group: Story = {
   render: () => (
     <ChipGroup>
