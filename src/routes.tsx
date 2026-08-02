@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router";
 
 import { ApiTestPage } from "./domains/debug/pages/api-test";
+import { KakaoMapPage } from "./domains/debug/pages/kakao-map";
 import { HomePage } from "./domains/home/pages";
 import { StartPage } from "./domains/home/pages/start";
 import { JoinPage } from "./domains/join/pages";
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/debug/api-test",
     Component: ApiTestPage,
+  },
+  {
+    path: "/debug/kakao-map",
+    Component: KakaoMapPage,
   },
   {
     path: "/new",
