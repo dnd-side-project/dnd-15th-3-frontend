@@ -32,6 +32,23 @@ export const Unselected: Story = {
   },
 };
 
+/** 미선택 상태에서 onRemove가 전달돼도 × 아이콘은 절대 보이지 않아야 한다 */
+export const UnselectedWithOnRemoveIgnored: Story = {
+  args: {
+    selected: false,
+    onRemove: fn(),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByRole("button", { name: "음식점" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+    await expect(canvas.queryByRole("button", { name: "삭제" })).not.toBeInTheDocument();
+  },
+};
+
 /** 선택 + 삭제 가능 상태: 진회색 배경, 흰 텍스트, 우측 × 아이콘 */
 export const SelectedRemovable: Story = {
   args: {

@@ -20,7 +20,7 @@ interface ChipProps {
 }
 
 export function Chip({ children, selected = false, onClick, onRemove }: ChipProps) {
-  const removable = Boolean(onRemove);
+  const removable = selected && Boolean(onRemove);
 
   return (
     <span className={chipContainer({ selected })}>

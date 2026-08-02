@@ -33,6 +33,15 @@ test("onRemove가 없으면 selected여도 삭제 버튼이 없다 (전체 칩)"
   expect(html).not.toContain('aria-label="삭제"');
 });
 
+test("selected가 false면 onRemove를 전달해도 삭제 버튼이 없다", () => {
+  const html = renderToStaticMarkup(
+    <Chip selected={false} onRemove={() => {}}>
+      음식점
+    </Chip>,
+  );
+  expect(html).not.toContain('aria-label="삭제"');
+});
+
 test("ChipGroup은 자식 칩들을 함께 렌더링한다", () => {
   const html = renderToStaticMarkup(
     <ChipGroup>
