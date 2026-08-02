@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { withLayout } from "../layout/index.decorators";
 import { Greeting } from "./index";
 
 const meta = {
@@ -28,6 +29,13 @@ export const Primary: Story = {
   args: {
     tone: "primary",
     size: "lg",
+  },
+};
+
+export const InFrame: Story = {
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
   },
 };
 
