@@ -6,6 +6,7 @@ import babel from "@rolldown/plugin-babel";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
 import { defineConfig, lazyPlugins } from "vite-plus";
 import { playwright } from "vite-plus/test/browser-playwright";
 const dirname =
@@ -47,6 +48,7 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     vanillaExtractPlugin({}),
+    svgr({ svgrOptions: { icon: true } }),
   ]),
   staged: {
     "*": "vp check --fix",
