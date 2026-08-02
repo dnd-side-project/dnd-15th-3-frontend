@@ -8,6 +8,11 @@ test("좋아요 개수를 렌더링한다", () => {
   expect(html).toContain(">3<");
 });
 
+test("count가 0이어도 0을 렌더링한다", () => {
+  const html = renderToStaticMarkup(<PreferenceButton count={0} type="like" />);
+  expect(html).toContain(">0<");
+});
+
 test("selected가 true이면 aria-pressed가 true이다", () => {
   const html = renderToStaticMarkup(<PreferenceButton count={3} selected type="like" />);
   expect(html).toContain('aria-pressed="true"');
