@@ -3,8 +3,6 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-// 와이어프레임 단계라 정확한 색상은 확정되지 않음. 공용 theme 토큰과의 충돌을 피하기 위해
-// 텍스트 인풋 전용 색상은 이 파일 안에 로컬 값으로 둔다.
 const localColor = {
   roundedBackground: "#eef0f5",
   pillBackground: "#ffffff",
