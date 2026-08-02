@@ -32,7 +32,6 @@ export const Primary: Story = {
   },
 };
 
-// 앱 프레임(모바일 폭 + 레터박스) 안에서 렌더링하는 예시
 export const InFrame: Story = {
   decorators: [withLayout],
   parameters: {

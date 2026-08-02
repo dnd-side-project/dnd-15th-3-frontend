@@ -6,7 +6,6 @@ const meta = {
   component: Layout,
   title: "components/Layout",
   parameters: {
-    // 레터박스 배경이 캔버스 전체를 채우도록 패딩 제거
     layout: "fullscreen",
   },
   args: {
