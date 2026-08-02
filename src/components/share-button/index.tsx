@@ -7,6 +7,7 @@ import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share
 import * as styles from "./index.css";
 
 const COPY_FEEDBACK_DURATION_MS = 1500;
+const ICON_SIZE = 20;
 
 interface ShareButtonGroupProps extends ShareLinkParams {
   onCopyLink?: () => void;
@@ -22,9 +23,7 @@ export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProp
       await navigator.clipboard.writeText(link);
       setCopied(true);
       setTimeout(() => setCopied(false), COPY_FEEDBACK_DURATION_MS);
-    } catch {
-      // 클립보드 접근이 차단된 환경(권한 미허용 등)에서는 조용히 무시한다.
-    }
+    } catch {}
     onCopyLink?.();
   };
 
@@ -36,7 +35,7 @@ export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProp
         onClick={handleCopyLink}
         aria-label="링크 복사"
       >
-        {copied ? "✓" : <LinkIcon width={20} height={20} />}
+        {copied ? "✓" : <LinkIcon width={ICON_SIZE} height={ICON_SIZE} />}
       </button>
       <button
         type="button"
@@ -45,7 +44,7 @@ export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProp
         disabled={loading}
         aria-label="카카오톡으로 공유"
       >
-        <MessageCircleFillIcon width={20} height={20} />
+        <MessageCircleFillIcon width={ICON_SIZE} height={ICON_SIZE} />
       </button>
       {error ? <p className={styles.label}>{error.message}</p> : null}
     </div>
