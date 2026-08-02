@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import LinkIcon from "../../assets/icon-link-2.svg?react";
-import MessageCircleIcon from "../../assets/icon-message-circle.svg?react";
+import MessageCircleFillIcon from "../../assets/icon-message-circle-fill.svg?react";
 import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share";
 
 import * as styles from "./index.css";
@@ -45,7 +45,7 @@ export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProp
         disabled={loading}
         aria-label="카카오톡으로 공유"
       >
-        <MessageCircleIcon width={20} height={20} />
+        <MessageCircleFillIcon width={20} height={20} />
       </button>
       {error ? <p className={styles.label}>{error.message}</p> : null}
     </div>
