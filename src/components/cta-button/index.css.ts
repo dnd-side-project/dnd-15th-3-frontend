@@ -5,8 +5,7 @@ import { recipe } from "@vanilla-extract/recipes";
 const colors = {
   primary: "#57a5ff",
   primaryPressed: "#eaf2ff",
-  disabledBackground: "#a1a3a7",
-  disabledText: "#ffffff",
+  primaryPressedText: "#3182f6",
   secondaryBackground: "#f2f3f5",
   secondaryText: "#4e5257",
   white: "#ffffff",
@@ -36,6 +35,7 @@ export const button = recipe({
         selectors: {
           "&:active": {
             backgroundColor: colors.primaryPressed,
+            color: colors.primaryPressedText,
           },
         },
       },
@@ -44,10 +44,12 @@ export const button = recipe({
         color: colors.secondaryText,
       },
     },
+    // Figma 상 비활성 버튼은 "위로" 보조 버튼과 동일한 연회색 배경 + 짙은 텍스트 조합을 쓴다
+    // (짙은 회색 배경 + 흰 텍스트가 아님에 유의).
     disabled: {
       true: {
-        backgroundColor: colors.disabledBackground,
-        color: colors.disabledText,
+        backgroundColor: colors.secondaryBackground,
+        color: colors.secondaryText,
         cursor: "not-allowed",
       },
       false: {},
