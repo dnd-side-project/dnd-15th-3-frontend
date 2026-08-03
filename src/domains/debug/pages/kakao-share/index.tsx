@@ -24,6 +24,8 @@ export function KakaoSharePage() {
         title="모모(momo) - 모임 초대를 받았어요"
         description="친구들과 함께 모임 코스를 계획해보세요"
         imageUrl="/static/momo-kakao-share.png"
+        imageWidth={800}
+        imageHeight={450}
         buttonTitle="참여하기"
       />
     </div>

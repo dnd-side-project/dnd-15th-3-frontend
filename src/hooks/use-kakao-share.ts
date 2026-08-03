@@ -4,6 +4,8 @@ export interface ShareLinkParams {
   title: string;
   description?: string;
   imageUrl: string;
+  imageWidth?: number;
+  imageHeight?: number;
   link?: string;
   buttonTitle?: string;
 }
@@ -55,6 +57,8 @@ export function useKakaoShare(): UseKakaoShareReturn {
         title: params.title,
         ...(params.description ? { description: params.description } : {}),
         imageUrl: absoluteImageUrl,
+        ...(params.imageWidth != null ? { imageWidth: params.imageWidth } : {}),
+        ...(params.imageHeight != null ? { imageHeight: params.imageHeight } : {}),
         link: linkObject,
       },
       buttons: [{ title: params.buttonTitle ?? "참여하기", link: linkObject }],
