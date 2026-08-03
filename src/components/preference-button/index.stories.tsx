@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { withLayout } from "../layout/index.decorators";
 import { PreferenceButton } from "./index";
 
 const meta = {
   component: PreferenceButton,
   title: "components/PreferenceButton",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     count: 3,
     selected: false,
