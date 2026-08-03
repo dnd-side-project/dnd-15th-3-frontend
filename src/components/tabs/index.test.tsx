@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { expect, test, vi } from "vite-plus/test";
+import { page, userEvent } from "vite-plus/test/browser/context";
 
+import { render } from "../../test-utils";
 import { Tabs } from "./index";
 
 const items = [
@@ -16,51 +16,61 @@ function renderTabs(value = "a") {
   return { onChange };
 }
 
-test("모든 항목을 탭 목록으로 렌더링한다", () => {
+test("모든 항목을 탭 목록으로 렌더링한다", async () => {
   renderTabs();
 
-  expect(screen.getByRole("tablist")).toBeInTheDocument();
-  expect(screen.getAllByRole("tab").map((tab) => tab.textContent)).toEqual([
-    "코스A",
-    "코스B",
-    "코스C",
-  ]);
+  await expect.element(page.getByRole("tablist")).toBeInTheDocument();
+  await expect.element(page.getByRole("tab", { name: "코스A" })).toBeInTheDocument();
+  await expect.element(page.getByRole("tab", { name: "코스B" })).toBeInTheDocument();
+  await expect.element(page.getByRole("tab", { name: "코스C" })).toBeInTheDocument();
 });
 
-test("value에 해당하는 탭만 선택 상태로 노출한다", () => {
+test("value에 해당하는 탭만 선택 상태로 노출한다", async () => {
   renderTabs("b");
 
-  expect(screen.getByRole("tab", { name: "코스B", selected: true })).toBeInTheDocument();
-  expect(screen.getByRole("tab", { name: "코스A", selected: false })).toBeInTheDocument();
-  expect(screen.getByRole("tab", { name: "코스C", selected: false })).toBeInTheDocument();
+  await expect
+    .element(page.getByRole("tab", { name: "코스B", selected: true }))
+    .toBeInTheDocument();
+  await expect
+    .element(page.getByRole("tab", { name: "코스A", selected: false }))
+    .toBeInTheDocument();
+  await expect
+    .element(page.getByRole("tab", { name: "코스C", selected: false }))
+    .toBeInTheDocument();
 });
 
 test("탭을 클릭하면 해당 value로 onChange를 호출한다", async () => {
-  const user = userEvent.setup();
   const { onChange } = renderTabs("a");
 
-  await user.click(screen.getByRole("tab", { name: "코스C" }));
+  await userEvent.click(page.getByRole("tab", { name: "코스C" }));
 
   expect(onChange).toHaveBeenCalledWith("c");
 });
 
+test("이미 선택된 탭을 클릭해도 다른 값으로 바뀌지 않는다", async () => {
+  const { onChange } = renderTabs("a");
+
+  await userEvent.click(page.getByRole("tab", { name: "코스A" }));
+
+  expect(onChange).not.toHaveBeenCalledWith("b");
+  expect(onChange).not.toHaveBeenCalledWith("c");
+});
+
 test("방향키로 다음 탭에 포커스를 옮긴다", async () => {
-  const user = userEvent.setup();
   renderTabs("a");
 
-  await user.tab();
-  expect(screen.getByRole("tab", { name: "코스A" })).toHaveFocus();
+  await userEvent.tab();
+  await expect.element(page.getByRole("tab", { name: "코스A" })).toHaveFocus();
 
-  await user.keyboard("{ArrowRight}");
-  expect(screen.getByRole("tab", { name: "코스B" })).toHaveFocus();
+  await userEvent.keyboard("{ArrowRight}");
+  await expect.element(page.getByRole("tab", { name: "코스B" })).toHaveFocus();
 });
 
 test("방향키로 이동한 탭을 Enter로 선택한다", async () => {
-  const user = userEvent.setup();
   const { onChange } = renderTabs("a");
 
-  await user.tab();
-  await user.keyboard("{ArrowRight}{Enter}");
+  await userEvent.tab();
+  await userEvent.keyboard("{ArrowRight}{Enter}");
 
   expect(onChange).toHaveBeenCalledWith("b");
 });
