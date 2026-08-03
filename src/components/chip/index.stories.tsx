@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
+import { withLayout } from "../layout/index.decorators";
 import { Chip, ChipGroup } from "./index";
 
 const meta = {
   component: Chip,
   title: "components/Chip",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     children: "음식점",
     selected: false,
