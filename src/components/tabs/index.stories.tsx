@@ -3,7 +3,7 @@ import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
 import { withLayout } from "../layout/index.decorators";
-import type { TabItem } from "./index";
+import type { TabItem, TabsProps } from "./index";
 import { Tabs } from "./index";
 
 const items: TabItem[] = [
@@ -11,6 +11,23 @@ const items: TabItem[] = [
   { label: "코스B", value: "b" },
   { label: "코스C", value: "c" },
 ];
+
+function InteractiveTabs({ items, value: initialValue, onChange }: TabsProps) {
+  const [value, setValue] = useState(initialValue);
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <Tabs
+        items={items}
+        value={value}
+        onChange={(next) => {
+          setValue(next);
+          onChange(next);
+        }}
+      />
+    </div>
+  );
+}
 
 const meta = {
   component: Tabs,
@@ -28,39 +45,8 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const SecondSelected: Story = {
-  args: {
-    value: "b",
-  },
-};
-
-export const ThirdSelected: Story = {
-  args: {
-    value: "c",
-  },
-};
-
-export const Interactive: Story = {
-  render: (args) => {
-    function InteractiveTabs() {
-      const [value, setValue] = useState(args.value);
-
-      return (
-        <Tabs
-          items={args.items}
-          value={value}
-          onChange={(next) => {
-            setValue(next);
-            args.onChange(next);
-          }}
-        />
-      );
-    }
-
-    return <InteractiveTabs />;
-  },
+export const Default: Story = {
+  render: (args) => <InteractiveTabs {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
