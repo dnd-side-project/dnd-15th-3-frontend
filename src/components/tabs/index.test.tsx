@@ -1,5 +1,6 @@
-import { renderToStaticMarkup } from "react-dom/server";
-import { expect, test } from "vite-plus/test";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { expect, test, vi } from "vite-plus/test";
 
 import { Tabs } from "./index";
 
@@ -9,23 +10,57 @@ const items = [
   { label: "코스C", value: "c" },
 ];
 
-test("모든 항목을 탭으로 렌더링한다", () => {
-  const html = renderToStaticMarkup(<Tabs items={items} value="a" onChange={() => {}} />);
+function renderTabs(value = "a") {
+  const onChange = vi.fn();
+  render(<Tabs items={items} value={value} onChange={onChange} />);
+  return { onChange };
+}
 
-  expect(html).toContain('role="tablist"');
-  expect(html).toContain("코스A");
-  expect(html).toContain("코스B");
-  expect(html).toContain("코스C");
+test("모든 항목을 탭 목록으로 렌더링한다", () => {
+  renderTabs();
+
+  expect(screen.getByRole("tablist")).toBeInTheDocument();
+  expect(screen.getAllByRole("tab").map((tab) => tab.textContent)).toEqual([
+    "코스A",
+    "코스B",
+    "코스C",
+  ]);
 });
 
-test("value에 해당하는 탭에만 aria-selected=true를 설정한다", () => {
-  const html = renderToStaticMarkup(<Tabs items={items} value="b" onChange={() => {}} />);
+test("value에 해당하는 탭만 선택 상태로 노출한다", () => {
+  renderTabs("b");
 
-  const tabA = html.match(/aria-selected="([^"]*)"[^>]*>코스A/)?.[1];
-  const tabB = html.match(/aria-selected="([^"]*)"[^>]*>코스B/)?.[1];
-  const tabC = html.match(/aria-selected="([^"]*)"[^>]*>코스C/)?.[1];
+  expect(screen.getByRole("tab", { name: "코스B", selected: true })).toBeInTheDocument();
+  expect(screen.getByRole("tab", { name: "코스A", selected: false })).toBeInTheDocument();
+  expect(screen.getByRole("tab", { name: "코스C", selected: false })).toBeInTheDocument();
+});
 
-  expect(tabA).toBe("false");
-  expect(tabB).toBe("true");
-  expect(tabC).toBe("false");
+test("탭을 클릭하면 해당 value로 onChange를 호출한다", async () => {
+  const user = userEvent.setup();
+  const { onChange } = renderTabs("a");
+
+  await user.click(screen.getByRole("tab", { name: "코스C" }));
+
+  expect(onChange).toHaveBeenCalledWith("c");
+});
+
+test("방향키로 다음 탭에 포커스를 옮긴다", async () => {
+  const user = userEvent.setup();
+  renderTabs("a");
+
+  await user.tab();
+  expect(screen.getByRole("tab", { name: "코스A" })).toHaveFocus();
+
+  await user.keyboard("{ArrowRight}");
+  expect(screen.getByRole("tab", { name: "코스B" })).toHaveFocus();
+});
+
+test("방향키로 이동한 탭을 Enter로 선택한다", async () => {
+  const user = userEvent.setup();
+  const { onChange } = renderTabs("a");
+
+  await user.tab();
+  await user.keyboard("{ArrowRight}{Enter}");
+
+  expect(onChange).toHaveBeenCalledWith("b");
 });
