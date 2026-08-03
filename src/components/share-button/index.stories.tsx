@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
+import { withLayout } from "../layout/index.decorators";
 import { ShareButtonGroup } from "./index";
 
 const meta = {
   component: ShareButtonGroup,
   title: "components/ShareButtonGroup",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     title: "모임 코스 완성!",
     description: "함께 다녀올 코스를 확인해보세요.",
