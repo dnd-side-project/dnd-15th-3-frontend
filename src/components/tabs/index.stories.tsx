@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
+import { withLayout } from "../layout/index.decorators";
 import type { TabItem } from "./index";
 import { Tabs } from "./index";
 
@@ -14,6 +15,10 @@ const items: TabItem[] = [
 const meta = {
   component: Tabs,
   title: "components/Tabs",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     items,
     value: "a",
