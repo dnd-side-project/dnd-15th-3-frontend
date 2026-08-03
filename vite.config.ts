@@ -60,7 +60,16 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        optimizeDeps: {
+          include: ["@vanilla-extract/recipes/createRuntimeFn"],
+        },
         test: {
+          browser: {
+            enabled: true,
+            headless: true,
+            instances: [{ browser: "chromium" }],
+            provider: playwright({}),
+          },
           include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
           name: "unit",
         },
