@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { CtaButton } from "../cta-button/index";
+import { withLayout } from "../layout/index.decorators";
 import { SpeechBubble } from "./index";
 
 const meta = {
   component: SpeechBubble,
   title: "components/SpeechBubble",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     children: "코스 둘러보는 중",
   },

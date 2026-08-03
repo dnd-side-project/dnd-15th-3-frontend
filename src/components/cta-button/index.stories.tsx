@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { withLayout } from "../layout/index.decorators";
 import { CtaButton, CtaButtonRow } from "./index";
 
 const meta = {
   component: CtaButton,
   title: "components/CtaButton",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     children: "다음",
   },
