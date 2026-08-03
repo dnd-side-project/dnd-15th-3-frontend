@@ -2,11 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
 import SearchIcon from "../../assets/icon-search.svg?react";
+import { withLayout } from "../layout/index.decorators";
 import { CharCounter, TextInput, type TextInputProps } from "./index";
 
 const meta = {
   component: TextInput,
   title: "components/TextInput",
+  decorators: [withLayout],
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     placeholder: "닉네임을 입력해주세요",
   },
