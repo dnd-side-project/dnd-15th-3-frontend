@@ -142,4 +142,72 @@ export const CategoryGroup: Story = {
   ),
 };
 
+export const Sizes: Story = {
+  render: () => (
+    <ChipGroup>
+      <Chip icon={<UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />}>md (38px)</Chip>
+      <Chip icon={<UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />} size="sm">
+        sm (34px)
+      </Chip>
+    </ChipGroup>
+  ),
+};
+
+export const FilterBar: Story = {
+  render: () => (
+    <ChipGroup>
+      <Chip selected tone="strong">
+        전체
+      </Chip>
+      <Chip>음식점</Chip>
+      <Chip>카페</Chip>
+      <Chip>술/바</Chip>
+      <Chip>문화/전시</Chip>
+    </ChipGroup>
+  ),
+};
+
+export const Overlay: Story = {
+  render: () => (
+    <div style={{ backgroundColor: "#DCE6D0", borderRadius: 8, padding: 16 }}>
+      <ChipGroup>
+        <Chip
+          icon={<UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />}
+          size="sm"
+          variant="overlay"
+        >
+          음식점
+        </Chip>
+        <Chip
+          icon={<CoffeeIcon height={ICON_SIZE} width={ICON_SIZE} />}
+          size="sm"
+          variant="overlay"
+        >
+          카페
+        </Chip>
+        <Chip icon={<WineIcon height={ICON_SIZE} width={ICON_SIZE} />} size="sm" variant="overlay">
+          술/바
+        </Chip>
+      </ChipGroup>
+    </div>
+  ),
+};
+
+export const SelectedTones: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <ChipGroup>
+        <Chip selected>기본 #606060</Chip>
+        <Chip selected tone="strong">
+          strong #3D3D3D
+        </Chip>
+      </ChipGroup>
+      <p style={{ color: "#6D6D6D", fontSize: 12, margin: 0 }}>
+        시안마다 선택 배경이 달라 두 가지를 모두 지원합니다. 디자이너 확인 후 하나로 통일하고 이
+        스토리를 삭제하세요.
+      </p>
+    </div>
+  ),
+};
+
 export default meta;

@@ -111,3 +111,72 @@ test("삭제 버튼을 클릭하면 onRemove만 호출되고 onClick은 호출�
   expect(onRemove).toHaveBeenCalledOnce();
   expect(onClick).not.toHaveBeenCalled();
 });
+
+test("기본 size는 md이고 높이가 38px다", async () => {
+  render(<Chip>음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const label = page.getByRole("button", { name: "음식점" }).element();
+
+  expect(label.parentElement?.getBoundingClientRect().height).toBe(38);
+});
+
+test("size가 sm이면 높이가 34px다", async () => {
+  render(<Chip size="sm">음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const label = page.getByRole("button", { name: "음식점" }).element();
+
+  expect(label.parentElement?.getBoundingClientRect().height).toBe(34);
+});
+
+test("가로 패딩이 디자인값 16px과 일치한다", async () => {
+  render(<Chip>음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const label = page.getByRole("button", { name: "음식점" }).element();
+
+  const style = getComputedStyle(label);
+  expect(style.paddingLeft).toBe("16px");
+  expect(style.paddingRight).toBe("16px");
+});
+
+test("variant가 overlay면 토글이 아니므로 aria-pressed를 노출하지 않는다", async () => {
+  render(<Chip variant="overlay">음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const label = page.getByRole("button", { name: "음식점" }).element();
+
+  expect(label.hasAttribute("aria-pressed")).toBe(false);
+});
+
+test("variant가 overlay여도 클릭하면 onClick이 호출된다", async () => {
+  const onClick = vi.fn();
+  render(
+    <Chip variant="overlay" onClick={onClick}>
+      음식점
+    </Chip>,
+  );
+
+  await userEvent.click(page.getByRole("button", { name: "음식점" }));
+
+  expect(onClick).toHaveBeenCalledOnce();
+});
+
+test("tone이 strong이면 선택 배경이 더 진하다", async () => {
+  render(
+    <>
+      <Chip selected>기본</Chip>
+      <Chip selected tone="strong">
+        진하게
+      </Chip>
+    </>,
+  );
+  await expect.element(page.getByRole("button", { name: "기본" })).toBeInTheDocument();
+
+  const base = page.getByRole("button", { name: "기본" }).element().parentElement!;
+  const strong = page.getByRole("button", { name: "진하게" }).element().parentElement!;
+
+  expect(getComputedStyle(base).backgroundColor).toBe("rgb(96, 96, 96)");
+  expect(getComputedStyle(strong).backgroundColor).toBe("rgb(61, 61, 61)");
+});
