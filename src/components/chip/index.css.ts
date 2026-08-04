@@ -28,14 +28,14 @@ export const chipContainer = recipe({
     boxSizing: "border-box",
     width: "fit-content",
     fontFamily: vars.font.body,
-    fontSize: vars.fontSize.sm,
+    fontSize: 14,
     fontWeight: vars.fontWeight.medium,
     lineHeight: 1.4,
   },
   variants: {
     size: {
       sm: { minHeight: 34, vars: { [paddingX]: "12px" } },
-      md: { minHeight: 38, vars: { [paddingX]: vars.space.md } },
+      md: { minHeight: 38, vars: { [paddingX]: "16px" } },
     },
     variant: {
       filled: {},
@@ -97,7 +97,7 @@ export const chipLabel = recipe({
     display: "inline-flex",
     alignItems: "center",
     alignSelf: "stretch",
-    gap: vars.space.xs,
+    gap: 6,
     padding: `0 ${paddingX}`,
     font: "inherit",
     color: "inherit",
@@ -106,7 +106,7 @@ export const chipLabel = recipe({
   },
   variants: {
     removable: {
-      true: { paddingRight: vars.space.none },
+      true: { paddingRight: 0 },
       false: {},
     },
   },
@@ -129,8 +129,8 @@ export const chipRemoveButton = style({
   alignItems: "center",
   justifyContent: "center",
   alignSelf: "stretch",
-  padding: `0 ${vars.space.xs}`,
-  marginRight: `calc(${paddingX} - ${vars.space.xs})`,
+  padding: "0 4px",
+  marginRight: `calc(${paddingX} - 4px)`,
   color: "inherit",
   cursor: "pointer",
   borderRadius: vars.radius.full,
@@ -139,5 +139,5 @@ export const chipRemoveButton = style({
 export const chipGroup = style({
   display: "flex",
   flexWrap: "wrap",
-  gap: vars.space.sm,
+  gap: 8,
 });
