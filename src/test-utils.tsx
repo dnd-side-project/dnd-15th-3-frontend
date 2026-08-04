@@ -2,19 +2,20 @@ import type { ReactNode } from "react";
 import { type Root, createRoot } from "react-dom/client";
 import { afterEach } from "vite-plus/test";
 
-let root: Root | undefined;
-let container: HTMLDivElement | undefined;
+const mounts: { root: Root; container: HTMLDivElement }[] = [];
 
 export function render(ui: ReactNode) {
-  container = document.createElement("div");
+  const container = document.createElement("div");
   document.body.appendChild(container);
-  root = createRoot(container);
+  const root = createRoot(container);
+  mounts.push({ root, container });
   root.render(ui);
 }
 
 afterEach(() => {
-  root?.unmount();
-  container?.remove();
-  root = undefined;
-  container = undefined;
+  for (const { root, container } of mounts) {
+    root.unmount();
+    container.remove();
+  }
+  mounts.length = 0;
 });
