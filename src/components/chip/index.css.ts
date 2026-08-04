@@ -18,6 +18,7 @@ export const chipContainer = recipe({
     gap: vars.space.xs,
     borderRadius: vars.radius.full,
     boxSizing: "border-box",
+    width: "fit-content",
   },
   variants: {
     selected: {
