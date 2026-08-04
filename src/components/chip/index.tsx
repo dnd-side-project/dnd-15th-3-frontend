@@ -32,7 +32,6 @@ export function Chip({
   const removable = selected && Boolean(onRemove);
   const pressed = variant === "overlay" ? undefined : selected;
 
-  // 삭제 버튼이 없으면 래퍼 없이 버튼 하나로 렌더한다.
   if (!removable) {
     return (
       <button
