@@ -4,10 +4,10 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "../../styles/theme.css";
 
 const chipColor = {
-  unselectedBackground: "#F0F0F0",
-  unselectedBorder: "#E0E0E0",
-  unselectedText: "#333333",
-  selectedBackground: "#4A4A4A",
+  unselectedBackground: "#ECEFF5",
+  unselectedText: "#6D6D6D",
+  unselectedIcon: "#A4B1C5",
+  selectedBackground: "#606060",
   selectedText: "#FFFFFF",
 };
 
@@ -22,14 +22,8 @@ export const chipContainer = recipe({
   },
   variants: {
     selected: {
-      false: {
-        backgroundColor: chipColor.unselectedBackground,
-        border: `1px solid ${chipColor.unselectedBorder}`,
-      },
-      true: {
-        backgroundColor: chipColor.selectedBackground,
-        border: "1px solid transparent",
-      },
+      false: { backgroundColor: chipColor.unselectedBackground },
+      true: { backgroundColor: chipColor.selectedBackground },
     },
   },
   defaultVariants: {
@@ -42,6 +36,9 @@ export const chipLabel = recipe({
     appearance: "none",
     border: "none",
     background: "transparent",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: vars.space.xs,
     padding: `${vars.space.xs} ${vars.space.sm}`,
     fontFamily: vars.font.body,
     fontSize: vars.fontSize.sm,
@@ -63,6 +60,22 @@ export const chipLabel = recipe({
   defaultVariants: {
     selected: false,
     removable: false,
+  },
+});
+
+export const chipIcon = recipe({
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+  },
+  variants: {
+    selected: {
+      false: { color: chipColor.unselectedIcon },
+      true: { color: chipColor.selectedText },
+    },
+  },
+  defaultVariants: {
+    selected: false,
   },
 });
 

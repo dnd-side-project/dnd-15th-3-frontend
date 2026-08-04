@@ -1,8 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
+import CoffeeIcon from "../../assets/icon-coffee.svg?react";
+import EllipsisIcon from "../../assets/icon-ellipsis.svg?react";
+import FootprintsIcon from "../../assets/icon-footprints.svg?react";
+import GamepadIcon from "../../assets/icon-gamepad-2.svg?react";
+import ImageIcon from "../../assets/icon-image.svg?react";
+import ShoppingBagIcon from "../../assets/icon-shopping-bag.svg?react";
+import UtensilsIcon from "../../assets/icon-utensils.svg?react";
+import WineIcon from "../../assets/icon-wine.svg?react";
 import { withLayout } from "../layout/index.decorators";
 import { Chip, ChipGroup } from "./index";
+
+const ICON_SIZE = 16;
 
 const meta = {
   component: Chip,
@@ -99,6 +109,35 @@ export const Group: Story = {
       <Chip>산책·드라이브</Chip>
       <Chip>모임소통</Chip>
       <Chip>기타</Chip>
+    </ChipGroup>
+  ),
+};
+
+export const WithIcon: Story = {
+  args: {
+    icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />,
+  },
+};
+
+export const WithIconSelected: Story = {
+  args: {
+    icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    selected: true,
+    onRemove: fn(),
+  },
+};
+
+export const CategoryGroup: Story = {
+  render: () => (
+    <ChipGroup>
+      <Chip icon={<UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />}>음식점</Chip>
+      <Chip icon={<CoffeeIcon height={ICON_SIZE} width={ICON_SIZE} />}>카페</Chip>
+      <Chip icon={<WineIcon height={ICON_SIZE} width={ICON_SIZE} />}>술/바</Chip>
+      <Chip icon={<ImageIcon height={ICON_SIZE} width={ICON_SIZE} />}>문화/전시</Chip>
+      <Chip icon={<GamepadIcon height={ICON_SIZE} width={ICON_SIZE} />}>액티비티</Chip>
+      <Chip icon={<FootprintsIcon height={ICON_SIZE} width={ICON_SIZE} />}>산책/야경</Chip>
+      <Chip icon={<ShoppingBagIcon height={ICON_SIZE} width={ICON_SIZE} />}>팝업/쇼핑</Chip>
+      <Chip icon={<EllipsisIcon height={ICON_SIZE} width={ICON_SIZE} />}>기타</Chip>
     </ChipGroup>
   ),
 };
