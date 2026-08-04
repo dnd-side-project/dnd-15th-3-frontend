@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import XIcon from "../../assets/icon-x.svg?react";
 
-import { chipContainer, chipGroup, chipIcon, chipLabel, chipRemoveButton } from "./index.css";
+import { chipContainer, chipGroup, chipIconHost, chipLabel, chipRemoveButton } from "./index.css";
 
 type ChipSize = "sm" | "md";
 type ChipTone = "default" | "strong";
@@ -30,27 +30,37 @@ export function Chip({
   onRemove,
 }: ChipProps) {
   const removable = selected && Boolean(onRemove);
+  const pressed = variant === "overlay" ? undefined : selected;
+
+  // 삭제 버튼이 없으면 래퍼 없이 버튼 하나로 렌더한다.
+  if (!removable) {
+    return (
+      <button
+        type="button"
+        className={`${chipContainer({ standalone: true, size, tone, variant, selected })} ${chipIconHost}`}
+        aria-pressed={pressed}
+        onClick={onClick}
+      >
+        {icon}
+        {children}
+      </button>
+    );
+  }
 
   return (
     <span className={chipContainer({ size, tone, variant, selected })}>
       <button
         type="button"
-        className={chipLabel({ removable })}
-        aria-pressed={variant === "overlay" ? undefined : selected}
+        className={`${chipLabel()} ${chipIconHost}`}
+        aria-pressed={pressed}
         onClick={onClick}
       >
-        {icon ? (
-          <span aria-hidden className={chipIcon}>
-            {icon}
-          </span>
-        ) : null}
+        {icon}
         {children}
       </button>
-      {removable ? (
-        <button type="button" className={chipRemoveButton} aria-label="삭제" onClick={onRemove}>
-          <XIcon width={12} height={12} />
-        </button>
-      ) : null}
+      <button type="button" className={chipRemoveButton} aria-label="삭제" onClick={onRemove}>
+        <XIcon width={12} height={12} />
+      </button>
     </span>
   );
 }
