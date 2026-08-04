@@ -1,54 +1,38 @@
 import { style } from "@vanilla-extract/css";
 
-const colors = {
-  background: "#eaf2ff",
-  text: "#3182f6",
-  iconBackground: "#ffffff",
-};
+import { vars } from "../../styles/theme.css";
 
-const tailSize = "6px";
+const colors = {
+  background: "#DBECFF",
+  text: "#3793FF",
+};
 
 export const bubble = style({
   position: "relative",
   display: "inline-flex",
   alignItems: "center",
-  gap: "6px",
-  marginBottom: "12px",
-  padding: "10px 16px",
-  borderRadius: "16px",
+  gap: 6,
+  height: 33,
+  marginBottom: 12,
+  padding: "0 10px",
+  borderRadius: 8,
   backgroundColor: colors.background,
   color: colors.text,
-  fontSize: "0.875rem",
+  fontFamily: vars.font.body,
+  fontSize: 16,
   fontWeight: 600,
   selectors: {
     "&::after": {
       content: '""',
       position: "absolute",
-      bottom: `calc(${tailSize} * -1)`,
-      left: "24px",
+      bottom: -10,
+      left: "50%",
       width: 0,
       height: 0,
       borderStyle: "solid",
-      borderWidth: `${tailSize} ${tailSize} 0 ${tailSize}`,
+      borderWidth: "10px 8px 0 8px",
       borderColor: `${colors.background} transparent transparent transparent`,
+      transform: "translateX(-50%)",
     },
   },
-});
-
-export const icon = style({
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "18px",
-  height: "18px",
-  borderRadius: "50%",
-  backgroundColor: colors.iconBackground,
-  flexShrink: 0,
-});
-
-export const iconDot = style({
-  width: "8px",
-  height: "8px",
-  borderRadius: "50%",
-  backgroundColor: colors.text,
 });
