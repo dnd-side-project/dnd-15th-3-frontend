@@ -5,24 +5,38 @@ import { render } from "../../test-utils";
 import { Tabs } from "./index";
 
 const items = [
-  { label: "코스A", value: "a" },
-  { label: "코스B", value: "b" },
-  { label: "코스C", value: "c" },
+  { label: "코스A", value: "a", content: "A 코스 내용" },
+  { label: "코스B", value: "b", content: "B 코스 내용" },
+  { label: "코스C", value: "c", content: "C 코스 내용" },
 ];
 
 function renderTabs(value = "a") {
   const onChange = vi.fn();
-  render(<Tabs items={items} value={value} onChange={onChange} />);
+  render(<Tabs items={items} label="코스 선택" value={value} onChange={onChange} />);
   return { onChange };
 }
 
 test("모든 항목을 탭 목록으로 렌더링한다", async () => {
   renderTabs();
 
-  await expect.element(page.getByRole("tablist")).toBeInTheDocument();
+  await expect.element(page.getByRole("tablist", { name: "코스 선택" })).toBeInTheDocument();
   await expect.element(page.getByRole("tab", { name: "코스A" })).toBeInTheDocument();
   await expect.element(page.getByRole("tab", { name: "코스B" })).toBeInTheDocument();
   await expect.element(page.getByRole("tab", { name: "코스C" })).toBeInTheDocument();
+});
+
+test("선택된 탭에 연결된 패널의 내용을 보여준다", async () => {
+  renderTabs("b");
+
+  await expect.element(page.getByRole("tabpanel", { name: "코스B" })).toBeInTheDocument();
+  await expect.element(page.getByText("B 코스 내용")).toBeInTheDocument();
+});
+
+test("선택되지 않은 탭의 패널은 감춰진다", async () => {
+  renderTabs("b");
+
+  await expect.element(page.getByText("A 코스 내용")).not.toBeVisible();
+  await expect.element(page.getByText("C 코스 내용")).not.toBeVisible();
 });
 
 test("value에 해당하는 탭만 선택 상태로 노출한다", async () => {

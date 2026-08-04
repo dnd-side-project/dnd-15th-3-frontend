@@ -7,18 +7,19 @@ import type { TabItem, TabsProps } from "./index";
 import { Tabs } from "./index";
 
 const items: TabItem[] = [
-  { label: "코스A", value: "a" },
-  { label: "코스B", value: "b" },
-  { label: "코스C", value: "c" },
+  { label: "코스A", value: "a", content: "코스A의 장소 목록이 표시됩니다." },
+  { label: "코스B", value: "b", content: "코스B의 장소 목록이 표시됩니다." },
+  { label: "코스C", value: "c", content: "코스C의 장소 목록이 표시됩니다." },
 ];
 
-function InteractiveTabs({ items, value: initialValue, onChange }: TabsProps) {
+function InteractiveTabs({ items, value: initialValue, onChange, label }: TabsProps) {
   const [value, setValue] = useState(initialValue);
 
   return (
     <div style={{ padding: "20px" }}>
       <Tabs
         items={items}
+        label={label}
         value={value}
         onChange={(next) => {
           setValue(next);
@@ -38,6 +39,7 @@ const meta = {
   },
   args: {
     items,
+    label: "코스 선택",
     value: "a",
     onChange: fn(),
   },
