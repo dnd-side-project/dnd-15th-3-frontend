@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { vars } from "../../styles/theme.css";
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -9,10 +11,10 @@ export const root = style({
 
 export const list = style({
   display: "flex",
-  gap: 4,
-  padding: 4,
+  gap: 2,
+  padding: 2,
   borderRadius: 9999,
-  backgroundColor: "#E4E7ED",
+  backgroundColor: "#ECEFF5",
 });
 
 export const tab = recipe({
@@ -21,12 +23,13 @@ export const tab = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "8px 12px",
+    height: 34,
     border: "none",
     borderRadius: 9999,
     backgroundColor: "transparent",
-    color: "#8B8D94",
-    fontSize: "0.875rem",
+    color: "#6D6D6D",
+    fontFamily: vars.font.body,
+    fontSize: 16,
     fontWeight: 500,
     cursor: "pointer",
     transition: "background-color 0.2s ease, color 0.2s ease",
@@ -34,7 +37,7 @@ export const tab = recipe({
   variants: {
     active: {
       true: {
-        backgroundColor: "#2E2E2E",
+        backgroundColor: "#3D3D3D",
         color: "#FFFFFF",
       },
       false: {},
