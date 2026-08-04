@@ -1,14 +1,16 @@
-import { bubble, icon, iconDot } from "./index.css";
+import type { ReactNode } from "react";
+
+import { bubble } from "./index.css";
 
 interface SpeechBubbleProps {
-  children: React.ReactNode;
-  icon?: React.ReactNode;
+  children: ReactNode;
+  icon?: ReactNode;
 }
 
-export function SpeechBubble({ children, icon: iconSlot }: SpeechBubbleProps) {
+export function SpeechBubble({ children, icon }: SpeechBubbleProps) {
   return (
     <div className={bubble}>
-      <span className={icon}>{iconSlot ?? <span className={iconDot} />}</span>
+      {icon}
       {children}
     </div>
   );

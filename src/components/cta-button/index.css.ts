@@ -1,13 +1,13 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { vars } from "../../styles/theme.css";
+
 const colors = {
-  primary: "#57a5ff",
-  primaryPressed: "#eaf2ff",
-  primaryPressedText: "#3182f6",
-  secondaryBackground: "#f2f3f5",
-  secondaryText: "#4e5257",
-  white: "#ffffff",
+  primary: "#66ADFF",
+  secondaryBackground: "#DAE1EC",
+  secondaryText: "#888888",
+  white: "#FFFFFF",
 };
 
 export const button = recipe({
@@ -15,55 +15,47 @@ export const button = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     flex: "1 1 0%",
-    height: "52px",
+    width: "100%",
+    height: 53,
     border: "none",
-    borderRadius: "12px",
-    fontSize: "1rem",
+    borderRadius: 8,
+    fontFamily: vars.font.body,
+    fontSize: 16,
     fontWeight: 700,
     cursor: "pointer",
-    transition: "background-color 0.15s ease",
+    selectors: {
+      "&:disabled": {
+        backgroundColor: colors.secondaryBackground,
+        color: colors.secondaryText,
+        cursor: "not-allowed",
+      },
+    },
   },
   variants: {
     variant: {
       primary: {
         backgroundColor: colors.primary,
         color: colors.white,
-        selectors: {
-          "&:active": {
-            backgroundColor: colors.primaryPressed,
-            color: colors.primaryPressedText,
-          },
-        },
       },
       secondary: {
         backgroundColor: colors.secondaryBackground,
         color: colors.secondaryText,
       },
     },
-    disabled: {
-      true: {
-        backgroundColor: colors.secondaryBackground,
-        color: colors.secondaryText,
-        cursor: "not-allowed",
-      },
-      false: {},
-    },
     fixedWidth: {
-      true: { flex: "0 0 88px" },
+      true: { flex: "0 0 80px" },
       false: {},
     },
   },
   defaultVariants: {
     variant: "primary",
-    disabled: false,
     fixedWidth: false,
   },
 });
 
 export const row = style({
   display: "flex",
-  gap: "8px",
+  gap: 12,
   width: "100%",
 });

@@ -1,29 +1,31 @@
+import type { ReactNode } from "react";
+
 import { button, row } from "./index.css";
 
 interface CtaButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
 }
 
 export function CtaButton({ children, disabled = false, onClick }: CtaButtonProps) {
   return (
-    <button className={button({ disabled })} disabled={disabled} onClick={onClick} type="button">
+    <button className={button()} disabled={disabled} type="button" onClick={onClick}>
       {children}
     </button>
   );
 }
 
 interface CtaButtonRowProps {
-  backLabel?: React.ReactNode;
+  backLabel?: ReactNode;
   onBack: () => void;
-  nextLabel: React.ReactNode;
+  nextLabel: ReactNode;
   onNext: () => void;
   nextDisabled?: boolean;
 }
 
 export function CtaButtonRow({
-  backLabel = "위로",
+  backLabel = "뒤로",
   onBack,
   nextLabel,
   onNext,
@@ -33,17 +35,12 @@ export function CtaButtonRow({
     <div className={row}>
       <button
         className={button({ variant: "secondary", fixedWidth: true })}
-        onClick={onBack}
         type="button"
+        onClick={onBack}
       >
         {backLabel}
       </button>
-      <button
-        className={button({ disabled: nextDisabled })}
-        disabled={nextDisabled}
-        onClick={onNext}
-        type="button"
-      >
+      <button className={button()} disabled={nextDisabled} type="button" onClick={onNext}>
         {nextLabel}
       </button>
     </div>
