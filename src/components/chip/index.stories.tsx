@@ -203,8 +203,7 @@ export const SelectedTones: Story = {
         </Chip>
       </ChipGroup>
       <p style={{ color: "#6D6D6D", fontSize: 12, margin: 0 }}>
-        시안마다 선택 배경이 달라 두 가지를 모두 지원합니다. 디자이너 확인 후 하나로 통일하고 이
-        스토리를 삭제하세요.
+        화면마다 선택 배경이 달라 우선 두 가지 모두 지원
       </p>
     </div>
   ),
