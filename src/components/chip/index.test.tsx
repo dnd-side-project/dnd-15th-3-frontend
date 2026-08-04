@@ -118,7 +118,7 @@ test("기본 size는 md이고 높이가 38px다", async () => {
   await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
   const label = page.getByRole("button", { name: "음식점" }).element();
 
-  expect(label.parentElement?.getBoundingClientRect().height).toBe(38);
+  expect(label.getBoundingClientRect().height).toBe(38);
 });
 
 test("size가 sm이면 높이가 34px다", async () => {
@@ -127,7 +127,7 @@ test("size가 sm이면 높이가 34px다", async () => {
   await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
   const label = page.getByRole("button", { name: "음식점" }).element();
 
-  expect(label.parentElement?.getBoundingClientRect().height).toBe(34);
+  expect(label.getBoundingClientRect().height).toBe(34);
 });
 
 test("가로 패딩이 디자인값 16px과 일치한다", async () => {
@@ -174,8 +174,8 @@ test("tone이 strong이면 선택 배경이 더 진하다", async () => {
   );
   await expect.element(page.getByRole("button", { name: "기본" })).toBeInTheDocument();
 
-  const base = page.getByRole("button", { name: "기본" }).element().parentElement!;
-  const strong = page.getByRole("button", { name: "진하게" }).element().parentElement!;
+  const base = page.getByRole("button", { name: "기본" }).element();
+  const strong = page.getByRole("button", { name: "진하게" }).element();
 
   expect(getComputedStyle(base).backgroundColor).toBe("rgb(96, 96, 96)");
   expect(getComputedStyle(strong).backgroundColor).toBe("rgb(61, 61, 61)");

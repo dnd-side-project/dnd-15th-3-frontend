@@ -1,4 +1,4 @@
-import { createVar, style } from "@vanilla-extract/css";
+import { createVar, globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
@@ -20,8 +20,15 @@ const chipColor = {
 const paddingX = createVar();
 const iconColor = createVar();
 
+// 아이콘 래퍼 span 없이 직계 자식 svg에 색을 준다 (DOM depth 한 단계 절약)
+export const chipIconHost = style({});
+globalStyle(`${chipIconHost} > svg`, { color: iconColor });
+
 export const chipContainer = recipe({
   base: {
+    appearance: "none",
+    border: "none",
+    background: "none",
     display: "inline-flex",
     alignItems: "center",
     borderRadius: vars.radius.full,
@@ -33,6 +40,15 @@ export const chipContainer = recipe({
     lineHeight: 1.4,
   },
   variants: {
+    // 삭제 버튼이 없으면 컨테이너 자체가 라벨 버튼이 되어 래퍼가 사라진다.
+    standalone: {
+      true: {
+        gap: 6,
+        padding: `0 ${paddingX}`,
+        cursor: "pointer",
+      },
+      false: {},
+    },
     size: {
       sm: { minHeight: 34, vars: { [paddingX]: "12px" } },
       md: { minHeight: 38, vars: { [paddingX]: "16px" } },
@@ -82,6 +98,7 @@ export const chipContainer = recipe({
     },
   ],
   defaultVariants: {
+    standalone: false,
     size: "md",
     variant: "filled",
     tone: "default",
@@ -104,21 +121,6 @@ export const chipLabel = recipe({
     cursor: "pointer",
     whiteSpace: "nowrap",
   },
-  variants: {
-    removable: {
-      true: { paddingRight: 0 },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    removable: false,
-  },
-});
-
-export const chipIcon = style({
-  display: "inline-flex",
-  alignItems: "center",
-  color: iconColor,
 });
 
 export const chipRemoveButton = style({
