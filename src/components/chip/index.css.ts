@@ -7,8 +7,6 @@ const chipColor = {
   unselectedBackground: "#ECEFF5",
   unselectedText: "#6D6D6D",
   unselectedIcon: "#A4B1C5",
-  // TODO(design): 필터바는 #3D3D3D, 코스/카테고리는 #606060로 시안이 갈린다.
-  // 디자이너 확인 전까지 tone으로 둘 다 지원한다.
   selectedBackground: "#606060",
   selectedStrongBackground: "#3D3D3D",
   selectedText: "#FFFFFF",
@@ -20,7 +18,6 @@ const chipColor = {
 const paddingX = createVar();
 const iconColor = createVar();
 
-// 아이콘 래퍼 span 없이 직계 자식 svg에 색을 준다 (DOM depth 한 단계 절약)
 export const chipIconHost = style({});
 globalStyle(`${chipIconHost} > svg`, { color: iconColor });
 
@@ -40,7 +37,6 @@ export const chipContainer = recipe({
     lineHeight: 1.4,
   },
   variants: {
-    // 삭제 버튼이 없으면 컨테이너 자체가 라벨 버튼이 되어 래퍼가 사라진다.
     standalone: {
       true: {
         gap: 6,
