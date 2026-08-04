@@ -6,7 +6,7 @@ import { vars } from "../../styles/theme.css";
 export const group = style({
   display: "inline-flex",
   alignItems: "center",
-  gap: vars.space.lg,
+  gap: 16,
 });
 
 export const iconButton = recipe({
@@ -14,8 +14,8 @@ export const iconButton = recipe({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "60px",
-    height: "60px",
+    width: 60,
+    height: 60,
     border: "none",
     borderRadius: vars.radius.full,
     cursor: "pointer",
@@ -26,19 +26,13 @@ export const iconButton = recipe({
   variants: {
     tone: {
       link: {
-        background: "#e4e7ed",
-        color: "#4b4f58",
+        background: "#ECEFF5",
+        color: "#A4B1C5",
       },
       kakao: {
-        background: "#fee500",
-        color: "#181600",
+        background: "#FEE500",
+        color: "#000000",
       },
     },
   },
-});
-
-export const label = style({
-  margin: 0,
-  color: "#ff5a5a",
-  fontSize: vars.fontSize.sm,
 });

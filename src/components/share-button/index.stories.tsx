@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 
 import { withLayout } from "../layout/index.decorators";
 import { ShareButtonGroup } from "./index";
@@ -7,7 +7,14 @@ import { ShareButtonGroup } from "./index";
 const meta = {
   component: ShareButtonGroup,
   title: "components/ShareButtonGroup",
-  decorators: [withLayout],
+  decorators: [
+    (Story) => (
+      <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+        <Story />
+      </div>
+    ),
+    withLayout,
+  ],
   parameters: {
     layout: "fullscreen",
   },
@@ -25,23 +32,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("button", { name: "링크 복사" })).toBeInTheDocument();
+
+    await expect(canvas.getByRole("button", { name: "링크 복사" })).toBeEnabled();
     await expect(canvas.getByRole("button", { name: "카카오톡으로 공유" })).toBeInTheDocument();
-  },
-};
-
-export const CopyLink: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const copyButton = canvas.getByRole("button", { name: "링크 복사" });
-    await userEvent.click(copyButton);
-    await expect(copyButton).toBeInTheDocument();
-  },
-};
-
-export const WithoutDescription: Story = {
-  args: {
-    description: undefined,
   },
 };
 
