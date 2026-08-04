@@ -1,63 +1,55 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 
-import SearchIcon from "../../assets/icon-search.svg?react";
 import { withLayout } from "../layout/index.decorators";
-import { CharCounter, TextInput, type TextInputProps } from "./index";
+import { CharCounter, CourseFeedbackInput, NicknameInput } from "./index";
 
 const meta = {
-  component: TextInput,
+  component: NicknameInput,
   title: "components/TextInput",
-  decorators: [withLayout],
+  decorators: [
+    (Story) => (
+      <div style={{ padding: 20 }}>
+        <Story />
+      </div>
+    ),
+    withLayout,
+  ],
   parameters: {
     layout: "fullscreen",
   },
-  args: {
-    placeholder: "닉네임을 입력해주세요",
-  },
-  argTypes: {
-    shape: {
-      control: "inline-radio",
-      options: ["rounded", "pill"],
-    },
-  },
-} satisfies Meta<typeof TextInput>;
+} satisfies Meta<typeof NicknameInput>;
 
 type Story = StoryObj<typeof meta>;
 
-function NicknameWithCounter(props: TextInputProps) {
+const MAX_LENGTH = 10;
+
+function NicknameField() {
   const [value, setValue] = useState("");
-  const maxLength = 10;
 
   return (
-    <TextInput
-      {...props}
+    <NicknameInput
+      endAdornment={<CharCounter maxLength={MAX_LENGTH} value={value} />}
+      maxLength={MAX_LENGTH}
       value={value}
-      maxLength={maxLength}
-      endAdornment={<CharCounter value={value} maxLength={maxLength} />}
       onChange={(event) => setValue(event.target.value)}
     />
   );
 }
 
-export const 닉네임을입력해주세요_카운터: Story = {
-  name: "닉네임을 입력해주세요 (카운터)",
-  render: (args) => <NicknameWithCounter {...args} />,
-};
+export const Nickname: Story = {
+  render: () => <NicknameField />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-export const 닉네임을입력해주세요_검색: Story = {
-  name: "닉네임을 입력해주세요 (검색)",
-  args: {
-    endAdornment: <SearchIcon width={18} height={18} />,
+    await userEvent.type(canvas.getByRole("textbox", { name: "닉네임" }), "당근마켓");
+    await expect(canvas.getByText("4/10")).toBeInTheDocument();
   },
 };
 
-export const 코스의견남기기: Story = {
-  name: "코스 의견남기기",
-  args: {
-    shape: "pill",
-    placeholder: "코스에 대한 의견을 남겨주세요",
-  },
+export const CourseFeedback: Story = {
+  render: () => <CourseFeedbackInput />,
 };
 
 export default meta;

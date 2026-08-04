@@ -3,33 +3,39 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-const localColor = {
-  roundedBackground: "#eef0f5",
-  pillBackground: "#ffffff",
-  pillBorder: "#e2e4ea",
-  placeholder: "#9096a3",
+const colors = {
+  roundedBackground: "#ECEFF5",
+  pillBackground: "#FDFDFF",
+  pillBorder: "#E7E7E7",
+  placeholder: "#888888",
 };
 
 export const wrapper = recipe({
   base: {
-    display: "inline-flex",
+    display: "flex",
     alignItems: "center",
-    gap: vars.space.xs,
+    gap: 8,
     width: "100%",
     boxSizing: "border-box",
-    paddingLeft: vars.space.md,
-    paddingRight: vars.space.md,
+    fontFamily: vars.font.body,
+    color: colors.placeholder,
   },
   variants: {
     shape: {
       rounded: {
-        backgroundColor: localColor.roundedBackground,
-        borderRadius: vars.radius.md,
+        height: 54,
+        padding: "0 14px",
+        borderRadius: 8,
+        backgroundColor: colors.roundedBackground,
+        fontSize: 16,
       },
       pill: {
-        backgroundColor: localColor.pillBackground,
-        border: `1px solid ${localColor.pillBorder}`,
+        height: 50,
+        padding: "0 18px",
+        border: `1px solid ${colors.pillBorder}`,
         borderRadius: vars.radius.full,
+        backgroundColor: colors.pillBackground,
+        fontSize: 14,
       },
     },
   },
@@ -41,25 +47,21 @@ export const wrapper = recipe({
 export const input = style({
   flex: 1,
   minWidth: 0,
+  padding: 0,
   border: "none",
   outline: "none",
   background: "transparent",
-  paddingTop: vars.space.sm,
-  paddingBottom: vars.space.sm,
-  fontFamily: vars.font.body,
-  fontSize: vars.fontSize.md,
+  fontFamily: "inherit",
+  fontSize: "inherit",
   color: vars.color.text,
 
   "::placeholder": {
-    color: localColor.placeholder,
+    color: colors.placeholder,
   },
 });
 
 export const adornment = style({
-  display: "inline-flex",
+  display: "flex",
   alignItems: "center",
   flexShrink: 0,
-  color: localColor.placeholder,
-  fontFamily: vars.font.body,
-  fontSize: vars.fontSize.sm,
 });

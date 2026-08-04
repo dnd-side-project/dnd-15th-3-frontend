@@ -35,9 +35,18 @@ export function CharCounter({ value, maxLength }: CharCounterProps) {
 }
 
 export function NicknameInput(props: Omit<TextInputProps, "shape">) {
-  return <TextInput shape="rounded" placeholder="닉네임을 입력해주세요" {...props} />;
+  return (
+    <TextInput aria-label="닉네임" placeholder="닉네임을 입력해주세요" shape="rounded" {...props} />
+  );
 }
 
 export function CourseFeedbackInput(props: Omit<TextInputProps, "shape">) {
-  return <TextInput shape="pill" placeholder="코스에 대한 의견을 남겨주세요" {...props} />;
+  return (
+    <TextInput
+      aria-label="코스 의견"
+      placeholder="코스에 대한 의견을 남겨주세요!"
+      shape="pill"
+      {...props}
+    />
+  );
 }
