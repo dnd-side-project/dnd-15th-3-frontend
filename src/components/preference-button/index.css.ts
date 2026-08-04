@@ -3,23 +3,26 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "../../styles/theme.css";
 
 const colors = {
-  like: "#5CA7FF",
+  like: "#66ADFF",
   dislike: "#FF46CE",
-  inactiveBackground: "#CCCDCE",
-  foreground: "#ffffff",
+  inactiveBackground: "rgba(255, 255, 255, 0.3)",
+  foreground: "#FFFFFF",
 };
 
 export const preferenceButton = recipe({
   base: {
     display: "inline-flex",
     alignItems: "center",
-    gap: vars.space.xs,
+    justifyContent: "center",
+    gap: 4,
+    minHeight: 25,
+    padding: "0 8px",
     border: "none",
     borderRadius: vars.radius.full,
-    padding: `${vars.space.xs} ${vars.space.sm}`,
     fontFamily: vars.font.body,
-    fontSize: vars.fontSize.sm,
+    fontSize: 12,
     fontWeight: vars.fontWeight.medium,
+    lineHeight: 1.4,
     color: colors.foreground,
     cursor: "pointer",
     selectors: {

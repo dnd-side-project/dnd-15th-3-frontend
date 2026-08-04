@@ -11,8 +11,6 @@ interface PreferenceButtonProps {
   onToggle?: (next: boolean) => void;
 }
 
-const ICON_SIZE = 16;
-
 export function PreferenceButton({
   type,
   count,
@@ -24,14 +22,15 @@ export function PreferenceButton({
 
   return (
     <button
+      aria-label={`${type === "like" ? "좋아요" : "싫어요"} ${count}`}
       aria-pressed={selected}
       className={preferenceButton({ type, selected })}
       disabled={disabled}
       type="button"
       onClick={() => onToggle?.(!selected)}
     >
-      <Icon height={ICON_SIZE} width={ICON_SIZE} />
-      <span>{count}</span>
+      <Icon height={16} width={16} />
+      {count}
     </button>
   );
 }
