@@ -2,16 +2,17 @@ import type { ReactNode } from "react";
 
 import XIcon from "../../assets/icon-x.svg?react";
 
-import { chipContainer, chipGroup, chipLabel, chipRemoveButton } from "./index.css";
+import { chipContainer, chipGroup, chipIcon, chipLabel, chipRemoveButton } from "./index.css";
 
 interface ChipProps {
   children: ReactNode;
+  icon?: ReactNode;
   selected?: boolean;
   onClick?: () => void;
   onRemove?: () => void;
 }
 
-export function Chip({ children, selected = false, onClick, onRemove }: ChipProps) {
+export function Chip({ children, icon, selected = false, onClick, onRemove }: ChipProps) {
   const removable = selected && Boolean(onRemove);
 
   return (
@@ -22,6 +23,11 @@ export function Chip({ children, selected = false, onClick, onRemove }: ChipProp
         aria-pressed={selected}
         onClick={onClick}
       >
+        {icon ? (
+          <span aria-hidden className={chipIcon({ selected })}>
+            {icon}
+          </span>
+        ) : null}
         {children}
       </button>
       {removable ? (

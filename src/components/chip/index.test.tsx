@@ -10,6 +10,25 @@ test("라벨 텍스트를 렌더링한다", async () => {
   await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
 });
 
+test("icon을 전달하면 라벨 앞에 아이콘이 렌더링된다", async () => {
+  render(<Chip icon={<svg data-testid="chip-icon" />}>음식점</Chip>);
+
+  await expect.element(page.getByTestId("chip-icon")).toBeInTheDocument();
+});
+
+test("icon을 전달해도 접근 가능한 이름은 라벨 텍스트만 유지된다", async () => {
+  render(<Chip icon={<svg data-testid="chip-icon" />}>음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+});
+
+test("icon이 없으면 아이콘 슬롯이 렌더링되지 않는다", async () => {
+  render(<Chip>음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  await expect.element(page.getByTestId("chip-icon")).not.toBeInTheDocument();
+});
+
 test("미선택 상태는 pressed가 false이고 삭제 버튼이 없다", async () => {
   render(<Chip>음식점</Chip>);
 
