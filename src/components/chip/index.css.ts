@@ -111,11 +111,21 @@ export const chipLabel = recipe({
     alignItems: "center",
     alignSelf: "stretch",
     gap: 6,
-    padding: `0 ${paddingX}`,
+    paddingLeft: paddingX,
+    paddingRight: paddingX,
     font: "inherit",
     color: "inherit",
     cursor: "pointer",
     whiteSpace: "nowrap",
+  },
+  variants: {
+    removable: {
+      true: { paddingRight: 4 },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    removable: false,
   },
 });
 
@@ -128,7 +138,7 @@ export const chipRemoveButton = style({
   justifyContent: "center",
   alignSelf: "stretch",
   padding: "0 4px",
-  marginRight: `calc(${paddingX} - 4px)`,
+  marginRight: `calc(${paddingX} - 8px)`,
   color: "inherit",
   cursor: "pointer",
   borderRadius: vars.radius.full,

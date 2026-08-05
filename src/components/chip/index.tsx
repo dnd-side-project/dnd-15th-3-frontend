@@ -50,7 +50,7 @@ export function Chip({
     <span className={chipContainer({ size, tone, variant, selected })}>
       <button
         type="button"
-        className={`${chipLabel()} ${chipIconHost}`}
+        className={`${chipLabel({ removable: true })} ${chipIconHost}`}
         aria-pressed={pressed}
         onClick={onClick}
       >
