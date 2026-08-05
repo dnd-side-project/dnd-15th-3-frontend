@@ -16,14 +16,14 @@ interface DayPickerProps {
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }
 
-function Chevron({ orientation }: ComponentProps<typeof RdpChevron>) {
+function Chevron({ orientation, ...props }: ComponentProps<typeof RdpChevron>) {
   if (orientation === "left") {
     return <CaretLeftIcon width={20} height={20} />;
   }
   if (orientation === "right") {
     return <CaretRightIcon width={20} height={20} />;
   }
-  return <RdpChevron />;
+  return <RdpChevron orientation={orientation} {...props} />;
 }
 
 export function DayPicker({ date, setDate }: DayPickerProps) {
