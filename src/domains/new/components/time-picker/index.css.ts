@@ -42,6 +42,7 @@ export const stepperButton = style({
   borderRadius: 100,
   backgroundColor: "white",
   padding: 8.98,
+  color: "#6D6D6D",
   margin: 0,
   display: "flex",
   alignItems: "center",
