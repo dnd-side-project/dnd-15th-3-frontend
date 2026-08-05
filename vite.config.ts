@@ -32,6 +32,7 @@ export default defineConfig({
     },
     plugins: ["oxc", "react", "typescript"],
     rules: {
+      curly: ["error", "all"],
       "react/exhaustive-deps": "warn",
       "react/only-export-components": [
         "warn",
