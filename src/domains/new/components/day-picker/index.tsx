@@ -70,6 +70,7 @@ export function DayPicker({ date, setDate }: DayPickerProps) {
             formatters={{
               formatCaption: (date) => `${date.getFullYear()} ${date.getMonth() + 1}월`,
             }}
+            defaultMonth={date}
           />
           <button
             className={styles.confirmButton({ tone: inputDate ? "primary" : "secondary" })}
