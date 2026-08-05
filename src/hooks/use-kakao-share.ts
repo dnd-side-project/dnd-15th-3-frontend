@@ -74,7 +74,9 @@ const SDK_INTEGRITY = "sha384-OL+ylM/iuPLtW5U3XcvLSGhE8JzReKDank5InqlHGWPhb4140/
 let cached: Promise<KakaoStatic> | undefined;
 
 function loadKakaoSdk(): Promise<KakaoStatic> {
-  if (cached) return cached;
+  if (cached) {
+    return cached;
+  }
 
   cached = new Promise<KakaoStatic>((resolve, reject) => {
     if (typeof window === "undefined") {
@@ -90,19 +92,20 @@ function loadKakaoSdk(): Promise<KakaoStatic> {
     }
 
     const init = () => {
-      const kakao = window.Kakao;
-      if (!kakao) {
-        cached = undefined;
-        reject(new Error("Kakao SDK 로드 후에도 window.Kakao 가 없습니다."));
-        return;
+      try {
+        const kakao = window.Kakao;
+        if (!kakao) {
+          throw new Error("Kakao SDK 로드 후에도 window.Kakao 가 없습니다.");
+        }
+        if (!kakao.isInitialized()) {
+          kakao.init(jsKey);
+        }
+        resolve(kakao);
+      } catch (error) {
+        reject(error);
       }
-      if (!kakao.isInitialized()) kakao.init(jsKey);
-      resolve(kakao);
     };
-    const fail = () => {
-      cached = undefined;
-      reject(new Error("Kakao SDK 스크립트 로드에 실패했습니다."));
-    };
+    const fail = () => reject(new Error("Kakao SDK 스크립트 로드에 실패했습니다."));
 
     if (window.Kakao) {
       init();
@@ -125,6 +128,12 @@ function loadKakaoSdk(): Promise<KakaoStatic> {
     script.addEventListener("load", init, { once: true });
     script.addEventListener("error", fail, { once: true });
     document.head.appendChild(script);
+  }).catch((error: unknown) => {
+    cached = undefined;
+    if (typeof document !== "undefined") {
+      document.getElementById("kakao-js-sdk")?.remove();
+    }
+    throw error;
   });
 
   return cached;
