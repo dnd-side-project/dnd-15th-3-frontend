@@ -56,6 +56,7 @@ function CategoryPicker() {
         <Chip
           key={category.value}
           icon={category.icon}
+          labelSize="md"
           selected={selected.includes(category.value)}
           onClick={() => toggle(category.value)}
           onRemove={() => toggle(category.value)}
@@ -80,6 +81,7 @@ const meta = {
   },
   argTypes: {
     size: { control: "inline-radio", options: ["sm", "md"] },
+    labelSize: { control: "inline-radio", options: ["sm", "md"] },
     tone: { control: "inline-radio", options: ["default", "strong"] },
     variant: { control: "inline-radio", options: ["filled", "overlay"] },
     selected: { control: "boolean" },

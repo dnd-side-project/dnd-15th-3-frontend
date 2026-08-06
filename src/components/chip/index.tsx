@@ -5,6 +5,7 @@ import XIcon from "../../assets/icon-x.svg?react";
 import { chipContainer, chipGroup, chipIconHost, chipLabel, chipRemoveButton } from "./index.css";
 
 type ChipSize = "sm" | "md";
+type ChipLabelSize = "sm" | "md";
 type ChipTone = "default" | "strong";
 type ChipVariant = "filled" | "overlay";
 
@@ -12,6 +13,7 @@ interface ChipProps {
   children: ReactNode;
   icon?: ReactNode;
   size?: ChipSize;
+  labelSize?: ChipLabelSize;
   tone?: ChipTone;
   variant?: ChipVariant;
   selected?: boolean;
@@ -23,6 +25,7 @@ export function Chip({
   children,
   icon,
   size = "md",
+  labelSize = "sm",
   tone = "default",
   variant = "filled",
   selected = false,
@@ -36,7 +39,7 @@ export function Chip({
     return (
       <button
         type="button"
-        className={`${chipContainer({ standalone: true, size, tone, variant, selected })} ${chipIconHost}`}
+        className={`${chipContainer({ standalone: true, labelSize, size, tone, variant, selected })} ${chipIconHost}`}
         aria-pressed={pressed}
         onClick={onClick}
       >
@@ -47,7 +50,7 @@ export function Chip({
   }
 
   return (
-    <span className={chipContainer({ size, tone, variant, selected })}>
+    <span className={chipContainer({ labelSize, size, tone, variant, selected })}>
       <button
         type="button"
         className={`${chipLabel({ removable: true })} ${chipIconHost}`}
