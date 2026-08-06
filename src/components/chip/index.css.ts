@@ -32,11 +32,14 @@ export const chipContainer = recipe({
     boxSizing: "border-box",
     width: "fit-content",
     fontFamily: vars.font.body,
-    fontSize: 14,
     fontWeight: vars.fontWeight.medium,
     lineHeight: 1.4,
   },
   variants: {
+    labelSize: {
+      sm: { fontSize: 14 },
+      md: { fontSize: 16 },
+    },
     standalone: {
       true: {
         gap: 6,
@@ -95,6 +98,7 @@ export const chipContainer = recipe({
   ],
   defaultVariants: {
     standalone: false,
+    labelSize: "sm",
     size: "md",
     variant: "filled",
     tone: "default",
