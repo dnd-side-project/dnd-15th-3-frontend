@@ -7,9 +7,8 @@ export const confirmButton = recipe({
     textAlign: "center",
     paddingBlock: 12,
     fontSize: 18,
-    width: 353,
+    width: "100%",
     height: 53,
-    margin: "10px 20px",
     fontWeight: 600,
   },
   variants: {
@@ -30,6 +29,11 @@ export const confirmButton = recipe({
   defaultVariants: {
     tone: "primary",
   },
+});
+
+export const confirmButtonWrapper = style({
+  paddingBlock: 10,
+  paddingInline: 20,
 });
 
 export const trigger = style({
