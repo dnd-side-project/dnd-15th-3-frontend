@@ -53,6 +53,7 @@ export const trigger = style({
 
 export const calendar = style({
   paddingLeft: 7,
+  overflowX: "auto",
 });
 
 export const selectedDay = style({
