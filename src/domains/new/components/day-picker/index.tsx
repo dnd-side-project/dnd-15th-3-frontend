@@ -72,13 +72,15 @@ export function DayPicker({ date, setDate }: DayPickerProps) {
             }}
             defaultMonth={date}
           />
-          <button
-            className={styles.confirmButton({ tone: inputDate ? "primary" : "secondary" })}
-            onClick={handleClickConfirmButton}
-            disabled={!inputDate}
-          >
-            확인
-          </button>
+          <div className={styles.confirmButtonWrapper}>
+            <button
+              className={styles.confirmButton({ tone: inputDate ? "primary" : "secondary" })}
+              onClick={handleClickConfirmButton}
+              disabled={!inputDate}
+            >
+              확인
+            </button>
+          </div>
         </div>
       </BottomSheet>
     </>
