@@ -29,7 +29,7 @@ export function PreferenceButton({
       type="button"
       onClick={() => onToggle?.(!selected)}
     >
-      <Icon height={16} width={16} />
+      <Icon height={12} width={12} />
       {count}
     </button>
   );
