@@ -53,7 +53,7 @@ test("selected이고 onRemove를 전달하면 삭제 버튼이 렌더링된다",
     </Chip>,
   );
 
-  await expect.element(page.getByRole("button", { name: "삭제" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "문화·예술 삭제" })).toBeInTheDocument();
 });
 
 test("onRemove가 없으면 selected여도 삭제 버튼이 없다 (전체 칩)", async () => {
@@ -106,7 +106,7 @@ test("삭제 버튼을 클릭하면 onRemove만 호출되고 onClick은 호출�
     </Chip>,
   );
 
-  await userEvent.click(page.getByRole("button", { name: "삭제" }));
+  await userEvent.click(page.getByRole("button", { name: "문화·예술 삭제" }));
 
   expect(onRemove).toHaveBeenCalledOnce();
   expect(onClick).not.toHaveBeenCalled();
@@ -179,4 +179,20 @@ test("tone이 strong이면 선택 배경이 더 진하다", async () => {
 
   expect(getComputedStyle(base).backgroundColor).toBe("rgb(96, 96, 96)");
   expect(getComputedStyle(strong).backgroundColor).toBe("rgb(61, 61, 61)");
+});
+
+test("삭제 버튼 이름에 칩 라벨이 포함되어 칩마다 구분된다", async () => {
+  render(
+    <ChipGroup>
+      <Chip selected onRemove={() => {}}>
+        음식점
+      </Chip>
+      <Chip selected onRemove={() => {}}>
+        카페
+      </Chip>
+    </ChipGroup>,
+  );
+
+  await expect.element(page.getByRole("button", { name: "음식점 삭제" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "카페 삭제" })).toBeInTheDocument();
 });
