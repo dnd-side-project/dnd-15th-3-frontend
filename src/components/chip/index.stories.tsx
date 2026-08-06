@@ -3,9 +3,11 @@ import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
 import CoffeeIcon from "../../assets/icon-coffee.svg?react";
+import EllipsisIcon from "../../assets/icon-ellipsis.svg?react";
 import FootprintsIcon from "../../assets/icon-footprints.svg?react";
 import GamepadIcon from "../../assets/icon-gamepad-2.svg?react";
 import ImageIcon from "../../assets/icon-image.svg?react";
+import ShoppingBagIcon from "../../assets/icon-shopping-bag.svg?react";
 import UtensilsIcon from "../../assets/icon-utensils.svg?react";
 import WineIcon from "../../assets/icon-wine.svg?react";
 import { withLayout } from "../layout/index.decorators";
@@ -32,8 +34,12 @@ const categories = [
     label: "산책/야경",
     icon: <FootprintsIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
-  { value: "popup", label: "팝업/쇼핑" },
-  { value: "etc", label: "기타" },
+  {
+    value: "popup",
+    label: "팝업/쇼핑",
+    icon: <ShoppingBagIcon height={ICON_SIZE} width={ICON_SIZE} />,
+  },
+  { value: "etc", label: "기타", icon: <EllipsisIcon height={ICON_SIZE} width={ICON_SIZE} /> },
 ];
 
 function CategoryPicker() {
@@ -104,7 +110,7 @@ export const Categories: Story = {
       "aria-pressed",
       "true",
     );
-    await expect(canvas.getByRole("button", { name: "삭제" })).toBeInTheDocument();
+    await expect(canvas.getByRole("button", { name: "음식점 삭제" })).toBeInTheDocument();
 
     await userEvent.click(canvas.getByRole("button", { name: "카페" }));
     await expect(canvas.getByRole("button", { name: "카페" })).toHaveAttribute(

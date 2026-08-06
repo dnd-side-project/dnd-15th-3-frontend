@@ -60,7 +60,12 @@ export function Chip({
         {icon}
         {children}
       </button>
-      <button type="button" className={chipRemoveButton} aria-label="삭제" onClick={onRemove}>
+      <button
+        type="button"
+        className={chipRemoveButton}
+        aria-label={typeof children === "string" ? `${children} 삭제` : "삭제"}
+        onClick={onRemove}
+      >
         <XIcon width={12} height={12} />
       </button>
     </span>
