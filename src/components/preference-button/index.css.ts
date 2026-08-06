@@ -5,7 +5,7 @@ import { vars } from "../../styles/theme.css";
 const colors = {
   like: "#66ADFF",
   dislike: "#FF46CE",
-  inactiveBackground: "rgba(255, 255, 255, 0.3)",
+  inactiveBackground: "rgba(242, 243, 247, 0.34)",
   foreground: "#FFFFFF",
 };
 
@@ -16,7 +16,7 @@ export const preferenceButton = recipe({
     justifyContent: "center",
     gap: 4,
     minHeight: 25,
-    padding: "0 8px",
+    padding: "0 9px",
     border: "none",
     borderRadius: vars.radius.full,
     fontFamily: vars.font.body,
