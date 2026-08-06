@@ -19,10 +19,12 @@ export const confirmButton = recipe({
         ":active": {
           filter: "brightness(0.8)",
         },
+        cursor: "pointer",
       },
       secondary: {
         backgroundColor: "#DAE1EC",
         color: "#707D91",
+        cursor: "not-allowed",
       },
     },
   },
@@ -49,6 +51,7 @@ export const trigger = style({
   padding: "13px 15px",
   fontFamily: "sans-serif",
   fontSize: "1rem",
+  cursor: "pointer",
 });
 
 export const calendar = style({
@@ -116,6 +119,7 @@ export const dayButton = style({
   width: 43.32,
   backgroundColor: "transparent",
   color: "inherit",
+  cursor: "pointer",
 });
 export const dayPickArea = style({
   paddingBottom: 15,
@@ -129,6 +133,7 @@ export const navigationButton = style({
   padding: 0,
   width: 20,
   height: 20,
+  cursor: "pointer",
 });
 
 export const outside = style({
