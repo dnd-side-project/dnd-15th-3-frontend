@@ -65,8 +65,9 @@ export function Chip({
 
 interface ChipGroupProps {
   children: ReactNode;
+  scroll?: boolean;
 }
 
-export function ChipGroup({ children }: ChipGroupProps) {
-  return <div className={chipGroup}>{children}</div>;
+export function ChipGroup({ children, scroll = false }: ChipGroupProps) {
+  return <div className={chipGroup({ scroll })}>{children}</div>;
 }
