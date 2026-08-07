@@ -6,7 +6,7 @@ import { vars } from "../../styles/theme.css";
 export const group = style({
   display: "inline-flex",
   alignItems: "center",
-  gap: 16,
+  gap: 14,
 });
 
 export const iconButton = recipe({
@@ -14,8 +14,8 @@ export const iconButton = recipe({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    width: 60,
-    height: 60,
+    width: 62,
+    height: 59,
     border: "none",
     borderRadius: vars.radius.full,
     cursor: "pointer",
@@ -32,6 +32,10 @@ export const iconButton = recipe({
       kakao: {
         background: "#FEE500",
         color: "#000000",
+      },
+      more: {
+        background: "#ECEFF5",
+        color: "#A4B1C5",
       },
     },
   },

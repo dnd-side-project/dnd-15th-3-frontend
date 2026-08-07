@@ -82,3 +82,21 @@ test("SDK 로드에 실패하면 카카오톡 공유 버튼이 비활성화된�
   await expect.element(kakaoButton()).toBeDisabled();
   await expect.element(copyButton()).toBeEnabled();
 });
+
+test("onMore를 전달하면 더보기 버튼이 렌더링되고 클릭 시 호출된다", async () => {
+  const onMore = vi.fn();
+  render(<ShareButtonGroup {...PARAMS} onMore={onMore} />);
+
+  const button = page.getByRole("button", { name: "공유 더보기" });
+  await expect.element(button).toBeInTheDocument();
+  await userEvent.click(button);
+
+  expect(onMore).toHaveBeenCalledOnce();
+});
+
+test("onMore가 없으면 더보기 버튼을 렌더링하지 않는다", async () => {
+  render(<ShareButtonGroup {...PARAMS} />);
+
+  await expect.element(copyButton()).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "공유 더보기" })).not.toBeInTheDocument();
+});
