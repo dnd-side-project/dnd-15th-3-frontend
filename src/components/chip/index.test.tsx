@@ -196,3 +196,19 @@ test("삭제 버튼 이름에 칩 라벨이 포함되어 칩마다 구분된다"
   await expect.element(page.getByRole("button", { name: "음식점 삭제" })).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "카페 삭제" })).toBeInTheDocument();
 });
+
+test("ChipGroup에 scroll을 주면 줄바꿈 없이 가로로 스크롤한다", async () => {
+  render(
+    <ChipGroup scroll>
+      <Chip>음식점</Chip>
+      <Chip>카페</Chip>
+    </ChipGroup>,
+  );
+
+  const chip = page.getByRole("button", { name: "음식점" });
+  await expect.element(chip).toBeInTheDocument();
+  const group = chip.element().parentElement;
+
+  expect(group && getComputedStyle(group).flexWrap).toBe("nowrap");
+  expect(group && getComputedStyle(group).overflowX).toBe("auto");
+});

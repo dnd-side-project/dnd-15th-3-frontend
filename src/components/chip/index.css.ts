@@ -30,6 +30,7 @@ export const chipContainer = recipe({
     borderRadius: 20,
     boxSizing: "border-box",
     width: "fit-content",
+    flexShrink: 0,
     fontFamily: vars.font.body,
     fontSize: 16,
     fontWeight: vars.fontWeight.medium,
@@ -112,8 +113,25 @@ export const chipRemoveButton = style({
   cursor: "pointer",
 });
 
-export const chipGroup = style({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: 7,
+export const chipGroup = recipe({
+  base: {
+    display: "flex",
+    gap: 7,
+  },
+  variants: {
+    scroll: {
+      true: {
+        flexWrap: "nowrap",
+        overflowX: "auto",
+        scrollbarWidth: "none",
+        selectors: {
+          "&::-webkit-scrollbar": { display: "none" },
+        },
+      },
+      false: { flexWrap: "wrap" },
+    },
+  },
+  defaultVariants: {
+    scroll: false,
+  },
 });

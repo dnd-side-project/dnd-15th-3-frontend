@@ -116,6 +116,19 @@ export const Categories: Story = {
   },
 };
 
+export const FilterBar: Story = {
+  render: () => (
+    <div style={{ padding: "0 0 0 20px" }}>
+      <ChipGroup scroll>
+        <Chip selected>전체</Chip>
+        {categories.map((category) => (
+          <Chip key={category.value}>{category.label}</Chip>
+        ))}
+      </ChipGroup>
+    </div>
+  ),
+};
+
 export const Overlay: Story = {
   render: () => (
     <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
