@@ -11,10 +11,11 @@ export const root = style({
 
 export const list = style({
   display: "flex",
-  gap: 2,
-  padding: 2,
-  borderRadius: 9999,
-  backgroundColor: "#ECEFF5",
+  alignItems: "center",
+  height: 45,
+  padding: "0 5px",
+  borderRadius: 30,
+  backgroundColor: "rgba(255, 255, 255, 0.81)",
 });
 
 export const tab = recipe({
@@ -23,21 +24,21 @@ export const tab = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: 34,
+    height: 37,
     border: "none",
-    borderRadius: 9999,
+    borderRadius: 30,
     backgroundColor: "transparent",
-    color: "#6D6D6D",
+    color: "#B0B0B0",
     fontFamily: vars.font.body,
-    fontSize: 16,
-    fontWeight: 500,
+    fontSize: 15,
+    fontWeight: 600,
     cursor: "pointer",
     transition: "background-color 0.2s ease, color 0.2s ease",
   },
   variants: {
     active: {
       true: {
-        backgroundColor: "#3D3D3D",
+        backgroundColor: "#3793FF",
         color: "#FFFFFF",
       },
       false: {},
