@@ -29,6 +29,10 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
+export const WithMore: Story = {
+  args: { onMore: () => {} },
+};
+
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

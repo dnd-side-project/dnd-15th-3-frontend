@@ -1,3 +1,4 @@
+import DotsThreeIcon from "../../assets/icon-dots-three.svg?react";
 import LinkIcon from "../../assets/icon-link-2.svg?react";
 import MessageCircleFillIcon from "../../assets/icon-message-circle-fill.svg?react";
 import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share";
@@ -6,12 +7,14 @@ import * as styles from "./index.css";
 
 const LINK_ICON_SIZE = 24;
 const KAKAO_ICON_SIZE = 22;
+const MORE_ICON_SIZE = 32;
 
 interface ShareButtonGroupProps extends ShareLinkParams {
   onCopyLink?: () => void;
+  onMore?: () => void;
 }
 
-export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProps) {
+export function ShareButtonGroup({ onCopyLink, onMore, ...params }: ShareButtonGroupProps) {
   const { loading, error, shareLink } = useKakaoShare();
 
   const handleCopyLink = async () => {
@@ -38,6 +41,16 @@ export function ShareButtonGroup({ onCopyLink, ...params }: ShareButtonGroupProp
       >
         <MessageCircleFillIcon height={KAKAO_ICON_SIZE} width={KAKAO_ICON_SIZE} />
       </button>
+      {onMore ? (
+        <button
+          aria-label="공유 더보기"
+          className={styles.iconButton({ tone: "more" })}
+          type="button"
+          onClick={onMore}
+        >
+          <DotsThreeIcon height={MORE_ICON_SIZE} width={MORE_ICON_SIZE} />
+        </button>
+      ) : null}
     </div>
   );
 }
