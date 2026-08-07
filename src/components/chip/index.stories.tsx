@@ -18,10 +18,10 @@ const ICON_SIZE = 20;
 const categories = [
   { value: "food", label: "음식점", icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} /> },
   { value: "cafe", label: "카페", icon: <CoffeeIcon height={ICON_SIZE} width={ICON_SIZE} /> },
-  { value: "bar", label: "술/바", icon: <WineIcon height={ICON_SIZE} width={ICON_SIZE} /> },
+  { value: "bar", label: "술 · 바", icon: <WineIcon height={ICON_SIZE} width={ICON_SIZE} /> },
   {
     value: "culture",
-    label: "문화/전시",
+    label: "문화 · 전시",
     icon: <ImageIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   {
@@ -31,12 +31,12 @@ const categories = [
   },
   {
     value: "walk",
-    label: "산책/야경",
+    label: "산책 · 야경",
     icon: <FootprintsIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   {
     value: "popup",
-    label: "팝업/쇼핑",
+    label: "팝업 · 쇼핑",
     icon: <ShoppingBagIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   { value: "etc", label: "기타", icon: <EllipsisIcon height={ICON_SIZE} width={ICON_SIZE} /> },
