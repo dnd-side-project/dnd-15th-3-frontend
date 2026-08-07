@@ -109,3 +109,21 @@ test("filled면 배경색이 진해진다", async () => {
 
   expect(box && getComputedStyle(box).backgroundColor).toBe("rgb(218, 225, 236)");
 });
+
+test("onSend를 전달하면 보내기 버튼이 렌더링되고 클릭 시 호출된다", async () => {
+  const onSend = vi.fn();
+  render(<CourseFeedbackInput onSend={onSend} />);
+
+  const button = page.getByRole("button", { name: "의견 보내기" });
+  await expect.element(button).toBeInTheDocument();
+  await userEvent.click(button);
+
+  expect(onSend).toHaveBeenCalledOnce();
+});
+
+test("onSend가 없으면 보내기 버튼을 렌더링하지 않는다", async () => {
+  render(<CourseFeedbackInput />);
+
+  await expect.element(page.getByRole("textbox", { name: "코스 의견" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "의견 보내기" })).not.toBeInTheDocument();
+});
