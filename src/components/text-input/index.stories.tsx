@@ -3,7 +3,7 @@ import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
 import { withLayout } from "../layout/index.decorators";
-import { CharCounter, CourseFeedbackInput, NicknameInput } from "./index";
+import { CharCounter, CourseFeedbackInput, NicknameInput, PlaceSearchInput } from "./index";
 
 const meta = {
   component: NicknameInput,
@@ -46,6 +46,10 @@ export const Nickname: Story = {
     await userEvent.type(canvas.getByRole("textbox", { name: "닉네임" }), "당근마켓");
     await expect(canvas.getByText("4/10")).toBeInTheDocument();
   },
+};
+
+export const PlaceSearch: Story = {
+  render: () => <PlaceSearchInput />,
 };
 
 export const CourseFeedback: Story = {
