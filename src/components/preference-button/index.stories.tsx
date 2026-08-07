@@ -29,6 +29,7 @@ const meta = {
       control: "inline-radio",
       options: ["like", "dislike"],
     },
+    tone: { control: "inline-radio", options: ["overlay", "muted"] },
     selected: { control: "boolean" },
     disabled: { control: "boolean" },
     count: { control: "number" },

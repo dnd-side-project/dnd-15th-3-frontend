@@ -6,6 +6,7 @@ import { preferenceButton } from "./index.css";
 interface PreferenceButtonProps {
   type: "like" | "dislike";
   count: number;
+  tone?: "overlay" | "muted";
   selected?: boolean;
   disabled?: boolean;
   onToggle?: (next: boolean) => void;
@@ -14,6 +15,7 @@ interface PreferenceButtonProps {
 export function PreferenceButton({
   type,
   count,
+  tone = "overlay",
   selected = false,
   disabled = false,
   onToggle,
@@ -24,7 +26,7 @@ export function PreferenceButton({
     <button
       aria-label={`${type === "like" ? "좋아요" : "싫어요"} ${count}`}
       aria-pressed={selected}
-      className={preferenceButton({ type, selected })}
+      className={preferenceButton({ type, tone, selected })}
       disabled={disabled}
       type="button"
       onClick={() => onToggle?.(!selected)}
