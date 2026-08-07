@@ -4,8 +4,10 @@ import { vars } from "../../styles/theme.css";
 
 const colors = {
   like: "#66ADFF",
-  dislike: "#FF46CE",
-  inactiveBackground: "rgba(242, 243, 247, 0.34)",
+  dislike: "#FF46A9",
+  overlayBackground: "rgba(242, 243, 247, 0.34)",
+  mutedBackground: "#ECEFF5",
+  mutedForeground: "#A4B1C5",
   foreground: "#FFFFFF",
 };
 
@@ -37,12 +39,24 @@ export const preferenceButton = recipe({
       like: {},
       dislike: {},
     },
+    tone: {
+      overlay: {},
+      muted: {},
+    },
     selected: {
       true: {},
-      false: { backgroundColor: colors.inactiveBackground },
+      false: {},
     },
   },
   compoundVariants: [
+    {
+      variants: { tone: "overlay", selected: false },
+      style: { backgroundColor: colors.overlayBackground },
+    },
+    {
+      variants: { tone: "muted", selected: false },
+      style: { backgroundColor: colors.mutedBackground, color: colors.mutedForeground },
+    },
     {
       variants: { type: "like", selected: true },
       style: { backgroundColor: colors.like },
@@ -54,6 +68,7 @@ export const preferenceButton = recipe({
   ],
   defaultVariants: {
     type: "like",
+    tone: "overlay",
     selected: false,
   },
 });
