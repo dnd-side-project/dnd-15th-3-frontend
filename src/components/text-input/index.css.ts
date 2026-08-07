@@ -81,3 +81,26 @@ export const adornment = style({
   alignItems: "center",
   flexShrink: 0,
 });
+
+export const sendButton = recipe({
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 42,
+    height: 36,
+    padding: 0,
+    border: "none",
+    borderRadius: 20,
+    cursor: "pointer",
+  },
+  variants: {
+    filled: {
+      true: { backgroundColor: "#AAD1FF", color: "#4C9FFF" },
+      false: { backgroundColor: "#DAE1EC", color: "#707D91" },
+    },
+  },
+  defaultVariants: {
+    filled: false,
+  },
+});

@@ -1,8 +1,9 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 
+import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
 import SearchIcon from "../../assets/icon-search.svg?react";
 
-import { adornment, input, wrapper } from "./index.css";
+import { adornment, input, sendButton, wrapper } from "./index.css";
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   shape?: "rounded" | "pill";
@@ -56,10 +57,27 @@ export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdorn
   );
 }
 
-export function CourseFeedbackInput(props: Omit<TextInputProps, "shape">) {
+interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" | "endAdornment"> {
+  onSend?: () => void;
+}
+
+export function CourseFeedbackInput({ onSend, filled, ...props }: CourseFeedbackInputProps) {
   return (
     <TextInput
       aria-label="코스 의견"
+      endAdornment={
+        onSend ? (
+          <button
+            aria-label="의견 보내기"
+            className={sendButton({ filled })}
+            type="button"
+            onClick={onSend}
+          >
+            <ChatCircleIcon height={24} width={24} />
+          </button>
+        ) : null
+      }
+      filled={filled}
       placeholder="코스에 대한 의견을 남겨주세요!"
       shape="pill"
       {...props}

@@ -53,7 +53,7 @@ export const PlaceSearch: Story = {
 };
 
 export const CourseFeedback: Story = {
-  render: () => <CourseFeedbackInput />,
+  render: () => <CourseFeedbackInput onSend={() => {}} />,
 };
 
 export default meta;
