@@ -15,6 +15,7 @@ export const button = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    gap: 10,
     flex: "1 1 0%",
     width: "100%",
     height: 53,
