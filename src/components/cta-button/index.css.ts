@@ -6,7 +6,7 @@ import { vars } from "../../styles/theme.css";
 const colors = {
   primary: "#66ADFF",
   secondaryBackground: "#DAE1EC",
-  secondaryText: "#888888",
+  secondaryText: "#707D91",
   white: "#FFFFFF",
 };
 
@@ -21,8 +21,8 @@ export const button = recipe({
     border: "none",
     borderRadius: 8,
     fontFamily: vars.font.body,
-    fontSize: 16,
-    fontWeight: 700,
+    fontSize: 18,
+    fontWeight: 600,
     cursor: "pointer",
     selectors: {
       "&:disabled": {
