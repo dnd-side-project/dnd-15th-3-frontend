@@ -3,7 +3,13 @@ import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../test-utils";
-import { CharCounter, CourseFeedbackInput, NicknameInput, TextInput } from "./index";
+import {
+  CharCounter,
+  CourseFeedbackInput,
+  NicknameInput,
+  PlaceSearchInput,
+  TextInput,
+} from "./index";
 
 test("NicknameInput은 닉네임 textbox를 렌더링한다", async () => {
   render(<NicknameInput />);
@@ -84,4 +90,22 @@ test("disabled이면 입력할 수 없다", async () => {
 
   await expect.element(input).toHaveValue("");
   expect(handleChange).not.toHaveBeenCalled();
+});
+
+test("PlaceSearchInput은 검색 아이콘과 함께 렌더링된다", async () => {
+  render(<PlaceSearchInput />);
+
+  await expect
+    .element(page.getByRole("textbox", { name: "장소 검색" }))
+    .toHaveAttribute("placeholder", "장소를 검색하세요");
+});
+
+test("filled면 배경색이 진해진다", async () => {
+  render(<NicknameInput filled />);
+
+  const input = page.getByRole("textbox", { name: "닉네임" });
+  await expect.element(input).toBeInTheDocument();
+  const box = input.element().closest("span");
+
+  expect(box && getComputedStyle(box).backgroundColor).toBe("rgb(218, 225, 236)");
 });

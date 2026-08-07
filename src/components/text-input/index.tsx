@@ -1,20 +1,24 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 
+import SearchIcon from "../../assets/icon-search.svg?react";
+
 import { adornment, input, wrapper } from "./index.css";
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   shape?: "rounded" | "pill";
+  filled?: boolean;
   endAdornment?: ReactNode;
 }
 
 export function TextInput({
   shape = "rounded",
+  filled = false,
   endAdornment,
   className,
   ...props
 }: TextInputProps) {
   return (
-    <span className={`${wrapper({ shape })}${className ? ` ${className}` : ""}`}>
+    <span className={`${wrapper({ shape, filled })}${className ? ` ${className}` : ""}`}>
       <input className={input} {...props} />
       {endAdornment ? <span className={adornment}>{endAdornment}</span> : null}
     </span>
@@ -37,6 +41,18 @@ export function CharCounter({ value, maxLength }: CharCounterProps) {
 export function NicknameInput(props: Omit<TextInputProps, "shape">) {
   return (
     <TextInput aria-label="닉네임" placeholder="닉네임을 입력해주세요" shape="rounded" {...props} />
+  );
+}
+
+export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdornment">) {
+  return (
+    <TextInput
+      aria-label="장소 검색"
+      endAdornment={<SearchIcon height={24} width={24} />}
+      placeholder="장소를 검색하세요"
+      shape="rounded"
+      {...props}
+    />
   );
 }
 

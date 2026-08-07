@@ -5,9 +5,10 @@ import { vars } from "../../styles/theme.css";
 
 const colors = {
   roundedBackground: "#ECEFF5",
-  pillBackground: "#FDFDFF",
+  roundedFilledBackground: "#DAE1EC",
+  pillBackground: "#FFFFFF",
   pillBorder: "#E7E7E7",
-  placeholder: "#888888",
+  placeholder: "#707D91",
 };
 
 export const wrapper = recipe({
@@ -24,23 +25,38 @@ export const wrapper = recipe({
     shape: {
       rounded: {
         height: 54,
-        padding: "0 14px",
+        padding: "0 13px",
         borderRadius: 8,
         backgroundColor: colors.roundedBackground,
         fontSize: 16,
       },
       pill: {
         height: 50,
-        padding: "0 18px",
+        padding: "0 10px 0 20px",
         border: `1px solid ${colors.pillBorder}`,
         borderRadius: vars.radius.full,
         backgroundColor: colors.pillBackground,
         fontSize: 14,
       },
     },
+    filled: {
+      true: {},
+      false: {},
+    },
   },
+  compoundVariants: [
+    {
+      variants: { shape: "rounded", filled: true },
+      style: { backgroundColor: colors.roundedFilledBackground },
+    },
+    {
+      variants: { shape: "pill", filled: true },
+      style: { backgroundColor: colors.roundedBackground },
+    },
+  ],
   defaultVariants: {
     shape: "rounded",
+    filled: false,
   },
 });
 
