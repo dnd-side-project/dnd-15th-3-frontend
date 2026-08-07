@@ -10,7 +10,7 @@ const meta = {
   title: "components/PreferenceButton",
   decorators: [
     (Story) => (
-      <div style={{ backgroundColor: "#2F3A2A", display: "flex", gap: 8, padding: 16 }}>
+      <div style={{ backgroundColor: "#2F3A2A", display: "flex", gap: 4, padding: 16 }}>
         <Story />
       </div>
     ),
