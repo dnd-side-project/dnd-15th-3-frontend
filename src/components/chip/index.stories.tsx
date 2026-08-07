@@ -13,7 +13,7 @@ import WineIcon from "../../assets/icon-wine.svg?react";
 import { withLayout } from "../layout/index.decorators";
 import { Chip, ChipGroup } from "./index";
 
-const ICON_SIZE = 16;
+const ICON_SIZE = 20;
 
 const categories = [
   { value: "food", label: "음식점", icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} /> },
@@ -56,7 +56,6 @@ function CategoryPicker() {
         <Chip
           key={category.value}
           icon={category.icon}
-          labelSize="md"
           selected={selected.includes(category.value)}
           onClick={() => toggle(category.value)}
           onRemove={() => toggle(category.value)}
@@ -80,9 +79,6 @@ const meta = {
     onClick: fn(),
   },
   argTypes: {
-    size: { control: "inline-radio", options: ["sm", "md"] },
-    labelSize: { control: "inline-radio", options: ["sm", "md"] },
-    tone: { control: "inline-radio", options: ["default", "strong"] },
     variant: { control: "inline-radio", options: ["filled", "overlay"] },
     selected: { control: "boolean" },
   },
@@ -125,7 +121,7 @@ export const Overlay: Story = {
     <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
       <ChipGroup>
         {categories.slice(0, 3).map((category) => (
-          <Chip key={category.value} icon={category.icon} size="sm" variant="overlay">
+          <Chip key={category.value} icon={category.icon} variant="overlay">
             {category.label}
           </Chip>
         ))}

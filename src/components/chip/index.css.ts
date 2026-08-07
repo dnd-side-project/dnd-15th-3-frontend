@@ -5,17 +5,16 @@ import { vars } from "../../styles/theme.css";
 
 const chipColor = {
   unselectedBackground: "#ECEFF5",
-  unselectedText: "#6D6D6D",
+  unselectedText: "#707D91",
   unselectedIcon: "#A4B1C5",
-  selectedBackground: "#606060",
-  selectedStrongBackground: "#3D3D3D",
-  selectedText: "#FFFFFF",
-  overlayBackground: "#F5F6F8",
-  overlayBorder: "#DADADA",
-  overlayText: "#3D3D3D",
+  selectedBackground: "#DBECFF",
+  selectedText: "#3793FF",
+  overlayBackground: "rgba(255, 255, 255, 0.3)",
+  overlayBorder: "rgba(169, 169, 169, 0.22)",
+  overlayText: "#707D91",
+  overlayIcon: "#3793FF",
 };
 
-const paddingX = createVar();
 const iconColor = createVar();
 
 export const chipIconHost = style({});
@@ -28,42 +27,32 @@ export const chipContainer = recipe({
     background: "none",
     display: "inline-flex",
     alignItems: "center",
-    borderRadius: vars.radius.full,
+    borderRadius: 20,
     boxSizing: "border-box",
     width: "fit-content",
     fontFamily: vars.font.body,
+    fontSize: 16,
     fontWeight: vars.fontWeight.medium,
-    lineHeight: 1.4,
+    lineHeight: "22px",
   },
   variants: {
-    labelSize: {
-      sm: { fontSize: 14 },
-      md: { fontSize: 16 },
-    },
     standalone: {
       true: {
-        gap: 6,
-        padding: `0 ${paddingX}`,
+        gap: 5,
+        padding: "0 11px",
         cursor: "pointer",
       },
       false: {},
     },
-    size: {
-      sm: { minHeight: 34, vars: { [paddingX]: "12px" } },
-      md: { minHeight: 38, vars: { [paddingX]: "16px" } },
-    },
     variant: {
-      filled: {},
+      filled: { minHeight: 38 },
       overlay: {
+        minHeight: 33,
         backgroundColor: chipColor.overlayBackground,
         color: chipColor.overlayText,
-        boxShadow: `inset 0 0 0 1px ${chipColor.overlayBorder}, 0 2px 6px rgba(0, 0, 0, 0.08)`,
-        vars: { [iconColor]: "currentColor" },
+        boxShadow: `inset 0 0 0 1px ${chipColor.overlayBorder}`,
+        vars: { [iconColor]: chipColor.overlayIcon },
       },
-    },
-    tone: {
-      default: {},
-      strong: {},
     },
     selected: {
       true: {},
@@ -80,17 +69,9 @@ export const chipContainer = recipe({
       },
     },
     {
-      variants: { selected: true, tone: "default", variant: "filled" },
+      variants: { selected: true, variant: "filled" },
       style: {
         backgroundColor: chipColor.selectedBackground,
-        color: chipColor.selectedText,
-        vars: { [iconColor]: chipColor.selectedText },
-      },
-    },
-    {
-      variants: { selected: true, tone: "strong", variant: "filled" },
-      style: {
-        backgroundColor: chipColor.selectedStrongBackground,
         color: chipColor.selectedText,
         vars: { [iconColor]: chipColor.selectedText },
       },
@@ -98,39 +79,24 @@ export const chipContainer = recipe({
   ],
   defaultVariants: {
     standalone: false,
-    labelSize: "sm",
-    size: "md",
     variant: "filled",
-    tone: "default",
     selected: false,
   },
 });
 
-export const chipLabel = recipe({
-  base: {
-    appearance: "none",
-    border: "none",
-    background: "transparent",
-    display: "inline-flex",
-    alignItems: "center",
-    alignSelf: "stretch",
-    gap: 6,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    font: "inherit",
-    color: "inherit",
-    cursor: "pointer",
-    whiteSpace: "nowrap",
-  },
-  variants: {
-    removable: {
-      true: { paddingRight: 4 },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    removable: false,
-  },
+export const chipLabel = style({
+  appearance: "none",
+  border: "none",
+  background: "transparent",
+  display: "inline-flex",
+  alignItems: "center",
+  alignSelf: "stretch",
+  gap: 5,
+  padding: "0 0 0 11px",
+  font: "inherit",
+  color: "inherit",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
 });
 
 export const chipRemoveButton = style({
@@ -141,15 +107,13 @@ export const chipRemoveButton = style({
   alignItems: "center",
   justifyContent: "center",
   alignSelf: "stretch",
-  padding: "0 4px",
-  marginRight: `calc(${paddingX} - 8px)`,
+  padding: "0 11px 0 5px",
   color: "inherit",
   cursor: "pointer",
-  borderRadius: vars.radius.full,
 });
 
 export const chipGroup = style({
   display: "flex",
   flexWrap: "wrap",
-  gap: 8,
+  gap: 7,
 });

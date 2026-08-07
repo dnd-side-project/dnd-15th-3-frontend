@@ -4,17 +4,11 @@ import XIcon from "../../assets/icon-x.svg?react";
 
 import { chipContainer, chipGroup, chipIconHost, chipLabel, chipRemoveButton } from "./index.css";
 
-type ChipSize = "sm" | "md";
-type ChipLabelSize = "sm" | "md";
-type ChipTone = "default" | "strong";
 type ChipVariant = "filled" | "overlay";
 
 interface ChipProps {
   children: ReactNode;
   icon?: ReactNode;
-  size?: ChipSize;
-  labelSize?: ChipLabelSize;
-  tone?: ChipTone;
   variant?: ChipVariant;
   selected?: boolean;
   onClick?: () => void;
@@ -24,9 +18,6 @@ interface ChipProps {
 export function Chip({
   children,
   icon,
-  size = "md",
-  labelSize = "sm",
-  tone = "default",
   variant = "filled",
   selected = false,
   onClick,
@@ -39,7 +30,7 @@ export function Chip({
     return (
       <button
         type="button"
-        className={`${chipContainer({ standalone: true, labelSize, size, tone, variant, selected })} ${chipIconHost}`}
+        className={`${chipContainer({ standalone: true, variant, selected })} ${chipIconHost}`}
         aria-pressed={pressed}
         onClick={onClick}
       >
@@ -50,10 +41,10 @@ export function Chip({
   }
 
   return (
-    <span className={chipContainer({ labelSize, size, tone, variant, selected })}>
+    <span className={chipContainer({ variant, selected })}>
       <button
         type="button"
-        className={`${chipLabel({ removable: true })} ${chipIconHost}`}
+        className={`${chipLabel} ${chipIconHost}`}
         aria-pressed={pressed}
         onClick={onClick}
       >
@@ -66,7 +57,7 @@ export function Chip({
         aria-label={typeof children === "string" ? `${children} 삭제` : "삭제"}
         onClick={onRemove}
       >
-        <XIcon width={12} height={12} />
+        <XIcon width={15} height={15} />
       </button>
     </span>
   );
