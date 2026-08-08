@@ -3,6 +3,13 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
+const colors = {
+  track: "rgba(255, 255, 255, 0.81)",
+  label: "#B0B0B0",
+  activeBackground: "#3793FF",
+  activeLabel: "#FFFFFF",
+};
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -15,7 +22,7 @@ export const list = style({
   height: 45,
   padding: "0 5px",
   borderRadius: 30,
-  backgroundColor: "rgba(255, 255, 255, 0.81)",
+  backgroundColor: colors.track,
 });
 
 export const tab = recipe({
@@ -24,13 +31,14 @@ export const tab = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: 37,
+    height: 36.55,
     border: "none",
     borderRadius: 30,
     backgroundColor: "transparent",
-    color: "#B0B0B0",
+    color: colors.label,
     fontFamily: vars.font.body,
-    fontSize: 15,
+    fontSize: 15.39,
+    lineHeight: "18.47px",
     fontWeight: 600,
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",
@@ -41,8 +49,8 @@ export const tab = recipe({
   variants: {
     active: {
       true: {
-        backgroundColor: "#3793FF",
-        color: "#FFFFFF",
+        backgroundColor: colors.activeBackground,
+        color: colors.activeLabel,
       },
       false: {},
     },
