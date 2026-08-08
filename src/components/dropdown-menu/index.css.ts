@@ -33,6 +33,7 @@ export const item = recipe({
       borderBottomRightRadius: 5,
       borderBottomLeftRadius: 5,
     },
+    cursor: "pointer",
     lineHeight: "28.7px",
     letterSpacing: -0.4,
     backgroundColor: "#FFFFFF",
