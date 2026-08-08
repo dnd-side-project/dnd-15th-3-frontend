@@ -35,8 +35,19 @@ export const Default: Story = {
   },
 };
 
+// meta 의 args 는 CtaButton 기준이므로, 각 arg 를 CtaButtonRow 의 대응 prop 으로 넘겨 컨트롤을 살린다.
+const onBack = fn();
+
 export const Row: Story = {
-  render: () => <CtaButtonRow nextDisabled nextLabel="다음" onBack={() => {}} onNext={() => {}} />,
+  args: { disabled: true, onClick: fn() },
+  render: ({ children, disabled, onClick }) => (
+    <CtaButtonRow
+      nextDisabled={disabled}
+      nextLabel={children}
+      onBack={onBack}
+      onNext={() => onClick?.()}
+    />
+  ),
 };
 
 export default meta;
