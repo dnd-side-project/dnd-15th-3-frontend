@@ -91,7 +91,7 @@ export function ChipGroup({ children, scroll = false, connected = false }: ChipG
         <span key={index} className={chipConnector}>
           {chip}
           {index < chips.length - 1 ? (
-            <ArrowRightIcon aria-hidden className={chipConnectorArrow} height={7.64} width={10.5} />
+            <ArrowRightIcon aria-hidden className={chipConnectorArrow} height={7.5} width={10.5} />
           ) : null}
         </span>
       ))}
