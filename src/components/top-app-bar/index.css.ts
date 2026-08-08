@@ -46,7 +46,7 @@ export const title = style({
   fontFamily: vars.font.body,
   fontSize: 18,
   fontWeight: 600,
-  lineHeight: "28.8px",
+  lineHeight: 1.6,
   textAlign: "center",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
