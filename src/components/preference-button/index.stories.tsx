@@ -80,9 +80,11 @@ function Preference() {
   );
 }
 
+// 컨트롤을 조작하며 네 가지 상태를 모두 확인하기 위한 중립 배경이다.
+// 실제 사용 맥락은 OnPhoto / OnWhiteCard / Muted 가 담당한다.
 export const Default: Story = {
   render: (args) => (
-    <Surface background="#FFFFFF">
+    <Surface background="#6B7280">
       <PreferenceButton {...args} />
     </Surface>
   ),
