@@ -49,7 +49,7 @@ export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdorn
   return (
     <TextInput
       aria-label="장소 검색"
-      endAdornment={<SearchIcon height={24} width={24} />}
+      endAdornment={<SearchIcon aria-hidden height={24} width={24} />}
       placeholder="장소를 검색하세요"
       shape="rounded"
       {...props}
@@ -57,7 +57,7 @@ export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdorn
   );
 }
 
-interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" | "endAdornment"> {
+export interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" | "endAdornment"> {
   onSend?: () => void;
 }
 
@@ -73,7 +73,7 @@ export function CourseFeedbackInput({ onSend, filled, ...props }: CourseFeedback
             type="button"
             onClick={onSend}
           >
-            <ChatCircleIcon height={24} width={24} />
+            <ChatCircleIcon aria-hidden height={24} width={24} />
           </button>
         ) : null
       }

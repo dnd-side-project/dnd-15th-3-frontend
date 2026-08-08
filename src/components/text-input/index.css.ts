@@ -4,11 +4,13 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "../../styles/theme.css";
 
 const colors = {
-  roundedBackground: "#ECEFF5",
-  roundedFilledBackground: "#DAE1EC",
+  background: "#ECEFF5",
+  filledBackground: "#DAE1EC",
   pillBackground: "#FFFFFF",
   pillBorder: "#E7E7E7",
-  placeholder: "#707D91",
+  mutedForeground: "#707D91",
+  activeBackground: "#AAD1FF",
+  activeForeground: "#4C9FFF",
 };
 
 export const wrapper = recipe({
@@ -19,7 +21,7 @@ export const wrapper = recipe({
     width: "100%",
     boxSizing: "border-box",
     fontFamily: vars.font.body,
-    color: colors.placeholder,
+    color: colors.mutedForeground,
   },
   variants: {
     shape: {
@@ -27,7 +29,7 @@ export const wrapper = recipe({
         height: 54,
         padding: "0 13px",
         borderRadius: 8,
-        backgroundColor: colors.roundedBackground,
+        backgroundColor: colors.background,
         fontSize: 16,
       },
       pill: {
@@ -47,11 +49,11 @@ export const wrapper = recipe({
   compoundVariants: [
     {
       variants: { shape: "rounded", filled: true },
-      style: { backgroundColor: colors.roundedFilledBackground },
+      style: { backgroundColor: colors.filledBackground },
     },
     {
       variants: { shape: "pill", filled: true },
-      style: { backgroundColor: colors.roundedBackground },
+      style: { backgroundColor: colors.background },
     },
   ],
   defaultVariants: {
@@ -72,7 +74,7 @@ export const input = style({
   color: vars.color.text,
 
   "::placeholder": {
-    color: colors.placeholder,
+    color: colors.mutedForeground,
   },
 });
 
@@ -100,8 +102,8 @@ export const sendButton = recipe({
   },
   variants: {
     filled: {
-      true: { backgroundColor: "#AAD1FF", color: "#4C9FFF" },
-      false: { backgroundColor: "#DAE1EC", color: "#707D91" },
+      true: { backgroundColor: colors.activeBackground, color: colors.activeForeground },
+      false: { backgroundColor: colors.filledBackground, color: colors.mutedForeground },
     },
   },
   defaultVariants: {
