@@ -27,7 +27,7 @@ export const iconButton = recipe({
     borderRadius: vars.radius.full,
     cursor: "pointer",
     selectors: {
-      "&:disabled": { opacity: 0.6, cursor: "not-allowed" },
+      "&:disabled": { opacity: 0.5, cursor: "not-allowed" },
     },
   },
   variants: {
