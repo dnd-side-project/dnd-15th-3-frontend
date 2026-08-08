@@ -27,11 +27,15 @@ export const preferenceButton = recipe({
     lineHeight: 1.4,
     color: colors.foreground,
     cursor: "pointer",
+    transition: "background-color 0.15s ease, color 0.15s ease",
     selectors: {
       "&:disabled": {
         cursor: "not-allowed",
         opacity: 0.6,
       },
+    },
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
     },
   },
   variants: {
