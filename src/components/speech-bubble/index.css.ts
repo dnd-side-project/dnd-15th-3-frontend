@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
 import { vars } from "../../styles/theme.css";
 
@@ -6,6 +6,11 @@ const colors = {
   background: "#DBECFF",
   text: "#3793FF",
 };
+
+const spin = keyframes({
+  from: { transform: "rotate(0deg)" },
+  to: { transform: "rotate(360deg)" },
+});
 
 export const bubble = style({
   position: "relative",
@@ -34,5 +39,13 @@ export const bubble = style({
       borderColor: `${colors.background} transparent transparent transparent`,
       transform: "translateX(-50%)",
     },
+  },
+});
+
+globalStyle(`${bubble} > svg`, {
+  transformOrigin: "center",
+  animation: `${spin} 1s linear infinite`,
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { animation: "none" },
   },
 });
