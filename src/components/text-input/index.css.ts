@@ -21,6 +21,7 @@ export const wrapper = recipe({
     width: "100%",
     boxSizing: "border-box",
     fontFamily: vars.font.body,
+    fontWeight: 500,
     color: colors.mutedForeground,
   },
   variants: {
@@ -73,6 +74,8 @@ export const input = style({
   background: "transparent",
   fontFamily: "inherit",
   fontSize: "inherit",
+  fontWeight: "inherit",
+  lineHeight: "inherit",
   color: vars.color.text,
 
   "::placeholder": {
@@ -84,6 +87,10 @@ export const adornment = style({
   display: "flex",
   alignItems: "center",
   flexShrink: 0,
+});
+
+export const charCounter = style({
+  fontWeight: 400,
 });
 
 export const sendButton = recipe({

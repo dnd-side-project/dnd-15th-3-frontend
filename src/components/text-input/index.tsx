@@ -3,7 +3,7 @@ import type { InputHTMLAttributes, ReactNode } from "react";
 import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
 import SearchIcon from "../../assets/icon-search.svg?react";
 
-import { adornment, input, sendButton, wrapper } from "./index.css";
+import { adornment, charCounter, input, sendButton, wrapper } from "./index.css";
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   shape?: "rounded" | "pill";
@@ -33,9 +33,9 @@ export interface CharCounterProps {
 
 export function CharCounter({ value, maxLength }: CharCounterProps) {
   return (
-    <>
+    <span className={charCounter}>
       {value.length}/{maxLength}
-    </>
+    </span>
   );
 }
 
