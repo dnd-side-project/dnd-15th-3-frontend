@@ -98,6 +98,7 @@ export const Default: Story = {
 };
 
 export const Categories: Story = {
+  parameters: { controls: { disable: true } },
   render: () => <CategoryPicker />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -117,6 +118,7 @@ export const Categories: Story = {
 };
 
 export const FilterBar: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ padding: "0 0 0 20px" }}>
       <ChipGroup scroll>
@@ -130,6 +132,7 @@ export const FilterBar: Story = {
 };
 
 export const CourseOrder: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
       <ChipGroup connected>
@@ -144,7 +147,11 @@ export const CourseOrder: Story = {
 };
 
 export const Overlay: Story = {
-  render: () => (
+  args: {
+    variant: "overlay",
+    icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />,
+  },
+  render: (args) => (
     <div
       style={{
         background:
@@ -153,11 +160,7 @@ export const Overlay: Story = {
       }}
     >
       <ChipGroup>
-        {categories.slice(0, 3).map((category) => (
-          <Chip key={category.value} icon={category.icon} variant="overlay">
-            {category.label}
-          </Chip>
-        ))}
+        <Chip {...args} />
       </ChipGroup>
     </div>
   ),
