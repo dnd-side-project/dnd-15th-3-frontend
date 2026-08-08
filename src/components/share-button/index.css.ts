@@ -3,6 +3,13 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
+const colors = {
+  background: "#ECEFF5",
+  icon: "#A4B1C5",
+  kakaoBackground: "#FEE500",
+  kakaoIcon: "#000000",
+};
+
 export const group = style({
   display: "inline-flex",
   alignItems: "center",
@@ -26,16 +33,16 @@ export const iconButton = recipe({
   variants: {
     tone: {
       link: {
-        background: "#ECEFF5",
-        color: "#A4B1C5",
+        backgroundColor: colors.background,
+        color: colors.icon,
       },
       kakao: {
-        background: "#FEE500",
-        color: "#000000",
+        backgroundColor: colors.kakaoBackground,
+        color: colors.kakaoIcon,
       },
       more: {
-        background: "#ECEFF5",
-        color: "#A4B1C5",
+        backgroundColor: colors.background,
+        color: colors.icon,
       },
     },
   },
