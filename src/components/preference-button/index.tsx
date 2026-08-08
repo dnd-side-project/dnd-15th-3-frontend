@@ -3,7 +3,7 @@ import ThumbsUpIcon from "../../assets/icon-thumbs-up.svg?react";
 
 import { preferenceButton } from "./index.css";
 
-interface PreferenceButtonProps {
+export interface PreferenceButtonProps {
   type: "like" | "dislike";
   count: number;
   tone?: "overlay" | "muted";
@@ -31,7 +31,7 @@ export function PreferenceButton({
       type="button"
       onClick={() => onToggle?.(!selected)}
     >
-      <Icon height={12} width={12} />
+      <Icon aria-hidden height={12} width={12} />
       {count}
     </button>
   );
