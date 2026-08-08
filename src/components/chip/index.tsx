@@ -1,8 +1,17 @@
-import type { ReactNode } from "react";
+import { Children, type ReactNode } from "react";
 
+import ArrowRightIcon from "../../assets/icon-arrow-right.svg?react";
 import XIcon from "../../assets/icon-x.svg?react";
 
-import { chipContainer, chipGroup, chipIconHost, chipLabel, chipRemoveButton } from "./index.css";
+import {
+  chipConnector,
+  chipConnectorArrow,
+  chipContainer,
+  chipGroup,
+  chipIconHost,
+  chipLabel,
+  chipRemoveButton,
+} from "./index.css";
 
 type ChipVariant = "filled" | "overlay";
 
@@ -66,8 +75,26 @@ export function Chip({
 interface ChipGroupProps {
   children: ReactNode;
   scroll?: boolean;
+  connected?: boolean;
 }
 
-export function ChipGroup({ children, scroll = false }: ChipGroupProps) {
-  return <div className={chipGroup({ scroll })}>{children}</div>;
+export function ChipGroup({ children, scroll = false, connected = false }: ChipGroupProps) {
+  if (!connected) {
+    return <div className={chipGroup({ scroll })}>{children}</div>;
+  }
+
+  const chips = Children.toArray(children);
+
+  return (
+    <div className={chipGroup({ scroll, connected })}>
+      {chips.map((chip, index) => (
+        <span key={index} className={chipConnector}>
+          {chip}
+          {index < chips.length - 1 ? (
+            <ArrowRightIcon aria-hidden className={chipConnectorArrow} height={8} width={11} />
+          ) : null}
+        </span>
+      ))}
+    </div>
+  );
 }

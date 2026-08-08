@@ -140,8 +140,24 @@ export const chipGroup = recipe({
       },
       false: { flexWrap: "wrap" },
     },
+    connected: {
+      true: { gap: 6 },
+      false: {},
+    },
   },
   defaultVariants: {
     scroll: false,
+    connected: false,
   },
+});
+
+export const chipConnector = style({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 7,
+});
+
+export const chipConnectorArrow = style({
+  flexShrink: 0,
+  color: "#3793FF",
 });
