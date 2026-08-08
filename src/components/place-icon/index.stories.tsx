@@ -28,7 +28,21 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+  args: {
+    category: "restaurant",
+    size: 20,
+  },
+  render: (args) => (
+    <div style={{ padding: "20px" }}>
+      <PlaceIcon {...args} />
+    </div>
+  ),
+};
+
+// 카테고리 7종을 한 번에 보여주는 쇼케이스라 단일 args 로 표현할 수 없어 컨트롤을 끈다
 export const AllCategories: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: "flex", gap: "12px", padding: "20px" }}>
       {categories.map((category) => (
@@ -38,7 +52,9 @@ export const AllCategories: Story = {
   ),
 };
 
+// 16/20 두 크기를 나란히 비교하는 쇼케이스라 단일 args 로 표현할 수 없어 컨트롤을 끈다
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px", padding: "20px" }}>
       <div style={{ display: "flex", gap: "12px" }}>
