@@ -31,6 +31,7 @@ export const wrapper = recipe({
         borderRadius: 8,
         backgroundColor: colors.background,
         fontSize: 16,
+        lineHeight: "19.2px",
       },
       pill: {
         height: 50,
@@ -39,6 +40,7 @@ export const wrapper = recipe({
         borderRadius: vars.radius.full,
         backgroundColor: colors.pillBackground,
         fontSize: 14,
+        lineHeight: "16.8px",
       },
     },
     filled: {
