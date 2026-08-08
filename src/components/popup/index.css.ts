@@ -96,7 +96,7 @@ export const texts = style({
 export const title = style({
   margin: 0,
   fontSize: 20,
-  lineHeight: "30px",
+  lineHeight: 1.5,
   fontWeight: 600,
   color: colors.title,
 });
@@ -104,7 +104,7 @@ export const title = style({
 export const description = style({
   margin: 0,
   fontSize: 14,
-  lineHeight: "20.54px",
+  lineHeight: 1.5,
   fontWeight: 400,
   color: colors.description,
 });
