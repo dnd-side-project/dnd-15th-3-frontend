@@ -5,11 +5,11 @@ import CaretRightIcon from "../../assets/icon-caret-right.svg?react";
 import { withLayout } from "../layout/index.decorators";
 import { TopAppBar } from "./index";
 
-import * as styles from "./index.css";
+import { iconButton } from "./index.css";
 
 const nextAction = (
-  <button aria-label="다음" className={styles.iconButton} type="button">
-    <CaretRightIcon width={24} height={24} />
+  <button aria-label="다음" className={iconButton} type="button">
+    <CaretRightIcon aria-hidden height={24} width={24} />
   </button>
 );
 
@@ -46,6 +46,13 @@ export const WithAction: Story = {
 export const TitleOnly: Story = {
   args: {
     onBack: undefined,
+  },
+};
+
+export const OnWhite: Story = {
+  args: {
+    background: "white",
+    title: "코스수정",
   },
 };
 

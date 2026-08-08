@@ -39,3 +39,21 @@ test("바 높이는 64px이다", async () => {
 
   expect(bar.element().getBoundingClientRect().height).toBe(64);
 });
+
+test("기본 배경색은 #F5F6F8이다", async () => {
+  render(<TopAppBar title="모임 만들기" onBack={vi.fn()} />);
+
+  const bar = page.getByRole("banner");
+  await expect.element(bar).toBeInTheDocument();
+
+  expect(getComputedStyle(bar.element()).backgroundColor).toBe("rgb(245, 246, 248)");
+});
+
+test("background가 white면 배경색은 #FFFFFF이다", async () => {
+  render(<TopAppBar title="코스수정" onBack={vi.fn()} background="white" />);
+
+  const bar = page.getByRole("banner");
+  await expect.element(bar).toBeInTheDocument();
+
+  expect(getComputedStyle(bar.element()).backgroundColor).toBe("rgb(255, 255, 255)");
+});
