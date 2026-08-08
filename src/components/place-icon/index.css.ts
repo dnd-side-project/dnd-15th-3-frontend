@@ -1,6 +1,9 @@
 import { recipe } from "@vanilla-extract/recipes";
 
+import { vars } from "../../styles/theme.css";
+
 const colors = {
+  icon: "#FFFFFF",
   restaurant: "#FF7751",
   activity: "#3793FF",
   shopping: "#FF46A9",
@@ -16,8 +19,8 @@ export const root = recipe({
     flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 9999,
-    color: "#FFFFFF",
+    borderRadius: vars.radius.full,
+    color: colors.icon,
   },
   variants: {
     category: {
