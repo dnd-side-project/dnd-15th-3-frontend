@@ -25,6 +25,10 @@ export const button = recipe({
     fontSize: 18,
     fontWeight: 600,
     cursor: "pointer",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
     selectors: {
       "&:disabled": {
         backgroundColor: colors.secondaryBackground,
