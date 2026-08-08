@@ -27,7 +27,7 @@ export function Toggle({ value, onChange }: ToggleProps) {
         className={item({ selected: value === "map" })}
         onClick={() => handleClick("map")}
       >
-        <MapIcon aria-hidden width={18.5} height={18.32} />
+        <MapIcon aria-hidden height={18.32} width={18.5} />
       </button>
       <button
         type="button"
@@ -36,7 +36,7 @@ export function Toggle({ value, onChange }: ToggleProps) {
         className={item({ selected: value === "list" })}
         onClick={() => handleClick("list")}
       >
-        <GridIcon aria-hidden width={16.19} height={16.19} />
+        <GridIcon aria-hidden height={16.19} width={16.19} />
       </button>
     </div>
   );
