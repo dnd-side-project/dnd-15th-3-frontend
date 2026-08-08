@@ -13,9 +13,9 @@ import {
   chipRemoveButton,
 } from "./index.css";
 
-type ChipVariant = "filled" | "overlay";
+export type ChipVariant = "filled" | "overlay";
 
-interface ChipProps {
+export interface ChipProps {
   children: ReactNode;
   icon?: ReactNode;
   variant?: ChipVariant;
@@ -66,13 +66,13 @@ export function Chip({
         aria-label={typeof children === "string" ? `${children} 삭제` : "삭제"}
         onClick={onRemove}
       >
-        <XIcon width={15} height={15} />
+        <XIcon aria-hidden height={15} width={15} />
       </button>
     </span>
   );
 }
 
-interface ChipGroupProps {
+export interface ChipGroupProps {
   children: ReactNode;
   scroll?: boolean;
   connected?: boolean;
