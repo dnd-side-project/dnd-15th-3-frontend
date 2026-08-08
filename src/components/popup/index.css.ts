@@ -76,10 +76,12 @@ export const close = style({
 });
 
 export const media = style({
+  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   height: 211,
+  paddingTop: 36,
 });
 
 export const texts = style({
