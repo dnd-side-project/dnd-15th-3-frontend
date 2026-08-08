@@ -32,7 +32,7 @@ export const wrapper = recipe({
         borderRadius: 8,
         backgroundColor: colors.background,
         fontSize: 16,
-        lineHeight: "19.2px",
+        lineHeight: 1.2,
       },
       pill: {
         height: 50,
@@ -41,7 +41,7 @@ export const wrapper = recipe({
         borderRadius: vars.radius.full,
         backgroundColor: colors.pillBackground,
         fontSize: 14,
-        lineHeight: "16.8px",
+        lineHeight: 1.2,
       },
     },
     filled: {
@@ -102,7 +102,7 @@ export const sendButton = recipe({
     height: 36,
     padding: 0,
     border: "none",
-    borderRadius: 20,
+    borderRadius: vars.radius.full,
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {
