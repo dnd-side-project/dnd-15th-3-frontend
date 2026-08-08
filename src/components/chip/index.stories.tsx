@@ -145,7 +145,13 @@ export const CourseOrder: Story = {
 
 export const Overlay: Story = {
   render: () => (
-    <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
+    <div
+      style={{
+        background:
+          "repeating-linear-gradient(45deg, #DCE6D0 0 12px, #8FB07A 12px 24px, #E9D9B8 24px 36px)",
+        padding: 16,
+      }}
+    >
       <ChipGroup>
         {categories.slice(0, 3).map((category) => (
           <Chip key={category.value} icon={category.icon} variant="overlay">

@@ -130,6 +130,24 @@ test("overlay 칩의 높이는 33px다", async () => {
   expect(chip.getBoundingClientRect().height).toBe(33);
 });
 
+test("overlay 칩은 뒤 배경을 4px 블러 처리한다", async () => {
+  render(<Chip variant="overlay">음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const chip = page.getByRole("button", { name: "음식점" }).element();
+
+  expect(getComputedStyle(chip).backdropFilter).toBe("blur(4px)");
+});
+
+test("filled 칩에는 블러가 없다", async () => {
+  render(<Chip>음식점</Chip>);
+
+  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
+  const chip = page.getByRole("button", { name: "음식점" }).element();
+
+  expect(getComputedStyle(chip).backdropFilter).toBe("none");
+});
+
 test("가로 패딩이 디자인값 11px과 일치한다", async () => {
   render(<Chip>음식점</Chip>);
 

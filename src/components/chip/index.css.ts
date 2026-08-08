@@ -3,7 +3,7 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-const chipColor = {
+const colors = {
   unselectedBackground: "#ECEFF5",
   unselectedText: "#707D91",
   unselectedIcon: "#A4B1C5",
@@ -39,7 +39,7 @@ export const chipContainer = recipe({
     flexShrink: 0,
     fontFamily: vars.font.body,
     fontSize: 16,
-    fontWeight: vars.fontWeight.medium,
+    fontWeight: 500,
     lineHeight: "22px",
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {
@@ -59,10 +59,11 @@ export const chipContainer = recipe({
       filled: { minHeight: 38 },
       overlay: {
         minHeight: 33,
-        backgroundColor: chipColor.overlayBackground,
-        color: chipColor.overlayText,
-        boxShadow: `inset 0 0 0 1px ${chipColor.overlayBorder}`,
-        vars: { [iconColor]: chipColor.overlayIcon },
+        backgroundColor: colors.overlayBackground,
+        backdropFilter: "blur(4px)",
+        color: colors.overlayText,
+        boxShadow: `inset 0 0 0 1px ${colors.overlayBorder}`,
+        vars: { [iconColor]: colors.overlayIcon },
       },
     },
     selected: {
@@ -74,17 +75,17 @@ export const chipContainer = recipe({
     {
       variants: { selected: false, variant: "filled" },
       style: {
-        backgroundColor: chipColor.unselectedBackground,
-        color: chipColor.unselectedText,
-        vars: { [iconColor]: chipColor.unselectedIcon },
+        backgroundColor: colors.unselectedBackground,
+        color: colors.unselectedText,
+        vars: { [iconColor]: colors.unselectedIcon },
       },
     },
     {
       variants: { selected: true, variant: "filled" },
       style: {
-        backgroundColor: chipColor.selectedBackground,
-        color: chipColor.selectedText,
-        vars: { [iconColor]: chipColor.selectedText },
+        backgroundColor: colors.selectedBackground,
+        color: colors.selectedText,
+        vars: { [iconColor]: colors.selectedText },
       },
     },
   ],
