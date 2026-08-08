@@ -29,10 +29,6 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-export const WithMore: Story = {
-  args: { onMore: () => {} },
-};
-
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -40,6 +36,10 @@ export const Default: Story = {
     await expect(canvas.getByRole("button", { name: "링크 복사" })).toBeEnabled();
     await expect(canvas.getByRole("button", { name: "카카오톡으로 공유" })).toBeInTheDocument();
   },
+};
+
+export const WithMore: Story = {
+  args: { onMore: () => {} },
 };
 
 export default meta;
