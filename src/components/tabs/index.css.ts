@@ -33,7 +33,10 @@ export const tab = recipe({
     fontSize: 15,
     fontWeight: 600,
     cursor: "pointer",
-    transition: "background-color 0.2s ease, color 0.2s ease",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
   },
   variants: {
     active: {
