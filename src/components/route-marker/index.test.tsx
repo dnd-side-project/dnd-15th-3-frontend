@@ -54,6 +54,31 @@ test("imageUrl이 있으면 해당 src로 이미지를 렌더링한다", async (
   await expect.element(image).toHaveAttribute("src", "/static/momo-kakao-share.png");
 });
 
+test("두 자리 순번도 배지에서 잘리지 않는다", async () => {
+  render(<RouteMarker index={12} />);
+
+  const badge = page.getByText("12");
+  await expect.element(badge).toBeInTheDocument();
+
+  const element = badge.element();
+  expect(element.scrollWidth).toBeLessThanOrEqual(element.clientWidth);
+
+  const rect = element.getBoundingClientRect();
+  expect(rect.width).toBeGreaterThanOrEqual(16);
+  expect(rect.height).toBe(16);
+});
+
+test("한 자리 순번 배지는 16 x 16을 유지한다", async () => {
+  render(<RouteMarker index={8} />);
+
+  const badge = page.getByText("8");
+  await expect.element(badge).toBeInTheDocument();
+
+  const rect = badge.element().getBoundingClientRect();
+  expect(rect.width).toBe(16);
+  expect(rect.height).toBe(16);
+});
+
 test("마커 전체 크기는 72 x 81이다", async () => {
   render(<RouteMarker index={1} onClick={vi.fn()} />);
 

@@ -40,6 +40,16 @@ export const WithImage: Story = {
   ),
 };
 
+export const TwoDigitIndex: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: "20px", padding: "24px" }}>
+      <RouteMarker {...args} index={9} />
+      <RouteMarker {...args} index={12} tone="pink" />
+      <RouteMarker {...args} index={28} tone="purple" />
+    </div>
+  ),
+};
+
 export const Tones: Story = {
   render: (args) => (
     <div style={{ display: "flex", gap: "20px", padding: "24px" }}>
