@@ -93,6 +93,10 @@ export const sendButton = recipe({
     border: "none",
     borderRadius: 20,
     cursor: "pointer",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
   },
   variants: {
     filled: {
