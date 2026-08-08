@@ -18,7 +18,7 @@ export const bubble = style({
   alignItems: "center",
   gap: 3,
   height: 33,
-  marginBottom: 11,
+  marginBottom: 12,
   padding: "0 10px",
   borderRadius: 8,
   backgroundColor: colors.background,
@@ -26,7 +26,7 @@ export const bubble = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
-  lineHeight: "23.48px",
+  lineHeight: 1.5,
   selectors: {
     "&::after": {
       content: '""',
