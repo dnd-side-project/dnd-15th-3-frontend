@@ -18,7 +18,13 @@ const chipColor = {
 const iconColor = createVar();
 
 export const chipIconHost = style({});
-globalStyle(`${chipIconHost} > svg`, { color: iconColor });
+globalStyle(`${chipIconHost} > svg`, {
+  color: iconColor,
+  transition: "color 0.15s ease",
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+});
 
 export const chipContainer = recipe({
   base: {
@@ -35,6 +41,10 @@ export const chipContainer = recipe({
     fontSize: 16,
     fontWeight: vars.fontWeight.medium,
     lineHeight: "22px",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
   },
   variants: {
     standalone: {
