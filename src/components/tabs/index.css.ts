@@ -3,6 +3,13 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
+const colors = {
+  track: "rgba(255, 255, 255, 0.81)",
+  label: "#B0B0B0",
+  activeBackground: "#3793FF",
+  activeLabel: "#FFFFFF",
+};
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -11,10 +18,12 @@ export const root = style({
 
 export const list = style({
   display: "flex",
-  gap: 2,
-  padding: 2,
-  borderRadius: 9999,
-  backgroundColor: "#ECEFF5",
+  alignItems: "center",
+  boxSizing: "border-box",
+  height: 45,
+  padding: "4px 5px",
+  borderRadius: vars.radius.full,
+  backgroundColor: colors.track,
 });
 
 export const tab = recipe({
@@ -22,23 +31,27 @@ export const tab = recipe({
     flex: 1,
     display: "flex",
     alignItems: "center",
+    alignSelf: "stretch",
     justifyContent: "center",
-    height: 34,
     border: "none",
-    borderRadius: 9999,
+    borderRadius: vars.radius.full,
     backgroundColor: "transparent",
-    color: "#6D6D6D",
+    color: colors.label,
     fontFamily: vars.font.body,
-    fontSize: 16,
-    fontWeight: 500,
+    fontSize: 15,
+    lineHeight: 1.2,
+    fontWeight: 600,
     cursor: "pointer",
-    transition: "background-color 0.2s ease, color 0.2s ease",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
   },
   variants: {
     active: {
       true: {
-        backgroundColor: "#3D3D3D",
-        color: "#FFFFFF",
+        backgroundColor: colors.activeBackground,
+        color: colors.activeLabel,
       },
       false: {},
     },

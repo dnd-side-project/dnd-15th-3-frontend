@@ -16,7 +16,7 @@ function InteractiveTabs({ items, value: initialValue, onChange, label }: TabsPr
   const [value, setValue] = useState(initialValue);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ backgroundColor: "#E8EDE4", padding: "20px" }}>
       <Tabs
         items={items}
         label={label}
