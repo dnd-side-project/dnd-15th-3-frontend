@@ -160,5 +160,5 @@ export const chipConnector = style({
 
 export const chipConnectorArrow = style({
   flexShrink: 0,
-  color: "#3793FF",
+  color: colors.overlayIcon,
 });
