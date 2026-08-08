@@ -129,6 +129,20 @@ export const FilterBar: Story = {
   ),
 };
 
+export const CourseOrder: Story = {
+  render: () => (
+    <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
+      <ChipGroup connected>
+        {categories.slice(0, 5).map((category) => (
+          <Chip key={category.value} icon={category.icon} variant="overlay">
+            {category.label}
+          </Chip>
+        ))}
+      </ChipGroup>
+    </div>
+  ),
+};
+
 export const Overlay: Story = {
   render: () => (
     <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>

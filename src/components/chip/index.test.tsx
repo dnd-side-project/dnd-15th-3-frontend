@@ -212,3 +212,34 @@ test("ChipGroup에 scroll을 주면 줄바꿈 없이 가로로 스크롤한다",
   expect(group && getComputedStyle(group).flexWrap).toBe("nowrap");
   expect(group && getComputedStyle(group).overflowX).toBe("auto");
 });
+
+test("ChipGroup에 connected를 주면 마지막 칩을 제외하고 화살표가 들어간다", async () => {
+  render(
+    <ChipGroup connected>
+      <Chip variant="overlay">음식점</Chip>
+      <Chip variant="overlay">카페</Chip>
+      <Chip variant="overlay">술 · 바</Chip>
+    </ChipGroup>,
+  );
+
+  const chip = page.getByRole("button", { name: "음식점" });
+  await expect.element(chip).toBeInTheDocument();
+  const group = chip.element().closest("div");
+
+  expect(group?.querySelectorAll("svg").length).toBe(2);
+});
+
+test("connected가 아니면 화살표를 넣지 않는다", async () => {
+  render(
+    <ChipGroup>
+      <Chip variant="overlay">음식점</Chip>
+      <Chip variant="overlay">카페</Chip>
+    </ChipGroup>,
+  );
+
+  const chip = page.getByRole("button", { name: "음식점" });
+  await expect.element(chip).toBeInTheDocument();
+  const group = chip.element().closest("div");
+
+  expect(group?.querySelectorAll("svg").length).toBe(0);
+});
