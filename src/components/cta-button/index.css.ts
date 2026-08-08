@@ -24,6 +24,7 @@ export const button = recipe({
     fontFamily: vars.font.body,
     fontSize: 18,
     fontWeight: 600,
+    lineHeight: "28.8px",
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {

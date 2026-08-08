@@ -26,6 +26,7 @@ export const bubble = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
+  lineHeight: "23.48px",
   selectors: {
     "&::after": {
       content: '""',
