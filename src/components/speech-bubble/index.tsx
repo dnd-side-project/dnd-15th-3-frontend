@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { bubble } from "./index.css";
 
-interface SpeechBubbleProps {
+export interface SpeechBubbleProps {
   children: ReactNode;
   icon?: ReactNode;
 }

@@ -30,7 +30,7 @@ export const Default: Story = {};
 export const WithIcon: Story = {
   args: {
     children: "코스 불러오는 중",
-    icon: <LoaderIcon height={20} width={20} />,
+    icon: <LoaderIcon aria-hidden height={20} width={20} />,
   },
 };
 

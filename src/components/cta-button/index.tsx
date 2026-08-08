@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { button, row } from "./index.css";
 
-interface CtaButtonProps {
+export interface CtaButtonProps {
   children: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
@@ -16,7 +16,7 @@ export function CtaButton({ children, disabled = false, onClick }: CtaButtonProp
   );
 }
 
-interface CtaButtonRowProps {
+export interface CtaButtonRowProps {
   backLabel?: ReactNode;
   onBack: () => void;
   nextLabel: ReactNode;
