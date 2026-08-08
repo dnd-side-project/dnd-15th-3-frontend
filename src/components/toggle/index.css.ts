@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { vars } from "../../styles/theme.css";
+
 const colors = {
   background: "rgba(242, 243, 247, 0.69)",
   icon: "rgba(75, 75, 75, 0.33)",
@@ -12,11 +14,11 @@ export const root = style({
   boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
-  gap: 10.35,
+  gap: 10,
   width: 107,
   height: 46,
-  padding: 4.6,
-  borderRadius: 50,
+  padding: 5,
+  borderRadius: vars.radius.full,
   backgroundColor: colors.background,
 });
 
@@ -26,11 +28,11 @@ export const item = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: 43.72,
-    height: 36.82,
+    flex: 1,
+    alignSelf: "stretch",
     padding: 0,
     border: "none",
-    borderRadius: 50,
+    borderRadius: vars.radius.full,
     backgroundColor: "transparent",
     color: colors.icon,
     cursor: "pointer",
