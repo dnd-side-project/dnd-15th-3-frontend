@@ -3,11 +3,16 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-const surface = "#FFFFFF";
-const placeholder = "#E2E2E2";
-const toneBlue = "#3793FF";
-const tonePink = "#FF46A9";
-const tonePurple = "#A754EB";
+const colors = {
+  surface: "#FFFFFF",
+  placeholder: "#E2E2E2",
+  shadow: "rgba(0, 0, 0, 0.3)",
+  tone: {
+    blue: "#3793FF",
+    pink: "#FF46A9",
+    purple: "#A754EB",
+  },
+};
 
 export const root = style({
   position: "relative",
@@ -28,7 +33,7 @@ export const shape = style({
   position: "relative",
   width: 72,
   height: 81,
-  filter: "drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3))",
+  filter: `drop-shadow(0 2px 5px ${colors.shadow})`,
 });
 
 export const body = style({
@@ -38,7 +43,7 @@ export const body = style({
   width: 72,
   height: 72,
   borderRadius: 18,
-  backgroundColor: surface,
+  backgroundColor: colors.surface,
 });
 
 export const tail = style({
@@ -48,7 +53,7 @@ export const tail = style({
   width: 13,
   height: 15,
   transform: "translateX(-50%)",
-  backgroundColor: surface,
+  backgroundColor: colors.surface,
   clipPath: "polygon(0 0, 100% 0, 50% 100%)",
 });
 
@@ -60,7 +65,7 @@ export const thumbnail = style({
   width: 68,
   height: 68,
   borderRadius: 17,
-  backgroundColor: placeholder,
+  backgroundColor: colors.placeholder,
   objectFit: "cover",
 });
 
@@ -75,7 +80,7 @@ export const badge = recipe({
     width: 16,
     height: 16,
     borderRadius: 8,
-    color: surface,
+    color: colors.surface,
     fontFamily: vars.font.body,
     fontSize: 12,
     fontWeight: 600,
@@ -83,9 +88,9 @@ export const badge = recipe({
   },
   variants: {
     tone: {
-      blue: { backgroundColor: toneBlue },
-      pink: { backgroundColor: tonePink },
-      purple: { backgroundColor: tonePurple },
+      blue: { backgroundColor: colors.tone.blue },
+      pink: { backgroundColor: colors.tone.pink },
+      purple: { backgroundColor: colors.tone.purple },
     },
   },
   defaultVariants: {
