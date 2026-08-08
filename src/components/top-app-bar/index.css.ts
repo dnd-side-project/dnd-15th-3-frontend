@@ -1,20 +1,34 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
 
-const backgroundColor = "#F5F6F8";
-const titleColor = "#262626";
-const iconColor = "#606060";
+const colors = {
+  backgroundSurface: "#F5F6F8",
+  backgroundWhite: "#FFFFFF",
+  title: "#262626",
+  icon: "#606060",
+};
 
-export const root = style({
-  display: "grid",
-  gridTemplateColumns: "24px 1fr 24px",
-  alignItems: "center",
-  boxSizing: "border-box",
-  width: "100%",
-  height: 64,
-  padding: "25px 20px 10px",
-  backgroundColor,
+export const root = recipe({
+  base: {
+    display: "grid",
+    gridTemplateColumns: "24px 1fr 24px",
+    alignItems: "center",
+    boxSizing: "border-box",
+    width: "100%",
+    height: 64,
+    padding: "25px 20px 10px",
+  },
+  variants: {
+    background: {
+      surface: { backgroundColor: colors.backgroundSurface },
+      white: { backgroundColor: colors.backgroundWhite },
+    },
+  },
+  defaultVariants: {
+    background: "surface",
+  },
 });
 
 export const slot = style({
@@ -28,7 +42,7 @@ export const slot = style({
 export const title = style({
   minWidth: 0,
   overflow: "hidden",
-  color: titleColor,
+  color: colors.title,
   fontFamily: vars.font.body,
   fontSize: 18,
   fontWeight: 600,
@@ -47,6 +61,6 @@ export const iconButton = style({
   padding: 0,
   border: "none",
   background: "transparent",
-  color: iconColor,
+  color: colors.icon,
   cursor: "pointer",
 });
