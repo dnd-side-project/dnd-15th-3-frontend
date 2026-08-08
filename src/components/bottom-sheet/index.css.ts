@@ -24,7 +24,7 @@ export const header = recipe({
     },
   },
   defaultVariants: {
-    topBorderRadius: "sm",
+    topBorderRadius: "md",
   },
 });
 
