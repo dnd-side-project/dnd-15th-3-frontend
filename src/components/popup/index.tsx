@@ -39,7 +39,7 @@ export function Popup({
         <Dialog.Popup ref={popupRef} initialFocus={popupRef} className={card}>
           {showClose && (
             <Dialog.Close aria-label="닫기" className={close}>
-              <XIcon width={15} height={15} />
+              <XIcon aria-hidden height={15} width={15} />
             </Dialog.Close>
           )}
           <div className={mediaStyle}>{media}</div>

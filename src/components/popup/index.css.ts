@@ -2,16 +2,18 @@ import { style } from "@vanilla-extract/css";
 
 import { vars } from "../../styles/theme.css";
 
-const backdropColor = "rgba(0, 0, 0, 0.4)";
-const cardColor = "#FFFFFF";
-const closeColor = "#BBBBBB";
-const titleColor = "#000000";
-const descriptionColor = "#6D6D6D";
+const colors = {
+  backdrop: "rgba(0, 0, 0, 0.4)",
+  background: "#FFFFFF",
+  icon: "#BBBBBB",
+  title: "#000000",
+  description: "#6D6D6D",
+};
 
 export const backdrop = style({
   position: "fixed",
   inset: 0,
-  backgroundColor: backdropColor,
+  backgroundColor: colors.backdrop,
   transition: "opacity 0.15s ease",
   selectors: {
     "&[data-starting-style]": {
@@ -37,7 +39,7 @@ export const card = style({
   width: 259,
   padding: "0 15px 28px",
   borderRadius: 12,
-  backgroundColor: cardColor,
+  backgroundColor: colors.background,
   fontFamily: vars.font.body,
   outline: "none",
   transition: "opacity 0.15s ease, transform 0.15s ease",
@@ -71,7 +73,7 @@ export const close = style({
   padding: 0,
   border: "none",
   backgroundColor: "transparent",
-  color: closeColor,
+  color: colors.icon,
   cursor: "pointer",
 });
 
@@ -96,7 +98,7 @@ export const title = style({
   fontSize: 20,
   lineHeight: "30px",
   fontWeight: 600,
-  color: titleColor,
+  color: colors.title,
 });
 
 export const description = style({
@@ -104,5 +106,5 @@ export const description = style({
   fontSize: 14,
   lineHeight: "20.54px",
   fontWeight: 400,
-  color: descriptionColor,
+  color: colors.description,
 });
