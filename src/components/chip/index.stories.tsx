@@ -155,7 +155,7 @@ export const Overlay: Story = {
     <div
       style={{
         background:
-          "repeating-linear-gradient(45deg, #DCE6D0 0 12px, #8FB07A 12px 24px, #E9D9B8 24px 36px)",
+          "repeating-linear-gradient(45deg, #DCE6D0 0 9px, #6E9455 9px 18px, #E9D9B8 18px 27px)",
         padding: 16,
       }}
     >
