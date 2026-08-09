@@ -73,6 +73,7 @@ export default defineConfig({
           },
           include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
           name: "unit",
+          setupFiles: ["./src/test-setup.ts"],
         },
       },
       {
