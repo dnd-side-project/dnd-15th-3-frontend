@@ -34,7 +34,6 @@ export const chipContainer = recipe({
     display: "inline-flex",
     alignItems: "center",
     borderRadius: vars.radius.full,
-    boxSizing: "border-box",
     width: "fit-content",
     flexShrink: 0,
     fontFamily: vars.font.body,
