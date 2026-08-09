@@ -91,7 +91,7 @@ export function MeetingPage() {
               type="button"
               onClick={() => void navigate(-1)}
             >
-              <CaretLeftIcon aria-hidden height={24.77} width={24.77} />
+              <CaretLeftIcon aria-hidden height={24} width={24} />
             </button>
           </div>
 
@@ -106,7 +106,7 @@ export function MeetingPage() {
           <div className={titleRow}>
             <h1 className={title}>{meeting.name}</h1>
             <button aria-label="모임 이름 수정" className={editButton} type="button">
-              <PenIcon aria-hidden height={30} width={28.68} />
+              <PenIcon aria-hidden height={30} width={28} />
             </button>
           </div>
 
@@ -144,7 +144,7 @@ export function MeetingPage() {
                   <MomoAvatar avatarId={person.profileAvatarId} size={60} />
                   {person.role === "HOST" ? (
                     <span aria-label="방장" className={crown} role="img">
-                      <CrownIcon aria-hidden height={14.21} width={14.21} />
+                      <CrownIcon aria-hidden height={14} width={14} />
                     </span>
                   ) : null}
                 </span>
@@ -161,7 +161,7 @@ export function MeetingPage() {
               <CourseLines aria-hidden className={courseLines} />
               <CourseNavigation aria-hidden className={courseNavigation} />
               <span aria-hidden className={cardArrow({ card: "course" })}>
-                <ArrowUpRightIcon height={11.38} width={11.38} />
+                <ArrowUpRightIcon height={12} width={12} />
               </span>
               <span className={cardTexts({ card: "course" })}>
                 <span className={cardTitle}>코스 순서</span>
@@ -173,7 +173,7 @@ export function MeetingPage() {
               <img alt="" className={mapImage} src="/static/meeting-course-map.webp" />
               <span aria-hidden className={mapScrim} />
               <span aria-hidden className={cardArrow({ card: "map" })}>
-                <ArrowUpRightIcon height={11.38} width={11.38} />
+                <ArrowUpRightIcon height={12} width={12} />
               </span>
               <span className={cardTexts({ card: "map" })}>
                 <span className={cardTitle}>모임 코스 자세히 보기</span>

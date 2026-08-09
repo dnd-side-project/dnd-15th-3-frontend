@@ -26,16 +26,16 @@ export const header = style({
   position: "relative",
   height: 288,
   overflow: "hidden",
-  // Figma 는 상태바 48px 를 포함한 336px 이라 프레임 원점만큼 잘라냈다.
-  background: "linear-gradient(166deg, #1E87FF 20%, #70B7FF 82.6%)",
+  // Figma 는 상태바 48px 를 포함한 336px 이다.
+  background: "linear-gradient(166deg, #1E87FF 20%, #70B7FF 83%)",
 });
 
 export const confetti = style({
   position: "absolute",
-  top: -139.58,
+  top: -140,
   left: 7,
-  width: 387.31,
-  height: 225.9,
+  width: 387,
+  height: 226,
 });
 
 export const nav = style({
@@ -81,8 +81,8 @@ export const typeBadge = style({
   fontFamily: vars.font.body,
   fontSize: 14,
   fontWeight: 500,
-  letterSpacing: -0.358,
-  lineHeight: "16.8px",
+  letterSpacing: -0.36,
+  lineHeight: 1.2,
   cursor: "pointer",
 });
 
@@ -91,7 +91,7 @@ export const typeSuffix = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 600,
-  letterSpacing: -0.333,
+  letterSpacing: -0.33,
   lineHeight: "22px",
 });
 
@@ -118,7 +118,7 @@ export const editButton = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: 28.68,
+  width: 28,
   height: 30,
   padding: 0,
   border: "none",
@@ -164,7 +164,7 @@ export const infoValue = style({
   fontFamily: vars.font.body,
   fontSize: 14,
   fontWeight: 600,
-  letterSpacing: -0.333,
+  letterSpacing: -0.33,
   lineHeight: "22px",
   textShadow,
   whiteSpace: "nowrap",
@@ -176,7 +176,7 @@ export const sectionTitle = style({
   fontFamily: vars.font.body,
   fontSize: 18,
   fontWeight: 600,
-  lineHeight: "29.7px",
+  lineHeight: 1.65,
 });
 
 export const participants = style({
@@ -219,7 +219,7 @@ export const participantName = style({
   fontFamily: vars.font.body,
   fontSize: 14,
   fontWeight: 600,
-  lineHeight: "22.4px",
+  lineHeight: 1.6,
   overflow: "hidden",
   textAlign: "center",
   textOverflow: "ellipsis",
@@ -259,18 +259,18 @@ export const courseCard = style({
 
 export const courseLines = style({
   position: "absolute",
-  top: -71.64,
-  left: -25.39,
-  width: 141.87,
+  top: -72,
+  left: -25,
+  width: 142,
   height: 227,
 });
 
 export const courseNavigation = style({
   position: "absolute",
-  top: 44.74,
+  top: 45,
   left: 28,
-  width: 80.46,
-  height: 80.46,
+  width: 80,
+  height: 80,
 });
 
 export const mapCard = style({
@@ -281,7 +281,7 @@ export const mapCard = style({
   height: 206,
   padding: 0,
   border: "none",
-  borderRadius: 10.57,
+  borderRadius: 10,
   boxShadow: "0 0 4px rgba(0, 0, 0, 0.1)",
   cursor: "pointer",
   textAlign: "left",
@@ -341,18 +341,18 @@ export const cardTitle = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 600,
-  lineHeight: "19.68px",
+  lineHeight: 1.23,
   textShadow,
   whiteSpace: "nowrap",
 });
 
 export const cardDescription = style({
-  margin: "0.32px 0 0",
+  margin: 0,
   color: colors.cardSubText,
   fontFamily: vars.font.body,
   fontSize: 13,
   fontWeight: 500,
-  lineHeight: "21.45px",
+  lineHeight: 1.65,
   whiteSpace: "nowrap",
 });
 
