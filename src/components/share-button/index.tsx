@@ -5,10 +5,6 @@ import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share
 
 import { group, iconButton } from "./index.css";
 
-const LINK_ICON_SIZE = 24;
-const KAKAO_ICON_SIZE = 22;
-const MORE_ICON_SIZE = 32;
-
 export interface ShareButtonGroupProps extends ShareLinkParams {
   onCopyLink?: () => void;
   onMore?: () => void;
@@ -30,7 +26,7 @@ export function ShareButtonGroup({ onCopyLink, onMore, ...params }: ShareButtonG
         type="button"
         onClick={handleCopyLink}
       >
-        <LinkIcon aria-hidden height={LINK_ICON_SIZE} width={LINK_ICON_SIZE} />
+        <LinkIcon aria-hidden height={24} width={24} />
       </button>
       <button
         aria-label="카카오톡으로 공유"
@@ -39,7 +35,7 @@ export function ShareButtonGroup({ onCopyLink, onMore, ...params }: ShareButtonG
         type="button"
         onClick={() => shareLink(params)}
       >
-        <MessageCircleFillIcon aria-hidden height={KAKAO_ICON_SIZE} width={KAKAO_ICON_SIZE} />
+        <MessageCircleFillIcon aria-hidden height={22} width={22} />
       </button>
       {onMore ? (
         <button
@@ -48,7 +44,7 @@ export function ShareButtonGroup({ onCopyLink, onMore, ...params }: ShareButtonG
           type="button"
           onClick={onMore}
         >
-          <DotsThreeIcon aria-hidden height={MORE_ICON_SIZE} width={MORE_ICON_SIZE} />
+          <DotsThreeIcon aria-hidden height={32} width={32} />
         </button>
       ) : null}
     </div>
