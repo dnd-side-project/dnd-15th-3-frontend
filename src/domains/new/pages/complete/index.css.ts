@@ -14,7 +14,7 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  // Figma 는 상태바를 포함한 852px 기준이라 흰색에 닿는 지점을 프레임 기준으로 옮겼다.
+  // 상태바 48px 를 뺀 프레임 기준으로 흰색 도달 지점을 옮겼다.
   background: "linear-gradient(180deg, #D7ECFF 0%, #FFFDFD 42%)",
 });
 
@@ -50,16 +50,16 @@ export const card = style({
   height: 301,
   margin: "51px 20px 0",
   borderRadius: 12,
-  background: "linear-gradient(180deg, #479BFF 40%, #7DB9FF 71.7%)",
+  background: "linear-gradient(180deg, #479BFF 40%, #7DB9FF 72%)",
   boxShadow: "0 3px 4px rgba(0, 0, 0, 0.25)",
 });
 
 export const confetti = style({
   position: "absolute",
-  top: -77.83,
+  top: -78,
   left: -44,
-  width: 439.31,
-  height: 256.93,
+  width: 439,
+  height: 257,
 });
 
 export const cardImage = style({
@@ -73,7 +73,7 @@ export const cardImage = style({
 export const badge = style({
   position: "absolute",
   top: 24,
-  left: 140.5,
+  left: 140,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
