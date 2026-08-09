@@ -11,7 +11,7 @@ globalStyle("html, body", {
   padding: 0,
 });
 
-// 디자인 기준 서체. index.html 에서 Pretendard 를 불러온다.
+// Pretendard 는 index.html 에서 불러온다.
 globalStyle(":root", {
   vars: {
     [vars.font.body]:
