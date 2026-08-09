@@ -31,7 +31,6 @@ export const backdrop = style({
 });
 
 export const card = style({
-  boxSizing: "border-box",
   position: "fixed",
   top: "50%",
   left: "50%",
@@ -61,7 +60,6 @@ export const card = style({
 });
 
 export const close = style({
-  boxSizing: "border-box",
   position: "absolute",
   top: 23,
   right: 19,
@@ -78,7 +76,6 @@ export const close = style({
 });
 
 export const media = style({
-  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
