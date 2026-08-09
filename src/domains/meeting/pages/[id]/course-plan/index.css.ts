@@ -40,7 +40,7 @@ export const introDescription = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
-  lineHeight: "22.4px",
+  lineHeight: 1.4,
 });
 
 export const editButton = style({
@@ -58,7 +58,7 @@ export const editButton = style({
   fontFamily: vars.font.body,
   fontSize: 12,
   fontWeight: 600,
-  lineHeight: "14.32px",
+  lineHeight: 1.2,
   cursor: "pointer",
 });
 
