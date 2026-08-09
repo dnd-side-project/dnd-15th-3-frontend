@@ -1,6 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://momo-dev.jinmu.me";
 
-// 서버가 4xx·5xx 응답에서 함께 내려주는 본문
 interface ErrorBody {
   message?: string | string[];
   error?: string;
