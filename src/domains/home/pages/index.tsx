@@ -61,7 +61,7 @@ export function HomePage() {
                   <span className={cardDescription}>{entry.description}</span>
                 </div>
                 <span aria-hidden className={arrow}>
-                  <ArrowUpRightIcon height={11.38} width={11.38} />
+                  <ArrowUpRightIcon height={12} width={12} />
                 </span>
               </div>
             </Link>

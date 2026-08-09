@@ -64,7 +64,7 @@ export const card = recipe({
     overflow: "hidden",
     borderRadius: 12,
     backgroundColor: colors.cardBackground,
-    boxShadow: "0 0 2.1px rgba(0, 0, 0, 0.25)",
+    boxShadow: "0 0 2px rgba(0, 0, 0, 0.25)",
     textDecoration: "none",
   },
   variants: {
@@ -78,9 +78,9 @@ export const card = recipe({
 export const confetti = style({
   position: "absolute",
   top: -120,
-  left: -49.26,
-  width: 450.8,
-  height: 256.93,
+  left: -49,
+  width: 451,
+  height: 257,
 });
 
 export const illustration = recipe({
