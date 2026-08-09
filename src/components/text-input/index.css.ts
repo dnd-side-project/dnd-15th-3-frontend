@@ -19,7 +19,6 @@ export const wrapper = recipe({
     alignItems: "center",
     gap: 8,
     width: "100%",
-    boxSizing: "border-box",
     fontFamily: vars.font.body,
     fontWeight: 500,
     color: colors.mutedForeground,
