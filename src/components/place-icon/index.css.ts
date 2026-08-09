@@ -11,6 +11,7 @@ const colors = {
   bar: "#A754EB",
   culture: "#28C55F",
   cafe: "#FF9B04",
+  other: "#A4B1C5",
 };
 
 export const root = recipe({
@@ -31,6 +32,7 @@ export const root = recipe({
       bar: { backgroundColor: colors.bar },
       culture: { backgroundColor: colors.culture },
       cafe: { backgroundColor: colors.cafe },
+      other: { backgroundColor: colors.other },
     },
     size: {
       16: { width: 16, height: 16 },
