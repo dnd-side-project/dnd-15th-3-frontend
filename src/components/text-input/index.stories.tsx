@@ -60,8 +60,8 @@ export const Nickname: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.type(canvas.getByRole("textbox", { name: "닉네임" }), "당근마켓");
-    await expect(canvas.getByText("4/10")).toBeInTheDocument();
+    await userEvent.type(canvas.getByRole("textbox", { name: "닉네임" }), "강남역");
+    await expect(canvas.getByText("3/10")).toBeInTheDocument();
   },
 };
 

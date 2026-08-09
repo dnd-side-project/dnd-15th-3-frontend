@@ -43,9 +43,9 @@ test("showCount를 주면 입력에 따라 글자 수가 갱신된다", async ()
 
   await expect.element(page.getByText("0/10")).toBeInTheDocument();
 
-  await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "당근마켓");
+  await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "강남역");
 
-  await expect.element(page.getByText("4/10")).toBeInTheDocument();
+  await expect.element(page.getByText("3/10")).toBeInTheDocument();
 });
 
 test("showCount가 없으면 글자 수를 보여주지 않는다", async () => {
@@ -58,9 +58,9 @@ test("showCount가 없으면 글자 수를 보여주지 않는다", async () => 
 test("maxLength가 없으면 현재 글자 수만 보여준다", async () => {
   render(<NicknameInput showCount />);
 
-  await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "당근");
+  await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "강남역");
 
-  await expect.element(page.getByText("2")).toBeInTheDocument();
+  await expect.element(page.getByText("3")).toBeInTheDocument();
 });
 
 test("타이핑하면 입력값이 반영되고 onChange가 호출된다", async () => {
@@ -68,10 +68,10 @@ test("타이핑하면 입력값이 반영되고 onChange가 호출된다", async
   render(<NicknameInput onChange={handleChange} />);
 
   const input = page.getByRole("textbox", { name: "닉네임" });
-  await userEvent.type(input, "당근");
+  await userEvent.type(input, "강남역");
 
-  await expect.element(input).toHaveValue("당근");
-  expect(handleChange).toHaveBeenCalledTimes(2);
+  await expect.element(input).toHaveValue("강남역");
+  expect(handleChange).toHaveBeenCalledTimes(3);
 });
 
 test("disabled이면 입력할 수 없다", async () => {
