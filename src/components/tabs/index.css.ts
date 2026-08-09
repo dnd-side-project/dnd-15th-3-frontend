@@ -19,7 +19,6 @@ export const root = style({
 export const list = style({
   display: "flex",
   alignItems: "center",
-  boxSizing: "border-box",
   height: 45,
   padding: "4px 5px",
   borderRadius: vars.radius.full,
