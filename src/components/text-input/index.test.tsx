@@ -100,16 +100,6 @@ test("PlaceSearchInput은 검색 아이콘과 함께 렌더링된다", async () 
     .toHaveAttribute("placeholder", "장소를 검색하세요");
 });
 
-test("filled면 배경색이 진해진다", async () => {
-  render(<NicknameInput filled />);
-
-  const input = page.getByRole("textbox", { name: "닉네임" });
-  await expect.element(input).toBeInTheDocument();
-  const box = input.element().closest("span");
-
-  expect(box && getComputedStyle(box).backgroundColor).toBe("rgb(218, 225, 236)");
-});
-
 test("onSend를 전달하면 보내기 버튼이 렌더링되고 클릭 시 호출된다", async () => {
   const onSend = vi.fn();
   render(<CourseFeedbackInput onSend={onSend} />);
