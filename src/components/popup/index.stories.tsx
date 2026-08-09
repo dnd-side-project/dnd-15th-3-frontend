@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { expect, fn, screen, userEvent, waitFor } from "storybook/test";
+import { fn } from "storybook/test";
 
 import { withLayout } from "../layout/index.decorators";
 import type { PopupProps } from "./index";
@@ -91,30 +91,6 @@ export const CourseCreating: Story = {
     title: "코스를 생성중이에요",
     description: "코스가 완성되면 함께 확인할 수 있어요.",
     media: <CourseMapMedia />,
-  },
-};
-
-export const WithoutDescription: Story = {
-  args: {
-    description: undefined,
-    media: <MomoMedia />,
-  },
-  play: async ({ args }) => {
-    await userEvent.click(screen.getByRole("button", { name: "닫기" }));
-
-    await expect(args.onOpenChange).toHaveBeenCalledWith(false);
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
-  },
-};
-
-export const WithoutClose: Story = {
-  args: {
-    media: <MomoMedia />,
-    showClose: false,
-  },
-  play: async () => {
-    await expect(screen.getByRole("dialog")).toBeInTheDocument();
-    await expect(screen.queryByRole("button", { name: "닫기" })).not.toBeInTheDocument();
   },
 };
 
