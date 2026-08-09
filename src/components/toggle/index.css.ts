@@ -11,7 +11,6 @@ const colors = {
 };
 
 export const root = style({
-  boxSizing: "border-box",
   display: "flex",
   alignItems: "center",
   gap: 10,
@@ -24,7 +23,6 @@ export const root = style({
 
 export const item = recipe({
   base: {
-    boxSizing: "border-box",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
