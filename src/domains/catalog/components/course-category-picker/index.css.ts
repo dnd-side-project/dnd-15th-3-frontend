@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
@@ -17,7 +18,18 @@ export const empty = style({
   whiteSpace: "pre-line",
 });
 
-export const available = style({
-  marginTop: 71,
-  padding: "0 20px",
+export const available = recipe({
+  base: {
+    padding: "0 20px",
+  },
+  variants: {
+    // 선택한 코스와 카테고리 목록 사이 간격이 화면마다 다르다.
+    gap: {
+      wide: { marginTop: 71 },
+      narrow: { marginTop: 49 },
+    },
+  },
+  defaultVariants: {
+    gap: "wide",
+  },
 });
