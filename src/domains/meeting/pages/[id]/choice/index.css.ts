@@ -76,7 +76,7 @@ export const card = style({
   breakInside: "avoid",
 });
 
-// 카드 전체를 누르면 장소 상세로 간다. 선호도 버튼과 중첩되지 않도록 아래에 깔아 둔다.
+// 선호도 버튼과 중첩되지 않도록 카드 전체 링크를 아래에 깔아 둔다.
 export const cardLink = style({
   position: "absolute",
   inset: 0,
@@ -94,7 +94,7 @@ export const cardImage = style({
 export const cardScrim = style({
   position: "absolute",
   inset: 0,
-  background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 39.9%, ${colors.scrim} 58.2%)`,
+  background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, ${colors.scrim} 58%)`,
 });
 
 export const cardBody = style({
@@ -125,7 +125,7 @@ export const cardTexts = style({
 export const cardName = style({
   display: "flex",
   alignItems: "center",
-  gap: 5.54,
+  gap: 6,
   color: colors.cardText,
   fontFamily: vars.font.body,
   fontSize: 16,
