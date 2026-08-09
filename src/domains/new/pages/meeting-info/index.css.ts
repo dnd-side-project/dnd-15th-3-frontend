@@ -102,6 +102,6 @@ export const typeLabel = style({
   fontFamily: vars.font.body,
   fontSize: 14,
   fontWeight: 600,
-  lineHeight: "20.83px",
+  lineHeight: 1.5,
   whiteSpace: "nowrap",
 });

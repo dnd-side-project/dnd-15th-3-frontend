@@ -6,9 +6,9 @@ interface MeetingTypeIcon {
   height: number;
 }
 
-// 카드 안에서 아이콘이 차지하는 크기가 유형마다 조금씩 다르다. Figma 값을 그대로 쓴다.
+// 아이콘이 카드에서 차지하는 크기가 유형마다 다르다.
 export const MEETING_TYPE_ICONS: Record<MeetingTypeCode, MeetingTypeIcon> = {
-  SOCIAL: { src: "/static/meeting-type-social.webp", width: 51.12, height: 50.17 },
+  SOCIAL: { src: "/static/meeting-type-social.webp", width: 51, height: 50 },
   DATING_HOBBY: { src: "/static/meeting-type-dating-hobby.webp", width: 53, height: 53 },
   COMPANY_DINNER: { src: "/static/meeting-type-company-dinner.webp", width: 53, height: 53 },
   FAMILY: { src: "/static/meeting-type-family.webp", width: 50, height: 50 },
