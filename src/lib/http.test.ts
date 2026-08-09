@@ -8,6 +8,10 @@ afterEach(() => {
   fetchMock.mockReset();
 });
 
+function requestedUrl(index = 0) {
+  return new Request(fetchMock.mock.calls[index]![0]).url;
+}
+
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -20,8 +24,7 @@ test("쿼리 파라미터를 URL 에 붙인다", async () => {
 
   await request("/api/v1/places/search", { query: { keyword: "강남역" } });
 
-  const [url] = fetchMock.mock.calls[0]!;
-  expect(String(url)).toContain("/api/v1/places/search?keyword=%EA%B0%95%EB%82%A8%EC%97%AD");
+  expect(requestedUrl()).toContain("/api/v1/places/search?keyword=%EA%B0%95%EB%82%A8%EC%97%AD");
 });
 
 test("undefined 인 쿼리 파라미터는 보내지 않는다", async () => {
@@ -29,7 +32,7 @@ test("undefined 인 쿼리 파라미터는 보내지 않는다", async () => {
 
   await request("/api/v1/places/search", { query: { keyword: "강남역", page: undefined } });
 
-  expect(String(fetchMock.mock.calls[0]![0])).not.toContain("page");
+  expect(requestedUrl()).not.toContain("page");
 });
 
 test("본문이 있으면 JSON 으로 직렬화해 보낸다", async () => {
