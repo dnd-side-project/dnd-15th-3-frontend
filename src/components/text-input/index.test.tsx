@@ -1,15 +1,8 @@
-import { useState } from "react";
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../test-utils";
-import {
-  CharCounter,
-  CourseFeedbackInput,
-  NicknameInput,
-  PlaceSearchInput,
-  TextInput,
-} from "./index";
+import { CourseFeedbackInput, NicknameInput, PlaceSearchInput, TextInput } from "./index";
 
 test("NicknameInput은 닉네임 textbox를 렌더링한다", async () => {
   render(<NicknameInput />);
@@ -33,39 +26,41 @@ test("aria-label을 넘기면 기본 이름을 덮어쓴다", async () => {
   await expect.element(page.getByRole("textbox", { name: "별명" })).toBeInTheDocument();
 });
 
-test("endAdornment로 전달한 내용을 렌더링한다", async () => {
-  render(<TextInput aria-label="검색" endAdornment={<span>초기화</span>} />);
+test("endIcon으로 전달한 내용을 렌더링한다", async () => {
+  render(<TextInput aria-label="검색" endIcon={<span>초기화</span>} />);
 
   await expect.element(page.getByText("초기화")).toBeInTheDocument();
 });
 
-test("endAdornment가 없으면 adornment 슬롯을 렌더링하지 않는다", async () => {
+test("endIcon이 없으면 아이콘 슬롯을 렌더링하지 않는다", async () => {
   render(<TextInput aria-label="검색" />);
 
   await expect.element(page.getByText("초기화")).not.toBeInTheDocument();
 });
 
-function NicknameFieldWithCounter() {
-  const [value, setValue] = useState("");
-
-  return (
-    <NicknameInput
-      endAdornment={<CharCounter maxLength={10} value={value} />}
-      maxLength={10}
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
-    />
-  );
-}
-
-test("입력하면 CharCounter의 현재 길이가 갱신된다", async () => {
-  render(<NicknameFieldWithCounter />);
+test("showCount를 주면 입력에 따라 글자 수가 갱신된다", async () => {
+  render(<NicknameInput maxLength={10} showCount />);
 
   await expect.element(page.getByText("0/10")).toBeInTheDocument();
 
   await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "당근마켓");
 
   await expect.element(page.getByText("4/10")).toBeInTheDocument();
+});
+
+test("showCount가 없으면 글자 수를 보여주지 않는다", async () => {
+  render(<NicknameInput maxLength={10} />);
+
+  await expect.element(page.getByRole("textbox", { name: "닉네임" })).toBeInTheDocument();
+  await expect.element(page.getByText("0/10")).not.toBeInTheDocument();
+});
+
+test("maxLength가 없으면 현재 글자 수만 보여준다", async () => {
+  render(<NicknameInput showCount />);
+
+  await userEvent.fill(page.getByRole("textbox", { name: "닉네임" }), "당근");
+
+  await expect.element(page.getByText("2")).toBeInTheDocument();
 });
 
 test("타이핑하면 입력값이 반영되고 onChange가 호출된다", async () => {

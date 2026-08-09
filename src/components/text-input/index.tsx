@@ -1,4 +1,5 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import { useState } from "react";
 
 import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
 import SearchIcon from "../../assets/icon-search.svg?react";
@@ -7,32 +8,44 @@ import { adornment, charCounter, field, input, sendButton, wrapper } from "./ind
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   shape?: "rounded" | "pill";
-  endAdornment?: ReactNode;
+  endIcon?: ReactNode;
+  showCount?: boolean;
 }
 
 export function TextInput({
   shape = "rounded",
-  endAdornment,
+  endIcon,
+  showCount = false,
   className,
+  maxLength,
+  value,
+  onChange,
   ...props
 }: TextInputProps) {
+  const [typedLength, setTypedLength] = useState(0);
+  const length = typeof value === "string" ? value.length : typedLength;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTypedLength(event.target.value.length);
+    onChange?.(event);
+  };
+
   return (
     <span className={[field, wrapper({ shape }), className].filter(Boolean).join(" ")}>
-      <input className={input} {...props} />
-      {endAdornment ? <span className={adornment}>{endAdornment}</span> : null}
-    </span>
-  );
-}
-
-export interface CharCounterProps {
-  value: string;
-  maxLength: number;
-}
-
-export function CharCounter({ value, maxLength }: CharCounterProps) {
-  return (
-    <span className={charCounter}>
-      {value.length}/{maxLength}
+      <input
+        className={input}
+        maxLength={maxLength}
+        value={value}
+        onChange={handleChange}
+        {...props}
+      />
+      {showCount ? (
+        <span className={charCounter}>
+          {length}
+          {maxLength === undefined ? null : `/${maxLength}`}
+        </span>
+      ) : null}
+      {endIcon ? <span className={adornment}>{endIcon}</span> : null}
     </span>
   );
 }
@@ -43,11 +56,11 @@ export function NicknameInput(props: Omit<TextInputProps, "shape">) {
   );
 }
 
-export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdornment">) {
+export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endIcon">) {
   return (
     <TextInput
       aria-label="장소 검색"
-      endAdornment={<SearchIcon aria-hidden height={24} width={24} />}
+      endIcon={<SearchIcon aria-hidden height={24} width={24} />}
       placeholder="장소를 검색하세요"
       shape="rounded"
       {...props}
@@ -55,7 +68,7 @@ export function PlaceSearchInput(props: Omit<TextInputProps, "shape" | "endAdorn
   );
 }
 
-export interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" | "endAdornment"> {
+export interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" | "endIcon"> {
   onSend?: () => void;
 }
 
@@ -63,7 +76,7 @@ export function CourseFeedbackInput({ onSend, ...props }: CourseFeedbackInputPro
   return (
     <TextInput
       aria-label="코스 의견"
-      endAdornment={
+      endIcon={
         onSend ? (
           <button aria-label="의견 보내기" className={sendButton} type="button" onClick={onSend}>
             <ChatCircleIcon aria-hidden height={24} width={24} />

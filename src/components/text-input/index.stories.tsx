@@ -1,18 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
 import { withLayout } from "../layout/index.decorators";
 import type { TextInputProps } from "./index";
-import {
-  CharCounter,
-  CourseFeedbackInput,
-  NicknameInput,
-  PlaceSearchInput,
-  TextInput,
-} from "./index";
+import { CourseFeedbackInput, NicknameInput, PlaceSearchInput, TextInput } from "./index";
 
-type PresetArgs = Pick<TextInputProps, "disabled" | "placeholder">;
+type PresetArgs = Pick<TextInputProps, "disabled" | "placeholder" | "showCount">;
 
 const meta = {
   component: TextInput,
@@ -32,10 +25,11 @@ const meta = {
     placeholder: "내용을 입력해주세요",
     shape: "rounded",
     disabled: false,
+    showCount: false,
   },
   argTypes: {
     shape: { control: "inline-radio", options: ["rounded", "pill"] },
-    endAdornment: { control: false },
+    endIcon: { control: false },
   },
 } satisfies Meta<typeof TextInput>;
 
@@ -49,28 +43,19 @@ export const Default: Story = {
   },
 };
 
-function NicknameField({ disabled, placeholder }: PresetArgs) {
-  const [value, setValue] = useState("");
-
-  return (
-    <NicknameInput
-      disabled={disabled}
-      endAdornment={<CharCounter maxLength={MAX_LENGTH} value={value} />}
-      maxLength={MAX_LENGTH}
-      placeholder={placeholder}
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
-    />
-  );
-}
-
 export const Nickname: Story = {
   args: {
     placeholder: "닉네임을 입력해주세요",
+    showCount: true,
   },
   argTypes: { shape: { control: false } },
-  render: ({ disabled, placeholder }) => (
-    <NicknameField disabled={disabled} placeholder={placeholder} />
+  render: ({ disabled, placeholder, showCount }: PresetArgs) => (
+    <NicknameInput
+      disabled={disabled}
+      maxLength={MAX_LENGTH}
+      placeholder={placeholder}
+      showCount={showCount}
+    />
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -85,7 +70,7 @@ export const PlaceSearch: Story = {
     placeholder: "장소를 검색하세요",
   },
   argTypes: { shape: { control: false } },
-  render: ({ disabled, placeholder }) => (
+  render: ({ disabled, placeholder }: PresetArgs) => (
     <PlaceSearchInput disabled={disabled} placeholder={placeholder} />
   ),
 };
@@ -95,7 +80,7 @@ export const CourseFeedback: Story = {
     placeholder: "코스에 대한 의견을 남겨주세요!",
   },
   argTypes: { shape: { control: false } },
-  render: ({ disabled, placeholder }) => (
+  render: ({ disabled, placeholder }: PresetArgs) => (
     <CourseFeedbackInput disabled={disabled} placeholder={placeholder} onSend={() => {}} />
   ),
 };
