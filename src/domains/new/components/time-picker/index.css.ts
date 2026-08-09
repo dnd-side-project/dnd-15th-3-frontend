@@ -1,25 +1,28 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { vars } from "../../../../styles/theme.css";
+
 export const trigger = style({
   borderRadius: 8,
   display: "flex",
   alignItems: "center",
   columnGap: 15,
-  width: 168,
+  flex: 1,
   height: 54,
   backgroundColor: "#ECEFF5",
   color: "#707D91",
   border: 0,
-  padding: "13px 15px",
-  fontFamily: "sans-serif",
-  fontSize: "1rem",
+  padding: "15px 13px",
+  fontFamily: vars.font.body,
+  fontSize: 16,
+  fontWeight: 500,
 });
 
 export const timePickArea = style({
   paddingTop: 20.65,
   paddingBottom: 15,
-  fontFamily: "sans-serif",
+  fontFamily: vars.font.body,
   fontSize: 26.64,
   color: "#262626",
   display: "flex",

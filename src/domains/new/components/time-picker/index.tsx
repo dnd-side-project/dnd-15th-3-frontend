@@ -39,7 +39,7 @@ interface TimePickerProps {
 export function TimePicker({ meetingTime, setMeetingTime }: TimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const meetingTimeWithPeriod = meetingTime ? toTimeWithPeriod(meetingTime) : null;
-  const timeString = meetingTimeWithPeriod ? formatTime(meetingTimeWithPeriod) : "-- --:--";
+  const timeString = meetingTimeWithPeriod ? formatTime(meetingTimeWithPeriod) : "-- -- : --";
   const [inputTime, setInputTime] = useState<TimeWithPeriod>(
     meetingTimeWithPeriod ?? {
       hours: 12,
