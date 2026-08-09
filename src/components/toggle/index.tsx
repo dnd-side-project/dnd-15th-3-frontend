@@ -1,7 +1,7 @@
 import GridIcon from "../../assets/icon-grid.svg?react";
 import MapIcon from "../../assets/icon-map.svg?react";
 
-import { item, root } from "./index.css";
+import { indicator, item, root } from "./index.css";
 
 export type ToggleValue = "map" | "list";
 
@@ -20,6 +20,7 @@ export function Toggle({ value, onChange }: ToggleProps) {
 
   return (
     <div className={root} role="group" aria-label="보기 방식">
+      <span aria-hidden className={indicator({ value })} />
       <button
         type="button"
         aria-label="지도로 보기"

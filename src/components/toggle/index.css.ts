@@ -10,19 +10,52 @@ const colors = {
   selectedIcon: "#F2F3F7",
 };
 
+const PADDING = 5;
+const GAP = 10;
+
 export const root = style({
+  position: "relative",
   display: "flex",
   alignItems: "center",
-  gap: 10,
+  gap: GAP,
   width: 107,
   height: 46,
-  padding: 5,
+  padding: PADDING,
   borderRadius: vars.radius.full,
   backgroundColor: colors.background,
 });
 
+export const indicator = recipe({
+  base: {
+    position: "absolute",
+    top: PADDING,
+    bottom: PADDING,
+    left: PADDING,
+    width: `calc((100% - ${PADDING * 2 + GAP}px) / 2)`,
+    borderRadius: vars.radius.full,
+    backgroundColor: colors.selectedBackground,
+    transition: "transform 0.2s ease",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": {
+        transition: "none",
+      },
+    },
+  },
+  variants: {
+    value: {
+      map: { transform: "translateX(0)" },
+      list: { transform: `translateX(calc(100% + ${GAP}px))` },
+    },
+  },
+  defaultVariants: {
+    value: "map",
+  },
+});
+
 export const item = recipe({
   base: {
+    position: "relative",
+    zIndex: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -30,11 +63,10 @@ export const item = recipe({
     alignSelf: "stretch",
     padding: 0,
     border: "none",
-    borderRadius: vars.radius.full,
     backgroundColor: "transparent",
     color: colors.icon,
     cursor: "pointer",
-    transition: "background-color 0.15s ease, color 0.15s ease",
+    transition: "color 0.15s ease",
     "@media": {
       "(prefers-reduced-motion: reduce)": {
         transition: "none",
@@ -43,10 +75,7 @@ export const item = recipe({
   },
   variants: {
     selected: {
-      true: {
-        backgroundColor: colors.selectedBackground,
-        color: colors.selectedIcon,
-      },
+      true: { color: colors.selectedIcon },
       false: {},
     },
   },
