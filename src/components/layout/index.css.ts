@@ -1,18 +1,23 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../styles/theme.css";
+const colors = {
+  backdrop: "#EEEEEE",
+  surface: "#F5F6F8",
+};
 
 export const letterbox = style({
   display: "flex",
   justifyContent: "center",
   minHeight: "100dvh",
-  background: "#eeeeee",
+  background: colors.backdrop,
 });
 
 export const frame = style({
-  width: "100%",
-  maxWidth: "393px",
-  background: vars.color.background,
+  position: "relative",
   display: "flex",
   flexDirection: "column",
+  width: "100%",
+  maxWidth: 393,
+  minHeight: "100dvh",
+  background: colors.surface,
 });

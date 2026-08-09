@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 
 import "./styles/theme.css";
 import "./styles/global.css";
-import "./index.css";
 import { QueryProvider } from "./providers/query-provider";
 import { Routes } from "./routes.tsx";
 
