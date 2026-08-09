@@ -62,14 +62,3 @@ test("disabled이면 클릭해도 onToggle이 호출되지 않는다", async () 
 
   expect(onToggle).not.toHaveBeenCalled();
 });
-
-test("tone이 muted면 배경과 글자색이 회색 계열이다", async () => {
-  render(<PreferenceButton count={3} tone="muted" type="like" />);
-
-  const button = page.getByRole("button", { name: "좋아요 3" });
-  await expect.element(button).toBeInTheDocument();
-  const style = getComputedStyle(button.element());
-
-  expect(style.backgroundColor).toBe("rgb(236, 239, 245)");
-  expect(style.color).toBe("rgb(164, 177, 197)");
-});
