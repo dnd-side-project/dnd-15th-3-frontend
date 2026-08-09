@@ -70,7 +70,7 @@ export const headerTitle = style({
   fontFamily: vars.font.body,
   fontSize: 18,
   fontWeight: 600,
-  lineHeight: "28.8px",
+  lineHeight: 1.6,
   textAlign: "center",
 });
 
@@ -95,7 +95,7 @@ export const photo = style({
 export const summary = style({
   display: "flex",
   alignItems: "center",
-  gap: 70,
+  gap: 12,
   height: 51,
   padding: "0 20px",
 });
@@ -172,7 +172,7 @@ export const externalLink = style({
   fontFamily: vars.font.body,
   fontSize: 14,
   fontWeight: 400,
-  lineHeight: "16.8px",
+  lineHeight: 1.2,
   textDecoration: "none",
 });
 
