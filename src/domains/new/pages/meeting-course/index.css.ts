@@ -100,7 +100,7 @@ export const sheetBody = style({
 });
 
 export const sheetSearch = style({
-  padding: "0 19.5px",
+  padding: "0 20px",
 });
 
 export const results = style({
@@ -120,7 +120,7 @@ export const result = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 400,
-  lineHeight: "19.09px",
+  lineHeight: 1.2,
   textAlign: "left",
   cursor: "pointer",
   selectors: {
@@ -138,5 +138,5 @@ export const empty = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 400,
-  lineHeight: "19.09px",
+  lineHeight: 1.2,
 });
