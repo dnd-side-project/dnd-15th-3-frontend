@@ -1,0 +1,24 @@
+import type { MeetingTypeCode } from "./api/types";
+
+interface MeetingTypeIcon {
+  src: string;
+  width: number;
+  height: number;
+}
+
+// 카드 안에서 아이콘이 차지하는 크기가 유형마다 조금씩 다르다. Figma 값을 그대로 쓴다.
+export const MEETING_TYPE_ICONS: Record<MeetingTypeCode, MeetingTypeIcon> = {
+  SOCIAL: { src: "/static/meeting-type-social.webp", width: 51.12, height: 50.17 },
+  DATING_HOBBY: { src: "/static/meeting-type-dating-hobby.webp", width: 53, height: 53 },
+  COMPANY_DINNER: { src: "/static/meeting-type-company-dinner.webp", width: 53, height: 53 },
+  FAMILY: { src: "/static/meeting-type-family.webp", width: 50, height: 50 },
+  TRAVEL: { src: "/static/meeting-type-travel.webp", width: 50, height: 50 },
+  STUDY: { src: "/static/meeting-type-study.webp", width: 50, height: 50 },
+  BUSINESS: { src: "/static/meeting-type-business.webp", width: 50, height: 50 },
+  ANNIVERSARY_EXERCISE: {
+    src: "/static/meeting-type-anniversary-exercise.webp",
+    width: 50,
+    height: 50,
+  },
+  OTHER: { src: "/static/meeting-type-other.webp", width: 50, height: 50 },
+};
