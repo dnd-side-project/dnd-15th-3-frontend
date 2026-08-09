@@ -6,55 +6,44 @@ import { withLayout } from "../layout/index.decorators";
 import type { PopupProps } from "./index";
 import { Popup } from "./index";
 
-function AlertMedia() {
+function MomoMedia() {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 85,
-        height: 85,
-        borderRadius: 42.5,
-        background: "linear-gradient(180deg, #E7F0FF 0%, #D1E2FE 100%)",
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 7 }}>
-        <div style={{ width: 9, height: 40, borderRadius: 4.5, backgroundColor: "#66ADFF" }} />
-        <div style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: "#66ADFF" }} />
-      </div>
-    </div>
+    <>
+      <img
+        alt=""
+        src="/static/popup-momo.webp"
+        style={{ position: "absolute", top: 31, left: 38, width: 183, height: 158 }}
+      />
+      <span
+        style={{
+          position: "absolute",
+          top: 182,
+          left: 91,
+          width: 78,
+          height: 7,
+          borderRadius: "50%",
+          backgroundColor: "#DAE1EC",
+          filter: "blur(4px)",
+        }}
+      />
+    </>
   );
 }
 
-function PinMedia() {
+function CourseMapMedia() {
   return (
-    <div style={{ position: "relative", width: 55, height: 68.75 }}>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 55,
-          height: 55,
-          borderRadius: "50%",
-          background: "linear-gradient(180deg, #9AC5FF 0%, #4A93F8 100%)",
-        }}
+    <>
+      <img
+        alt=""
+        src="/static/popup-course-map.webp"
+        style={{ position: "absolute", top: -53, left: -5.4, width: 268.71, height: 323 }}
       />
-      <div
-        style={{
-          position: "absolute",
-          top: 44,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 0,
-          height: 0,
-          borderLeft: "9px solid transparent",
-          borderRight: "9px solid transparent",
-          borderTop: "24.75px solid #4A93F8",
-        }}
+      <img
+        alt=""
+        src="/static/popup-course-pin.webp"
+        style={{ position: "absolute", top: 89, left: 102, width: 55, height: 68.75 }}
       />
-    </div>
+    </>
   );
 }
 
@@ -93,7 +82,7 @@ type Story = StoryObj<typeof meta>;
 
 export const AlreadyAdded: Story = {
   args: {
-    media: <AlertMedia />,
+    media: <MomoMedia />,
   },
 };
 
@@ -101,14 +90,14 @@ export const CourseCreating: Story = {
   args: {
     title: "코스를 생성중이에요",
     description: "코스가 완성되면 함께 확인할 수 있어요.",
-    media: <PinMedia />,
+    media: <CourseMapMedia />,
   },
 };
 
 export const WithoutDescription: Story = {
   args: {
     description: undefined,
-    media: <AlertMedia />,
+    media: <MomoMedia />,
   },
   play: async ({ args }) => {
     await userEvent.click(screen.getByRole("button", { name: "닫기" }));
@@ -120,7 +109,7 @@ export const WithoutDescription: Story = {
 
 export const WithoutClose: Story = {
   args: {
-    media: <AlertMedia />,
+    media: <MomoMedia />,
     showClose: false,
   },
   play: async () => {

@@ -37,6 +37,7 @@ export const card = style({
   transform: "translate(-50%, -50%)",
   width: 259,
   padding: "0 15px 28px",
+  overflow: "hidden",
   borderRadius: 12,
   backgroundColor: colors.background,
   fontFamily: vars.font.body,
@@ -61,6 +62,7 @@ export const card = style({
 
 export const close = style({
   position: "absolute",
+  zIndex: 1,
   top: 23,
   right: 19,
   display: "flex",
@@ -80,10 +82,11 @@ export const media = style({
   alignItems: "center",
   justifyContent: "center",
   height: 211,
-  paddingTop: 36,
 });
 
 export const texts = style({
+  position: "relative",
+  zIndex: 1,
   display: "flex",
   flexDirection: "column",
   gap: 1,
