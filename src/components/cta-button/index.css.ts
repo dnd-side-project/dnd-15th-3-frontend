@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../styles/theme.css";
@@ -7,8 +7,14 @@ const colors = {
   primary: "#66ADFF",
   secondaryBackground: "#DAE1EC",
   secondaryText: "#707D91",
+  icon: "#A4B1C5",
   white: "#FFFFFF",
 };
+
+export const buttonRoot = style({});
+globalStyle(`${buttonRoot} svg`, {
+  color: colors.icon,
+});
 
 export const button = recipe({
   base: {
