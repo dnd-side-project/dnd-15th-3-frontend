@@ -35,8 +35,6 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-const MAX_LENGTH = 10;
-
 export const Default: Story = {
   args: {
     "aria-label": "텍스트 입력",
@@ -52,7 +50,7 @@ export const Nickname: Story = {
   render: ({ disabled, placeholder, showCount }: PresetArgs) => (
     <NicknameInput
       disabled={disabled}
-      maxLength={MAX_LENGTH}
+      maxLength={10}
       placeholder={placeholder}
       showCount={showCount}
     />
