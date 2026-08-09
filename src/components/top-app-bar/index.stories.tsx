@@ -49,11 +49,4 @@ export const TitleOnly: Story = {
   },
 };
 
-export const OnWhite: Story = {
-  args: {
-    background: "white",
-    title: "코스수정",
-  },
-};
-
 export default meta;
