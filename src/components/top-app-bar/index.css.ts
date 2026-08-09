@@ -15,7 +15,6 @@ export const root = recipe({
     display: "grid",
     gridTemplateColumns: "24px 1fr 24px",
     alignItems: "center",
-    boxSizing: "border-box",
     width: "100%",
     height: 64,
     padding: "25px 20px 10px",
