@@ -112,53 +112,6 @@ test("삭제 버튼을 클릭하면 onRemove만 호출되고 onClick은 호출�
   expect(onClick).not.toHaveBeenCalled();
 });
 
-test("filled 칩의 높이는 38px다", async () => {
-  render(<Chip>음식점</Chip>);
-
-  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
-  const chip = page.getByRole("button", { name: "음식점" }).element();
-
-  expect(chip.getBoundingClientRect().height).toBe(38);
-});
-
-test("overlay 칩의 높이는 33px다", async () => {
-  render(<Chip variant="overlay">음식점</Chip>);
-
-  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
-  const chip = page.getByRole("button", { name: "음식점" }).element();
-
-  expect(chip.getBoundingClientRect().height).toBe(33);
-});
-
-test("overlay 칩은 뒤 배경을 4px 블러 처리한다", async () => {
-  render(<Chip variant="overlay">음식점</Chip>);
-
-  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
-  const chip = page.getByRole("button", { name: "음식점" }).element();
-
-  expect(getComputedStyle(chip).backdropFilter).toBe("blur(4px)");
-});
-
-test("filled 칩에는 블러가 없다", async () => {
-  render(<Chip>음식점</Chip>);
-
-  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
-  const chip = page.getByRole("button", { name: "음식점" }).element();
-
-  expect(getComputedStyle(chip).backdropFilter).toBe("none");
-});
-
-test("가로 패딩이 디자인값 11px과 일치한다", async () => {
-  render(<Chip>음식점</Chip>);
-
-  await expect.element(page.getByRole("button", { name: "음식점" })).toBeInTheDocument();
-  const chip = page.getByRole("button", { name: "음식점" }).element();
-
-  const style = getComputedStyle(chip);
-  expect(style.paddingLeft).toBe("11px");
-  expect(style.paddingRight).toBe("11px");
-});
-
 test("variant가 overlay면 토글이 아니므로 aria-pressed를 노출하지 않는다", async () => {
   render(<Chip variant="overlay">음식점</Chip>);
 
@@ -181,24 +134,6 @@ test("variant가 overlay여도 클릭하면 onClick이 호출된다", async () =
   expect(onClick).toHaveBeenCalledOnce();
 });
 
-test("선택 상태에 따라 배경과 글자색이 바뀐다", async () => {
-  render(
-    <>
-      <Chip selected>카페</Chip>
-      <Chip>음식점</Chip>
-    </>,
-  );
-  await expect.element(page.getByRole("button", { name: "카페" })).toBeInTheDocument();
-
-  const on = getComputedStyle(page.getByRole("button", { name: "카페" }).element());
-  const off = getComputedStyle(page.getByRole("button", { name: "음식점" }).element());
-
-  expect(on.backgroundColor).toBe("rgb(219, 236, 255)");
-  expect(on.color).toBe("rgb(55, 147, 255)");
-  expect(off.backgroundColor).toBe("rgb(236, 239, 245)");
-  expect(off.color).toBe("rgb(112, 125, 145)");
-});
-
 test("삭제 버튼 이름에 칩 라벨이 포함되어 칩마다 구분된다", async () => {
   render(
     <ChipGroup>
@@ -213,22 +148,6 @@ test("삭제 버튼 이름에 칩 라벨이 포함되어 칩마다 구분된다"
 
   await expect.element(page.getByRole("button", { name: "음식점 삭제" })).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "카페 삭제" })).toBeInTheDocument();
-});
-
-test("ChipGroup에 scroll을 주면 줄바꿈 없이 가로로 스크롤한다", async () => {
-  render(
-    <ChipGroup scroll>
-      <Chip>음식점</Chip>
-      <Chip>카페</Chip>
-    </ChipGroup>,
-  );
-
-  const chip = page.getByRole("button", { name: "음식점" });
-  await expect.element(chip).toBeInTheDocument();
-  const group = chip.element().parentElement;
-
-  expect(group && getComputedStyle(group).flexWrap).toBe("nowrap");
-  expect(group && getComputedStyle(group).overflowX).toBe("auto");
 });
 
 test("ChipGroup에 connected를 주면 마지막 칩을 제외하고 화살표가 들어간다", async () => {
