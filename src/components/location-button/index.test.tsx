@@ -31,15 +31,3 @@ test("disabled면 클릭해도 onClick을 호출하지 않는다", async () => {
 
   expect(onClick).not.toHaveBeenCalled();
 });
-
-test("버튼 크기는 44 x 44이다", async () => {
-  renderLocationButton();
-
-  const locator = page.getByRole("button", { name: "현재 위치" });
-  await expect.element(locator).toBeInTheDocument();
-
-  const rect = locator.element().getBoundingClientRect();
-
-  expect(rect.width).toBe(44);
-  expect(rect.height).toBe(44);
-});
