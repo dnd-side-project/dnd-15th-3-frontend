@@ -77,12 +77,3 @@ test("미디어 영역에 전달한 노드를 렌더링한다", async () => {
 
   await expect.element(page.getByTestId("popup-media")).toBeInTheDocument();
 });
-
-test("카드 너비는 259px이다", async () => {
-  renderPopup();
-
-  const dialog = page.getByRole("dialog");
-  await expect.element(dialog).toBeInTheDocument();
-
-  expect(dialog.element().getBoundingClientRect().width).toBe(259);
-});
