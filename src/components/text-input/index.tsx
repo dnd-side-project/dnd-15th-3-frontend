@@ -3,23 +3,21 @@ import type { InputHTMLAttributes, ReactNode } from "react";
 import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
 import SearchIcon from "../../assets/icon-search.svg?react";
 
-import { adornment, charCounter, input, sendButton, wrapper } from "./index.css";
+import { adornment, charCounter, field, input, sendButton, wrapper } from "./index.css";
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
   shape?: "rounded" | "pill";
-  filled?: boolean;
   endAdornment?: ReactNode;
 }
 
 export function TextInput({
   shape = "rounded",
-  filled = false,
   endAdornment,
   className,
   ...props
 }: TextInputProps) {
   return (
-    <span className={`${wrapper({ shape, filled })}${className ? ` ${className}` : ""}`}>
+    <span className={[field, wrapper({ shape }), className].filter(Boolean).join(" ")}>
       <input className={input} {...props} />
       {endAdornment ? <span className={adornment}>{endAdornment}</span> : null}
     </span>
@@ -61,23 +59,17 @@ export interface CourseFeedbackInputProps extends Omit<TextInputProps, "shape" |
   onSend?: () => void;
 }
 
-export function CourseFeedbackInput({ onSend, filled, ...props }: CourseFeedbackInputProps) {
+export function CourseFeedbackInput({ onSend, ...props }: CourseFeedbackInputProps) {
   return (
     <TextInput
       aria-label="코스 의견"
       endAdornment={
         onSend ? (
-          <button
-            aria-label="의견 보내기"
-            className={sendButton({ filled })}
-            type="button"
-            onClick={onSend}
-          >
+          <button aria-label="의견 보내기" className={sendButton} type="button" onClick={onSend}>
             <ChatCircleIcon aria-hidden height={24} width={24} />
           </button>
         ) : null
       }
-      filled={filled}
       placeholder="코스에 대한 의견을 남겨주세요!"
       shape="pill"
       {...props}

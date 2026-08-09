@@ -5,13 +5,22 @@ import { vars } from "../../styles/theme.css";
 
 const colors = {
   background: "#ECEFF5",
-  filledBackground: "#DAE1EC",
+  focusedBackground: "#DAE1EC",
   pillBackground: "#FFFFFF",
   pillBorder: "#E7E7E7",
   mutedForeground: "#707D91",
-  activeBackground: "#AAD1FF",
-  activeForeground: "#4C9FFF",
+  focusedSendBackground: "#AAD1FF",
+  focusedSendForeground: "#4C9FFF",
 };
+
+const motion = {
+  transition: "background-color 0.15s ease, color 0.15s ease",
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+} as const;
+
+export const field = style({});
 
 export const wrapper = recipe({
   base: {
@@ -22,6 +31,7 @@ export const wrapper = recipe({
     fontFamily: vars.font.body,
     fontWeight: 500,
     color: colors.mutedForeground,
+    ...motion,
   },
   variants: {
     shape: {
@@ -32,6 +42,9 @@ export const wrapper = recipe({
         backgroundColor: colors.background,
         fontSize: 16,
         lineHeight: 1.2,
+        selectors: {
+          "&:focus-within": { backgroundColor: colors.focusedBackground },
+        },
       },
       pill: {
         height: 50,
@@ -41,26 +54,14 @@ export const wrapper = recipe({
         backgroundColor: colors.pillBackground,
         fontSize: 14,
         lineHeight: 1.2,
+        selectors: {
+          "&:focus-within": { backgroundColor: colors.background },
+        },
       },
     },
-    filled: {
-      true: {},
-      false: {},
-    },
   },
-  compoundVariants: [
-    {
-      variants: { shape: "rounded", filled: true },
-      style: { backgroundColor: colors.filledBackground },
-    },
-    {
-      variants: { shape: "pill", filled: true },
-      style: { backgroundColor: colors.background },
-    },
-  ],
   defaultVariants: {
     shape: "rounded",
-    filled: false,
   },
 });
 
@@ -92,29 +93,23 @@ export const charCounter = style({
   fontWeight: 400,
 });
 
-export const sendButton = recipe({
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 42,
-    height: 36,
-    padding: 0,
-    border: "none",
-    borderRadius: vars.radius.full,
-    cursor: "pointer",
-    transition: "background-color 0.15s ease, color 0.15s ease",
-    "@media": {
-      "(prefers-reduced-motion: reduce)": { transition: "none" },
+export const sendButton = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 42,
+  height: 36,
+  padding: 0,
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: colors.focusedBackground,
+  color: colors.mutedForeground,
+  cursor: "pointer",
+  ...motion,
+  selectors: {
+    [`${field}:focus-within &`]: {
+      backgroundColor: colors.focusedSendBackground,
+      color: colors.focusedSendForeground,
     },
-  },
-  variants: {
-    filled: {
-      true: { backgroundColor: colors.activeBackground, color: colors.activeForeground },
-      false: { backgroundColor: colors.filledBackground, color: colors.mutedForeground },
-    },
-  },
-  defaultVariants: {
-    filled: false,
   },
 });
