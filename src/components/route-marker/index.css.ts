@@ -77,7 +77,6 @@ export const badge = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxSizing: "border-box",
     width: "auto",
     minWidth: 16,
     height: 16,
