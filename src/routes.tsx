@@ -53,6 +53,11 @@ const router = createBrowserRouter([
         Component: ProfilePage,
       },
       {
+        // 프로필 이미지 변경은 프로필 작성 위에 바텀시트로 뜬다.
+        path: "profile-avatar",
+        Component: ProfilePage,
+      },
+      {
         path: "meeting-info",
         Component: MeetingInfoPage,
       },
