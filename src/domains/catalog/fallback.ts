@@ -4,11 +4,7 @@ import type {
   ProfileAvatarResponse,
 } from "./api/types";
 
-/**
- * 카탈로그 API 3종은 아직 501 을 반환한다. 목록과 순서가 디자인에 고정되어 있어
- * 서버 응답을 받기 전까지 아래 값으로 화면을 그린다. 응답이 오면 그쪽을 우선한다.
- */
-
+// 카탈로그 API 3종이 501 을 반환하는 동안 쓰는 값. 목록과 순서는 디자인에 고정돼 있다.
 export const MEETING_TYPES: MeetingTypeResponse[] = [
   { id: "1", code: "SOCIAL", name: "친목" },
   { id: "2", code: "DATING_HOBBY", name: "데이트" },
