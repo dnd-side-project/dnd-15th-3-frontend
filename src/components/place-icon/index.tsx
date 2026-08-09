@@ -33,8 +33,6 @@ const glyphs = {
   cafe: CafeIcon,
 };
 
-const GLYPH_SIZE = 12;
-
 export function PlaceIcon({ category, size = 20, label }: PlaceIconProps) {
   const Glyph = glyphs[category];
 
@@ -45,7 +43,7 @@ export function PlaceIcon({ category, size = 20, label }: PlaceIconProps) {
       className={root({ category, size })}
       role={label ? "img" : undefined}
     >
-      <Glyph height={GLYPH_SIZE} width={GLYPH_SIZE} />
+      <Glyph height={12} width={12} />
     </span>
   );
 }
