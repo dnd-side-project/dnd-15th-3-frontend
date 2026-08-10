@@ -18,6 +18,7 @@ import {
   picker,
   root,
   status,
+  surfaceColor,
 } from "./index.css";
 
 export function CoursePlanPage() {
@@ -45,7 +46,7 @@ export function CoursePlanPage() {
   if (isPending || plan === undefined) {
     return (
       <Layout>
-        <TopAppBar title="코스 순서" onBack={() => void navigate(-1)} />
+        <TopAppBar background={surfaceColor} title="코스 순서" onBack={() => void navigate(-1)} />
         <p className={status}>코스를 불러오고 있어요</p>
       </Layout>
     );
@@ -66,7 +67,7 @@ export function CoursePlanPage() {
   return (
     <Layout>
       <div className={root}>
-        <TopAppBar title="코스 순서" onBack={() => void navigate(-1)} />
+        <TopAppBar background={surfaceColor} title="코스 순서" onBack={() => void navigate(-1)} />
 
         <SectionIntro
           action={

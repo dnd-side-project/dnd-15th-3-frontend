@@ -2,8 +2,10 @@ import { style } from "@vanilla-extract/css";
 
 import { vars } from "../../../../../styles/theme.css";
 
+export const surfaceColor = "#FFFFFF";
+
 const colors = {
-  surface: "#FFFFFF",
+  surface: surfaceColor,
   action: "#707D91",
 };
 
