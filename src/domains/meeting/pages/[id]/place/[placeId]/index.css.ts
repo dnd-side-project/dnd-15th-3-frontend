@@ -83,8 +83,7 @@ export const photos = style({
 });
 
 export const photo = style({
-  flexShrink: 0,
-  width: 353,
+  flex: "0 0 100%",
   height: 213,
   borderRadius: 10,
   backgroundColor: colors.photo,
