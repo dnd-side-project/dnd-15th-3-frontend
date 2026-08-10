@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { Dropdown, Item, createHandle, Trigger } from ".";
+import { Dropdown, Item, createMenuHandle, Trigger } from ".";
 import { withLayout } from "../layout/index.decorators";
 
 const meta = {
@@ -14,7 +14,7 @@ const meta = {
 } satisfies Meta<typeof Dropdown>;
 
 function SmallComponent() {
-  const menu = createHandle();
+  const menu = createMenuHandle();
   const [selectedId, setSelectedId] = useState(1);
   const items = [
     {
@@ -40,7 +40,7 @@ function SmallComponent() {
   );
 }
 function MediumComponent() {
-  const menu = createHandle();
+  const menu = createMenuHandle();
   const [selectedId, setSelectedId] = useState(1);
   const items = [
     {

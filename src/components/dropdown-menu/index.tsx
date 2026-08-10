@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 
 import * as styles from "./index.css";
 
-export function createHandle() {
+export function createMenuHandle() {
   return Menu.createHandle();
 }
 
