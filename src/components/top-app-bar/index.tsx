@@ -8,11 +8,12 @@ export interface TopAppBarProps {
   title: string;
   onBack?: () => void;
   action?: ReactNode;
+  background?: string;
 }
 
-export function TopAppBar({ title, onBack, action }: TopAppBarProps) {
+export function TopAppBar({ title, onBack, action, background = "#FFFFFF" }: TopAppBarProps) {
   return (
-    <header className={root}>
+    <header className={root} style={{ background }}>
       <div className={slot}>
         {onBack ? (
           <button aria-label="뒤로 가기" className={iconButton} onClick={onBack} type="button">

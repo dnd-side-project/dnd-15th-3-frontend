@@ -8,6 +8,9 @@ const colors = {
 };
 
 export const root = style({
+  position: "sticky",
+  top: 0,
+  zIndex: 1,
   display: "grid",
   gridTemplateColumns: "24px 1fr 24px",
   alignItems: "center",
