@@ -17,6 +17,7 @@ export const trigger = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
+  whiteSpace: "nowrap",
 });
 
 export const timePickArea = style({
@@ -64,7 +65,7 @@ export const confirmButton = recipe({
     textAlign: "center",
     paddingBlock: 12,
     fontSize: 18,
-    width: 353,
+    alignSelf: "stretch",
     height: 53,
     margin: "10px 20px",
     fontWeight: 600,
@@ -93,7 +94,7 @@ export const stepperGroup = style({
   columnGap: 67,
   alignItems: "center",
   justifyContent: "center",
-  width: 381,
+  width: "100%",
   marginBlock: 3,
 });
 

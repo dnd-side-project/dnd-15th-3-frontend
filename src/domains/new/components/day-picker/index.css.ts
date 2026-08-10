@@ -54,6 +54,7 @@ export const trigger = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
+  whiteSpace: "nowrap",
   cursor: "pointer",
 });
 
