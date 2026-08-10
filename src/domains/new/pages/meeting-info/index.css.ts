@@ -58,11 +58,10 @@ export const introDescription = style({
 
 export const types = style({
   display: "grid",
-  gridTemplateColumns: "repeat(3, 102px)",
+  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
   gap: "18px 17px",
-  justifyContent: "center",
   marginTop: 28,
-  padding: "0 20px",
+  padding: "0 26px",
 });
 
 export const typeCard = recipe({
@@ -72,7 +71,7 @@ export const typeCard = recipe({
     alignItems: "center",
     gap: 6,
     height: 102,
-    padding: "10px 24px",
+    padding: "10px 4px",
     border: "none",
     borderRadius: 10,
     cursor: "pointer",
