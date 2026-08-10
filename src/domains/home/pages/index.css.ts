@@ -87,8 +87,8 @@ export const illustration = recipe({
   base: { position: "absolute" },
   variants: {
     size: {
-      large: { top: 21, left: 34, width: 319, height: 233 },
-      small: { top: 0, left: 137, width: 210, height: 79 },
+      large: { top: 21, right: 0, width: 319, height: 233 },
+      small: { top: 0, right: 6, width: 210, height: 79 },
     },
   },
 });
@@ -99,8 +99,8 @@ export const cardContent = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    width: 300,
-    marginLeft: 25,
+    gap: 12,
+    margin: "0 28px 0 25px",
   },
   variants: {
     size: {
@@ -113,6 +113,7 @@ export const cardContent = recipe({
 export const cardTexts = style({
   display: "flex",
   flexDirection: "column",
+  minWidth: 0,
 });
 
 export const cardTitle = style({
@@ -122,6 +123,9 @@ export const cardTitle = style({
   fontSize: 18,
   fontWeight: 600,
   lineHeight: 1.65,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 });
 
 export const cardDescription = style({
@@ -131,6 +135,9 @@ export const cardDescription = style({
   fontSize: 14,
   fontWeight: 500,
   lineHeight: 1.65,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 });
 
 export const arrow = style({
