@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import SearchIcon from "../../../../assets/icon-search.svg?react";
 import { BottomSheet } from "../../../../components/bottom-sheet";
+import { SectionIntro } from "../../../../components/section-intro";
 import { TextInput } from "../../../../components/text-input";
 import { catalogQueries } from "../../../catalog/api/queries";
 import type { FirstMeetingPlaceResponse } from "../../../catalog/api/types";
@@ -14,8 +15,6 @@ import { useMeetingDraft } from "../../draft";
 import {
   empty,
   intro,
-  introDescription,
-  introTitle,
   location,
   locationField,
   locationLabel,
@@ -77,10 +76,11 @@ export function MeetingCoursePage() {
         </button>
       </div>
 
-      <div className={intro}>
-        <h2 className={introTitle}>어떤 코스 순서로 가고싶나요?</h2>
-        <p className={introDescription}>가고 싶은 순서대로 장소를 선택해 추가해보세요.</p>
-      </div>
+      <SectionIntro
+        className={intro}
+        description="가고 싶은 순서대로 장소를 선택해 추가해보세요."
+        title="어떤 코스 순서로 가고싶나요?"
+      />
 
       <div className={picker}>
         <CourseCategoryPicker
