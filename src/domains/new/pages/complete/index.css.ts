@@ -65,16 +65,18 @@ export const confetti = style({
 export const cardImage = style({
   position: "absolute",
   top: 90,
-  left: -52,
+  left: "50%",
   width: 457,
   height: 366,
+  transform: "translateX(-50%)",
 });
 
 export const badge = style({
   position: "absolute",
   top: 24,
-  left: 140,
+  left: "50%",
   display: "flex",
+  transform: "translateX(-50%)",
   alignItems: "center",
   justifyContent: "center",
   width: 76,
@@ -92,8 +94,9 @@ export const badge = style({
 export const codeRow = style({
   position: "absolute",
   top: 96,
-  left: 72,
+  left: "50%",
   display: "flex",
+  transform: "translateX(-50%)",
   alignItems: "center",
   gap: 16,
   width: 209,
