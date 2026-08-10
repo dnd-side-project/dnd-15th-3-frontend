@@ -53,6 +53,32 @@ export const Default: Story = {
   render: () => <DefaultStory />,
 };
 
+function NoHeaderStory() {
+  return (
+    <BottomSheet
+      isOpen
+      onClose={() => {}}
+      initialSnap={1}
+      snapPoints={[0, 227, 1]}
+      hasHeader={false}
+      disableDismiss
+    >
+      <WithBottomSheetContext>
+        {(context) => {
+          return (
+            <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 773 }}>
+              <strong>모임 바텀시트</strong> <br /> 현재 snapPoint: {context.currentSnap}
+            </div>
+          );
+        }}
+      </WithBottomSheetContext>
+    </BottomSheet>
+  );
+}
+
+export const NoHeader: Story = {
+  render: () => <NoHeaderStory />,
+};
 function ToggleStory() {
   const [isOpen, setIsOpen] = useState(false);
   return (

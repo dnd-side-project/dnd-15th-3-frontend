@@ -6,6 +6,7 @@ import { backdrop, bottomSheet, container, content, dragIndicator, header } from
 type SheetProps = Omit<ComponentProps<typeof Sheet>, "unstyled" | "detent" | "className">;
 
 interface BottomSheetProps extends SheetProps {
+  hasHeader?: boolean;
   topBorderRadius?: "sm" | "md";
   onTapBackdrop?: () => void;
 }
@@ -14,14 +15,17 @@ export function BottomSheet({
   children,
   topBorderRadius,
   onTapBackdrop,
+  hasHeader = true,
   ...props
 }: BottomSheetProps) {
   return (
     <Sheet unstyled {...props} className={bottomSheet} detent="content">
       <Sheet.Container className={container}>
-        <Sheet.Header className={header({ topBorderRadius: topBorderRadius })}>
-          <div className={dragIndicator} />
-        </Sheet.Header>
+        {hasHeader && (
+          <Sheet.Header className={header({ topBorderRadius: topBorderRadius })}>
+            <div className={dragIndicator} />
+          </Sheet.Header>
+        )}
         <Sheet.Content className={content}>{children}</Sheet.Content>
       </Sheet.Container>
       {onTapBackdrop && <Sheet.Backdrop style={backdrop} onTap={onTapBackdrop} />}
