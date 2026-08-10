@@ -14,7 +14,6 @@ export interface MeetingMapPlace {
 }
 
 export interface MeetingMapProps {
-  center: Coordinates;
   places?: MeetingMapPlace[];
   currentPosition?: Coordinates | null;
   level?: number;
@@ -24,24 +23,28 @@ export interface MeetingMapProps {
 // 코스 순서마다 마커 색을 돌려 쓴다.
 const TONES: RouteMarkerTone[] = ["blue", "pink", "purple"];
 
+const SEOUL_CITY_HALL: Coordinates = { lat: 37.5665, lng: 126.978 };
+
+const toCoordinates = (place: MeetingMapPlace): Coordinates => ({
+  lat: place.latitude,
+  lng: place.longitude,
+});
+
 export function MeetingMap({
-  center,
   places = [],
   currentPosition = null,
   level = 4,
   onSelectPlace,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
+  const first = places[0];
+  const center = currentPosition ?? (first === undefined ? SEOUL_CITY_HALL : toCoordinates(first));
 
   return (
     <div className={root}>
-      <Map center={currentPosition ?? center} className={map} level={level}>
+      <Map center={center} className={map} level={level}>
         {places.map((place, index) => (
-          <CustomOverlayMap
-            key={place.id}
-            position={{ lat: place.latitude, lng: place.longitude }}
-            yAnchor={1}
-          >
+          <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
             <RouteMarker
               imageAlt={place.name}
               imageUrl={place.previewUrl}

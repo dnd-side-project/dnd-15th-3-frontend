@@ -9,10 +9,11 @@ import { Layout } from "../../../../../components/layout";
 import { LocationButton } from "../../../../../components/location-button";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PlaceSearchInput } from "../../../../../components/text-input";
-import { Toggle, type ToggleValue } from "../../../../../components/toggle";
+import { Toggle } from "../../../../../components/toggle";
 import { useCurrentPosition } from "../../../../../hooks/use-current-position";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { CourseCategoryChips } from "../../../../catalog/components/course-category-chips";
+import { useCategorySlug } from "../../../../catalog/hooks";
 import { getAccessToken } from "../../../access-token";
 import { meetingQueries } from "../../../api/queries";
 import { MeetingMap } from "../../../components/meeting-map";
@@ -42,51 +43,25 @@ export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
-  const { data: categories = [] } = useQuery(catalogQueries.categories());
+  const categoryOf = useCategorySlug();
 
-  const [view, setView] = useState<ToggleValue>("map");
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
   const { data: places } = useQuery(catalogQueries.places(deferredKeyword));
   const { position, locate, loading } = useCurrentPosition();
 
-  const center =
-    meeting === undefined
-      ? { lat: 37.5665, lng: 126.978 }
-      : { lat: meeting.firstLocation.latitude, lng: meeting.firstLocation.longitude };
-
-  const categoryOf = (categoryId: string) =>
-    categories.find((category) => category.id === categoryId)?.slug ?? "other";
-
   return (
     <Layout>
       <div className={root}>
         <MeetingMap
-          center={center}
           currentPosition={position}
-          places={
-            meeting === undefined
-              ? []
-              : [
-                  {
-                    id: meeting.firstLocation.id,
-                    name: meeting.firstLocation.name,
-                    latitude: meeting.firstLocation.latitude,
-                    longitude: meeting.firstLocation.longitude,
-                  },
-                ]
-          }
+          places={meeting === undefined ? [] : [meeting.firstLocation]}
         />
 
         <div className={toggle}>
           <Toggle
-            value={view}
-            onChange={(next) => {
-              setView(next);
-              if (next === "list") {
-                void navigate(`/meeting/${id}/choice`);
-              }
-            }}
+            value="map"
+            onChange={() => void navigate(`/meeting/${id}/choice`)}
           />
         </div>
 
