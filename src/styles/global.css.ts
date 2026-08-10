@@ -11,7 +11,6 @@ globalStyle("html, body", {
   padding: 0,
 });
 
-// Pretendard 는 index.html 에서 불러온다.
 globalStyle(":root", {
   vars: {
     [vars.font.body]:
