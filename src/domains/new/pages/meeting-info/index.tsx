@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 
+import { SectionIntro } from "../../../../components/section-intro";
 import { TextInput } from "../../../../components/text-input";
 import { useMeetingTypes } from "../../../catalog/hooks";
 import { MEETING_TYPE_ICONS } from "../../../catalog/meeting-type-icons";
@@ -8,8 +9,6 @@ import { useMeetingDraft } from "../../draft";
 
 import {
   intro,
-  introDescription,
-  introTitle,
   name,
   nameLabel,
   typeCard,
@@ -43,10 +42,11 @@ export function MeetingInfoPage() {
         />
       </div>
 
-      <div className={intro}>
-        <h2 className={introTitle}>어떤 모임인가요?</h2>
-        <p className={introDescription}>모임을 가장 잘 나타내는 카테고리를 선택해주세요.</p>
-      </div>
+      <SectionIntro
+        className={intro}
+        description="모임을 가장 잘 나타내는 카테고리를 선택해주세요."
+        title="어떤 모임인가요?"
+      />
 
       <div className={types}>
         {meetingTypes.map((meetingType) => {
