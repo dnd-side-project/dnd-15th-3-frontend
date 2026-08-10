@@ -5,7 +5,7 @@ import CaretLeftIcon from "../../../../../../assets/icon-caret-left.svg?react";
 import PlusIcon from "../../../../../../assets/icon-plus.svg?react";
 import { Layout } from "../../../../../../components/layout";
 import { PlaceIcon } from "../../../../../../components/place-icon";
-import { useCategories } from "../../../../../catalog/hooks";
+import { useCategorySlug } from "../../../../../catalog/hooks";
 import { getAccessToken } from "../../../../access-token";
 import { meetingQueries } from "../../../../api/queries";
 import { MeetingMap } from "../../../../components/meeting-map";
@@ -36,36 +36,16 @@ export function PlaceDetailPage() {
   const navigate = useNavigate();
   const { id = "", placeId = "" } = useParams();
   const { data: meeting } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
-  const categories = useCategories();
+  const categoryOf = useCategorySlug();
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
   const place = recommendation?.place ?? meeting?.firstLocation;
-  const slug =
-    categories.find((category) => category.id === recommendation?.categoryId)?.slug ?? "other";
-
-  const center =
-    place === undefined
-      ? { lat: 37.5665, lng: 126.978 }
-      : { lat: place.latitude, lng: place.longitude };
+  const slug = categoryOf(recommendation?.categoryId ?? "");
 
   return (
     <Layout>
       <div className={root}>
-        <MeetingMap
-          center={center}
-          places={
-            place === undefined
-              ? []
-              : [
-                  {
-                    id: place.id,
-                    name: place.name,
-                    latitude: place.latitude,
-                    longitude: place.longitude,
-                  },
-                ]
-          }
-        />
+        <MeetingMap places={place === undefined ? [] : [place]} />
 
         <div className={sheet}>
           <div className={grabber}>
