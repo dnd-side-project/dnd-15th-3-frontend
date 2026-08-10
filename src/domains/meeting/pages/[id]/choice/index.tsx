@@ -9,10 +9,10 @@ import { CtaButton } from "../../../../../components/cta-button";
 import { Layout } from "../../../../../components/layout";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PreferenceButton } from "../../../../../components/preference-button";
-import { Toggle, type ToggleValue } from "../../../../../components/toggle";
+import { Toggle } from "../../../../../components/toggle";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { CategoryIcon } from "../../../../catalog/category-icons";
-import { useCategories } from "../../../../catalog/hooks";
+import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
 import { getAccessToken } from "../../../access-token";
 import { meetingQueries } from "../../../api/queries";
 
@@ -46,6 +46,7 @@ export function ChoicePage() {
   const { id = "" } = useParams();
   const { data: meeting, isPending } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
   const categories = useCategories();
+  const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -57,9 +58,6 @@ export function ChoicePage() {
     );
   }
 
-  const slugOf = (categoryId: string) =>
-    categories.find((category) => category.id === categoryId)?.slug ?? "other";
-
   const visible = meeting.recommendations.filter(
     (recommendation) => filter === "all" || slugOf(recommendation.categoryId) === filter,
   );
@@ -68,14 +66,7 @@ export function ChoicePage() {
     <Layout>
       <div className={root}>
         <div className={toggle}>
-          <Toggle
-            value={"list" satisfies ToggleValue}
-            onChange={(next) => {
-              if (next === "map") {
-                void navigate(`/meeting/${id}/place`);
-              }
-            }}
-          />
+          <Toggle value="list" onChange={() => void navigate(`/meeting/${id}/place`)} />
         </div>
 
         <div className={filters}>
