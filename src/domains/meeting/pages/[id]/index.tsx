@@ -111,27 +111,19 @@ export function MeetingPage() {
           </div>
 
           <div className={infoCard}>
-            <button className={infoCell} type="button">
-              <CalendarIcon aria-hidden height={24} width={24} />
-              <span className={infoValue}>
-                {formatDate(meeting.date)}
-                <CaretDownIcon aria-hidden height={14} width={14} />
-              </span>
-            </button>
-            <button className={infoCell} type="button">
-              <ClockIcon aria-hidden height={24} width={24} />
-              <span className={infoValue}>
-                {meeting.time}
-                <CaretDownIcon aria-hidden height={14} width={14} />
-              </span>
-            </button>
-            <button className={infoCell} type="button">
-              <MapPinIcon aria-hidden height={24} width={24} />
-              <span className={infoValue}>
-                {meeting.firstLocation.name}
-                <CaretDownIcon aria-hidden height={14} width={14} />
-              </span>
-            </button>
+            {[
+              { Icon: CalendarIcon, value: formatDate(meeting.date) },
+              { Icon: ClockIcon, value: meeting.time },
+              { Icon: MapPinIcon, value: meeting.firstLocation.name },
+            ].map(({ Icon, value }) => (
+              <button className={infoCell} key={value} type="button">
+                <Icon aria-hidden height={24} width={24} />
+                <span className={infoValue}>
+                  {value}
+                  <CaretDownIcon aria-hidden height={14} width={14} />
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 
