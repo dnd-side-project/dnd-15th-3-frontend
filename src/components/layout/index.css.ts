@@ -1,8 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
+// 프레임 배경. sticky 상단 앱바가 같은 색을 깔아야 해서 밖으로 노출한다.
+export const surfaceColor = "#F5F6F8";
+
 const colors = {
   backdrop: "#EEEEEE",
-  surface: "#F5F6F8",
+  surface: surfaceColor,
 };
 
 export const letterbox = style({
