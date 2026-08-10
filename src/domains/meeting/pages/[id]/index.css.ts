@@ -98,6 +98,7 @@ export const typeSuffix = style({
 export const titleRow = style({
   position: "absolute",
   top: 131,
+  right: 20,
   left: 23,
   display: "flex",
   alignItems: "flex-end",
@@ -106,6 +107,10 @@ export const titleRow = style({
 
 export const title = style({
   margin: 0,
+  minWidth: 0,
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
   color: colors.white,
   fontFamily: vars.font.body,
   fontSize: 26,
@@ -130,9 +135,9 @@ export const editButton = style({
 export const infoCard = style({
   position: "absolute",
   top: 179,
+  right: 22,
   left: 23,
   display: "flex",
-  width: 348,
   height: 81,
   borderRadius: 10,
   background: "radial-gradient(120% 200% at 50% 120%, #95CFFF 0%, #55A8FF 50%, #4498FF 100%)",
@@ -326,6 +331,9 @@ export const cardTexts = recipe({
   base: {
     position: "absolute",
     top: 155,
+    right: 8,
+    display: "flex",
+    flexDirection: "column",
   },
   variants: {
     card: {
