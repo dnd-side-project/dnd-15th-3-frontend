@@ -49,4 +49,13 @@ export const TitleOnly: Story = {
   },
 };
 
+export const Scrollable: Story = {
+  render: (args) => (
+    <>
+      <TopAppBar {...args} />
+      <div style={{ height: 1200 }} />
+    </>
+  ),
+};
+
 export default meta;
