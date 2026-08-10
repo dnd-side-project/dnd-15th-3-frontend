@@ -4,8 +4,6 @@ import { vars } from "../../../../../styles/theme.css";
 
 const colors = {
   surface: "#FFFFFF",
-  heading: "#3D3D3D",
-  description: "#6D6D6D",
   action: "#707D91",
 };
 
@@ -17,30 +15,7 @@ export const root = style({
 });
 
 export const intro = style({
-  position: "relative",
-  display: "flex",
-  flexDirection: "column",
-  gap: 8,
   marginTop: 30,
-  padding: "0 23px",
-});
-
-export const introTitle = style({
-  margin: 0,
-  color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
-});
-
-export const introDescription = style({
-  margin: 0,
-  color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.4,
 });
 
 export const editButton = style({
