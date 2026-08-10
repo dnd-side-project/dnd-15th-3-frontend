@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import { SectionIntro } from "../../../../components/section-intro";
 import { DayPicker } from "../../components/day-picker";
 import { StepPage } from "../../components/step-page";
 import { TimePicker } from "../../components/time-picker";
@@ -8,7 +9,7 @@ import { useMeetingDraft } from "../../draft";
 import type { Time } from "../../types/time";
 import { formatTwoDigits } from "../../utils/time";
 
-import { fields, intro, introDescription, introTitle } from "./index.css";
+import { fields, intro } from "./index.css";
 
 /** CreateMeetingDto.date 는 YYYY-MM-DD */
 function toDateString(date: Date) {
@@ -59,10 +60,11 @@ export function MeetingSchedulePage() {
       title="모임생성"
       onPrimary={() => void navigate("/new/complete")}
     >
-      <div className={intro}>
-        <h2 className={introTitle}>정해진 모임 날짜와 시간을 작성해주세요</h2>
-        <p className={introDescription}>모두가 만날 수 있는 날짜와 시간을 선택해주세요</p>
-      </div>
+      <SectionIntro
+        className={intro}
+        description="모두가 만날 수 있는 날짜와 시간을 선택해주세요"
+        title="정해진 모임 날짜와 시간을 작성해주세요"
+      />
 
       <div className={fields}>
         <DayPicker
