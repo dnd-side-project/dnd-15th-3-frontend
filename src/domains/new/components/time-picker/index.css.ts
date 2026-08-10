@@ -20,10 +20,10 @@ export const trigger = style({
 });
 
 export const timePickArea = style({
-  paddingTop: 20.65,
+  paddingTop: 21,
   paddingBottom: 15,
   fontFamily: vars.font.body,
-  fontSize: 26.64,
+  fontSize: 27,
   color: "#262626",
   display: "flex",
   flexDirection: "column",
@@ -35,16 +35,16 @@ export const timePickArea = style({
 export const stepper = style({
   display: "flex",
   flexDirection: "column",
-  width: 53.88,
+  width: 54,
   alignItems: "center",
-  rowGap: 14.97,
+  rowGap: 15,
 });
 
 export const stepperButton = style({
   borderStyle: "none",
   borderRadius: 100,
   backgroundColor: "white",
-  padding: 8.98,
+  padding: 9,
   color: "#6D6D6D",
   margin: 0,
   display: "flex",
@@ -90,15 +90,15 @@ export const confirmButton = recipe({
 });
 export const stepperGroup = style({
   display: "flex",
-  columnGap: 67.35,
+  columnGap: 67,
   alignItems: "center",
   justifyContent: "center",
-  width: 380.65,
-  marginBlock: 2.65,
+  width: 381,
+  marginBlock: 3,
 });
 
 export const timeGroup = style({
   display: "flex",
-  columnGap: 35.92,
+  columnGap: 36,
   alignItems: "center",
 });

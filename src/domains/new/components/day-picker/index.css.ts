@@ -73,7 +73,7 @@ export const monthCaption = style({
   width: 83,
   fontWeight: 700,
   textAlign: "center",
-  fontSize: "1rem",
+  fontSize: 16,
   paddingLeft: 8,
 });
 export const navigation = style({
@@ -92,10 +92,10 @@ export const weekdays = style({
   color: "#888888",
 });
 export const weekday = style({
-  fontSize: "1rem",
+  fontSize: 16,
   fontWeight: 400,
-  padding: "0px 0px 15px 0px ",
-  width: 43.32,
+  padding: "0 0 15px",
+  width: 43,
 });
 
 export const today = style({
@@ -106,20 +106,20 @@ export const monthGrid = style({
   fontSize: 16,
   paddingTop: 19,
   borderSpacing: `8px 0`,
-  paddingBottom: 12.6,
+  paddingBottom: 13,
 });
 
 export const day = style({
   borderWidth: 0,
   padding: 0,
-  height: 43.32,
-  width: 43.32,
+  height: 43,
+  width: 43,
 });
 export const dayButton = style({
   borderWidth: 0,
   padding: 0,
-  height: 43.32,
-  width: 43.32,
+  height: 43,
+  width: 43,
   backgroundColor: "transparent",
   color: "inherit",
   cursor: "pointer",

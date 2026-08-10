@@ -24,9 +24,9 @@ function StepperButton({ stepType, onClick }: StepperButtonProps) {
   return (
     <button className={styles.stepperButton} onClick={onClick}>
       {stepType === "up" ? (
-        <ArrowUpIcon width={35.92} height={35.92} />
+        <ArrowUpIcon width={36} height={36} />
       ) : (
-        <ArrowDownIcon width={35.92} height={35.92} />
+        <ArrowDownIcon width={36} height={36} />
       )}
     </button>
   );
