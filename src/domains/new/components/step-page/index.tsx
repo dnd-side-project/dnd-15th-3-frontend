@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 
 import { CtaButtonRow } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
+import { surfaceColor } from "../../../../components/layout/index.css";
 import { TopAppBar } from "../../../../components/top-app-bar";
 
 import { body, footer } from "./index.css";
@@ -26,7 +27,7 @@ export function StepPage({
 
   return (
     <Layout>
-      <TopAppBar title={title} onBack={() => void navigate(-1)} />
+      <TopAppBar background={surfaceColor} title={title} onBack={() => void navigate(-1)} />
       <div className={body}>{children}</div>
       <div className={footer}>
         <CtaButtonRow
