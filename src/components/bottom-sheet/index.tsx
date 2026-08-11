@@ -1,9 +1,11 @@
 import {
   Children,
   isValidElement,
-  type CSSProperties,
   type ComponentProps,
+  type CSSProperties,
   type ReactNode,
+  type Ref,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -22,13 +24,26 @@ import {
 
 const DUMMY_PREFIX = "__end_dummy__";
 
-type SheetProps = Omit<ComponentProps<typeof Sheet>, "unstyled" | "detent" | "className">;
+type SheetProps = Omit<ComponentProps<typeof Sheet>, "unstyled" | "className">;
 
-interface BottomSheetProps extends SheetProps {
+export interface ViewProps<T extends string = string> {
+  name: T;
+  height: number;
+  next?: T | null;
+  previous?: T | null;
+  disableDismiss?: boolean;
+  children: ReactNode;
+}
+
+export function View<T extends string>(_props: ViewProps<T>): null {
+  return null;
+}
+
+export interface BottomSheetProps extends SheetProps {
   hasHeader?: boolean;
   topBorderRadius?: "sm" | "md";
   onTapBackdrop?: () => void;
-  initialView?: string;
+  ref?: Ref<SheetRef>;
 }
 
 export function BottomSheet({
@@ -36,30 +51,12 @@ export function BottomSheet({
   topBorderRadius,
   onTapBackdrop,
   hasHeader = true,
+  detent = "content",
+  ref,
   ...props
 }: BottomSheetProps) {
-  const views = extractViews(children);
-  const isViewsMode = views.length > 0;
-  const initialView = props.initialView as string | undefined;
-
-  if (isViewsMode) {
-    if (!initialView) {
-      throw new Error("initialView is required when using BottomSheet.View");
-    }
-    return (
-      <BottomSheetViews
-        views={injectDummyViews(views)}
-        initialView={initialView}
-        topBorderRadius={topBorderRadius}
-        hasHeader={hasHeader}
-        onTapBackdrop={onTapBackdrop}
-        {...props}
-      />
-    );
-  }
-
   return (
-    <Sheet unstyled {...props} className={bottomSheet} detent="content">
+    <Sheet unstyled {...props} ref={ref} detent={detent} className={bottomSheet}>
       <Sheet.Container className={container}>
         {hasHeader && (
           <Sheet.Header className={header({ topBorderRadius: topBorderRadius })}>
@@ -73,21 +70,6 @@ export function BottomSheet({
   );
 }
 
-interface ViewProps<T extends string = string> {
-  name: T;
-  height: number;
-  next?: T | null;
-  previous?: T | null;
-  disableDismiss?: boolean;
-  children: ReactNode;
-}
-
-function View<T extends string>(_props: ViewProps<T>): null {
-  return null;
-}
-
-BottomSheet.View = View;
-
 interface ViewConfig {
   name: string;
   height: number;
@@ -97,112 +79,14 @@ interface ViewConfig {
   children: ReactNode;
 }
 
-interface BottomSheetViewsProps extends Omit<
-  BottomSheetProps,
-  "children" | "snapPoints" | "initialSnap" | "onSnap"
-> {
-  views: ViewConfig[];
-  initialView: string;
-}
-
-function BottomSheetViews({
-  views,
-  initialView,
-  topBorderRadius,
-  hasHeader = true,
-  onTapBackdrop,
-  ...props
-}: BottomSheetViewsProps) {
-  const ref = useRef<SheetRef>(null);
-  const [view, setView] = useState<string>(initialView);
-  const pendingPreviousRef = useRef(false);
-
-  const viewMap = new Map(views.map((v) => [v.name, v]));
-  const activeView = viewMap.get(view) ?? views[0]!;
-  const isDummy = view.startsWith(DUMMY_PREFIX);
-
-  const snapPoints = [0, activeView.height, 1];
-  const restIndex = 1;
-
-  useEffect(() => {
-    if (pendingPreviousRef.current) {
-      pendingPreviousRef.current = false;
-    }
-    ref.current?.snapTo(restIndex);
-  }, [view]);
-
-  useEffect(() => {
-    if (isDummy && activeView.previous) {
-      queueMicrotask(() => {
-        setView(activeView.previous!);
-      });
-    }
-  }, [isDummy, activeView.previous]);
-
-  const handleSnap = (index: number) => {
-    if (index === restIndex) {
-      return;
-    }
-    if (index < restIndex) {
-      const prev = activeView.previous;
-      if (prev === view) {
-        return;
-      }
-      if (typeof prev === "string") {
-        pendingPreviousRef.current = true;
-        setView(prev);
-      }
-      // null/undefined → 라이브러리 onClose가 닫기 처리
-    } else {
-      const next = activeView.next;
-      if (next === view) {
-        return;
-      }
-      if (typeof next === "string") {
-        setView(next);
-      }
-      // null/undefined → 도달 불가 (더미 주입으로 모든 next가 채워짐)
-    }
-  };
-
-  const wrapOnClose = () => {
-    if (pendingPreviousRef.current) {
-      return;
-    }
-    props.onClose?.();
-  };
-
-  const containerStyle: CSSProperties = { height: activeView.height };
-
-  return (
-    <Sheet
-      unstyled
-      {...props}
-      ref={ref}
-      className={bottomSheet}
-      detent="default"
-      snapPoints={snapPoints}
-      initialSnap={restIndex}
-      onSnap={handleSnap}
-      onClose={wrapOnClose}
-      disableDismiss={activeView.disableDismiss ?? false}
-      tweenConfig={{ ease: "linear", duration: 0.15 }}
-    >
-      <Sheet.Container className={container}>
-        {hasHeader && (
-          <Sheet.Header className={header({ topBorderRadius: topBorderRadius })}>
-            <div className={dragIndicator} />
-          </Sheet.Header>
-        )}
-        <Sheet.Content className={content}>
-          <div key={view} className={viewContainer} style={containerStyle}>
-            {activeView.children}
-          </div>
-        </Sheet.Content>
-      </Sheet.Container>
-      {onTapBackdrop && <Sheet.Backdrop style={backdrop} onTap={onTapBackdrop} />}
-    </Sheet>
-  );
+export interface MultiViewBottomSheetProps extends SheetProps {
+  view?: string;
+  onViewChange?: (view: string) => void;
+  initialView?: string;
+  children: ReactNode;
+  hasHeader?: boolean;
+  topBorderRadius?: "sm" | "md";
+  onTapBackdrop?: () => void;
 }
 
 function extractViews(children: ReactNode): ViewConfig[] {
@@ -242,6 +126,113 @@ function injectDummyViews(views: ViewConfig[]): ViewConfig[] {
       },
     ];
   });
+}
+
+export function MultiViewBottomSheet({
+  view,
+  onViewChange,
+  initialView,
+  children,
+  hasHeader = true,
+  topBorderRadius,
+  onTapBackdrop,
+  ...props
+}: MultiViewBottomSheetProps) {
+  const views = extractViews(children);
+  const processedViews = injectDummyViews(views);
+
+  const isControlled = view !== undefined;
+  const [internalView, setInternalView] = useState<string>(initialView ?? processedViews[0]!.name);
+  const currentView = isControlled ? view : internalView;
+
+  const ref = useRef<SheetRef>(null);
+  const pendingPreviousRef = useRef(false);
+
+  const viewMap = new Map(processedViews.map((v) => [v.name, v]));
+  const activeView = viewMap.get(currentView) ?? processedViews[0]!;
+  const isDummy = currentView.startsWith(DUMMY_PREFIX);
+
+  const snapPoints = [0, activeView.height, 1];
+  const restIndex = 1;
+
+  const setView = useCallback(
+    (newView: string) => {
+      if (!isControlled) {
+        setInternalView(newView);
+      }
+      onViewChange?.(newView);
+    },
+    [isControlled, onViewChange, setInternalView],
+  );
+
+  useEffect(() => {
+    if (pendingPreviousRef.current) {
+      pendingPreviousRef.current = false;
+    }
+    ref.current?.snapTo(restIndex);
+  }, [currentView]);
+
+  useEffect(() => {
+    if (isDummy && activeView.previous) {
+      queueMicrotask(() => {
+        setView(activeView.previous!);
+      });
+    }
+  }, [isDummy, activeView.previous, setView]);
+
+  const handleSnap = (index: number) => {
+    if (index === restIndex) {
+      return;
+    }
+    if (index < restIndex) {
+      const prev = activeView.previous;
+      if (prev === currentView) {
+        return;
+      }
+      if (typeof prev === "string") {
+        pendingPreviousRef.current = true;
+        setView(prev);
+      }
+    } else {
+      const next = activeView.next;
+      if (next === currentView) {
+        return;
+      }
+      if (typeof next === "string") {
+        setView(next);
+      }
+    }
+  };
+
+  const wrapOnClose = () => {
+    if (pendingPreviousRef.current) {
+      return;
+    }
+    props.onClose?.();
+  };
+
+  const containerStyle: CSSProperties = { height: activeView.height };
+
+  return (
+    <BottomSheet
+      {...props}
+      ref={ref}
+      detent="default"
+      snapPoints={snapPoints}
+      initialSnap={restIndex}
+      onSnap={handleSnap}
+      onClose={wrapOnClose}
+      disableDismiss={activeView.disableDismiss ?? false}
+      tweenConfig={{ ease: "linear", duration: 0.15 }}
+      hasHeader={hasHeader}
+      topBorderRadius={topBorderRadius}
+      onTapBackdrop={onTapBackdrop}
+    >
+      <div key={currentView} className={viewContainer} style={containerStyle}>
+        {activeView.children}
+      </div>
+    </BottomSheet>
+  );
 }
 
 export function WithBottomSheetContext({
