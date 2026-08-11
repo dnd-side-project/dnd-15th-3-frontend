@@ -20,6 +20,7 @@ import { MeetingMap } from "../../../components/meeting-map";
 import {
   addButton,
   bottomActions,
+  bottomStack,
   chips,
   empty,
   grabber,
@@ -53,74 +54,74 @@ export function PlaceSearchPage() {
   return (
     <Layout>
       <div className={root}>
-        <MeetingMap
-          currentPosition={position}
-          origin={meeting?.firstLocation}
-        />
+        <MeetingMap currentPosition={position} origin={meeting?.firstLocation} />
 
         <div className={toggle}>
-          <Toggle
-            value="map"
-            onChange={() => void navigate(`/meeting/${id}/choice`)}
-          />
+          <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
         </div>
 
         <div className={chips}>
           <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
         </div>
 
-        <div className={bottomActions}>
-          <LocationButton disabled={loading} onClick={locate} />
-          <button className={meetingPill} type="button" onClick={() => void navigate(`/meeting/${id}`)}>
-            <img alt="" className={pillIcon} src="/static/icon-meeting-calendar.webp" />
-            모임 상세
-            <CaretRightIcon aria-hidden height={16} width={16} />
-          </button>
-        </div>
-
-        <div className={sheet}>
-          <div className={grabber}>
-            <span className={grabberBar} />
+        <div className={bottomStack}>
+          <div className={bottomActions}>
+            <LocationButton disabled={loading} onClick={locate} />
+            <button
+              className={meetingPill}
+              type="button"
+              onClick={() => void navigate(`/meeting/${id}`)}
+            >
+              <img alt="" className={pillIcon} src="/static/icon-meeting-calendar.webp" />
+              모임 상세
+              <CaretRightIcon aria-hidden height={16} width={16} />
+            </button>
           </div>
 
-          <div className={search}>
-            <PlaceSearchInput
-              value={keyword}
-              onChange={(event) => setKeyword(event.target.value)}
-            />
-          </div>
+          <div className={sheet}>
+            <div className={grabber}>
+              <span className={grabberBar} />
+            </div>
 
-          {deferredKeyword.length === 0 ? (
-            <div className={sheetBottom} />
-          ) : places === undefined || places.length === 0 ? (
-            <p className={empty}>검색 결과가 없어요</p>
-          ) : (
-            <>
-              <div className={results}>
-                {places.map((place) => (
-                  <button
-                    className={result}
-                    key={place.id}
-                    type="button"
-                    onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
-                  >
-                    <img alt="" className={thumbnail} src={place.previewUrl} />
-                    <span className={resultTexts}>
-                      <span className={resultName}>
-                        <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
-                        {place.name}
-                      </span>
-                      <span className={resultAddress}>{place.address}</span>
-                    </span>
-                    <span aria-hidden className={addButton}>
-                      <PlusIcon height={16} width={16} />
-                    </span>
-                  </button>
-                ))}
-              </div>
+            <div className={search}>
+              <PlaceSearchInput
+                value={keyword}
+                onChange={(event) => setKeyword(event.target.value)}
+              />
+            </div>
+
+            {deferredKeyword.length === 0 ? (
               <div className={sheetBottom} />
-            </>
-          )}
+            ) : places === undefined || places.length === 0 ? (
+              <p className={empty}>검색 결과가 없어요</p>
+            ) : (
+              <>
+                <div className={results}>
+                  {places.map((place) => (
+                    <button
+                      className={result}
+                      key={place.id}
+                      type="button"
+                      onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
+                    >
+                      <img alt="" className={thumbnail} src={place.previewUrl} />
+                      <span className={resultTexts}>
+                        <span className={resultName}>
+                          <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
+                          {place.name}
+                        </span>
+                        <span className={resultAddress}>{place.address}</span>
+                      </span>
+                      <span aria-hidden className={addButton}>
+                        <PlusIcon height={16} width={16} />
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className={sheetBottom} />
+              </>
+            )}
+          </div>
         </div>
       </div>
     </Layout>

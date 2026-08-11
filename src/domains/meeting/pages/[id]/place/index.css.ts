@@ -38,15 +38,28 @@ export const chips = style({
   padding: "0 15px",
 });
 
-export const bottomActions = style({
+// 시트 높이가 화면마다 달라, 지도 위 버튼이 시트를 따라 올라오도록 함께 묶는다.
+export const bottomStack = style({
   position: "absolute",
-  left: 20,
-  bottom: 139,
+  right: 0,
+  bottom: 0,
+  left: 0,
   zIndex: 1,
+  display: "flex",
+  flexDirection: "column",
+  gap: 14,
+  // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
+  pointerEvents: "none",
+});
+
+export const bottomActions = style({
+  pointerEvents: "auto",
   display: "flex",
   flexDirection: "column",
   gap: 7,
   alignItems: "flex-start",
+  alignSelf: "flex-start",
+  marginLeft: 20,
 });
 
 export const meetingPill = style({
@@ -74,11 +87,7 @@ export const pillIcon = style({
 });
 
 export const sheet = style({
-  position: "absolute",
-  right: 0,
-  bottom: 0,
-  left: 0,
-  zIndex: 2,
+  pointerEvents: "auto",
   borderRadius: "24px 24px 0 0",
   backgroundColor: colors.sheet,
   boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
