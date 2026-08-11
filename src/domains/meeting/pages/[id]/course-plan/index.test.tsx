@@ -27,9 +27,12 @@ function jsonResponse(body: unknown) {
 }
 
 function renderCoursePlan() {
-  const router = createMemoryRouter([{ path: "/meeting/:id/course-plan", Component: CoursePlanPage }], {
-    initialEntries: ["/meeting/1/course-plan"],
-  });
+  const router = createMemoryRouter(
+    [{ path: "/meeting/:id/course-plan", Component: CoursePlanPage }],
+    {
+      initialEntries: ["/meeting/1/course-plan"],
+    },
+  );
 
   render(
     <QueryClientProvider client={new QueryClient()}>
@@ -56,11 +59,11 @@ test("저장된 코스를 순서대로 보여준다", async () => {
   await expect.element(course.last()).toHaveTextContent("카페");
 });
 
-test("편집을 누르기 전에는 코스를 바꿀 수 없다", async () => {
+test("편집을 누르기 전에는 카테고리 목록을 보여주지 않는다", async () => {
   renderCoursePlan();
 
   await expect.element(page.getByRole("button", { name: "편집" })).toBeInTheDocument();
-  await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
+  await expect.element(page.getByRole("button", { name: "술 · 바" })).not.toBeInTheDocument();
 
   expect(document.querySelectorAll('[aria-pressed="true"]').length).toBe(2);
 });

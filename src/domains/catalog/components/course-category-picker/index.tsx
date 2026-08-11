@@ -42,23 +42,25 @@ export function CourseCategoryPicker({ value, onChange, gap }: CourseCategoryPic
         )}
       </div>
 
-      <div className={available({ gap })}>
-        <ChipGroup>
-          {categories.map((category) => (
-            <Chip
-              icon={<CategoryIcon slug={category.slug} />}
-              key={category.slug}
-              onClick={
-                onChange === undefined || value.length >= MAX_COURSE_STEPS
-                  ? undefined
-                  : () => onChange([...value, category.slug])
-              }
-            >
-              {category.name}
-            </Chip>
-          ))}
-        </ChipGroup>
-      </div>
+      {onChange === undefined ? null : (
+        <div className={available({ gap })}>
+          <ChipGroup>
+            {categories.map((category) => (
+              <Chip
+                icon={<CategoryIcon slug={category.slug} />}
+                key={category.slug}
+                onClick={
+                  value.length >= MAX_COURSE_STEPS
+                    ? undefined
+                    : () => onChange([...value, category.slug])
+                }
+              >
+                {category.name}
+              </Chip>
+            ))}
+          </ChipGroup>
+        </div>
+      )}
     </>
   );
 }
