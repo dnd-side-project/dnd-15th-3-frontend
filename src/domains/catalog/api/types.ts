@@ -24,7 +24,8 @@ export type ProfileAvatarId =
   | "momo-yellow"
   | "momo-purple"
   | "momo-pink"
-  | "momo-green";
+  | "momo-green"
+  | "momo-mint";
 
 export interface MeetingTypeResponse {
   id: string;

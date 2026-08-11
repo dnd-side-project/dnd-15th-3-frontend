@@ -1,8 +1,4 @@
-import type {
-  CategoryResponse,
-  MeetingTypeResponse,
-  ProfileAvatarResponse,
-} from "./api/types";
+import type { CategoryResponse, MeetingTypeResponse, ProfileAvatarResponse } from "./api/types";
 
 // 카탈로그 API 3종이 501 을 반환하는 동안 쓰는 값. 목록과 순서는 디자인에 고정돼 있다.
 export const MEETING_TYPES: MeetingTypeResponse[] = [
@@ -33,5 +29,6 @@ export const PROFILE_AVATARS: ProfileAvatarResponse[] = [
   { id: "momo-yellow", name: "노란 모모" },
   { id: "momo-green", name: "초록 모모" },
   { id: "momo-pink", name: "분홍 모모" },
+  { id: "momo-mint", name: "민트 모모" },
   { id: "momo-purple", name: "보라 모모" },
 ];
