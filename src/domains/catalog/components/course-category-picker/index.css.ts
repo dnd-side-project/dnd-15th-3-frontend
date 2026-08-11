@@ -9,6 +9,7 @@ export const selected = style({
 
 export const empty = style({
   // 83px 인 선택 영역 안에서 시안의 문구 위치에 맞춘다.
+  margin: 0,
   paddingTop: 43,
   color: "#A4B1C5",
   fontFamily: vars.font.body,
