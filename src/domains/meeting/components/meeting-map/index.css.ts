@@ -33,6 +33,12 @@ export const notice = style({
   pointerEvents: "none",
 });
 
+export const originMarker = style({
+  display: "block",
+  width: 60,
+  height: 62,
+});
+
 export const currentDot = style({
   width: 18,
   height: 18,

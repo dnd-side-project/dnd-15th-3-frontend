@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useDeferredValue, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import CalendarIcon from "../../../../../assets/icon-calendar.svg?react";
 import CaretRightIcon from "../../../../../assets/icon-caret-right.svg?react";
 import PlusIcon from "../../../../../assets/icon-plus.svg?react";
 import { Layout } from "../../../../../components/layout";
@@ -26,6 +25,7 @@ import {
   grabber,
   grabberBar,
   meetingPill,
+  pillIcon,
   result,
   resultAddress,
   resultName,
@@ -55,7 +55,7 @@ export function PlaceSearchPage() {
       <div className={root}>
         <MeetingMap
           currentPosition={position}
-          places={meeting === undefined ? [] : [meeting.firstLocation]}
+          origin={meeting?.firstLocation}
         />
 
         <div className={toggle}>
@@ -72,7 +72,7 @@ export function PlaceSearchPage() {
         <div className={bottomActions}>
           <LocationButton disabled={loading} onClick={locate} />
           <button className={meetingPill} type="button" onClick={() => void navigate(`/meeting/${id}`)}>
-            <CalendarIcon aria-hidden height={20} width={20} />
+            <img alt="" className={pillIcon} src="/static/icon-meeting-calendar.webp" />
             모임 상세
             <CaretRightIcon aria-hidden height={16} width={16} />
           </button>
@@ -113,7 +113,7 @@ export function PlaceSearchPage() {
                       <span className={resultAddress}>{place.address}</span>
                     </span>
                     <span aria-hidden className={addButton}>
-                      <PlusIcon height={24} width={24} />
+                      <PlusIcon height={16} width={16} />
                     </span>
                   </button>
                 ))}

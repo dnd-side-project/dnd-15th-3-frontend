@@ -3,7 +3,7 @@ import { CustomOverlayMap, Map, useKakaoLoader } from "react-kakao-maps-sdk";
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
 
-import { currentDot, map, notice, root } from "./index.css";
+import { currentDot, map, notice, originMarker, root } from "./index.css";
 
 export interface MeetingMapPlace {
   id: string;
@@ -14,6 +14,8 @@ export interface MeetingMapPlace {
 }
 
 export interface MeetingMapProps {
+  /** 모임 위치. 코스 마커와 다른 핀으로 그린다. */
+  origin?: MeetingMapPlace;
   places?: MeetingMapPlace[];
   currentPosition?: Coordinates | null;
   level?: number;
@@ -31,18 +33,25 @@ const toCoordinates = (place: MeetingMapPlace): Coordinates => ({
 });
 
 export function MeetingMap({
+  origin,
   places = [],
   currentPosition = null,
   level = 4,
   onSelectPlace,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
-  const first = places[0];
-  const center = currentPosition ?? (first === undefined ? SEOUL_CITY_HALL : toCoordinates(first));
+  const focus = origin ?? places[0];
+  const center = currentPosition ?? (focus === undefined ? SEOUL_CITY_HALL : toCoordinates(focus));
 
   return (
     <div className={root}>
       <Map center={center} className={map} level={level}>
+        {origin === undefined ? null : (
+          <CustomOverlayMap position={toCoordinates(origin)} yAnchor={1}>
+            <img alt={origin.name} className={originMarker} src="/static/map-origin-marker.webp" />
+          </CustomOverlayMap>
+        )}
+
         {places.map((place, index) => (
           <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
             <RouteMarker

@@ -6,7 +6,7 @@ const colors = {
   pillBackground: "#3D4A5C",
   pillText: "#FFFFFF",
   sheet: "#FFFFFF",
-  divider: "#ECEFF5",
+  divider: "#DAE1EC",
   placeName: "#262626",
   placeAddress: "#707D91",
   addBackground: "#ECEFF5",
@@ -52,9 +52,9 @@ export const bottomActions = style({
 export const meetingPill = style({
   display: "flex",
   alignItems: "center",
-  gap: 8,
+  gap: 6,
   height: 35,
-  padding: "0 12px",
+  padding: "0 7px",
   border: "none",
   borderRadius: vars.radius.full,
   backgroundColor: colors.pillBackground,
@@ -65,6 +65,12 @@ export const meetingPill = style({
   fontWeight: 600,
   lineHeight: "22px",
   cursor: "pointer",
+});
+
+export const pillIcon = style({
+  flexShrink: 0,
+  width: 23,
+  height: 23,
 });
 
 export const sheet = style({
@@ -107,9 +113,9 @@ export const results = style({
 export const result = style({
   display: "flex",
   alignItems: "center",
-  gap: 16,
+  gap: 14,
   width: "100%",
-  padding: "13px 20px",
+  padding: "17px 20px",
   border: "none",
   borderTop: `1px solid ${colors.divider}`,
   background: "none",
@@ -120,8 +126,8 @@ export const result = style({
 export const thumbnail = style({
   flexShrink: 0,
   width: 96,
-  height: 96,
-  borderRadius: 8,
+  height: 71,
+  borderRadius: 5,
   backgroundColor: colors.addBackground,
   objectFit: "cover",
 });
@@ -164,8 +170,8 @@ export const addButton = style({
   flexShrink: 0,
   alignItems: "center",
   justifyContent: "center",
-  width: 56,
-  height: 56,
+  width: 36,
+  height: 36,
   border: "none",
   borderRadius: vars.radius.full,
   backgroundColor: colors.addBackground,
