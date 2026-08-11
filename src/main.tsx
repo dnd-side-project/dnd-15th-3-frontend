@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import "./styles/fonts";
 import "./styles/theme.css";
 import "./styles/global.css";
-import "./index.css";
 import { QueryProvider } from "./providers/query-provider";
 import { Routes } from "./routes.tsx";
 
