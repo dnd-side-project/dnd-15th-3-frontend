@@ -11,7 +11,6 @@ import { PlaceIcon } from "../../../../../components/place-icon";
 import { PreferenceButton } from "../../../../../components/preference-button";
 import { Toggle } from "../../../../../components/toggle";
 import type { CategorySlug } from "../../../../catalog/api/types";
-import { CategoryIcon } from "../../../../catalog/category-icons";
 import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
 import { getAccessToken } from "../../../access-token";
 import { meetingQueries } from "../../../api/queries";
@@ -83,7 +82,6 @@ export function ChoicePage() {
             </Chip>
             {categories.map((category) => (
               <Chip
-                icon={<CategoryIcon slug={category.slug} />}
                 key={category.slug}
                 selected={filter === category.slug}
                 onClick={() => setFilter(category.slug)}
