@@ -68,7 +68,7 @@ export function MeetingCoursePage() {
         <span className={locationLabel}>모일 위치</span>
         <button className={locationField} type="button" onClick={() => setSheetOpen(true)}>
           {draft.firstLocation === null ? (
-            <span className={locationPlaceholder}>장소를 검색하세요</span>
+            <span className={locationPlaceholder}>위치를 검색해주세요</span>
           ) : (
             <span>{draft.firstLocation.name}</span>
           )}

@@ -33,6 +33,16 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
+test("코스를 고르기 전에는 안내 문구를 보여준다", async () => {
+  renderMeetingCourse();
+
+  await expect.element(page.getByText("아직 코스를 선택하지 않았어요!")).toBeInTheDocument();
+
+  await userEvent.click(page.getByRole("button", { name: "음식점" }));
+
+  await expect.element(page.getByText("아직 코스를 선택하지 않았어요!")).not.toBeInTheDocument();
+});
+
 test("카테고리를 고르면 코스 순서에 차례로 쌓인다", async () => {
   renderMeetingCourse();
 
