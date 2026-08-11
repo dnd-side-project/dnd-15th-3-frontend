@@ -56,16 +56,28 @@ const MEETING = {
   selectedCourse: null,
 };
 
+function jsonResponse(body: unknown) {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+}
+
 function renderPlaceDetail(placeId: string) {
-  fetchMock.mockResolvedValue(
-    new Response(JSON.stringify(MEETING), {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    }),
-  );
+  fetchMock.mockImplementation((input) => {
+    const url = new Request(input).url;
+    if (url.includes("/categories")) {
+      return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
+    }
+    return Promise.resolve(jsonResponse(MEETING));
+  });
 
   const router = createMemoryRouter(
-    [{ path: "/meeting/:id/place/:placeId", Component: PlaceDetailPage }],
+    [
+      { path: "/meeting/:id/place/:placeId", Component: PlaceDetailPage },
+      { path: "/meeting/:id", Component: () => <p>모임 상세</p> },
+      { path: "/meeting/:id/choice", Component: () => <p>추천목록</p> },
+    ],
     { initialEntries: [`/meeting/1/place/${placeId}`] },
   );
 

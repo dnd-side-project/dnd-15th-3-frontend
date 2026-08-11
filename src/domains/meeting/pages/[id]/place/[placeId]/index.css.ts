@@ -16,11 +16,7 @@ const colors = {
 };
 
 export const sheet = style({
-  position: "absolute",
-  right: 0,
-  bottom: 0,
-  left: 0,
-  zIndex: 2,
+  pointerEvents: "auto",
   display: "flex",
   flexDirection: "column",
   gap: 7,
