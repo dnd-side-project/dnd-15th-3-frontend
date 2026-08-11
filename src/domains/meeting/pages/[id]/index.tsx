@@ -180,10 +180,10 @@ export function MeetingPage() {
             <CtaButton onClick={() => void navigate(shareUrl)}>공유하기</CtaButton>
           ) : (
             <CtaButtonRow
-              primaryLabel="다음"
+              primaryLabel="모임 카드 생성"
               secondaryAriaLabel="공유하기"
               secondaryLabel={<ExportIcon aria-hidden height={24} width={24} />}
-              onPrimary={() => void navigate(`/meeting/${id}/course`)}
+              onPrimary={() => void navigate(`/meeting/${id}/card`)}
               onSecondary={() => void navigate(shareUrl)}
             />
           )}

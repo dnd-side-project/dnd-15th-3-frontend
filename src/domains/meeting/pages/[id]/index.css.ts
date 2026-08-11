@@ -26,8 +26,8 @@ export const header = style({
   position: "relative",
   height: 288,
   overflow: "hidden",
-  // Figma 는 상태바 48px 를 포함한 336px 이다.
-  background: "linear-gradient(166deg, #1E87FF 20%, #70B7FF 83%)",
+  // Figma 는 상태바 48px 를 포함한 336px 이다. 그라디언트 축이 프레임 위쪽에서 시작해 첫 스톱이 음수다.
+  background: "linear-gradient(167deg, #1E87FF -16%, #70B7FF 65%)",
 });
 
 export const confetti = style({

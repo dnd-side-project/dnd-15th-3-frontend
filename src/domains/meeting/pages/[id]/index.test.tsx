@@ -75,7 +75,9 @@ afterEach(() => {
 test("모임 이름과 날짜·시간·장소를 보여준다", async () => {
   renderMeeting();
 
-  await expect.element(page.getByRole("heading", { name: "을지로·성수 나들이" })).toBeInTheDocument();
+  await expect
+    .element(page.getByRole("heading", { name: "을지로·성수 나들이" }))
+    .toBeInTheDocument();
   await expect.element(page.getByText("26. 08. 05")).toBeInTheDocument();
   await expect.element(page.getByText("18:00")).toBeInTheDocument();
   await expect.element(page.getByText("을지로3가역")).toBeInTheDocument();
@@ -104,11 +106,13 @@ test("코스가 정해지기 전에는 공유하기만 보여준다", async () =
   renderMeeting();
 
   await expect.element(page.getByRole("button", { name: "공유하기" })).toBeInTheDocument();
-  await expect.element(page.getByRole("button", { name: "다음" })).not.toBeInTheDocument();
+  await expect
+    .element(page.getByRole("button", { name: "모임 카드 생성" }))
+    .not.toBeInTheDocument();
 });
 
-test("코스가 정해지면 다음 단계 버튼을 함께 보여준다", async () => {
+test("코스가 정해지면 모임 카드 생성 버튼을 함께 보여준다", async () => {
   renderMeeting({ ...MEETING, selectedCourse: { id: "41", recommendationIds: ["21"] } });
 
-  await expect.element(page.getByRole("button", { name: "다음" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "모임 카드 생성" })).toBeInTheDocument();
 });
