@@ -61,19 +61,26 @@ export const sort = style({
 });
 
 export const grid = style({
-  columns: 2,
-  columnGap: 12,
+  display: "flex",
+  gap: 13,
   margin: "25px 22px 0",
   // 마지막 카드가 하단 고정 버튼에 가리지 않게 한다.
   paddingBottom: 123,
 });
 
+export const column = style({
+  display: "flex",
+  flex: 1,
+  flexDirection: "column",
+  gap: 13,
+  minWidth: 0,
+});
+
 export const card = style({
   position: "relative",
-  marginBottom: 13,
+  flexShrink: 0,
   borderRadius: 12,
   overflow: "hidden",
-  breakInside: "avoid",
 });
 
 // 선호도 버튼과 중첩되지 않도록 카드 전체 링크를 아래에 깔아 둔다.
@@ -89,6 +96,8 @@ export const cardLink = style({
 export const cardImage = style({
   display: "block",
   width: "100%",
+  height: "100%",
+  objectFit: "cover",
 });
 
 export const cardScrim = style({
