@@ -45,7 +45,7 @@ export function PlaceDetailPage() {
   return (
     <Layout>
       <div className={root}>
-        <MeetingMap places={place === undefined ? [] : [place]} />
+        <MeetingMap origin={meeting?.firstLocation} />
 
         <div className={sheet}>
           <div className={grabber}>
