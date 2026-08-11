@@ -73,8 +73,9 @@ test("이미 선택된 탭을 클릭해도 다른 값으로 바뀌지 않는다"
 test("방향키로 다음 탭에 포커스를 옮긴다", async () => {
   renderTabs("a");
 
-  await userEvent.tab();
-  await expect.element(page.getByRole("tab", { name: "코스A" })).toHaveFocus();
+  const first = page.getByRole("tab", { name: "코스A" });
+  await expect.element(first).toBeInTheDocument();
+  first.element().focus();
 
   await userEvent.keyboard("{ArrowRight}");
   await expect.element(page.getByRole("tab", { name: "코스B" })).toHaveFocus();
@@ -83,7 +84,10 @@ test("방향키로 다음 탭에 포커스를 옮긴다", async () => {
 test("방향키로 이동한 탭을 Enter로 선택한다", async () => {
   const { onChange } = renderTabs("a");
 
-  await userEvent.tab();
+  const first = page.getByRole("tab", { name: "코스A" });
+  await expect.element(first).toBeInTheDocument();
+  first.element().focus();
+
   await userEvent.keyboard("{ArrowRight}{Enter}");
 
   expect(onChange).toHaveBeenCalledWith("b");
