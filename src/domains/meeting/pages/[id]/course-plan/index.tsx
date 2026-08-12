@@ -42,7 +42,7 @@ export function CoursePlanPage() {
     return (
       <Layout>
         <TopAppBar background={surfaceColor} title="코스 순서" onBack={() => void navigate(-1)} />
-        <p className={status}>코스를 불러오고 있어요</p>
+        <p className={status}>코스 불러오는 중</p>
       </Layout>
     );
   }
