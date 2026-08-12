@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router";
 
 import CaretRightIcon from "../../../../../assets/icon-caret-right.svg?react";
 import PlusIcon from "../../../../../assets/icon-plus.svg?react";
-import SearchIcon from "../../../../../assets/icon-search.svg?react";
+import RetryLargeIcon from "../../../../../assets/icon-retry-large.svg?react";
+import SearchLargeIcon from "../../../../../assets/icon-search-large.svg?react";
 import { Layout } from "../../../../../components/layout";
 import { LocationButton } from "../../../../../components/location-button";
 import { PlaceIcon } from "../../../../../components/place-icon";
@@ -53,13 +54,25 @@ interface SearchState {
 /** 시트에 목록 대신 띄울 안내. null 이면 목록을 그린다. */
 function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) {
   if (failed) {
-    return { title: "장소 정보를 불러오지 못했습니다.", description: "잠시 후 다시 시도해주세요." };
+    return {
+      Icon: RetryLargeIcon,
+      iconSize: { width: 40, height: 37 },
+      title: "장소 정보를 불러오지 못했습니다.",
+      description: "잠시 후 다시 시도해주세요.",
+    };
   }
   if (collecting) {
-    return { title: "주변 장소를 모으는 중이에요", description: "잠시만 기다려주세요!" };
+    return {
+      Icon: SearchLargeIcon,
+      iconSize: { width: 40, height: 40 },
+      title: "주변 장소를 모으는 중이에요",
+      description: "잠시만 기다려주세요!",
+    };
   }
   if (matchCount === 0) {
     return {
+      Icon: SearchLargeIcon,
+      iconSize: { width: 40, height: 40 },
       title: `‘${keyword}'에 대한 검색 결과가 없어요`,
       description: "검색어를 다시 확인해주세요.",
     };
@@ -131,7 +144,7 @@ export function PlaceSearchPage() {
 
             {deferredKeyword.length === 0 ? null : sheetNotice !== null ? (
               <div className={notice}>
-                <SearchIcon aria-hidden className={noticeIcon} height={40} width={40} />
+                <sheetNotice.Icon aria-hidden className={noticeIcon} {...sheetNotice.iconSize} />
                 <p className={noticeTitle}>{sheetNotice.title}</p>
                 <p className={noticeDescription}>{sheetNotice.description}</p>
               </div>
