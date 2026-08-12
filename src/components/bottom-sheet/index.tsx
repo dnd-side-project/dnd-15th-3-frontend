@@ -27,7 +27,9 @@ type SheetProps = Omit<ComponentProps<typeof Sheet>, "unstyled" | "className">;
 export interface BottomSheetProps extends SheetProps {
   hasHeader?: boolean;
   topBorderRadius?: "sm" | "md";
+  hasBackdrop?: boolean;
   onTapBackdrop?: () => void;
+  hasShadow?: boolean;
   ref?: Ref<SheetRef>;
   disableContentDrag?: boolean;
   disableContentScroll?: boolean;
@@ -36,9 +38,11 @@ export interface BottomSheetProps extends SheetProps {
 export function BottomSheet({
   children,
   topBorderRadius,
+  hasBackdrop = false,
   onTapBackdrop,
   hasHeader = true,
   detent = "content",
+  hasShadow = false,
   ref,
   disableContentDrag,
   disableContentScroll,
@@ -48,7 +52,7 @@ export function BottomSheet({
     <Sheet unstyled {...props} ref={ref} detent={detent} className={bottomSheet}>
       <Sheet.Container className={container}>
         {hasHeader && (
-          <Sheet.Header className={header({ topBorderRadius: topBorderRadius })}>
+          <Sheet.Header className={header({ topBorderRadius, shadow: hasShadow })}>
             <div className={dragIndicator} />
           </Sheet.Header>
         )}
@@ -60,7 +64,7 @@ export function BottomSheet({
           {children}
         </Sheet.Content>
       </Sheet.Container>
-      {onTapBackdrop && <Sheet.Backdrop style={backdrop} onTap={onTapBackdrop} />}
+      {hasBackdrop && <Sheet.Backdrop className={backdrop} onTap={onTapBackdrop} />}
     </Sheet>
   );
 }
@@ -93,7 +97,9 @@ export interface MultiViewBottomSheetProps extends SheetProps {
   children: ReactNode;
   hasHeader?: boolean;
   topBorderRadius?: "sm" | "md";
+  hasBackdrop?: boolean;
   onTapBackdrop?: () => void;
+  hasShadow?: boolean;
 }
 
 function extractViews(children: ReactNode): ViewProps[] {
@@ -122,7 +128,9 @@ export function MultiViewBottomSheet({
   children,
   hasHeader = true,
   topBorderRadius,
+  hasBackdrop = false,
   onTapBackdrop,
+  hasShadow = false,
   ...props
 }: MultiViewBottomSheetProps) {
   const views = extractViews(children);
@@ -168,7 +176,9 @@ export function MultiViewBottomSheet({
       onSnap={handleSnap}
       hasHeader={showHeader}
       topBorderRadius={topBorderRadius}
+      hasBackdrop={hasBackdrop}
       onTapBackdrop={onTapBackdrop}
+      hasShadow={hasShadow}
       disableContentScroll
     >
       <div className={viewStack} style={stackStyle}>

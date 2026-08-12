@@ -22,9 +22,16 @@ export const header = recipe({
       },
       md: { borderTopRightRadius: 24, borderTopLeftRadius: 24 },
     },
+    shadow: {
+      true: {
+        boxShadow: "0px 4px 70px rgba(0, 0, 0, 0.2)",
+      },
+      false: {},
+    },
   },
   defaultVariants: {
     topBorderRadius: "md",
+    shadow: false,
   },
 });
 
@@ -38,9 +45,9 @@ export const dragIndicator = style({
 export const container = style({
   margin: "0 auto",
 });
-export const backdrop = {
-  background: "none",
-};
+export const backdrop = style({
+  backgroundColor: "rgba(0,0,0,0.25)",
+});
 export const content = style({
   backgroundColor: "#FFFFFF",
 });
