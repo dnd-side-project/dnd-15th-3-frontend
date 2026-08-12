@@ -19,8 +19,6 @@ const MEETING = {
   time: "18:00",
   role: "HOST",
   isHost: true,
-  placeId: "101",
-  firstLocationPlaceId: "101",
   permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
   meetingType: { id: "1", code: "SOCIAL", name: "친목" },
   meetingTypeCode: "SOCIAL",
@@ -28,10 +26,11 @@ const MEETING = {
   categorySlugs: ["restaurant"],
   firstLocation: {
     id: "101",
-    name: "을지로3가역",
+    displayName: "을지로3가역",
     address: "서울 중구",
     latitude: 37.5661,
     longitude: 126.9917,
+    syncVersion: 1,
   },
   viewerParticipantId: "11",
   participants: [],
@@ -46,6 +45,7 @@ const MEETING = {
         address: "서울 종로구 예지동 6-1",
         latitude: 37.5701,
         longitude: 126.9989,
+        previewUrl: "/static/popup-momo.webp",
       },
       recommendedByParticipantId: "11",
       likeCount: 3,
@@ -54,6 +54,16 @@ const MEETING = {
     },
   ],
   selectedCourse: null,
+};
+
+const PLACE_DETAIL = {
+  placeId: "201",
+  category: "음식점",
+  categorySlug: "restaurant",
+  name: "광장시장 순대볶음",
+  address: "서울 종로구 예지동 6-1",
+  imageUrls: ["/static/popup-momo.webp", "/static/complete-momo.webp"],
+  previewUrl: "/static/popup-momo.webp",
 };
 
 function jsonResponse(body: unknown) {
@@ -68,6 +78,9 @@ function renderPlaceDetail(placeId: string) {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
+    }
+    if (url.includes("/places/")) {
+      return Promise.resolve(jsonResponse(PLACE_DETAIL));
     }
     return Promise.resolve(jsonResponse(MEETING));
   });
@@ -102,6 +115,13 @@ test("추천 목록에 있는 장소의 이름과 주소를 보여준다", async
 
   await expect.element(page.getByText("광장시장 순대볶음")).toBeInTheDocument();
   await expect.element(page.getByText("서울 종로구 예지동 6-1")).toBeInTheDocument();
+});
+
+test("장소 상세의 사진을 모두 보여준다", async () => {
+  renderPlaceDetail("201");
+
+  await expect.element(page.getByAltText("광장시장 순대볶음 사진 1")).toBeInTheDocument();
+  await expect.element(page.getByAltText("광장시장 순대볶음 사진 2")).toBeInTheDocument();
 });
 
 test("카카오맵 상세정보로 나가는 링크를 건다", async () => {

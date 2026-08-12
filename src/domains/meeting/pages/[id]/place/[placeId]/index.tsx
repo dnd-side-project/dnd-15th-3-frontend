@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 
 import CaretLeftIcon from "../../../../../../assets/icon-caret-left.svg?react";
@@ -8,6 +9,7 @@ import { LocationButton } from "../../../../../../components/location-button";
 import { PlaceIcon } from "../../../../../../components/place-icon";
 import { Toggle } from "../../../../../../components/toggle";
 import { useCurrentPosition } from "../../../../../../hooks/use-current-position";
+import { catalogQueries } from "../../../../../catalog/api/queries";
 import { CourseCategoryChips } from "../../../../../catalog/components/course-category-chips";
 import { useCategorySlug } from "../../../../../catalog/hooks";
 import { MeetingMap } from "../../../../components/meeting-map";
@@ -24,7 +26,7 @@ import {
 } from "../index.css";
 import {
   addButton,
-  address,
+  address as addressRow,
   addressLabel,
   addressValue,
   backButton,
@@ -51,8 +53,13 @@ export function PlaceDetailPage() {
   const { position, locate, loading } = useCurrentPosition();
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
-  const place = recommendation?.place ?? meeting?.firstLocation;
-  const slug = categoryOf(recommendation?.categoryId ?? "");
+  const { data: detail } = useQuery(catalogQueries.placeDetail(placeId));
+  // 사진이 오기 전에도 추천 목록에 있는 이름·주소로 먼저 그린다.
+  const origin = meeting?.firstLocation.id === placeId ? meeting.firstLocation : undefined;
+  const name = detail?.name ?? recommendation?.place.name ?? origin?.displayName;
+  const address = detail?.address ?? recommendation?.place.address ?? origin?.address;
+  const slug = detail?.categorySlug ?? categoryOf(recommendation?.categoryId ?? "");
+  const imageUrls = detail?.imageUrls ?? [];
 
   return (
     <Layout>
@@ -99,23 +106,34 @@ export function PlaceDetailPage() {
               <span />
             </div>
 
-            {place === undefined ? (
+            {name === undefined ? (
               <p className={status}>장소 정보를 찾지 못했어요</p>
             ) : (
               <>
                 <div className={photos}>
-                  <img alt="" className={photo} src="/static/meeting-course-map.webp" />
+                  {imageUrls.length === 0 ? (
+                    <span className={photo} />
+                  ) : (
+                    imageUrls.map((imageUrl, index) => (
+                      <img
+                        alt={`${name} 사진 ${index + 1}`}
+                        className={photo}
+                        key={imageUrl}
+                        src={imageUrl}
+                      />
+                    ))
+                  )}
                 </div>
 
                 <div className={summary}>
                   <div className={summaryTexts}>
                     <span className={nameStyle}>
                       <PlaceIcon category={slug} size={20} />
-                      {place.name}
+                      {name}
                     </span>
-                    <span className={address}>
+                    <span className={addressRow}>
                       <span className={addressLabel}>주소</span>
-                      <span className={addressValue}>{place.address}</span>
+                      <span className={addressValue}>{address}</span>
                     </span>
                   </div>
                   <button aria-label="코스에 담기" className={addButton} type="button">
@@ -125,7 +143,7 @@ export function PlaceDetailPage() {
 
                 <a
                   className={externalLink}
-                  href={`https://map.kakao.com/link/search/${encodeURIComponent(place.name)}`}
+                  href={`https://map.kakao.com/link/search/${encodeURIComponent(name)}`}
                   rel="noreferrer"
                   target="_blank"
                 >
