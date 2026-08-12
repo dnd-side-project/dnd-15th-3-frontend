@@ -71,7 +71,7 @@ export function ChoicePage() {
   if (isPending || meeting === undefined) {
     return (
       <Layout>
-        <p className={status}>추천 장소를 불러오고 있어요</p>
+        <p className={status}>추천 장소 불러오는 중</p>
       </Layout>
     );
   }
