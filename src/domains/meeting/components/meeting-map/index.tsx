@@ -1,4 +1,4 @@
-import { CustomOverlayMap, Map, StaticMap, useKakaoLoader } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
@@ -20,6 +20,8 @@ export interface MeetingMapProps {
   places?: MeetingMapPlace[];
   currentPosition?: Coordinates | null;
   level?: number;
+  /** 카드 안에 넣을 때는 조작을 막아 링크가 클릭을 받게 한다. */
+  interactive?: boolean;
   onSelectPlace?: (placeId: string) => void;
 }
 
@@ -38,6 +40,7 @@ export function MeetingMap({
   places = [],
   currentPosition = null,
   level = 4,
+  interactive = true,
   onSelectPlace,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
@@ -45,8 +48,14 @@ export function MeetingMap({
   const center = currentPosition ?? (focus === undefined ? SEOUL_CITY_HALL : toCoordinates(focus));
 
   return (
-    <div className={root}>
-      <Map center={center} className={map} level={level}>
+    <div className={root({ interactive })}>
+      <Map
+        center={center}
+        className={map}
+        draggable={interactive}
+        level={level}
+        zoomable={interactive}
+      >
         {origin === undefined ? null : (
           <CustomOverlayMap position={toCoordinates(origin)} yAnchor={1}>
             <img
@@ -79,41 +88,5 @@ export function MeetingMap({
       {loading ? <p className={notice}>지도를 불러오는 중이에요</p> : null}
       {error === undefined ? null : <p className={notice}>지도를 불러오지 못했어요</p>}
     </div>
-  );
-}
-
-export interface MeetingStaticMapProps {
-  className?: string;
-  origin?: MeetingLocationResponse;
-  places?: MeetingMapPlace[];
-  level?: number;
-}
-
-/** 카드 안에 넣는 정지 지도. 카드 전체가 링크라 조작을 받지 않는다. */
-export function MeetingStaticMap({
-  className,
-  origin,
-  places = [],
-  level = 6,
-}: MeetingStaticMapProps) {
-  const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
-  const focus = origin ?? places[0];
-  // 시안의 지도에는 이름표가 없어 핀만 찍는다.
-  const markers = [
-    ...(origin === undefined ? [] : [{ position: toCoordinates(origin) }]),
-    ...places.map((place) => ({ position: toCoordinates(place) })),
-  ];
-
-  if (loading || error !== undefined) {
-    return <span aria-hidden className={className} />;
-  }
-
-  return (
-    <StaticMap
-      center={focus === undefined ? SEOUL_CITY_HALL : toCoordinates(focus)}
-      className={className}
-      level={level}
-      marker={markers}
-    />
   );
 }

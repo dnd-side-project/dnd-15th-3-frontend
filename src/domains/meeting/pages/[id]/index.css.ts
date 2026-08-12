@@ -284,12 +284,6 @@ export const courseNavigation = style({
   height: 80,
 });
 
-export const mapImage = style({
-  display: "block",
-  width: "100%",
-  height: "100%",
-});
-
 export const mapScrim = style({
   position: "absolute",
   // 지도 타일이 자체 z-index 를 쓰므로 그 위로 올린다.

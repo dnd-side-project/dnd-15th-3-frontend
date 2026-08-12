@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "../../../../styles/theme.css";
 
@@ -9,10 +10,17 @@ const colors = {
   currentHalo: "rgba(55, 147, 255, 0.25)",
 };
 
-export const root = style({
-  position: "absolute",
-  inset: 0,
-  backgroundColor: colors.fallback,
+export const root = recipe({
+  base: {
+    position: "absolute",
+    inset: 0,
+    backgroundColor: colors.fallback,
+  },
+  variants: {
+    interactive: {
+      false: { pointerEvents: "none" },
+    },
+  },
 });
 
 export const map = style({

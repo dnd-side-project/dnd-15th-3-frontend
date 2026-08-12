@@ -23,7 +23,7 @@ import { TimePickerSheet } from "../../../../components/time-picker";
 import { parseDateString, parseTimeString } from "../../../../utils/time";
 import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
 import { useMeetingTypes } from "../../../catalog/hooks";
-import { MeetingStaticMap } from "../../components/meeting-map";
+import { MeetingMap } from "../../components/meeting-map";
 import { useMeeting, useMeetingPermissions } from "../../hooks";
 
 import {
@@ -46,7 +46,6 @@ import {
   infoCard,
   infoCell,
   infoValue,
-  mapImage,
   mapScrim,
   nav,
   participant,
@@ -246,8 +245,9 @@ export function MeetingPage() {
             </Link>
 
             <Link className={card({ card: "map" })} to={`/meeting/${id}/place`}>
-              <MeetingStaticMap
-                className={mapImage}
+              <MeetingMap
+                interactive={false}
+                level={6}
                 origin={meeting.firstLocation}
                 places={coursePlaces}
               />
