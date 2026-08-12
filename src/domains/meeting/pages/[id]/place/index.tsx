@@ -13,9 +13,8 @@ import { useCurrentPosition } from "../../../../../hooks/use-current-position";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { CourseCategoryChips } from "../../../../catalog/components/course-category-chips";
 import { useCategorySlug } from "../../../../catalog/hooks";
-import { getAccessToken } from "../../../access-token";
-import { meetingQueries } from "../../../api/queries";
 import { MeetingMap } from "../../../components/meeting-map";
+import { useMeeting } from "../../../hooks";
 
 import {
   addButton,
@@ -43,7 +42,7 @@ import {
 export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
-  const { data: meeting } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
+  const { data: meeting } = useMeeting();
   const categoryOf = useCategorySlug();
 
   const [keyword, setKeyword] = useState("");
