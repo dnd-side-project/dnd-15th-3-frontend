@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
+import { text } from "../../../../../styles/text";
+
 import { vars } from "../../../../../styles/theme.css";
 
 const colors = {
@@ -15,79 +17,6 @@ const colors = {
   noticeTitle: "#000000",
   noticeDescription: "#6D6D6D",
 };
-
-export const root = style({
-  position: "relative",
-  display: "flex",
-  flexDirection: "column",
-  flex: 1,
-  overflow: "hidden",
-});
-
-export const toggle = style({
-  position: "absolute",
-  top: 20,
-  left: "50%",
-  transform: "translateX(-50%)",
-  zIndex: 1,
-});
-
-export const chips = style({
-  position: "absolute",
-  top: 81,
-  left: 0,
-  right: 0,
-  zIndex: 1,
-  padding: "0 15px",
-});
-
-// 시트 높이가 화면마다 달라, 지도 위 버튼이 시트를 따라 올라오도록 함께 묶는다.
-export const bottomStack = style({
-  position: "absolute",
-  right: 0,
-  bottom: 0,
-  left: 0,
-  zIndex: 1,
-  display: "flex",
-  flexDirection: "column",
-  gap: 14,
-  // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
-  pointerEvents: "none",
-});
-
-export const bottomActions = style({
-  pointerEvents: "auto",
-  display: "flex",
-  flexDirection: "column",
-  gap: 7,
-  alignItems: "flex-start",
-  alignSelf: "flex-start",
-  marginLeft: 20,
-});
-
-export const meetingPill = style({
-  display: "flex",
-  alignItems: "center",
-  gap: 6,
-  height: 35,
-  padding: "0 7px",
-  border: "none",
-  borderRadius: vars.radius.full,
-  backgroundColor: colors.pillBackground,
-  boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
-  color: colors.pillText,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 600,
-  lineHeight: "22px",
-  cursor: "pointer",
-});
-
-export const pillIcon = style({
-  flexShrink: 0,
-  width: 23,
-  height: 23,
-});
 
 export const sheet = style({
   pointerEvents: "auto",
@@ -157,10 +86,7 @@ export const resultName = style({
   alignItems: "center",
   gap: 8,
   color: colors.placeName,
-  fontFamily: vars.font.body,
-  fontSize: 18,
-  fontWeight: 600,
-  lineHeight: 1.4,
+  ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -168,10 +94,7 @@ export const resultName = style({
 
 export const resultAddress = style({
   color: colors.placeAddress,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.4,
+  ...text({ size: 16, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -208,20 +131,14 @@ export const noticeTitle = style({
   alignSelf: "stretch",
   margin: 0,
   color: colors.noticeTitle,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: "30px",
+  ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const noticeDescription = style({
   alignSelf: "stretch",
   margin: "1px 0 0",
   color: colors.noticeDescription,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 500,
-  lineHeight: "21px",
+  ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 
 export const sheetBottom = style({

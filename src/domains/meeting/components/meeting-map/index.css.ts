@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../../../styles/text";
+
 import { vars } from "../../../../styles/theme.css";
 
 const colors = {
@@ -35,9 +37,7 @@ export const notice = style({
   alignItems: "center",
   justifyContent: "center",
   color: colors.muted,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
+  ...text({ size: 16, weight: 500 }),
   pointerEvents: "none",
 });
 
