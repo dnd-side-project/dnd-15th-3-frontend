@@ -1,8 +1,8 @@
-import EllipsisIcon from "../../assets/icon-ellipsis.svg?react";
 import ActivityIcon from "../../assets/icon-place-activity.svg?react";
 import BarIcon from "../../assets/icon-place-bar.svg?react";
 import CafeIcon from "../../assets/icon-place-cafe.svg?react";
 import CultureIcon from "../../assets/icon-place-culture.svg?react";
+import OtherIcon from "../../assets/icon-place-other.svg?react";
 import RestaurantIcon from "../../assets/icon-place-restaurant.svg?react";
 import ShoppingIcon from "../../assets/icon-place-shopping.svg?react";
 import WalkIcon from "../../assets/icon-place-walk.svg?react";
@@ -33,7 +33,7 @@ const glyphs = {
   bar: BarIcon,
   culture: CultureIcon,
   cafe: CafeIcon,
-  other: EllipsisIcon,
+  other: OtherIcon,
 };
 
 export function PlaceIcon({ category, size = 20, label }: PlaceIconProps) {

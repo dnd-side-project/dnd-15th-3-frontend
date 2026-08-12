@@ -12,6 +12,7 @@ const categories: PlaceCategory[] = [
   "bar",
   "culture",
   "cafe",
+  "other",
 ];
 
 const meta = {
@@ -40,7 +41,7 @@ export const Default: Story = {
   ),
 };
 
-// 카테고리 7종을 한 번에 보여주는 쇼케이스라 단일 args 로 표현할 수 없어 컨트롤을 끈다
+// 카테고리 8종을 한 번에 보여주는 쇼케이스라 단일 args 로 표현할 수 없어 컨트롤을 끈다
 export const AllCategories: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
