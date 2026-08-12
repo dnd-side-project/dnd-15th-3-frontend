@@ -1,4 +1,4 @@
-import { createContext, use, useCallback, useMemo, useState, type ReactNode } from "react";
+import { createContext, use, useCallback, useState, type ReactNode } from "react";
 
 import type { FirstMeetingPlaceResponse } from "../catalog/api/types";
 import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "../catalog/api/types";
@@ -67,9 +67,7 @@ export function MeetingDraftProvider({ children }: { children: ReactNode }) {
     setDraft(EMPTY_DRAFT);
   }, []);
 
-  const value = useMemo(() => ({ draft, patch, clear }), [draft, patch, clear]);
-
-  return <DraftContext value={value}>{children}</DraftContext>;
+  return <DraftContext value={{ draft, patch, clear }}>{children}</DraftContext>;
 }
 
 export function useMeetingDraft() {

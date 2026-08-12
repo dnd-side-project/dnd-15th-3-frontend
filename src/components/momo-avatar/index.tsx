@@ -1,4 +1,5 @@
 import type { ProfileAvatarId } from "../../domains/catalog/api/types";
+import { cx } from "../../lib/cx";
 
 import { image, root } from "./index.css";
 
@@ -13,7 +14,7 @@ export interface MomoAvatarProps {
 
 export function MomoAvatar({ avatarId, size = "medium", alt = "", className }: MomoAvatarProps) {
   return (
-    <span className={[root({ size }), className].filter(Boolean).join(" ")}>
+    <span className={cx(root({ size }), className)}>
       <img alt={alt} className={image} src={`/static/avatar-${avatarId}.webp`} />
     </span>
   );

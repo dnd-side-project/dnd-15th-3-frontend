@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 
 import { CtaButtonRow } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
-import { surfaceColor } from "../../../../components/layout/index.css";
 import { TopAppBar } from "../../../../components/top-app-bar";
 
+import { surfaceColor } from "../../../../components/layout/index.css";
 import { body, footer } from "./index.css";
 
 export interface StepPageProps {

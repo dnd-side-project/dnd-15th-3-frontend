@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
+import { text } from "../../../../styles/text";
+
 import { vars } from "../../../../styles/theme.css";
 
 const colors = {
@@ -56,10 +58,7 @@ export const nickname = style({
 export const label = style({
   margin: "0 3px",
   color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
 });
 
 export const sheetBody = style({
@@ -80,19 +79,13 @@ export const sheetTexts = style({
 export const sheetTitle = style({
   margin: 0,
   color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
 });
 
 export const sheetDescription = style({
   margin: 0,
   color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
 export const preview = style({
