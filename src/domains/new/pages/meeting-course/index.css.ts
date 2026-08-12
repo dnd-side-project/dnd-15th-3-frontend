@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../../../styles/theme.css";
+import { text } from "../../../../styles/text";
 
 const colors = {
   label: "#262626",
@@ -11,7 +11,6 @@ const colors = {
   icon: "#707D91",
   divider: "#ECEFF5",
   resultText: "#000000",
-  match: "#3793FF",
 };
 
 export const location = style({
@@ -25,10 +24,7 @@ export const location = style({
 export const locationLabel = style({
   margin: "0 3px",
   color: colors.label,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
 });
 
 export const locationField = style({
@@ -43,10 +39,7 @@ export const locationField = style({
   borderRadius: 8,
   backgroundColor: colors.fieldBackground,
   color: colors.fieldText,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
   textAlign: "left",
   cursor: "pointer",
 });
@@ -94,10 +87,7 @@ export const result = style({
   borderTop: `1px solid ${colors.divider}`,
   background: "none",
   color: colors.resultText,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 400,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
   textAlign: "left",
   cursor: "pointer",
   selectors: {
@@ -105,15 +95,8 @@ export const result = style({
   },
 });
 
-export const match = style({
-  color: colors.match,
-});
-
 export const empty = style({
   padding: "16px 3px",
   color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 400,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
 });

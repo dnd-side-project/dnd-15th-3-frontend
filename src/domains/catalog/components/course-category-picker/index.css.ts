@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../../../styles/theme.css";
+import { text } from "../../../../styles/text";
 
 export const selected = style({
   minHeight: 83,
@@ -12,10 +12,7 @@ export const empty = style({
   margin: 0,
   paddingTop: 43,
   color: "#A4B1C5",
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 400,
-  lineHeight: "20px",
+  ...text({ size: 14, weight: 400, lineHeight: "20px" }),
   textAlign: "center",
   whiteSpace: "pre-line",
 });

@@ -8,7 +8,6 @@ import OtherIcon from "../../assets/icon-place-other.svg?react";
 import RestaurantIcon from "../../assets/icon-place-restaurant.svg?react";
 import ShoppingIcon from "../../assets/icon-place-shopping.svg?react";
 import WalkIcon from "../../assets/icon-place-walk.svg?react";
-
 import type { CategorySlug } from "./api/types";
 
 const CATEGORY_ICONS: Record<CategorySlug, ComponentType<SVGProps<SVGSVGElement>>> = {

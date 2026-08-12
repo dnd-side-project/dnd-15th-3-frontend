@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import SearchIcon from "../../../../assets/icon-search.svg?react";
 import { BottomSheet } from "../../../../components/bottom-sheet";
+import { Highlight } from "../../../../components/highlight";
 import { SectionIntro } from "../../../../components/section-intro";
 import { TextInput } from "../../../../components/text-input";
 import { catalogQueries } from "../../../catalog/api/queries";
@@ -19,7 +20,6 @@ import {
   locationField,
   locationLabel,
   locationPlaceholder,
-  match,
   picker,
   result,
   results,
@@ -27,22 +27,6 @@ import {
   sheetBody,
   sheetSearch,
 } from "./index.css";
-
-/** 검색어와 일치하는 부분만 파랗게 보여준다. */
-function Highlight({ text, keyword }: { text: string; keyword: string }) {
-  const at = keyword.length === 0 ? -1 : text.indexOf(keyword);
-  if (at === -1) {
-    return <>{text}</>;
-  }
-
-  return (
-    <>
-      {text.slice(0, at)}
-      <span className={match}>{keyword}</span>
-      {text.slice(at + keyword.length)}
-    </>
-  );
-}
 
 export function MeetingCoursePage() {
   const navigate = useNavigate();
