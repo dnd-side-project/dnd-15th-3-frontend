@@ -78,7 +78,7 @@ export interface PlaceDetail {
   address: string;
   primaryImageUrl?: string;
   imageUrls?: string[];
-  previewUrl: string;
+  previewUrl?: string;
 }
 
 export interface FirstMeetingPlaceResponse {

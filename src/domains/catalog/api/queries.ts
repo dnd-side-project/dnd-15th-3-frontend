@@ -35,11 +35,13 @@ export const catalogQueries = {
       staleTime: CATALOG_STALE_TIME,
     }),
 
-  places: (params: SearchPlacesParams) =>
+  places: ({ meetingId, accessToken, categoryId, page, size }: SearchPlacesParams) =>
     queryOptions({
-      queryKey: ["catalog", "places", params] as const,
-      queryFn: ({ signal }) => searchPlaces(params, signal),
-      enabled: params.meetingId.length > 0,
+      // 토큰은 캐시 키에서 뺀다. 다시 받아도 같은 목록이다.
+      queryKey: ["catalog", "places", meetingId, categoryId, page, size] as const,
+      queryFn: ({ signal }) =>
+        searchPlaces({ meetingId, accessToken, categoryId, page, size }, signal),
+      enabled: meetingId.length > 0 && accessToken.length > 0,
     }),
 
   placeDetail: (placeId: string) =>
