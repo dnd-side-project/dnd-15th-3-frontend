@@ -98,11 +98,10 @@ export function MeetingStaticMap({
 }: MeetingStaticMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
   const focus = origin ?? places[0];
+  // 시안의 지도에는 이름표가 없어 핀만 찍는다.
   const markers = [
-    ...(origin === undefined
-      ? []
-      : [{ text: origin.displayName, position: toCoordinates(origin) }]),
-    ...places.map((place) => ({ text: place.name, position: toCoordinates(place) })),
+    ...(origin === undefined ? [] : [{ position: toCoordinates(origin) }]),
+    ...places.map((place) => ({ position: toCoordinates(place) })),
   ];
 
   if (loading || error !== undefined) {
