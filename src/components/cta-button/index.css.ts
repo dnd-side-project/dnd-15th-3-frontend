@@ -1,7 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { vars } from "../../styles/theme.css";
+import { text } from "../../styles/text";
 
 const colors = {
   primary: "#66ADFF",
@@ -27,10 +27,7 @@ export const button = recipe({
     height: 53,
     border: "none",
     borderRadius: 8,
-    fontFamily: vars.font.body,
-    fontSize: 18,
-    fontWeight: 600,
-    lineHeight: 1.6,
+    ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {

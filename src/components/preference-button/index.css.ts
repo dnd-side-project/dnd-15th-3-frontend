@@ -1,5 +1,7 @@
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../styles/text";
+
 import { vars } from "../../styles/theme.css";
 
 const colors = {
@@ -21,10 +23,7 @@ export const preferenceButton = recipe({
     padding: "0 9px",
     border: "none",
     borderRadius: vars.radius.full,
-    fontFamily: vars.font.body,
-    fontSize: 12,
-    fontWeight: 500,
-    lineHeight: "14.25px",
+    ...text({ size: 12, weight: 500, lineHeight: "14.25px" }),
     color: colors.foreground,
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",

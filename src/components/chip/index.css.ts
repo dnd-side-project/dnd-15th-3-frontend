@@ -1,6 +1,8 @@
 import { createVar, globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../styles/text";
+
 import { vars } from "../../styles/theme.css";
 
 const colors = {
@@ -36,10 +38,7 @@ export const chipContainer = recipe({
     borderRadius: vars.radius.full,
     width: "fit-content",
     flexShrink: 0,
-    fontFamily: vars.font.body,
-    fontSize: 16,
-    fontWeight: 500,
-    lineHeight: "22px",
+    ...text({ size: 16, weight: 500, lineHeight: "22px" }),
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {
       "(prefers-reduced-motion: reduce)": { transition: "none" },

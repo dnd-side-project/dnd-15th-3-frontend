@@ -1,6 +1,6 @@
 import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
-import { vars } from "../../styles/theme.css";
+import { text } from "../../styles/text";
 
 const colors = {
   background: "#DBECFF",
@@ -23,10 +23,7 @@ export const bubble = style({
   borderRadius: 8,
   backgroundColor: colors.background,
   color: colors.text,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.5,
+  ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   selectors: {
     "&::after": {
       content: '""',

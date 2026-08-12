@@ -1,5 +1,4 @@
 import { request } from "../../../lib/http";
-
 import type {
   CoursePlan,
   CreateMeetingRequest,
