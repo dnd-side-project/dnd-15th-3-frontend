@@ -11,6 +11,7 @@ import { PreferenceButton } from "../../../../../components/preference-button";
 import { Toggle } from "../../../../../components/toggle";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
+import type { RecommendationPreview } from "../../../api/types";
 import { useMeeting } from "../../../hooks";
 
 import {
@@ -59,6 +60,56 @@ const PREVIEW_CARDS = [
   { left: 14, top: 102, height: 44, background: "#D2DCF1" },
 ];
 
+function RecommendationCard({
+  recommendation,
+  height,
+  slug,
+  onOpen,
+}: {
+  recommendation: RecommendationPreview;
+  height: number;
+  slug: CategorySlug;
+  onOpen: () => void;
+}) {
+  const { place } = recommendation;
+
+  return (
+    <div className={card} style={{ height }}>
+      {place.previewUrl === null ? (
+        <span aria-hidden className={cardImage} />
+      ) : (
+        <img alt="" className={cardImage} src={place.previewUrl} />
+      )}
+      <span aria-hidden className={cardScrim} />
+      <button aria-label={place.name} className={cardLink} type="button" onClick={onOpen} />
+      <span className={cardBody}>
+        <span className={cardHeader}>
+          <span className={cardTexts}>
+            <span className={cardName}>
+              <PlaceIcon category={slug} size={16} />
+              {place.name}
+            </span>
+            <span className={cardAddress}>{place.address}</span>
+          </span>
+          <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
+        </span>
+        <span className={preferences}>
+          <PreferenceButton
+            count={recommendation.likeCount}
+            selected={recommendation.viewerPreference === "LIKE"}
+            type="like"
+          />
+          <PreferenceButton
+            count={recommendation.dislikeCount}
+            selected={recommendation.viewerPreference === "DISLIKE"}
+            type="dislike"
+          />
+        </span>
+      </span>
+    </div>
+  );
+}
+
 export function ChoicePage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -79,6 +130,11 @@ export function ChoicePage() {
   const visible = meeting.recommendations.filter(
     (recommendation) => filter === "all" || slugOf(recommendation.categoryId) === filter,
   );
+  // 왼쪽·오른쪽 열에 번갈아 담는다.
+  const columns = [
+    visible.filter((_, at) => at % 2 === 0),
+    visible.filter((_, at) => at % 2 === 1),
+  ];
 
   return (
     <Layout>
@@ -131,56 +187,17 @@ export function ChoicePage() {
           </div>
         ) : (
           <div className={grid}>
-            {CARD_HEIGHTS.map((heights, columnIndex) => (
+            {columns.map((cards, columnIndex) => (
               <div className={column} key={columnIndex}>
-                {visible
-                  .filter((_, at) => at % 2 === columnIndex)
-                  .map((recommendation, position) => (
-                    <div
-                      className={card}
-                      key={recommendation.id}
-                      style={{ height: heights[position % heights.length] }}
-                    >
-                      {recommendation.place.previewUrl === null ? (
-                        <span aria-hidden className={cardImage} />
-                      ) : (
-                        <img alt="" className={cardImage} src={recommendation.place.previewUrl} />
-                      )}
-                      <span aria-hidden className={cardScrim} />
-                      <button
-                        aria-label={recommendation.place.name}
-                        className={cardLink}
-                        type="button"
-                        onClick={() =>
-                          void navigate(`/meeting/${id}/place/${recommendation.place.id}`)
-                        }
-                      />
-                      <span className={cardBody}>
-                        <span className={cardHeader}>
-                          <span className={cardTexts}>
-                            <span className={cardName}>
-                              <PlaceIcon category={slugOf(recommendation.categoryId)} size={16} />
-                              {recommendation.place.name}
-                            </span>
-                            <span className={cardAddress}>{recommendation.place.address}</span>
-                          </span>
-                          <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
-                        </span>
-                        <span className={preferences}>
-                          <PreferenceButton
-                            count={recommendation.likeCount}
-                            selected={recommendation.viewerPreference === "LIKE"}
-                            type="like"
-                          />
-                          <PreferenceButton
-                            count={recommendation.dislikeCount}
-                            selected={recommendation.viewerPreference === "DISLIKE"}
-                            type="dislike"
-                          />
-                        </span>
-                      </span>
-                    </div>
-                  ))}
+                {cards.map((recommendation, position) => (
+                  <RecommendationCard
+                    height={CARD_HEIGHTS[columnIndex][position % CARD_HEIGHTS[columnIndex].length]}
+                    key={recommendation.id}
+                    recommendation={recommendation}
+                    slug={slugOf(recommendation.categoryId)}
+                    onOpen={() => void navigate(`/meeting/${id}/place/${recommendation.place.id}`)}
+                  />
+                ))}
               </div>
             ))}
           </div>
