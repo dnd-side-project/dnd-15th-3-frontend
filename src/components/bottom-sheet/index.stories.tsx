@@ -129,7 +129,7 @@ function MultiViewStory() {
           </div>
         </div>
       </View>
-      <View snapIndex={2} fullScreen>
+      <View snapIndex={2} fullScreen hasHeader={false}>
         <div style={{ paddingInline: "20px", fontFamily: "sans-serif" }}>
           <strong>Snap Index {snapIndex}</strong>
           <br />
@@ -147,4 +147,50 @@ function MultiViewStory() {
 
 export const MultiView: Story = {
   render: () => <MultiViewStory />,
+};
+
+function NestedStory() {
+  const [isFirstOpen, setIsFirstOpen] = useState(false);
+  const [isSecondOpen, setIsSecondOpen] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setIsFirstOpen(true)}>첫 번째 바텀시트 열기</button>
+
+      <BottomSheet
+        isOpen={isFirstOpen}
+        onClose={() => setIsFirstOpen(false)}
+        onTapBackdrop={() => setIsFirstOpen(false)}
+        topBorderRadius="md"
+      >
+        <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 227 }}>
+          <strong>첫 번째 바텀시트</strong>
+          <br />
+          아래 버튼을 클릭하면 두 번째 바텀시트가 열립니다.
+          <div style={{ marginTop: "16px" }}>
+            <button onClick={() => setIsSecondOpen(true)}>두 번째 바텀시트 열기</button>
+          </div>
+        </div>
+      </BottomSheet>
+
+      <BottomSheet
+        isOpen={isSecondOpen}
+        onClose={() => setIsSecondOpen(false)}
+        onTapBackdrop={() => setIsSecondOpen(false)}
+        topBorderRadius="md"
+      >
+        <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 300 }}>
+          <strong>두 번째 바텀시트 (중첩)</strong>
+          <br />
+          첫 번째 바텀시트 위에 겹쳐 표시됩니다.
+          <br />
+          backdrop을 클릭하면 닫힙니다.
+        </div>
+      </BottomSheet>
+    </div>
+  );
+}
+
+export const Nested: Story = {
+  render: () => <NestedStory />,
 };
