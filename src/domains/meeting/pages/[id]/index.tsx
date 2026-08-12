@@ -117,7 +117,7 @@ export function MeetingPage() {
             {[
               { Icon: CalendarIcon, value: formatDate(meeting.date) },
               { Icon: ClockIcon, value: meeting.time },
-              { Icon: MapPinIcon, value: meeting.firstLocation.name },
+              { Icon: MapPinIcon, value: meeting.firstLocation.displayName },
             ].map(({ Icon, value }) => (
               <button className={infoCell} key={value} type="button">
                 <Icon aria-hidden height={24} width={24} />

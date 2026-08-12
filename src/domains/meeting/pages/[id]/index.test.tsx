@@ -20,8 +20,6 @@ const MEETING: MeetingScreen = {
   time: "18:00",
   role: "HOST",
   isHost: true,
-  placeId: "101",
-  firstLocationPlaceId: "101",
   permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
   meetingType: { id: "1", code: "SOCIAL", name: "친목" },
   meetingTypeCode: "SOCIAL",
@@ -29,10 +27,11 @@ const MEETING: MeetingScreen = {
   categorySlugs: ["restaurant"],
   firstLocation: {
     id: "101",
-    name: "을지로3가역",
+    displayName: "을지로3가역",
     address: "서울 중구",
     latitude: 37.5661,
     longitude: 126.9917,
+    syncVersion: 1,
   },
   viewerParticipantId: "11",
   participants: [
