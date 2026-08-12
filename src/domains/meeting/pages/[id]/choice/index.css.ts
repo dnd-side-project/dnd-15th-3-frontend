@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../../../../styles/theme.css";
+import { text } from "../../../../../styles/text";
 
 const colors = {
   surface: "#FFFFFF",
@@ -41,10 +41,7 @@ export const bar = style({
 
 export const count = style({
   color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 18,
-  fontWeight: 600,
-  lineHeight: "22px",
+  ...text({ size: 18, weight: 600, lineHeight: "22px" }),
 });
 
 export const sort = style({
@@ -55,10 +52,7 @@ export const sort = style({
   border: "none",
   background: "none",
   color: colors.muted,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: "17px",
+  ...text({ size: 16, weight: 500, lineHeight: "17px" }),
   cursor: "pointer",
 });
 
@@ -94,19 +88,13 @@ export const emptyTexts = style({
 export const emptyTitle = style({
   margin: 0,
   color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: "30px",
+  ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const emptyDescription = style({
   margin: 0,
   color: colors.emptyDescription,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 500,
-  lineHeight: "21px",
+  ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 
 export const grid = style({
@@ -186,10 +174,7 @@ export const cardName = style({
   alignItems: "center",
   gap: 6,
   color: colors.cardText,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 600,
-  lineHeight: "20px",
+  ...text({ size: 16, weight: 600, lineHeight: "20px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -197,10 +182,7 @@ export const cardName = style({
 
 export const cardAddress = style({
   color: colors.cardText,
-  fontFamily: vars.font.body,
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: "12px",
+  ...text({ size: 12, weight: 500, lineHeight: "12px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -230,8 +212,6 @@ export const footer = style({
 export const status = style({
   padding: "40px 20px",
   color: colors.muted,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
+  ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });
