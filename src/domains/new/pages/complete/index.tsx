@@ -1,6 +1,5 @@
 import "@fontsource/montserrat/latin-500.css";
 import "@fontsource/montserrat/latin-600.css";
-
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
@@ -73,7 +72,13 @@ export function CompletePage() {
       name: draft.name,
       date: draft.date,
       time: draft.time,
-      firstLocationPlaceId: draft.firstLocation?.id ?? "",
+      firstMeetingLocation: {
+        displayName: draft.firstLocation?.name ?? "",
+        address: draft.firstLocation?.address ?? "",
+        latitude: draft.firstLocation?.latitude ?? 0,
+        longitude: draft.firstLocation?.longitude ?? 0,
+        externalAddressId: draft.firstLocation?.externalAddressId,
+      },
       categorySlugs: draft.categorySlugs,
       host: {
         userKey: getUserKey(),

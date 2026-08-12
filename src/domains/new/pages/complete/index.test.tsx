@@ -20,14 +20,19 @@ const MEETING = {
   time: "18:00",
   role: "HOST",
   isHost: true,
-  placeId: "101",
-  firstLocationPlaceId: "101",
   permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
   meetingType: { id: "1", code: "SOCIAL", name: "친목" },
   meetingTypeCode: "SOCIAL",
   host: { userKey: "device-1", nickname: "방장모모", profileAvatarId: "momo-blue" },
   categorySlugs: ["restaurant"],
-  firstLocation: { id: "101", name: "을지로3가역", address: "서울", latitude: 1, longitude: 2 },
+  firstLocation: {
+    id: "101",
+    displayName: "을지로3가역",
+    address: "서울",
+    latitude: 1,
+    longitude: 2,
+    syncVersion: 1,
+  },
   viewerParticipantId: "11",
   participants: [],
   categorySteps: [],
@@ -40,7 +45,14 @@ const DRAFT = {
   profileAvatarId: "momo-blue",
   name: "을지로·성수 나들이",
   meetingTypeCode: "SOCIAL",
-  firstLocation: { id: "101", name: "을지로3가역", address: "서울", latitude: 1, longitude: 2 },
+  firstLocation: {
+    id: "101",
+    externalAddressId: "kakao-101",
+    name: "을지로3가역",
+    address: "서울",
+    latitude: 1,
+    longitude: 2,
+  },
   categorySlugs: ["restaurant", "cafe"],
   date: "2026-08-05",
   time: "18:00",
@@ -48,12 +60,20 @@ const DRAFT = {
 
 function renderComplete(initialEntry: string) {
   const router = createMemoryRouter(
-    [{ path: "/new", Component: newMeetingLayout, children: [{ path: "complete", Component: CompletePage }] }],
+    [
+      {
+        path: "/new",
+        Component: newMeetingLayout,
+        children: [{ path: "complete", Component: CompletePage }],
+      },
+    ],
     { initialEntries: [initialEntry] },
   );
 
   render(
-    <QueryClientProvider client={new QueryClient({ defaultOptions: { mutations: { retry: false } } })}>
+    <QueryClientProvider
+      client={new QueryClient({ defaultOptions: { mutations: { retry: false } } })}
+    >
       <RouterProvider router={router} />
     </QueryClientProvider>,
   );
@@ -89,7 +109,13 @@ test("초안을 들고 들어오면 모임을 만들고 초대코드를 보여�
     name: "을지로·성수 나들이",
     date: "2026-08-05",
     time: "18:00",
-    firstLocationPlaceId: "101",
+    firstMeetingLocation: {
+      displayName: "을지로3가역",
+      address: "서울",
+      latitude: 1,
+      longitude: 2,
+      externalAddressId: "kakao-101",
+    },
     categorySlugs: ["restaurant", "cafe"],
   });
 });
