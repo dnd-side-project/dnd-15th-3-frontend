@@ -72,7 +72,7 @@ export function MeetingPage() {
   if (isPending || meeting === undefined) {
     return (
       <Layout>
-        <p className={status}>모임 정보를 불러오고 있어요</p>
+        <p className={status}>모임 정보 불러오는 중</p>
       </Layout>
     );
   }
