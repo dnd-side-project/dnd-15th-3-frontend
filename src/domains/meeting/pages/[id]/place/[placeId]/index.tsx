@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 
 import CaretLeftIcon from "../../../../../../assets/icon-caret-left.svg?react";
@@ -11,9 +10,8 @@ import { Toggle } from "../../../../../../components/toggle";
 import { useCurrentPosition } from "../../../../../../hooks/use-current-position";
 import { CourseCategoryChips } from "../../../../../catalog/components/course-category-chips";
 import { useCategorySlug } from "../../../../../catalog/hooks";
-import { getAccessToken } from "../../../../access-token";
-import { meetingQueries } from "../../../../api/queries";
 import { MeetingMap } from "../../../../components/meeting-map";
+import { useMeeting } from "../../../../hooks";
 
 import {
   bottomActions,
@@ -48,7 +46,7 @@ import {
 export function PlaceDetailPage() {
   const navigate = useNavigate();
   const { id = "", placeId = "" } = useParams();
-  const { data: meeting } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
+  const { data: meeting } = useMeeting();
   const categoryOf = useCategorySlug();
   const { position, locate, loading } = useCurrentPosition();
 
