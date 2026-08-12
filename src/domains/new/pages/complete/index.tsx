@@ -62,22 +62,28 @@ export function CompletePage() {
   // 이 화면에 도착하는 순간 모임을 만든다. 새로고침해도 code 가 남아 있어 다시 만들지 않는다.
   const requested = useRef(false);
   useEffect(() => {
-    if (requested.current || invitationCode !== "" || draft.meetingTypeCode === null) {
+    const { meetingTypeCode, firstLocation } = draft;
+    if (
+      requested.current ||
+      invitationCode !== "" ||
+      meetingTypeCode === null ||
+      firstLocation === null
+    ) {
       return;
     }
     requested.current = true;
 
     const request: CreateMeetingRequest = {
-      meetingTypeCode: draft.meetingTypeCode,
+      meetingTypeCode,
       name: draft.name,
       date: draft.date,
       time: draft.time,
       firstMeetingLocation: {
-        displayName: draft.firstLocation?.name ?? "",
-        address: draft.firstLocation?.address ?? "",
-        latitude: draft.firstLocation?.latitude ?? 0,
-        longitude: draft.firstLocation?.longitude ?? 0,
-        externalAddressId: draft.firstLocation?.externalAddressId,
+        displayName: firstLocation.name,
+        address: firstLocation.address,
+        latitude: firstLocation.latitude,
+        longitude: firstLocation.longitude,
+        externalAddressId: firstLocation.externalAddressId,
       },
       categorySlugs: draft.categorySlugs,
       host: {
@@ -104,7 +110,7 @@ export function CompletePage() {
 
         {invitationCode === "" ? (
           <p className={status}>
-            {error === null ? "모임 방을 만들고 있어요" : "모임 방을 만들지 못했어요"}
+            {error === null ? "모임 방 만드는 중" : "모임 방을 만들지 못했습니다."}
           </p>
         ) : (
           <>

@@ -135,6 +135,6 @@ test("만드는 동안에는 진행 상태를 알린다", async () => {
 
   renderComplete("/new/complete");
 
-  await expect.element(page.getByText("모임 방을 만들고 있어요")).toBeInTheDocument();
+  await expect.element(page.getByText("모임 방 만드는 중")).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "모임 시작하기" })).toBeDisabled();
 });
