@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
+import { text } from "../../../../../../styles/text";
+
 import { vars } from "../../../../../../styles/theme.css";
 
 const colors = {
@@ -7,7 +9,6 @@ const colors = {
   headerBackground: "rgba(255, 255, 255, 0.93)",
   title: "#262626",
   address: "#7D7D7D",
-  grabber: "#D1D1D1",
   addBackground: "#ECEFF5",
   addIcon: "#A4B1C5",
   linkBackground: "#F2F3F7",
@@ -23,20 +24,6 @@ export const sheet = style({
   borderRadius: "24px 24px 0 0",
   backgroundColor: colors.sheet,
   boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
-});
-
-export const grabber = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: 25,
-});
-
-export const grabberBar = style({
-  width: 50,
-  height: 5,
-  borderRadius: 10,
-  backgroundColor: colors.grabber,
 });
 
 export const header = style({
@@ -63,10 +50,7 @@ export const backButton = style({
 
 export const headerTitle = style({
   color: colors.title,
-  fontFamily: vars.font.body,
-  fontSize: 18,
-  fontWeight: 600,
-  lineHeight: 1.6,
+  ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
   textAlign: "center",
 });
 
@@ -109,10 +93,7 @@ export const name = style({
   gap: 7,
   margin: "0 3px",
   color: colors.title,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -123,10 +104,7 @@ export const address = style({
   gap: 0,
   margin: "0 3px",
   color: colors.address,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
 export const addressLabel = style({
@@ -164,10 +142,7 @@ export const externalLink = style({
   borderRadius: 5,
   backgroundColor: colors.linkBackground,
   color: colors.address,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 400,
-  lineHeight: 1.2,
+  ...text({ size: 14, weight: 400, lineHeight: 1.2 }),
   textDecoration: "none",
 });
 
@@ -179,8 +154,6 @@ export const externalLogo = style({
 export const status = style({
   padding: "24px 20px calc(30px + env(safe-area-inset-bottom))",
   color: colors.address,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
+  ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });
