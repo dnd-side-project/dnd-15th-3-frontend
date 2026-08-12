@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import CaretRightIcon from "../../../../../assets/icon-caret-right.svg?react";
 import PlusIcon from "../../../../../assets/icon-plus.svg?react";
+import SearchIcon from "../../../../../assets/icon-search.svg?react";
 import { Layout } from "../../../../../components/layout";
 import { LocationButton } from "../../../../../components/location-button";
 import { PlaceIcon } from "../../../../../components/place-icon";
@@ -21,10 +22,13 @@ import {
   bottomActions,
   bottomStack,
   chips,
-  empty,
   grabber,
   grabberBar,
   meetingPill,
+  notice,
+  noticeDescription,
+  noticeIcon,
+  noticeTitle,
   pillIcon,
   result,
   resultAddress,
@@ -39,6 +43,30 @@ import {
   toggle,
 } from "./index.css";
 
+interface SearchState {
+  failed: boolean;
+  collecting: boolean;
+  keyword: string;
+  matchCount: number;
+}
+
+/** 시트에 목록 대신 띄울 안내. null 이면 목록을 그린다. */
+function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) {
+  if (failed) {
+    return { title: "장소 정보를 불러오지 못했습니다.", description: "잠시 후 다시 시도해주세요." };
+  }
+  if (collecting) {
+    return { title: "주변 장소를 모으는 중이에요", description: "잠시만 기다려주세요!" };
+  }
+  if (matchCount === 0) {
+    return {
+      title: `‘${keyword}'에 대한 검색 결과가 없어요`,
+      description: "검색어를 다시 확인해주세요.",
+    };
+  }
+  return null;
+}
+
 export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -47,15 +75,19 @@ export function PlaceSearchPage() {
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
   // 검색은 받아 둔 목록에서 걸러내므로 한 번에 최대치(50)까지 받는다.
-  const { data: places } = useQuery(
+  const { data: places, isError } = useQuery(
     catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id), size: 50 }),
   );
 
-  const collecting =
-    places?.collectionStatus === "PENDING" || places?.collectionStatus === "RUNNING";
   const matched = (places?.items ?? []).filter(
     (place) => place.name.includes(deferredKeyword) || place.address.includes(deferredKeyword),
   );
+  const sheetNotice = searchNotice({
+    failed: isError,
+    collecting: places?.collectionStatus === "PENDING" || places?.collectionStatus === "RUNNING",
+    keyword: deferredKeyword,
+    matchCount: matched.length,
+  });
   const { position, locate, loading } = useCurrentPosition();
 
   return (
@@ -97,43 +129,42 @@ export function PlaceSearchPage() {
               />
             </div>
 
-            {deferredKeyword.length === 0 ? (
-              <div className={sheetBottom} />
-            ) : collecting ? (
-              <p className={empty}>주변 장소를 모으고 있어요</p>
-            ) : matched.length === 0 ? (
-              <p className={empty}>검색 결과가 없어요</p>
+            {deferredKeyword.length === 0 ? null : sheetNotice !== null ? (
+              <div className={notice}>
+                <SearchIcon aria-hidden className={noticeIcon} height={40} width={40} />
+                <p className={noticeTitle}>{sheetNotice.title}</p>
+                <p className={noticeDescription}>{sheetNotice.description}</p>
+              </div>
             ) : (
-              <>
-                <div className={results}>
-                  {matched.map((place) => (
-                    <button
-                      className={result}
-                      key={place.id}
-                      type="button"
-                      onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
-                    >
-                      {place.previewUrl === null ? (
-                        <span className={thumbnail} />
-                      ) : (
-                        <img alt="" className={thumbnail} src={place.previewUrl} />
-                      )}
-                      <span className={resultTexts}>
-                        <span className={resultName}>
-                          <PlaceIcon category={place.category.slug} size={20} />
-                          {place.name}
-                        </span>
-                        <span className={resultAddress}>{place.address}</span>
+              <div className={results}>
+                {matched.map((place) => (
+                  <button
+                    className={result}
+                    key={place.id}
+                    type="button"
+                    onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
+                  >
+                    {place.previewUrl === null ? (
+                      <span className={thumbnail} />
+                    ) : (
+                      <img alt="" className={thumbnail} src={place.previewUrl} />
+                    )}
+                    <span className={resultTexts}>
+                      <span className={resultName}>
+                        <PlaceIcon category={place.category.slug} size={20} />
+                        {place.name}
                       </span>
-                      <span aria-hidden className={addButton}>
-                        <PlusIcon height={16} width={16} />
-                      </span>
-                    </button>
-                  ))}
-                </div>
-                <div className={sheetBottom} />
-              </>
+                      <span className={resultAddress}>{place.address}</span>
+                    </span>
+                    <span aria-hidden className={addButton}>
+                      <PlusIcon height={16} width={16} />
+                    </span>
+                  </button>
+                ))}
+              </div>
             )}
+
+            <div className={sheetBottom} />
           </div>
         </div>
       </div>

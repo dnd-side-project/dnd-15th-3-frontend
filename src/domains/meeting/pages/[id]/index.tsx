@@ -128,12 +128,10 @@ export function MeetingPage() {
   const shareUrl = `/new/complete?code=${meeting.invitationCode}`;
 
   // 코스를 고르기 전에는 모임 위치만 찍는다.
-  const coursePlaces = (meeting.selectedCourse?.recommendationIds ?? []).flatMap(
-    (recommendationId) =>
-      meeting.recommendations
-        .filter((recommendation) => recommendation.id === recommendationId)
-        .map((recommendation) => recommendation.place),
-  );
+  const placeOf = new Map(meeting.recommendations.map(({ id, place }) => [id, place]));
+  const coursePlaces = (meeting.selectedCourse?.recommendationIds ?? [])
+    .map((recommendationId) => placeOf.get(recommendationId))
+    .filter((place) => place !== undefined);
 
   return (
     <Layout>

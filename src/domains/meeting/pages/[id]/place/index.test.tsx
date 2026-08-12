@@ -60,18 +60,18 @@ const PLACES = {
   lastSyncedAt: null,
 };
 
-function jsonResponse(body: unknown) {
+function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
-    status: 200,
+    status,
     headers: { "content-type": "application/json" },
   });
 }
 
-function renderPlaceSearch(places: unknown = PLACES) {
+function renderPlaceSearch(places: unknown = PLACES, placesStatus = 200) {
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
     if (url.includes("/places/search")) {
-      return Promise.resolve(jsonResponse(places));
+      return Promise.resolve(jsonResponse(places, placesStatus));
     }
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
@@ -89,7 +89,9 @@ function renderPlaceSearch(places: unknown = PLACES) {
   );
 
   render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider
+      client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}
+    >
       <RouterProvider router={router} />
     </QueryClientProvider>,
   );
@@ -119,12 +121,30 @@ test("검색어를 넣으면 장소 목록을 보여준다", async () => {
   await expect.element(page.getByText("서울 종로구 예지동 6-1")).toBeInTheDocument();
 });
 
+test("검색 결과가 없으면 입력한 검색어를 되짚어 준다", async () => {
+  renderPlaceSearch({ ...PLACES, items: [], total: 0 });
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "메밀");
+
+  await expect.element(page.getByText("‘메밀'에 대한 검색 결과가 없어요")).toBeInTheDocument();
+  await expect.element(page.getByText("검색어를 다시 확인해주세요.")).toBeInTheDocument();
+});
+
+test("장소 목록 조회가 실패하면 다시 시도하라고 알린다", async () => {
+  renderPlaceSearch(null, 500);
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
+
+  await expect.element(page.getByText("장소 정보를 불러오지 못했습니다.")).toBeInTheDocument();
+  await expect.element(page.getByText("잠시 후 다시 시도해주세요.")).toBeInTheDocument();
+});
+
 test("장소를 아직 모으는 중이면 결과 없음 대신 수집 중임을 알린다", async () => {
   renderPlaceSearch({ ...PLACES, items: [], total: 0, collectionStatus: "RUNNING" });
 
   await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
 
-  await expect.element(page.getByText("주변 장소를 모으고 있어요")).toBeInTheDocument();
+  await expect.element(page.getByText("주변 장소를 모으는 중이에요")).toBeInTheDocument();
 });
 
 test("검색 결과를 누르면 장소 상세로 간다", async () => {

@@ -11,6 +11,9 @@ const colors = {
   placeAddress: "#707D91",
   addBackground: "#ECEFF5",
   addIcon: "#A4B1C5",
+  noticeIcon: "#E0E0E0",
+  noticeTitle: "#000000",
+  noticeDescription: "#6D6D6D",
 };
 
 export const root = style({
@@ -188,13 +191,37 @@ export const addButton = style({
   cursor: "pointer",
 });
 
-export const empty = style({
-  padding: "24px 20px 32px",
-  color: colors.placeAddress,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
+export const notice = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "41px 62px 45px",
   textAlign: "center",
+});
+
+export const noticeIcon = style({
+  marginBottom: 18,
+  color: colors.noticeIcon,
+});
+
+export const noticeTitle = style({
+  alignSelf: "stretch",
+  margin: 0,
+  color: colors.noticeTitle,
+  fontFamily: vars.font.body,
+  fontSize: 20,
+  fontWeight: 600,
+  lineHeight: "30px",
+});
+
+export const noticeDescription = style({
+  alignSelf: "stretch",
+  margin: "1px 0 0",
+  color: colors.noticeDescription,
+  fontFamily: vars.font.body,
+  fontSize: 14,
+  fontWeight: 500,
+  lineHeight: "21px",
 });
 
 export const sheetBottom = style({

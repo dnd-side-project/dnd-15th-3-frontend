@@ -85,8 +85,8 @@ export function MeetingMap({
         )}
       </Map>
 
-      {loading ? <p className={notice}>지도를 불러오는 중이에요</p> : null}
-      {error === undefined ? null : <p className={notice}>지도를 불러오지 못했어요</p>}
+      {loading ? <p className={notice}>지도 불러오는 중</p> : null}
+      {error === undefined ? null : <p className={notice}>지도를 불러오지 못했습니다.</p>}
     </div>
   );
 }
