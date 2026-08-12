@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { withLayout } from "../layout/index.decorators";
 import { BottomSheet, MultiViewBottomSheet, View, WithBottomSheetContext } from "./index";
 
 const meta = {
@@ -160,6 +161,7 @@ function NestedStory() {
       <BottomSheet
         isOpen={isFirstOpen}
         onClose={() => setIsFirstOpen(false)}
+        hasBackdrop
         onTapBackdrop={() => setIsFirstOpen(false)}
         topBorderRadius="md"
       >
@@ -176,6 +178,7 @@ function NestedStory() {
       <BottomSheet
         isOpen={isSecondOpen}
         onClose={() => setIsSecondOpen(false)}
+        hasBackdrop
         onTapBackdrop={() => setIsSecondOpen(false)}
         topBorderRadius="md"
       >
@@ -193,4 +196,56 @@ function NestedStory() {
 
 export const Nested: Story = {
   render: () => <NestedStory />,
+  decorators: [withLayout],
+};
+
+function ShadowStory() {
+  return (
+    <BottomSheet
+      isOpen
+      onClose={() => {}}
+      initialSnap={1}
+      snapPoints={[0, 227, 1]}
+      hasShadow
+      disableDismiss
+    >
+      <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 227 }}>
+        <strong>Shadow 바텀시트</strong>
+        <br />
+        dropshadow가 적용된 바텀시트입니다.
+      </div>
+    </BottomSheet>
+  );
+}
+
+export const Shadow: Story = {
+  render: () => <ShadowStory />,
+  decorators: [withLayout],
+};
+
+function BackdropStory() {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setIsOpen(true)}>바텀시트 열기</button>
+      <BottomSheet
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        initialSnap={1}
+        snapPoints={[0, 227, 1]}
+        hasBackdrop
+      >
+        <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 227 }}>
+          <strong>Backdrop 바텀시트</strong>
+          <br />
+          backdrop이 있는 바텀시트입니다.
+        </div>
+      </BottomSheet>
+    </div>
+  );
+}
+
+export const Backdrop: Story = {
+  render: () => <BackdropStory />,
+  decorators: [withLayout],
 };
