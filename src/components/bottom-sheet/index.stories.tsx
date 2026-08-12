@@ -162,7 +162,6 @@ function NestedStory() {
         isOpen={isFirstOpen}
         onClose={() => setIsFirstOpen(false)}
         hasBackdrop
-        onTapBackdrop={() => setIsFirstOpen(false)}
         topBorderRadius="md"
       >
         <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 227 }}>
@@ -179,7 +178,6 @@ function NestedStory() {
         isOpen={isSecondOpen}
         onClose={() => setIsSecondOpen(false)}
         hasBackdrop
-        onTapBackdrop={() => setIsSecondOpen(false)}
         topBorderRadius="md"
       >
         <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 300 }}>
@@ -187,7 +185,6 @@ function NestedStory() {
           <br />
           첫 번째 바텀시트 위에 겹쳐 표시됩니다.
           <br />
-          backdrop을 클릭하면 닫힙니다.
         </div>
       </BottomSheet>
     </div>
@@ -234,11 +231,13 @@ function BackdropStory() {
         initialSnap={1}
         snapPoints={[0, 227, 1]}
         hasBackdrop
+        onTapBackdrop={() => setIsOpen(false)}
       >
         <div style={{ paddingInline: "20px", fontFamily: "sans-serif", height: 227 }}>
           <strong>Backdrop 바텀시트</strong>
           <br />
-          backdrop이 있는 바텀시트입니다.
+          backdrop과 onTapBackdrop가 적용되어 있는 바텀시트입니다.
+          <br /> backdrop 클릭 시, 닫힙니다.
         </div>
       </BottomSheet>
     </div>
