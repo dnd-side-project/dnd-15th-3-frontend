@@ -9,6 +9,8 @@ const colors = {
   scrim: "rgba(0, 0, 0, 0.59)",
   cardText: "#FFFFFF",
   caret: "rgba(242, 243, 247, 0.59)",
+  previewCard: "#ECEFF5",
+  emptyDescription: "#7D7D7D",
 };
 
 export const root = style({
@@ -58,6 +60,53 @@ export const sort = style({
   fontWeight: 500,
   lineHeight: "17px",
   cursor: "pointer",
+});
+
+export const emptyState = style({
+  display: "flex",
+  flex: 1,
+  flexDirection: "column",
+  alignItems: "center",
+  marginTop: 106,
+});
+
+export const emptyPreview = style({
+  position: "relative",
+  width: 130,
+  height: 182,
+});
+
+export const emptyPreviewCard = style({
+  position: "absolute",
+  width: 48,
+  borderRadius: 5,
+  backgroundColor: colors.previewCard,
+});
+
+export const emptyTexts = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 1,
+  width: 230,
+  textAlign: "center",
+});
+
+export const emptyTitle = style({
+  margin: 0,
+  color: colors.heading,
+  fontFamily: vars.font.body,
+  fontSize: 20,
+  fontWeight: 600,
+  lineHeight: "30px",
+});
+
+export const emptyDescription = style({
+  margin: 0,
+  color: colors.emptyDescription,
+  fontFamily: vars.font.body,
+  fontSize: 14,
+  fontWeight: 500,
+  lineHeight: "21px",
 });
 
 export const grid = style({
