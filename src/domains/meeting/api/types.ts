@@ -17,7 +17,8 @@ export interface CreateMeetingRequest {
   date: string;
   /** HH:mm */
   time: string;
-  firstLocationPlaceId: string;
+  /** 첫 만남 위치 검색 결과에서 고른 위치 */
+  firstMeetingLocation: MeetingLocation;
   /** 배열 순서가 코스 진행 순서. 1~6개. */
   categorySlugs: CategorySlug[];
   host: ParticipantProfile;
@@ -41,6 +42,22 @@ export interface PlaceSummary {
   address: string;
   latitude: number;
   longitude: number;
+  /** 이미지 수집 전에는 null */
+  previewUrl: string | null;
+}
+
+/** 첫 만남 기준 위치. 장소(PlaceSummary)와 달리 주소 검색 결과에서 온다. */
+export interface MeetingLocation {
+  displayName: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  externalAddressId?: string | null;
+}
+
+export interface MeetingLocationResponse extends MeetingLocation {
+  id: string;
+  syncVersion: number;
 }
 
 export interface MeetingParticipant {
@@ -86,14 +103,12 @@ export interface MeetingScreen {
   time: string;
   role: ParticipantRole;
   isHost: boolean;
-  placeId: string;
-  firstLocationPlaceId: string;
   permissions: MeetingPermissions;
   meetingType: MeetingTypeSummary;
   meetingTypeCode: MeetingTypeCode;
   host: ParticipantProfile;
   categorySlugs: CategorySlug[];
-  firstLocation: PlaceSummary;
+  firstLocation: MeetingLocationResponse;
   viewerParticipantId: string;
   participants: MeetingParticipant[];
   categorySteps: CourseCategoryStep[];
@@ -122,8 +137,7 @@ export interface MeetingInvitation {
   name: string;
   date: string;
   time: string;
-  placeId: string;
-  place: PlaceSummary;
+  locationId: string;
 }
 
 export interface JoinMeetingRequest extends ParticipantProfile {

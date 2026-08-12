@@ -3,10 +3,12 @@ import { queryOptions } from "@tanstack/react-query";
 import {
   getCategories,
   getMeetingTypes,
+  getPlaceDetail,
   getProfileAvatars,
   searchFirstMeetingPlaces,
   searchPlaces,
 } from "./index";
+import type { SearchPlacesParams } from "./index";
 
 // 카탈로그는 거의 변하지 않으므로 세션 동안 캐시를 유지한다.
 const CATALOG_STALE_TIME = Number.POSITIVE_INFINITY;
@@ -33,11 +35,18 @@ export const catalogQueries = {
       staleTime: CATALOG_STALE_TIME,
     }),
 
-  places: (keyword: string) =>
+  places: (params: SearchPlacesParams) =>
     queryOptions({
-      queryKey: ["catalog", "places", keyword] as const,
-      queryFn: ({ signal }) => searchPlaces(keyword, signal),
-      enabled: keyword.length > 0,
+      queryKey: ["catalog", "places", params] as const,
+      queryFn: ({ signal }) => searchPlaces(params, signal),
+      enabled: params.meetingId.length > 0,
+    }),
+
+  placeDetail: (placeId: string) =>
+    queryOptions({
+      queryKey: ["catalog", "place", placeId] as const,
+      queryFn: ({ signal }) => getPlaceDetail(placeId, signal),
+      enabled: placeId.length > 0,
     }),
 
   firstMeetingPlaces: (q: string) =>
