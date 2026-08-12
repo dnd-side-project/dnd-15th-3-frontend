@@ -2,44 +2,44 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import CoffeeIcon from "../../assets/icon-coffee.svg?react";
-import EllipsisIcon from "../../assets/icon-ellipsis.svg?react";
-import FootprintsIcon from "../../assets/icon-footprints.svg?react";
-import GamepadIcon from "../../assets/icon-gamepad-2.svg?react";
-import ImageIcon from "../../assets/icon-image.svg?react";
-import ShoppingBagIcon from "../../assets/icon-shopping-bag.svg?react";
-import UtensilsIcon from "../../assets/icon-utensils.svg?react";
-import WineIcon from "../../assets/icon-wine.svg?react";
+import ActivityIcon from "../../assets/icon-place-activity.svg?react";
+import BarIcon from "../../assets/icon-place-bar.svg?react";
+import CafeIcon from "../../assets/icon-place-cafe.svg?react";
+import CultureIcon from "../../assets/icon-place-culture.svg?react";
+import OtherIcon from "../../assets/icon-place-other.svg?react";
+import RestaurantIcon from "../../assets/icon-place-restaurant.svg?react";
+import ShoppingIcon from "../../assets/icon-place-shopping.svg?react";
+import WalkIcon from "../../assets/icon-place-walk.svg?react";
 import { withLayout } from "../layout/index.decorators";
 import { Chip, ChipGroup } from "./index";
 
 const ICON_SIZE = 20;
 
 const categories = [
-  { value: "food", label: "음식점", icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} /> },
-  { value: "cafe", label: "카페", icon: <CoffeeIcon height={ICON_SIZE} width={ICON_SIZE} /> },
-  { value: "bar", label: "술 · 바", icon: <WineIcon height={ICON_SIZE} width={ICON_SIZE} /> },
+  { value: "food", label: "음식점", icon: <RestaurantIcon height={ICON_SIZE} width={ICON_SIZE} /> },
+  { value: "cafe", label: "카페", icon: <CafeIcon height={ICON_SIZE} width={ICON_SIZE} /> },
+  { value: "bar", label: "술 · 바", icon: <BarIcon height={ICON_SIZE} width={ICON_SIZE} /> },
   {
     value: "culture",
     label: "문화 · 전시",
-    icon: <ImageIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    icon: <CultureIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   {
     value: "activity",
     label: "액티비티",
-    icon: <GamepadIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    icon: <ActivityIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   {
     value: "walk",
     label: "산책 · 야경",
-    icon: <FootprintsIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    icon: <WalkIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   {
     value: "popup",
     label: "팝업 · 쇼핑",
-    icon: <ShoppingBagIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    icon: <ShoppingIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
-  { value: "etc", label: "기타", icon: <EllipsisIcon height={ICON_SIZE} width={ICON_SIZE} /> },
+  { value: "etc", label: "기타", icon: <OtherIcon height={ICON_SIZE} width={ICON_SIZE} /> },
 ];
 
 function CategoryPicker() {
@@ -149,7 +149,7 @@ export const CourseOrder: Story = {
 export const Overlay: Story = {
   args: {
     variant: "overlay",
-    icon: <UtensilsIcon height={ICON_SIZE} width={ICON_SIZE} />,
+    icon: <RestaurantIcon height={ICON_SIZE} width={ICON_SIZE} />,
   },
   render: (args) => (
     <div
