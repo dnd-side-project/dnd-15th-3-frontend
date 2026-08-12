@@ -141,7 +141,11 @@ export function ChoicePage() {
                       key={recommendation.id}
                       style={{ height: heights[position % heights.length] }}
                     >
-                      <img alt="" className={cardImage} src="/static/meeting-course-map.webp" />
+                      {recommendation.place.previewUrl === null ? (
+                        <span aria-hidden className={cardImage} />
+                      ) : (
+                        <img alt="" className={cardImage} src={recommendation.place.previewUrl} />
+                      )}
                       <span aria-hidden className={cardScrim} />
                       <button
                         aria-label={recommendation.place.name}
