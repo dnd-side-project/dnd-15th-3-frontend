@@ -78,6 +78,7 @@ export interface ViewProps {
   snapIndex: number;
   height?: number;
   fullScreen?: boolean;
+  hasHeader?: boolean;
   children: ReactNode;
 }
 
@@ -107,6 +108,7 @@ function extractViews(children: ReactNode): ViewProps[] {
       snapIndex: props.snapIndex,
       height,
       fullScreen: props.fullScreen,
+      hasHeader: props.hasHeader,
       children: props.children,
     });
   });
@@ -154,6 +156,7 @@ export function MultiViewBottomSheet({
   const currentView = views.find((v) => v.snapIndex === currentSnapIndex);
   const stackStyle: CSSProperties = { height: maxHeight };
   const detent = currentView?.fullScreen ? "full" : "content";
+  const showHeader = currentView?.hasHeader !== false && hasHeader !== false;
 
   return (
     <BottomSheet
@@ -163,7 +166,7 @@ export function MultiViewBottomSheet({
       snapPoints={snapPoints}
       initialSnap={currentSnapIndex}
       onSnap={handleSnap}
-      hasHeader={hasHeader}
+      hasHeader={showHeader}
       topBorderRadius={topBorderRadius}
       onTapBackdrop={onTapBackdrop}
       disableContentScroll
