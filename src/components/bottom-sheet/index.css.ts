@@ -44,3 +44,30 @@ export const backdrop = {
 export const content = style({
   backgroundColor: "#FFFFFF",
 });
+
+export const viewStack = style({
+  position: "relative",
+  overflow: "hidden",
+});
+
+export const viewLayer = recipe({
+  base: {
+    position: "absolute",
+    inset: 0,
+    overflow: "auto",
+    visibility: "hidden",
+    opacity: 0,
+    pointerEvents: "none",
+    zIndex: 0,
+  },
+  variants: {
+    active: {
+      true: {
+        visibility: "visible",
+        opacity: 1,
+        pointerEvents: "auto",
+        zIndex: 1,
+      },
+    },
+  },
+});

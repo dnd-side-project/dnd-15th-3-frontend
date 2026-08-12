@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { BottomSheet, WithBottomSheetContext } from "./index";
+import { BottomSheet, MultiViewBottomSheet, View, WithBottomSheetContext } from "./index";
 
 const meta = {
   component: BottomSheet,
@@ -101,4 +101,50 @@ function ToggleStory() {
 
 export const Toggle: Story = {
   render: () => <ToggleStory />,
+};
+
+function MultiViewStory() {
+  const [snapIndex, setSnapIndex] = useState(1);
+
+  return (
+    <MultiViewBottomSheet
+      isOpen
+      onClose={() => {}}
+      snapIndex={snapIndex}
+      onSnapIndexChange={setSnapIndex}
+      disableScrollLocking
+      disableDismiss
+      avoidKeyboard={false}
+    >
+      <View snapIndex={1} height={227}>
+        <div style={{ paddingInline: "20px", fontFamily: "sans-serif" }}>
+          <strong>Snap Index {snapIndex}</strong>
+          <br />
+          height: 227
+          <br />
+          위로 스와이프하면 SnapIndex 2로 전환됩니다
+          <input type="text" />
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <button onClick={() => setSnapIndex(2)}>View 2</button>
+          </div>
+        </div>
+      </View>
+      <View snapIndex={2} height={600}>
+        <div style={{ paddingInline: "20px", fontFamily: "sans-serif" }}>
+          <strong>Snap Index {snapIndex}</strong>
+          <br />
+          height: 600
+          <br />
+          아래로 스와이프하면 SnapIndex 1로 돌아갑니다.
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <button onClick={() => setSnapIndex(1)}>View 1</button>
+          </div>
+        </div>
+      </View>
+    </MultiViewBottomSheet>
+  );
+}
+
+export const MultiView: Story = {
+  render: () => <MultiViewStory />,
 };
