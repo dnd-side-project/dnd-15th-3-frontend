@@ -116,3 +116,43 @@ test("코스가 정해지면 모임 카드 생성 버튼을 함께 보여준다"
 
   await expect.element(page.getByRole("button", { name: "모임 카드 생성" })).toBeInTheDocument();
 });
+
+const MEMBER: MeetingScreen = {
+  ...MEETING,
+  role: "MEMBER",
+  isHost: false,
+  permissions: { canManageMeeting: false, canSelectCourse: true, canShareInvitation: true },
+};
+
+test("모임을 관리할 수 없으면 이름 수정 버튼을 감춘다", async () => {
+  renderMeeting(MEMBER);
+
+  await expect
+    .element(page.getByRole("heading", { name: "을지로·성수 나들이" }))
+    .toBeInTheDocument();
+  await expect
+    .element(page.getByRole("button", { name: "모임 이름 수정" }))
+    .not.toBeInTheDocument();
+});
+
+const SELECTED_COURSE = { id: "41", recommendationIds: ["21"] };
+
+test("코스가 정해지면 코스 수정 버튼을 보여준다", async () => {
+  renderMeeting({ ...MEETING, selectedCourse: SELECTED_COURSE });
+
+  await expect.element(page.getByRole("button", { name: "코스 수정" })).toBeInTheDocument();
+});
+
+test("모임을 관리할 수 없으면 코스가 정해져도 코스 수정 버튼을 감춘다", async () => {
+  renderMeeting({ ...MEMBER, selectedCourse: SELECTED_COURSE });
+
+  await expect.element(page.getByRole("button", { name: "모임 카드 생성" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "코스 수정" })).not.toBeInTheDocument();
+});
+
+test("코스가 정해지기 전에는 코스 수정 버튼이 없다", async () => {
+  renderMeeting();
+
+  await expect.element(page.getByRole("button", { name: "공유하기" })).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "코스 수정" })).not.toBeInTheDocument();
+});

@@ -11,6 +11,8 @@ const colors = {
   crown: "#FF46A9",
   cardSubText: "#F1F8FF",
   overlay: "rgba(0, 0, 0, 0.1)",
+  editBackdrop: "rgba(255, 255, 255, 0.14)",
+  courseEdit: "#4C9FFF",
 };
 
 const textShadow = "0 0 4px rgba(0, 0, 0, 0.25)";
@@ -121,13 +123,15 @@ export const title = style({
 
 export const editButton = style({
   display: "flex",
+  flexShrink: 0,
   alignItems: "center",
   justifyContent: "center",
-  width: 28,
+  width: 29,
   height: 30,
   padding: 0,
   border: "none",
-  background: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: colors.editBackdrop,
   color: colors.white,
   cursor: "pointer",
 });
@@ -240,10 +244,30 @@ export const courseSection = style({
 });
 
 export const courseCards = style({
+  position: "relative",
   display: "flex",
   gap: 8,
   marginTop: 15,
   padding: "0 20px",
+});
+
+// 지도 카드가 링크라 그 위에 겹쳐 둔다.
+export const courseEditButton = style({
+  position: "absolute",
+  top: 134,
+  right: 25,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 50,
+  height: 50,
+  padding: 0,
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: colors.courseEdit,
+  boxShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
+  color: colors.white,
+  cursor: "pointer",
 });
 
 export const courseCard = style({

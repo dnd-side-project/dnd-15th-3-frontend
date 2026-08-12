@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router";
 
 import ArrowUpRightIcon from "../../../../assets/icon-arrow-up-right.svg?react";
@@ -9,6 +8,7 @@ import ClockIcon from "../../../../assets/icon-clock.svg?react";
 import CrownIcon from "../../../../assets/icon-crown.svg?react";
 import ExportIcon from "../../../../assets/icon-export.svg?react";
 import MapPinIcon from "../../../../assets/icon-map-pin-simple.svg?react";
+import PenSmallIcon from "../../../../assets/icon-pen-small.svg?react";
 import PenIcon from "../../../../assets/icon-pen.svg?react";
 import CourseLines from "../../../../assets/meeting-course-lines.svg?react";
 import CourseNavigation from "../../../../assets/meeting-course-navigation.svg?react";
@@ -16,8 +16,7 @@ import HeaderConfetti from "../../../../assets/meeting-header-confetti.svg?react
 import { CtaButton, CtaButtonRow } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
 import { MomoAvatar } from "../../../../components/momo-avatar";
-import { getAccessToken } from "../../access-token";
-import { meetingQueries } from "../../api/queries";
+import { useMeeting, useMeetingPermissions } from "../../hooks";
 
 import {
   backButton,
@@ -32,6 +31,7 @@ import {
   courseNavigation,
   courseSection,
   crown,
+  courseEditButton,
   editButton,
   footer,
   header,
@@ -66,7 +66,8 @@ function formatDate(date: string) {
 export function MeetingPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
-  const { data: meeting, isPending } = useQuery(meetingQueries.detail(id, getAccessToken(id)));
+  const { data: meeting, isPending } = useMeeting();
+  const { canManageMeeting } = useMeetingPermissions();
 
   if (isPending || meeting === undefined) {
     return (
@@ -105,9 +106,11 @@ export function MeetingPage() {
 
           <div className={titleRow}>
             <h1 className={title}>{meeting.name}</h1>
-            <button aria-label="모임 이름 수정" className={editButton} type="button">
-              <PenIcon aria-hidden height={30} width={28} />
-            </button>
+            {canManageMeeting ? (
+              <button aria-label="모임 이름 수정" className={editButton} type="button">
+                <PenIcon aria-hidden height={30} width={29} />
+              </button>
+            ) : null}
           </div>
 
           <div className={infoCard}>
@@ -172,6 +175,12 @@ export function MeetingPage() {
                 <span className={cardDescription}>정해진 코스 장소 확인</span>
               </span>
             </Link>
+
+            {canManageMeeting && meeting.selectedCourse !== null ? (
+              <button aria-label="코스 수정" className={courseEditButton} type="button">
+                <PenSmallIcon aria-hidden height={32} width={32} />
+              </button>
+            ) : null}
           </div>
         </section>
 
