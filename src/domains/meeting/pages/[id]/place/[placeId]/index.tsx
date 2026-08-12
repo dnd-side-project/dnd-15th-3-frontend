@@ -54,12 +54,12 @@ export function PlaceDetailPage() {
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
   const { data: detail } = useQuery(catalogQueries.placeDetail(placeId));
-  // 사진이 오기 전에도 추천 목록에 있는 이름·주소로 먼저 그린다.
-  const origin = meeting?.firstLocation.id === placeId ? meeting.firstLocation : undefined;
-  const name = detail?.name ?? recommendation?.place.name ?? origin?.displayName;
-  const address = detail?.address ?? recommendation?.place.address ?? origin?.address;
+
+  // 상세가 오기 전에는 추천 목록에 있는 이름·주소로 먼저 그린다.
+  const name = detail?.name ?? recommendation?.place.name;
+  const address = detail?.address ?? recommendation?.place.address;
   const slug = detail?.categorySlug ?? categoryOf(recommendation?.categoryId ?? "");
-  const imageUrls = detail?.imageUrls ?? [];
+  const photoUrls = detail?.imageUrls ?? [];
 
   return (
     <Layout>
@@ -107,14 +107,14 @@ export function PlaceDetailPage() {
             </div>
 
             {name === undefined ? (
-              <p className={status}>장소 정보를 찾지 못했어요</p>
+              <p className={status}>장소 정보를 불러오지 못했습니다.</p>
             ) : (
               <>
                 <div className={photos}>
-                  {imageUrls.length === 0 ? (
+                  {photoUrls.length === 0 ? (
                     <span className={photo} />
                   ) : (
-                    imageUrls.map((imageUrl, index) => (
+                    photoUrls.map((imageUrl, index) => (
                       <img
                         alt={`${name} 사진 ${index + 1}`}
                         className={photo}
