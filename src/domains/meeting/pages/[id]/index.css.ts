@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../../../styles/text";
+
 import { vars } from "../../../../styles/theme.css";
 
 const colors = {
@@ -81,9 +83,7 @@ export const typeBadge = style({
   borderRadius: 6,
   background: "radial-gradient(circle at 90% 100%, #3D96FF 0%, rgba(133, 189, 255, 0.26) 100%)",
   color: colors.white,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 500,
+  ...text({ size: 14, weight: 500 }),
   letterSpacing: -0.36,
   lineHeight: 1.2,
   cursor: "pointer",
@@ -91,9 +91,7 @@ export const typeBadge = style({
 
 export const typeSuffix = style({
   color: colors.white,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 600,
+  ...text({ size: 16, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
 });
@@ -115,10 +113,7 @@ export const title = style({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   color: colors.white,
-  fontFamily: vars.font.body,
-  fontSize: 26,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 26, weight: 600, lineHeight: 1.2 }),
   textShadow,
 });
 
@@ -171,9 +166,7 @@ export const infoValue = style({
   alignItems: "center",
   gap: 2,
   height: 22,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 600,
+  ...text({ size: 14, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
   textShadow,
@@ -183,10 +176,7 @@ export const infoValue = style({
 export const sectionTitle = style({
   margin: "0 0 0 29px",
   color: colors.heading,
-  fontFamily: vars.font.body,
-  fontSize: 18,
-  fontWeight: 600,
-  lineHeight: 1.65,
+  ...text({ size: 18, weight: 600, lineHeight: 1.65 }),
 });
 
 export const participants = style({
@@ -226,10 +216,7 @@ export const crown = style({
 export const participantName = style({
   width: "100%",
   color: colors.participant,
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 600,
-  lineHeight: 1.6,
+  ...text({ size: 14, weight: 600, lineHeight: 1.6 }),
   overflow: "hidden",
   textAlign: "center",
   textOverflow: "ellipsis",
@@ -271,20 +258,29 @@ export const courseEditButton = style({
   cursor: "pointer",
 });
 
-export const courseCard = style({
-  position: "relative",
-  display: "block",
-  flex: "0 0 113px",
-  overflow: "hidden",
-  height: 206,
-  padding: 0,
-  border: "none",
-  borderRadius: 16,
-  background: "linear-gradient(166deg, #54A3FF 0%, #87BFFF 33%, #BBDAFF 98%)",
-  boxShadow: "0 0 4px rgba(0, 0, 0, 0.1)",
-  cursor: "pointer",
-  textAlign: "left",
-  textDecoration: "none",
+export const card = recipe({
+  base: {
+    position: "relative",
+    display: "block",
+    overflow: "hidden",
+    height: 206,
+    padding: 0,
+    border: "none",
+    boxShadow: "0 0 4px rgba(0, 0, 0, 0.1)",
+    cursor: "pointer",
+    textAlign: "left",
+    textDecoration: "none",
+  },
+  variants: {
+    card: {
+      course: {
+        flex: "0 0 113px",
+        borderRadius: 16,
+        background: "linear-gradient(166deg, #54A3FF 0%, #87BFFF 33%, #BBDAFF 98%)",
+      },
+      map: { flex: 1, borderRadius: 10 },
+    },
+  },
 });
 
 export const courseLines = style({
@@ -301,21 +297,6 @@ export const courseNavigation = style({
   left: 28,
   width: 80,
   height: 80,
-});
-
-export const mapCard = style({
-  position: "relative",
-  display: "block",
-  flex: 1,
-  overflow: "hidden",
-  height: 206,
-  padding: 0,
-  border: "none",
-  borderRadius: 10,
-  boxShadow: "0 0 4px rgba(0, 0, 0, 0.1)",
-  cursor: "pointer",
-  textAlign: "left",
-  textDecoration: "none",
 });
 
 export const mapImage = style({
@@ -371,10 +352,7 @@ export const cardTexts = recipe({
 export const cardTitle = style({
   margin: 0,
   color: colors.white,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 600,
-  lineHeight: 1.23,
+  ...text({ size: 16, weight: 600, lineHeight: 1.23 }),
   textShadow,
   whiteSpace: "nowrap",
 });
@@ -382,10 +360,7 @@ export const cardTitle = style({
 export const cardDescription = style({
   margin: 0,
   color: colors.cardSubText,
-  fontFamily: vars.font.body,
-  fontSize: 13,
-  fontWeight: 500,
-  lineHeight: 1.65,
+  ...text({ size: 13, weight: 500, lineHeight: 1.65 }),
   whiteSpace: "nowrap",
 });
 
@@ -399,9 +374,6 @@ export const footer = style({
 export const status = style({
   padding: "40px 20px",
   color: colors.participant,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.5,
+  ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });

@@ -25,7 +25,7 @@ import {
   cardTexts,
   cardTitle,
   confetti,
-  courseCard,
+  card,
   courseCards,
   courseLines,
   courseNavigation,
@@ -38,7 +38,6 @@ import {
   infoCard,
   infoCell,
   infoValue,
-  mapCard,
   mapImage,
   mapScrim,
   nav,
@@ -115,11 +114,11 @@ export function MeetingPage() {
 
           <div className={infoCard}>
             {[
-              { Icon: CalendarIcon, value: formatDate(meeting.date) },
-              { Icon: ClockIcon, value: meeting.time },
-              { Icon: MapPinIcon, value: meeting.firstLocation.displayName },
-            ].map(({ Icon, value }) => (
-              <button className={infoCell} key={value} type="button">
+              { field: "date", Icon: CalendarIcon, value: formatDate(meeting.date) },
+              { field: "time", Icon: ClockIcon, value: meeting.time },
+              { field: "location", Icon: MapPinIcon, value: meeting.firstLocation.displayName },
+            ].map(({ field, Icon, value }) => (
+              <button className={infoCell} key={field} type="button">
                 <Icon aria-hidden height={24} width={24} />
                 <span className={infoValue}>
                   {value}
@@ -152,7 +151,7 @@ export function MeetingPage() {
         <section className={courseSection}>
           <h2 className={sectionTitle}>코스 정보</h2>
           <div className={courseCards}>
-            <Link className={courseCard} to={`/meeting/${id}/course-plan`}>
+            <Link className={card({ card: "course" })} to={`/meeting/${id}/course-plan`}>
               <CourseLines aria-hidden className={courseLines} />
               <CourseNavigation aria-hidden className={courseNavigation} />
               <span aria-hidden className={cardArrow({ card: "course" })}>
@@ -164,7 +163,7 @@ export function MeetingPage() {
               </span>
             </Link>
 
-            <Link className={mapCard} to={`/meeting/${id}/place`}>
+            <Link className={card({ card: "map" })} to={`/meeting/${id}/place`}>
               <img alt="" className={mapImage} src="/static/meeting-course-map.webp" />
               <span aria-hidden className={mapScrim} />
               <span aria-hidden className={cardArrow({ card: "map" })}>
