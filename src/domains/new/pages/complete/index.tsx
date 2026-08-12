@@ -9,11 +9,12 @@ import CopyIcon from "../../../../assets/icon-copy.svg?react";
 import { CtaButton } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
 import { ShareButtonGroup } from "../../../../components/share-button";
+import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
 import { setAccessToken } from "../../../meeting/access-token";
 import { createMeeting } from "../../../meeting/api";
 import type { CreateMeetingRequest, MeetingScreen } from "../../../meeting/api/types";
 import { getUserKey } from "../../../user/user-key";
-import { useMeetingDraft } from "../../draft";
+import { useMeetingDraft, type MeetingDraft } from "../../draft";
 
 import {
   badge,
@@ -36,21 +37,58 @@ import {
 
 const MEETING_ID_KEY = (invitationCode: string) => `momo.meeting-id.${invitationCode}`;
 
+/** 새로고침해도 이미 만든 모임으로 돌아가도록 초대 코드별 모임 ID 를 세션에 남긴다. */
+function useCreatedMeetingId(invitationCode: string) {
+  const [meetingId, setMeetingId] = useState(
+    () => sessionStorage.getItem(MEETING_ID_KEY(invitationCode)) ?? "",
+  );
+
+  const remember = (code: string, id: string) => {
+    sessionStorage.setItem(MEETING_ID_KEY(code), id);
+    setMeetingId(id);
+  };
+
+  return { meetingId, remember };
+}
+
+function toCreateRequest(
+  draft: MeetingDraft,
+  meetingTypeCode: MeetingTypeCode,
+  firstLocation: FirstMeetingPlaceResponse,
+): CreateMeetingRequest {
+  return {
+    meetingTypeCode,
+    name: draft.name,
+    date: draft.date,
+    time: draft.time,
+    firstMeetingLocation: {
+      displayName: firstLocation.name,
+      address: firstLocation.address,
+      latitude: firstLocation.latitude,
+      longitude: firstLocation.longitude,
+      externalAddressId: firstLocation.externalAddressId,
+    },
+    categorySlugs: draft.categorySlugs,
+    host: {
+      userKey: getUserKey(),
+      nickname: draft.nickname,
+      profileAvatarId: draft.profileAvatarId,
+    },
+  };
+}
+
 export function CompletePage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { draft } = useMeetingDraft();
 
   const invitationCode = searchParams.get("code") ?? "";
-  const [meetingId, setMeetingId] = useState(
-    () => sessionStorage.getItem(MEETING_ID_KEY(invitationCode)) ?? "",
-  );
+  const { meetingId, remember } = useCreatedMeetingId(invitationCode);
   const [copied, setCopied] = useState(false);
 
   const settle = (meeting: MeetingScreen) => {
     setAccessToken(meeting.id, meeting.participantAccessToken);
-    sessionStorage.setItem(MEETING_ID_KEY(meeting.invitationCode), meeting.id);
-    setMeetingId(meeting.id);
+    remember(meeting.invitationCode, meeting.id);
     setSearchParams({ code: meeting.invitationCode }, { replace: true });
   };
 
@@ -72,27 +110,7 @@ export function CompletePage() {
       return;
     }
     requested.current = true;
-
-    const request: CreateMeetingRequest = {
-      meetingTypeCode,
-      name: draft.name,
-      date: draft.date,
-      time: draft.time,
-      firstMeetingLocation: {
-        displayName: firstLocation.name,
-        address: firstLocation.address,
-        latitude: firstLocation.latitude,
-        longitude: firstLocation.longitude,
-        externalAddressId: firstLocation.externalAddressId,
-      },
-      categorySlugs: draft.categorySlugs,
-      host: {
-        userKey: getUserKey(),
-        nickname: draft.nickname,
-        profileAvatarId: draft.profileAvatarId,
-      },
-    };
-    mutate(request);
+    mutate(toCreateRequest(draft, meetingTypeCode, firstLocation));
   }, [draft, invitationCode, mutate]);
 
   const copyCode = async () => {

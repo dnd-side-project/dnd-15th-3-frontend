@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../../../styles/theme.css";
+import { text } from "../../../../styles/text";
 
 const colors = {
   title: "#3793FF",
@@ -29,19 +29,13 @@ export const texts = style({
 export const title = style({
   margin: 0,
   color: colors.title,
-  fontFamily: vars.font.body,
-  fontSize: 24,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 24, weight: 600, lineHeight: 1.2 }),
 });
 
 export const description = style({
   margin: 0,
   color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
 export const card = style({
@@ -132,10 +126,7 @@ export const dividerLine = style({
 
 export const dividerLabel = style({
   color: colors.dividerLabel,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 600,
-  lineHeight: 1.6,
+  ...text({ size: 16, weight: 600, lineHeight: 1.6 }),
 });
 
 export const share = style({
@@ -153,9 +144,6 @@ export const footer = style({
 export const status = style({
   margin: "51px 20px 0",
   color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.5,
+  ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });
