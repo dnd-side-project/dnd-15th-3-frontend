@@ -46,11 +46,13 @@ export function PlaceSearchPage() {
 
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
+  // 검색은 받아 둔 목록에서 걸러내므로 한 번에 최대치(50)까지 받는다.
   const { data: places } = useQuery(
-    catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id) }),
+    catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id), size: 50 }),
   );
 
-  // 검색은 모임 반경 안의 장소 목록에서 걸러낸다. 서버가 키워드 검색을 받지 않는다.
+  const collecting =
+    places?.collectionStatus === "PENDING" || places?.collectionStatus === "RUNNING";
   const matched = (places?.items ?? []).filter(
     (place) => place.name.includes(deferredKeyword) || place.address.includes(deferredKeyword),
   );
@@ -97,6 +99,8 @@ export function PlaceSearchPage() {
 
             {deferredKeyword.length === 0 ? (
               <div className={sheetBottom} />
+            ) : collecting ? (
+              <p className={empty}>주변 장소를 모으고 있어요</p>
             ) : matched.length === 0 ? (
               <p className={empty}>검색 결과가 없어요</p>
             ) : (

@@ -67,11 +67,11 @@ function jsonResponse(body: unknown) {
   });
 }
 
-function renderPlaceSearch() {
+function renderPlaceSearch(places: unknown = PLACES) {
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
     if (url.includes("/places/search")) {
-      return Promise.resolve(jsonResponse(PLACES));
+      return Promise.resolve(jsonResponse(places));
     }
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
@@ -117,6 +117,14 @@ test("검색어를 넣으면 장소 목록을 보여준다", async () => {
 
   await expect.element(page.getByText("광장시장 순대볶음")).toBeInTheDocument();
   await expect.element(page.getByText("서울 종로구 예지동 6-1")).toBeInTheDocument();
+});
+
+test("장소를 아직 모으는 중이면 결과 없음 대신 수집 중임을 알린다", async () => {
+  renderPlaceSearch({ ...PLACES, items: [], total: 0, collectionStatus: "RUNNING" });
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
+
+  await expect.element(page.getByText("주변 장소를 모으고 있어요")).toBeInTheDocument();
 });
 
 test("검색 결과를 누르면 장소 상세로 간다", async () => {

@@ -5,7 +5,7 @@ export type RouteMarkerTone = "blue" | "pink" | "purple";
 export interface RouteMarkerProps {
   index: number;
   tone?: RouteMarkerTone;
-  imageUrl?: string;
+  imageUrl?: string | null;
   imageAlt?: string;
   onClick?: () => void;
 }

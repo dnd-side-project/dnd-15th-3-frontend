@@ -1,4 +1,4 @@
-import { CustomOverlayMap, Map, useKakaoLoader } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, StaticMap, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
@@ -11,7 +11,7 @@ export interface MeetingMapPlace {
   name: string;
   latitude: number;
   longitude: number;
-  previewUrl?: string;
+  previewUrl?: string | null;
 }
 
 export interface MeetingMapProps {
@@ -79,5 +79,42 @@ export function MeetingMap({
       {loading ? <p className={notice}>지도를 불러오는 중이에요</p> : null}
       {error === undefined ? null : <p className={notice}>지도를 불러오지 못했어요</p>}
     </div>
+  );
+}
+
+export interface MeetingStaticMapProps {
+  className?: string;
+  origin?: MeetingLocationResponse;
+  places?: MeetingMapPlace[];
+  level?: number;
+}
+
+/** 카드 안에 넣는 정지 지도. 카드 전체가 링크라 조작을 받지 않는다. */
+export function MeetingStaticMap({
+  className,
+  origin,
+  places = [],
+  level = 6,
+}: MeetingStaticMapProps) {
+  const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
+  const focus = origin ?? places[0];
+  const markers = [
+    ...(origin === undefined
+      ? []
+      : [{ text: origin.displayName, position: toCoordinates(origin) }]),
+    ...places.map((place) => ({ text: place.name, position: toCoordinates(place) })),
+  ];
+
+  if (loading || error !== undefined) {
+    return <span aria-hidden className={className} />;
+  }
+
+  return (
+    <StaticMap
+      center={focus === undefined ? SEOUL_CITY_HALL : toCoordinates(focus)}
+      className={className}
+      level={level}
+      marker={markers}
+    />
   );
 }
