@@ -13,7 +13,7 @@ const meta = {
   },
   args: {
     currentStep: 1,
-    totalSteps: 5,
+    totalStep: 5,
   },
   render: (args) => (
     <div style={{ display: "flex", justifyContent: "center", width: "100%", paddingTop: 30 }}>
@@ -26,13 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-function InteractiveStory({
-  currentStep,
-  totalSteps,
-}: {
-  currentStep: number;
-  totalSteps: number;
-}) {
+function InteractiveStory({ currentStep, totalStep }: { currentStep: number; totalStep: number }) {
   const [step, setStep] = useState(currentStep);
 
   return (
@@ -45,20 +39,20 @@ function InteractiveStory({
         gap: "20px",
       }}
     >
-      <ProgressBar currentStep={step} totalSteps={totalSteps} />
+      <ProgressBar currentStep={step} totalStep={totalStep} />
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
         <label htmlFor="step-slider">단계:</label>
         <input
           id="step-slider"
           type="range"
           min={1}
-          max={totalSteps}
+          max={totalStep}
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
           style={{ flex: 1 }}
         />
         <span>
-          {step} / {totalSteps}
+          {step} / {totalStep}
         </span>
       </div>
     </div>
@@ -66,9 +60,7 @@ function InteractiveStory({
 }
 
 export const Interactive: Story = {
-  render: (args) => (
-    <InteractiveStory currentStep={args.currentStep} totalSteps={args.totalSteps} />
-  ),
+  render: (args) => <InteractiveStory currentStep={args.currentStep} totalStep={args.totalStep} />,
 };
 
 export default meta;

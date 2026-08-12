@@ -10,20 +10,20 @@ function Step({ isCurrent }: StepProps) {
 
 export interface ProgressBarProps {
   currentStep: number;
-  totalSteps: number;
+  totalStep: number;
 }
 
-export function ProgressBar({ currentStep, totalSteps }: ProgressBarProps) {
+export function ProgressBar({ currentStep, totalStep }: ProgressBarProps) {
   return (
     <div
       className={container}
       role="progressbar"
       aria-valuenow={currentStep}
       aria-valuemin={1}
-      aria-valuemax={totalSteps}
-      aria-label={`진행 상태: ${currentStep}/${totalSteps}`}
+      aria-valuemax={totalStep}
+      aria-label={`진행 상태: ${currentStep}/${totalStep}`}
     >
-      {Array.from({ length: totalSteps }).map((_, index) => (
+      {Array.from({ length: totalStep }).map((_, index) => (
         <Step key={index} isCurrent={currentStep === index + 1} />
       ))}
     </div>
