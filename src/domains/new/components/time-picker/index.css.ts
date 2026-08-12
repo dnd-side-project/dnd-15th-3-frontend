@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../../../styles/text";
+
 import { vars } from "../../../../styles/theme.css";
 
 export const trigger = style({
@@ -14,9 +16,7 @@ export const trigger = style({
   color: "#707D91",
   border: 0,
   padding: "15px 13px",
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
+  ...text({ size: 16, weight: 500 }),
   whiteSpace: "nowrap",
 });
 
