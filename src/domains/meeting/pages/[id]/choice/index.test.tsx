@@ -45,7 +45,13 @@ const MEETING = {
     {
       id: "21",
       categoryId: "1",
-      place: { id: "201", name: "광장시장 순대볶음", address: "서울 종로구", latitude: 1, longitude: 2 },
+      place: {
+        id: "201",
+        name: "광장시장 순대볶음",
+        address: "서울 종로구",
+        latitude: 1,
+        longitude: 2,
+      },
       recommendedByParticipantId: "11",
       likeCount: 3,
       dislikeCount: 1,
@@ -54,7 +60,13 @@ const MEETING = {
     {
       id: "22",
       categoryId: "2",
-      place: { id: "202", name: "성수 카페 모모", address: "서울 성동구", latitude: 1, longitude: 2 },
+      place: {
+        id: "202",
+        name: "성수 카페 모모",
+        address: "서울 성동구",
+        latitude: 1,
+        longitude: 2,
+      },
       recommendedByParticipantId: "12",
       likeCount: 2,
       dislikeCount: 0,
@@ -71,13 +83,13 @@ function jsonResponse(body: unknown) {
   });
 }
 
-function renderChoice() {
+function renderChoice(meeting: typeof MEETING = MEETING) {
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse(CATEGORIES));
     }
-    return Promise.resolve(jsonResponse(MEETING));
+    return Promise.resolve(jsonResponse(meeting));
   });
 
   const router = createMemoryRouter(
@@ -108,14 +120,12 @@ test("추천 장소와 선호도 수를 보여준다", async () => {
   renderChoice();
 
   await expect.element(page.getByText("광장시장 순대볶음")).toBeInTheDocument();
-  await expect.element(page.getByRole("button", { name: "좋아요 3" })).toHaveAttribute(
-    "aria-pressed",
-    "true",
-  );
-  await expect.element(page.getByRole("button", { name: "싫어요 1" })).toHaveAttribute(
-    "aria-pressed",
-    "false",
-  );
+  await expect
+    .element(page.getByRole("button", { name: "좋아요 3" }))
+    .toHaveAttribute("aria-pressed", "true");
+  await expect
+    .element(page.getByRole("button", { name: "싫어요 1" }))
+    .toHaveAttribute("aria-pressed", "false");
 });
 
 test("카테고리를 고르면 해당 장소만 남는다", async () => {
@@ -135,4 +145,11 @@ test("지도 보기로 바꾸면 지도 화면으로 간다", async () => {
   await userEvent.click(page.getByRole("button", { name: "지도로 보기" }));
 
   await expect.element(page.getByText("지도")).toBeInTheDocument();
+});
+
+test("보여줄 장소가 없으면 빈 상태를 보여주고 코스 생성을 막는다", async () => {
+  renderChoice({ ...MEETING, recommendations: [] });
+
+  await expect.element(page.getByText("아직 저장된 장소가 없어요")).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeDisabled();
 });
