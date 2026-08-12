@@ -24,7 +24,7 @@ export function CoursePlanPage() {
   const { data: plan, isPending } = useQuery(meetingQueries.coursePlan(id, accessToken));
   const { canManageMeeting } = useMeetingPermissions();
 
-  const [editing, setEditing] = useState(false);
+  // draft 가 있으면 편집 중이다.
   const [draft, setDraft] = useState<CategorySlug[] | null>(null);
 
   const { mutate, isPending: isSaving } = useMutation({
@@ -34,7 +34,6 @@ export function CoursePlanPage() {
       queryClient.setQueryData(meetingQueries.coursePlan(id, accessToken).queryKey, saved);
       await queryClient.invalidateQueries({ queryKey: ["meeting", id] });
       setDraft(null);
-      setEditing(false);
     },
   });
 
@@ -48,15 +47,14 @@ export function CoursePlanPage() {
   }
 
   const saved = plan.categorySteps.map((step) => step.slug);
-  const value = draft ?? saved;
+  const editing = draft !== null;
 
   const toggleEditing = () => {
-    if (!editing) {
+    if (draft === null) {
       setDraft(saved);
-      setEditing(true);
       return;
     }
-    mutate(value);
+    mutate(draft);
   };
 
   return (
@@ -86,7 +84,7 @@ export function CoursePlanPage() {
         <div className={picker}>
           <CourseCategoryPicker
             gap="narrow"
-            value={value}
+            value={draft ?? saved}
             onChange={editing ? setDraft : undefined}
           />
         </div>

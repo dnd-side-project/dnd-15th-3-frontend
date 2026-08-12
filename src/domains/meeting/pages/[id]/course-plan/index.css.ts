@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { vars } from "../../../../../styles/theme.css";
+import { text } from "../../../../../styles/text";
 
 export const surfaceColor = "#FFFFFF";
 
@@ -58,9 +58,6 @@ export const picker = style({
 export const status = style({
   padding: "40px 20px",
   color: colors.action,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.5,
+  ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });
