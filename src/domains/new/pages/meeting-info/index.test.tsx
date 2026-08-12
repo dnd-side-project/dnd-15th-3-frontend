@@ -49,10 +49,14 @@ test("선택한 카테고리 하나만 눌린 상태로 표시한다", async () 
   renderMeetingInfo();
 
   await userEvent.click(page.getByRole("button", { name: "친목" }));
-  await expect.element(page.getByRole("button", { name: "친목" })).toHaveAttribute("aria-pressed", "true");
+  await expect
+    .element(page.getByRole("button", { name: "친목" }))
+    .toHaveAttribute("aria-pressed", "true");
 
   await userEvent.click(page.getByRole("button", { name: "여행" }));
-  await expect.element(page.getByRole("button", { name: "여행" })).toHaveAttribute("aria-pressed", "true");
+  await expect
+    .element(page.getByRole("button", { name: "여행" }))
+    .toHaveAttribute("aria-pressed", "true");
   await expect
     .element(page.getByRole("button", { name: "친목" }))
     .toHaveAttribute("aria-pressed", "false");

@@ -2,22 +2,41 @@ import { useNavigate } from "react-router";
 
 import { SectionIntro } from "../../../../components/section-intro";
 import { TextInput } from "../../../../components/text-input";
+import type { MeetingTypeCode } from "../../../catalog/api/types";
 import { useMeetingTypes } from "../../../catalog/hooks";
 import { MEETING_TYPE_ICONS } from "../../../catalog/meeting-type-icons";
 import { StepPage } from "../../components/step-page";
 import { useMeetingDraft } from "../../draft";
 
-import {
-  intro,
-  name,
-  nameLabel,
-  typeCard,
-  typeIcon,
-  typeLabel,
-  types,
-} from "./index.css";
+import { intro, name, nameLabel, typeCard, typeIcon, typeLabel, types } from "./index.css";
 
 const NAME_MAX_LENGTH = 10;
+
+function MeetingTypeCard({
+  code,
+  label,
+  selected,
+  onSelect,
+}: {
+  code: MeetingTypeCode;
+  label: string;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  const icon = MEETING_TYPE_ICONS[code];
+
+  return (
+    <button
+      aria-pressed={selected}
+      className={typeCard({ selected })}
+      type="button"
+      onClick={onSelect}
+    >
+      <img alt="" className={typeIcon} height={icon.height} src={icon.src} width={icon.width} />
+      <span className={typeLabel}>{label}</span>
+    </button>
+  );
+}
 
 export function MeetingInfoPage() {
   const navigate = useNavigate();
@@ -49,29 +68,15 @@ export function MeetingInfoPage() {
       />
 
       <div className={types}>
-        {meetingTypes.map((meetingType) => {
-          const icon = MEETING_TYPE_ICONS[meetingType.code];
-          const selected = draft.meetingTypeCode === meetingType.code;
-
-          return (
-            <button
-              aria-pressed={selected}
-              className={typeCard({ selected })}
-              key={meetingType.code}
-              type="button"
-              onClick={() => patch({ meetingTypeCode: meetingType.code })}
-            >
-              <img
-                alt=""
-                className={typeIcon}
-                height={icon.height}
-                src={icon.src}
-                width={icon.width}
-              />
-              <span className={typeLabel}>{meetingType.name}</span>
-            </button>
-          );
-        })}
+        {meetingTypes.map((meetingType) => (
+          <MeetingTypeCard
+            code={meetingType.code}
+            key={meetingType.code}
+            label={meetingType.name}
+            selected={draft.meetingTypeCode === meetingType.code}
+            onSelect={() => patch({ meetingTypeCode: meetingType.code })}
+          />
+        ))}
       </div>
     </StepPage>
   );

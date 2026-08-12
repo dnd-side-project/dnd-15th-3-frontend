@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { vars } from "../../../../styles/theme.css";
+import { text } from "../../../../styles/text";
 
 const colors = {
   nameLabel: "#262626",
@@ -22,10 +22,7 @@ export const name = style({
 export const nameLabel = style({
   margin: "0 3px",
   color: colors.nameLabel,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
 });
 
 export const intro = style({
@@ -74,9 +71,6 @@ export const typeIcon = style({
 
 export const typeLabel = style({
   color: "inherit",
-  fontFamily: vars.font.body,
-  fontSize: 14,
-  fontWeight: 600,
-  lineHeight: 1.5,
+  ...text({ size: 14, weight: 600, lineHeight: 1.5 }),
   whiteSpace: "nowrap",
 });

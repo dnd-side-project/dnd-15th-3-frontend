@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../styles/theme.css";
+import { text } from "../../styles/text";
 
 const colors = {
   title: "#3D3D3D",
@@ -18,17 +18,11 @@ export const root = style({
 export const title = style({
   margin: 0,
   color: colors.title,
-  fontFamily: vars.font.body,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: 1.2,
+  ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
 });
 
 export const description = style({
   margin: 0,
   color: colors.description,
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: 1.2,
+  ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
