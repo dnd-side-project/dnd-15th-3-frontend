@@ -9,6 +9,7 @@ const colors = {
   heading: "#3D3D3D",
   participant: "#707D91",
   crown: "#FF46A9",
+  crownGlyph: "#FFECF6",
   cardSubText: "#F1F8FF",
   overlay: "rgba(0, 0, 0, 0.1)",
   editBackdrop: "rgba(255, 255, 255, 0.14)",
@@ -219,7 +220,7 @@ export const crown = style({
   height: 18,
   borderRadius: vars.radius.full,
   backgroundColor: colors.crown,
-  color: colors.white,
+  color: colors.crownGlyph,
 });
 
 export const participantName = style({
