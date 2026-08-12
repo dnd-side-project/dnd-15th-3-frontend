@@ -30,6 +30,7 @@ export interface BottomSheetProps extends SheetProps {
   onTapBackdrop?: () => void;
   ref?: Ref<SheetRef>;
   disableContentDrag?: boolean;
+  disableContentScroll?: boolean;
 }
 
 export function BottomSheet({
@@ -40,6 +41,7 @@ export function BottomSheet({
   detent = "content",
   ref,
   disableContentDrag,
+  disableContentScroll,
   ...props
 }: BottomSheetProps) {
   return (
@@ -50,7 +52,11 @@ export function BottomSheet({
             <div className={dragIndicator} />
           </Sheet.Header>
         )}
-        <Sheet.Content className={content} disableDrag={disableContentDrag}>
+        <Sheet.Content
+          className={content}
+          disableDrag={disableContentDrag}
+          disableScroll={disableContentScroll}
+        >
           {children}
         </Sheet.Content>
       </Sheet.Container>
@@ -70,7 +76,8 @@ export function WithBottomSheetContext({
 
 export interface ViewProps {
   snapIndex: number;
-  height: number;
+  height?: number;
+  fullScreen?: boolean;
   children: ReactNode;
 }
 
@@ -95,7 +102,13 @@ function extractViews(children: ReactNode): ViewProps[] {
       return;
     }
     const props = child.props as ViewProps;
-    views.push({ snapIndex: props.snapIndex, height: props.height, children: props.children });
+    const height = props.fullScreen ? window.innerHeight : (props.height ?? 0);
+    views.push({
+      snapIndex: props.snapIndex,
+      height,
+      fullScreen: props.fullScreen,
+      children: props.children,
+    });
   });
   return views.sort((a, b) => a.snapIndex - b.snapIndex);
 }
@@ -112,12 +125,12 @@ export function MultiViewBottomSheet({
 }: MultiViewBottomSheetProps) {
   const views = extractViews(children);
   const maxSnapIndex = Math.max(...views.map((v) => v.snapIndex));
-  const maxHeight = Math.max(...views.map((v) => v.height));
+  const maxHeight = Math.max(...views.map((v) => v.height ?? 0));
 
   const snapPoints = [0];
   for (let i = 1; i < maxSnapIndex; i++) {
     const view = views.find((v) => v.snapIndex === i);
-    snapPoints.push(view ? view.height : 0);
+    snapPoints.push(view ? (view.height ?? 0) : 0);
   }
   snapPoints.push(1);
 
@@ -138,18 +151,22 @@ export function MultiViewBottomSheet({
     onSnapIndexChange?.(index);
   };
 
+  const currentView = views.find((v) => v.snapIndex === currentSnapIndex);
   const stackStyle: CSSProperties = { height: maxHeight };
+  const detent = currentView?.fullScreen ? "full" : "content";
 
   return (
     <BottomSheet
       {...props}
       ref={sheetRef}
+      detent={detent}
       snapPoints={snapPoints}
       initialSnap={currentSnapIndex}
       onSnap={handleSnap}
       hasHeader={hasHeader}
       topBorderRadius={topBorderRadius}
       onTapBackdrop={onTapBackdrop}
+      disableContentScroll
     >
       <div className={viewStack} style={stackStyle}>
         {views.map((view) => {

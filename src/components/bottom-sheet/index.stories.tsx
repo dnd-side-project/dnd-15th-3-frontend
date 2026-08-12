@@ -129,11 +129,11 @@ function MultiViewStory() {
           </div>
         </div>
       </View>
-      <View snapIndex={2} height={600}>
+      <View snapIndex={2} fullScreen>
         <div style={{ paddingInline: "20px", fontFamily: "sans-serif" }}>
           <strong>Snap Index {snapIndex}</strong>
           <br />
-          height: 600
+          fullScreen
           <br />
           아래로 스와이프하면 SnapIndex 1로 돌아갑니다.
           <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
