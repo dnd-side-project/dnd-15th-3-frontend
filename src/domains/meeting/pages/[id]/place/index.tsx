@@ -12,7 +12,7 @@ import { Toggle } from "../../../../../components/toggle";
 import { useCurrentPosition } from "../../../../../hooks/use-current-position";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { CourseCategoryChips } from "../../../../catalog/components/course-category-chips";
-import { useCategorySlug } from "../../../../catalog/hooks";
+import { getAccessToken } from "../../../access-token";
 import { MeetingMap } from "../../../components/meeting-map";
 import { useMeeting } from "../../../hooks";
 
@@ -43,11 +43,17 @@ export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
-  const categoryOf = useCategorySlug();
 
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
-  const { data: places } = useQuery(catalogQueries.places(deferredKeyword));
+  const { data: places } = useQuery(
+    catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id) }),
+  );
+
+  // 검색은 모임 반경 안의 장소 목록에서 걸러낸다. 서버가 키워드 검색을 받지 않는다.
+  const matched = (places?.items ?? []).filter(
+    (place) => place.name.includes(deferredKeyword) || place.address.includes(deferredKeyword),
+  );
   const { position, locate, loading } = useCurrentPosition();
 
   return (
@@ -91,22 +97,26 @@ export function PlaceSearchPage() {
 
             {deferredKeyword.length === 0 ? (
               <div className={sheetBottom} />
-            ) : places === undefined || places.length === 0 ? (
+            ) : matched.length === 0 ? (
               <p className={empty}>검색 결과가 없어요</p>
             ) : (
               <>
                 <div className={results}>
-                  {places.map((place) => (
+                  {matched.map((place) => (
                     <button
                       className={result}
                       key={place.id}
                       type="button"
                       onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
                     >
-                      <img alt="" className={thumbnail} src={place.previewUrl} />
+                      {place.previewUrl === null ? (
+                        <span className={thumbnail} />
+                      ) : (
+                        <img alt="" className={thumbnail} src={place.previewUrl} />
+                      )}
                       <span className={resultTexts}>
                         <span className={resultName}>
-                          <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
+                          <PlaceIcon category={place.category.slug} size={20} />
                           {place.name}
                         </span>
                         <span className={resultAddress}>{place.address}</span>

@@ -19,8 +19,6 @@ const MEETING = {
   time: "18:00",
   role: "HOST",
   isHost: true,
-  placeId: "101",
-  firstLocationPlaceId: "101",
   permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
   meetingType: { id: "1", code: "SOCIAL", name: "친목" },
   meetingTypeCode: "SOCIAL",
@@ -28,10 +26,11 @@ const MEETING = {
   categorySlugs: ["restaurant", "cafe"],
   firstLocation: {
     id: "101",
-    name: "을지로3가역",
+    displayName: "을지로3가역",
     address: "서울 중구",
     latitude: 37.5661,
     longitude: 126.9917,
+    syncVersion: 1,
   },
   viewerParticipantId: "11",
   participants: [],
@@ -40,17 +39,26 @@ const MEETING = {
   selectedCourse: null,
 };
 
-const PLACES = [
-  {
-    id: "301",
-    categoryId: "1",
-    name: "광장시장 순대볶음",
-    address: "서울 종로구 예지동 6-1",
-    latitude: 37.5701,
-    longitude: 126.9989,
-    previewUrl: "/static/popup-momo.webp",
-  },
-];
+const PLACES = {
+  items: [
+    {
+      id: "301",
+      name: "광장시장 순대볶음",
+      address: "서울 종로구 예지동 6-1",
+      category: { id: "1", slug: "restaurant", name: "음식점" },
+      latitude: 37.5701,
+      longitude: 126.9989,
+      distanceMeters: 320,
+      previewUrl: "/static/popup-momo.webp",
+    },
+  ],
+  page: 0,
+  size: 20,
+  total: 1,
+  hasNext: false,
+  collectionStatus: "READY",
+  lastSyncedAt: null,
+};
 
 function jsonResponse(body: unknown) {
   return new Response(JSON.stringify(body), {
