@@ -1,13 +1,31 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { beforeEach, expect, test } from "vite-plus/test";
+import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
 import { newMeetingLayout } from "../../layout";
 import { ProfilePage } from "./index";
 
+const fetchMock = vi.spyOn(globalThis, "fetch");
+
+const PROFILE_AVATARS = [
+  { id: "momo-blue", name: "파란 모모" },
+  { id: "momo-yellow", name: "노란 모모" },
+  { id: "momo-green", name: "초록 모모" },
+  { id: "momo-pink", name: "분홍 모모" },
+  { id: "momo-mint", name: "민트 모모" },
+  { id: "momo-purple", name: "보라 모모" },
+];
+
 function renderProfile(initialEntry = "/new/profile") {
+  fetchMock.mockResolvedValue(
+    new Response(JSON.stringify(PROFILE_AVATARS), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }),
+  );
+
   const router = createMemoryRouter(
     [
       {
@@ -32,6 +50,10 @@ function renderProfile(initialEntry = "/new/profile") {
 
 beforeEach(() => {
   sessionStorage.clear();
+});
+
+afterEach(() => {
+  fetchMock.mockReset();
 });
 
 test("닉네임이 비어 있으면 다음으로 넘어갈 수 없다", async () => {
