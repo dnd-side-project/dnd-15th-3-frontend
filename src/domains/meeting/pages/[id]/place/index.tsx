@@ -9,12 +9,10 @@ import { PlaceIcon } from "../../../../../components/place-icon";
 import { PlaceSearchInput } from "../../../../../components/text-input";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { getAccessToken } from "../../../access-token";
-import { MapScreen } from "../../../components/map-screen";
+import { MapScreen, MapSheet } from "../../../components/map-screen";
 
 import {
   addButton,
-  grabber,
-  grabberBar,
   notice,
   noticeDescription,
   noticeIcon,
@@ -25,7 +23,6 @@ import {
   resultTexts,
   results,
   search,
-  sheet,
   sheetBottom,
   thumbnail,
 } from "./index.css";
@@ -89,11 +86,7 @@ export function PlaceSearchPage() {
 
   return (
     <MapScreen>
-      <div className={sheet}>
-        <div className={grabber}>
-          <span className={grabberBar} />
-        </div>
-
+      <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
         </div>
@@ -134,7 +127,7 @@ export function PlaceSearchPage() {
         )}
 
         <div className={sheetBottom} />
-      </div>
+      </MapSheet>
     </MapScreen>
   );
 }

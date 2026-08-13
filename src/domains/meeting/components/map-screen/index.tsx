@@ -6,6 +6,7 @@ import { Layout } from "../../../../components/layout";
 import { LocationButton } from "../../../../components/location-button";
 import { Toggle } from "../../../../components/toggle";
 import { useCurrentPosition } from "../../../../hooks/use-current-position";
+import { cx } from "../../../../lib/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
 import { MeetingMap } from "../meeting-map";
@@ -14,9 +15,12 @@ import {
   bottomActions,
   bottomStack,
   chips,
+  grabber,
+  grabberBar,
   meetingPill,
   pillIcon,
   root,
+  sheet,
   toggle,
 } from "./index.css";
 
@@ -58,5 +62,23 @@ export function MapScreen({ children }: { children: ReactNode }) {
         </div>
       </div>
     </Layout>
+  );
+}
+
+export interface MapSheetProps {
+  /** 시트 안쪽 배치가 화면마다 달라 덧붙일 수 있게 열어 둔다. */
+  className?: string;
+  children: ReactNode;
+}
+
+/** 지도 아래에 붙는 시트. 손잡이는 모든 지도 화면이 같아 여기서 그린다. */
+export function MapSheet({ className, children }: MapSheetProps) {
+  return (
+    <div className={cx(sheet, className)}>
+      <div className={grabber}>
+        <span className={grabberBar} />
+      </div>
+      {children}
+    </div>
   );
 }

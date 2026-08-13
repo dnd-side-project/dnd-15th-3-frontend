@@ -7,6 +7,8 @@ import { vars } from "../../../../styles/theme.css";
 const colors = {
   pillBackground: "#3D4A5C",
   pillText: "#FFFFFF",
+  sheet: "#FFFFFF",
+  grabber: "#D1D1D1",
 };
 
 export const root = style({
@@ -77,4 +79,25 @@ export const pillIcon = style({
   flexShrink: 0,
   width: 23,
   height: 23,
+});
+
+export const sheet = style({
+  pointerEvents: "auto",
+  borderRadius: "24px 24px 0 0",
+  backgroundColor: colors.sheet,
+  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+});
+
+export const grabber = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: 25,
+});
+
+export const grabberBar = style({
+  width: 50,
+  height: 5,
+  borderRadius: 10,
+  backgroundColor: colors.grabber,
 });

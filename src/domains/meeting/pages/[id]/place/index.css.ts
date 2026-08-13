@@ -7,7 +7,6 @@ import { vars } from "../../../../../styles/theme.css";
 const colors = {
   pillBackground: "#3D4A5C",
   pillText: "#FFFFFF",
-  sheet: "#FFFFFF",
   divider: "#DAE1EC",
   placeName: "#262626",
   placeAddress: "#707D91",
@@ -17,27 +16,6 @@ const colors = {
   noticeTitle: "#000000",
   noticeDescription: "#6D6D6D",
 };
-
-export const sheet = style({
-  pointerEvents: "auto",
-  borderRadius: "24px 24px 0 0",
-  backgroundColor: colors.sheet,
-  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
-});
-
-export const grabber = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: 25,
-});
-
-export const grabberBar = style({
-  width: 50,
-  height: 5,
-  borderRadius: 10,
-  backgroundColor: "#D1D1D1",
-});
 
 export const search = style({
   padding: "11px 20px 0",
