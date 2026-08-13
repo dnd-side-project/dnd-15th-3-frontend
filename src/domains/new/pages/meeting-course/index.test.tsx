@@ -1,13 +1,37 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { beforeEach, expect, test } from "vite-plus/test";
+import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
 import { newMeetingLayout } from "../../layout";
 import { MeetingCoursePage } from "./index";
 
+const fetchMock = vi.spyOn(globalThis, "fetch");
+
+const CATEGORIES = [
+  { id: "1", slug: "restaurant", name: "음식점" },
+  { id: "2", slug: "cafe", name: "카페" },
+  { id: "3", slug: "bar", name: "술 · 바" },
+  { id: "4", slug: "walk", name: "산책 · 야경" },
+  { id: "5", slug: "shopping", name: "팝업 · 쇼핑" },
+  { id: "6", slug: "activity", name: "액티비티" },
+  { id: "7", slug: "culture", name: "문화 · 전시" },
+  { id: "8", slug: "other", name: "기타" },
+];
+
 function renderMeetingCourse() {
+  fetchMock.mockImplementation((input) => {
+    const url = new Request(input).url;
+    const body = url.includes("/categories") ? CATEGORIES : [];
+    return Promise.resolve(
+      new Response(JSON.stringify(body), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+  });
+
   const router = createMemoryRouter(
     [
       {
@@ -31,6 +55,10 @@ function renderMeetingCourse() {
 
 beforeEach(() => {
   sessionStorage.clear();
+});
+
+afterEach(() => {
+  fetchMock.mockReset();
 });
 
 test("코스를 고르기 전에는 안내 문구를 보여준다", async () => {
