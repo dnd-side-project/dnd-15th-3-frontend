@@ -6,10 +6,9 @@ import PlusIcon from "../../../../../../assets/icon-plus.svg?react";
 import { PlaceIcon } from "../../../../../../components/place-icon";
 import { catalogQueries } from "../../../../../catalog/api/queries";
 import { useCategorySlug } from "../../../../../catalog/hooks";
-import { MapScreen } from "../../../../components/map-screen";
+import { MapScreen, MapSheet } from "../../../../components/map-screen";
 import { useMeeting } from "../../../../hooks";
 
-import { grabber, grabberBar } from "../index.css";
 import {
   addButton,
   address as addressRow,
@@ -23,7 +22,7 @@ import {
   name as nameStyle,
   photo,
   photos,
-  sheet,
+  sheetLayout,
   status,
   summary,
   summaryTexts,
@@ -46,11 +45,7 @@ export function PlaceDetailPage() {
 
   return (
     <MapScreen>
-      <div className={sheet}>
-        <div className={grabber}>
-          <span className={grabberBar} />
-        </div>
-
+      <MapSheet className={sheetLayout}>
         <div className={header}>
           <button
             aria-label="뒤로 가기"
@@ -110,7 +105,7 @@ export function PlaceDetailPage() {
             </a>
           </>
         )}
-      </div>
+      </MapSheet>
     </MapScreen>
   );
 }

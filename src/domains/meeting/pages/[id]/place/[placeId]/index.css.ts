@@ -5,7 +5,6 @@ import { text } from "../../../../../../styles/text";
 import { vars } from "../../../../../../styles/theme.css";
 
 const colors = {
-  sheet: "#FFFFFF",
   headerBackground: "rgba(255, 255, 255, 0.93)",
   title: "#262626",
   address: "#7D7D7D",
@@ -16,14 +15,11 @@ const colors = {
   photo: "#ECEFF5",
 };
 
-export const sheet = style({
-  pointerEvents: "auto",
+// 시트 껍데기는 MapSheet 이 그리고, 이 화면만 내용을 세로로 쌓는다.
+export const sheetLayout = style({
   display: "flex",
   flexDirection: "column",
   gap: 7,
-  borderRadius: "24px 24px 0 0",
-  backgroundColor: colors.sheet,
-  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
 });
 
 export const header = style({
