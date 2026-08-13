@@ -1,13 +1,34 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { beforeEach, expect, test } from "vite-plus/test";
+import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
 import { newMeetingLayout } from "../../layout";
 import { MeetingInfoPage } from "./index";
 
+const fetchMock = vi.spyOn(globalThis, "fetch");
+
+const MEETING_TYPES = [
+  { id: "1", code: "SOCIAL", name: "친목" },
+  { id: "2", code: "DATING_HOBBY", name: "데이트" },
+  { id: "3", code: "COMPANY_DINNER", name: "회식" },
+  { id: "4", code: "FAMILY", name: "가족" },
+  { id: "5", code: "TRAVEL", name: "여행" },
+  { id: "6", code: "STUDY", name: "스터디" },
+  { id: "7", code: "BUSINESS", name: "비즈니스" },
+  { id: "8", code: "ANNIVERSARY_EXERCISE", name: "취미" },
+  { id: "9", code: "OTHER", name: "기타" },
+];
+
 function renderMeetingInfo() {
+  fetchMock.mockResolvedValue(
+    new Response(JSON.stringify(MEETING_TYPES), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }),
+  );
+
   const router = createMemoryRouter(
     [
       {
@@ -31,6 +52,10 @@ function renderMeetingInfo() {
 
 beforeEach(() => {
   sessionStorage.clear();
+});
+
+afterEach(() => {
+  fetchMock.mockReset();
 });
 
 test("이름과 카테고리를 모두 채워야 다음으로 넘어갈 수 있다", async () => {
