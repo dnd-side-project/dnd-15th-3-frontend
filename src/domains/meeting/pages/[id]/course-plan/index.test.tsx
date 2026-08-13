@@ -4,11 +4,21 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../../test-utils";
-import { CATEGORIES } from "../../../../catalog/fallback";
 import type { CoursePlan, MeetingPermissions } from "../../../api/types";
 import { CoursePlanPage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
+
+const CATEGORIES = [
+  { id: "1", slug: "restaurant", name: "음식점" },
+  { id: "2", slug: "cafe", name: "카페" },
+  { id: "3", slug: "bar", name: "술 · 바" },
+  { id: "4", slug: "walk", name: "산책 · 야경" },
+  { id: "5", slug: "shopping", name: "팝업 · 쇼핑" },
+  { id: "6", slug: "activity", name: "액티비티" },
+  { id: "7", slug: "culture", name: "문화 · 전시" },
+  { id: "8", slug: "other", name: "기타" },
+];
 
 const PLAN: CoursePlan = {
   meetingId: "1",
