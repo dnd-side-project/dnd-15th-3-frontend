@@ -42,7 +42,12 @@ export function DayPicker({ date, setDate }: DayPickerProps) {
         <CalendarIcon width={24} height={24} />
         {dateString}
       </button>
-      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <BottomSheet
+        hasBackdrop
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onTapBackdrop={() => setIsOpen(false)}
+      >
         <div className={styles.dayPickArea}>
           <ReactDayPicker
             className={styles.calendar}

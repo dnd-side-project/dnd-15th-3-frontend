@@ -58,7 +58,12 @@ export function TimePicker({ meetingTime, setMeetingTime }: TimePickerProps) {
       <button className={styles.trigger} onClick={() => setIsOpen((isOpen) => !isOpen)}>
         <ClockIcon width={24} height={24} /> {timeString}
       </button>
-      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)} topBorderRadius="md">
+      <BottomSheet
+        hasBackdrop
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onTapBackdrop={() => setIsOpen(false)}
+      >
         <div className={styles.timePickArea}>
           <div className={styles.stepperGroup}>
             <div className={styles.timeGroup}>
