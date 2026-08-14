@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import { SectionIntro } from "../../../../components/section-intro";
 import { DayPicker } from "../../components/day-picker";
 import { StepPage } from "../../components/step-page";
 import { TimePicker } from "../../components/time-picker";
-import { useMeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../draft";
 import type { Time } from "../../types/time";
 import { formatTwoDigits } from "../../utils/time";
 
@@ -39,24 +39,12 @@ function parseTime(value: string): Time | null {
 
 export function MeetingSchedulePage() {
   const navigate = useNavigate();
-  const { draft, patch } = useMeetingDraft();
-
-  const [date, setDate] = useState<Date | undefined>(() => parseDate(draft.date));
-  const [time, setTime] = useState<Time | null>(() => parseTime(draft.time));
-
-  const changeDate = (next: Date | undefined) => {
-    setDate(next);
-    patch({ date: next === undefined ? "" : toDateString(next) });
-  };
-
-  const changeTime = (next: Time | null) => {
-    setTime(next);
-    patch({ time: next === null ? "" : toTimeString(next) });
-  };
+  const { control } = useFormContext<MeetingDraft>();
+  const [date, time] = useWatch({ control, name: ["date", "time"] });
 
   return (
     <StepPage
-      primaryDisabled={draft.date === "" || draft.time === ""}
+      primaryDisabled={date === "" || time === ""}
       title="모임생성"
       onPrimary={() => void navigate("/new/complete")}
     >
@@ -67,15 +55,37 @@ export function MeetingSchedulePage() {
       />
 
       <div className={fields}>
-        <DayPicker
-          date={date}
-          setDate={(action) => changeDate(typeof action === "function" ? action(date) : action)}
+        <Controller
+          control={control}
+          name="date"
+          render={({ field }) => {
+            const selected = parseDate(field.value);
+            return (
+              <DayPicker
+                date={selected}
+                setDate={(action) => {
+                  const next = typeof action === "function" ? action(selected) : action;
+                  field.onChange(next === undefined ? "" : toDateString(next));
+                }}
+              />
+            );
+          }}
         />
-        <TimePicker
-          meetingTime={time}
-          setMeetingTime={(action) =>
-            changeTime(typeof action === "function" ? action(time) : action)
-          }
+        <Controller
+          control={control}
+          name="time"
+          render={({ field }) => {
+            const selected = parseTime(field.value);
+            return (
+              <TimePicker
+                meetingTime={selected}
+                setMeetingTime={(action) => {
+                  const next = typeof action === "function" ? action(selected) : action;
+                  field.onChange(next === null ? "" : toTimeString(next));
+                }}
+              />
+            );
+          }}
         />
       </div>
     </StepPage>
