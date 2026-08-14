@@ -74,8 +74,8 @@ export function MeetingCoursePage() {
       </div>
 
       <BottomSheet
+        hasBackdrop
         isOpen={sheetOpen}
-        topBorderRadius="md"
         onClose={() => setSheetOpen(false)}
         onTapBackdrop={() => setSheetOpen(false)}
       >
