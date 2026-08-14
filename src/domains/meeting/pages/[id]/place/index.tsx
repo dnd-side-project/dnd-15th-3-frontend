@@ -7,8 +7,8 @@ import RetryLargeIcon from "../../../../../assets/icon-retry-large.svg?react";
 import SearchLargeIcon from "../../../../../assets/icon-search-large.svg?react";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PlaceSearchInput } from "../../../../../components/text-input";
+import { getAccessToken } from "../../../../../utils/access-token";
 import { catalogQueries } from "../../../../catalog/api/queries";
-import { getAccessToken } from "../../../access-token";
 import { MapScreen, MapSheet } from "../../../components/map-screen";
 
 import {
