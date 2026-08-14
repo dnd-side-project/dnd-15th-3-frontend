@@ -1,23 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { FormProvider, useForm } from "react-hook-form";
-import { createMemoryRouter, Outlet, RouterProvider } from "react-router";
-import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
+import { createMemoryRouter, RouterProvider } from "react-router";
+import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import { EMPTY_DRAFT, type MeetingDraft } from "../../draft";
-
-// 이 화면만 검증하므로 앞 단계를 채운 폼을 바로 깐다.
-function FilledFormLayout() {
-  const methods = useForm<MeetingDraft>({
-    defaultValues: { ...EMPTY_DRAFT, nickname: "면킬러" },
-  });
-  return (
-    <FormProvider {...methods}>
-      <Outlet />
-    </FormProvider>
-  );
-}
+import { formLayout } from "../../test-utils";
 import { MeetingInfoPage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
@@ -46,7 +33,7 @@ function renderMeetingInfo() {
     [
       {
         path: "/new",
-        Component: FilledFormLayout,
+        Component: formLayout({ nickname: "면킬러" }),
         children: [
           { path: "meeting-info", Component: MeetingInfoPage },
           { path: "meeting-course", Component: () => <p>위치 및 코스</p> },
@@ -63,15 +50,11 @@ function renderMeetingInfo() {
   );
 }
 
-beforeEach(() => {
-  sessionStorage.clear();
-});
-
 afterEach(() => {
   fetchMock.mockReset();
 });
 
-test("이름과 카테고리를 모두 채워야 다음으로 넘어갈 수 있다", async () => {
+test("이름과 카테고리를 모두 채워야 위치·코스 단계로 넘어간다", async () => {
   renderMeetingInfo();
 
   await expect.element(page.getByRole("button", { name: "다음" })).toBeDisabled();
@@ -80,7 +63,9 @@ test("이름과 카테고리를 모두 채워야 다음으로 넘어갈 수 있�
   await expect.element(page.getByRole("button", { name: "다음" })).toBeDisabled();
 
   await userEvent.click(page.getByRole("button", { name: "친목" }));
-  await expect.element(page.getByRole("button", { name: "다음" })).toBeEnabled();
+  await userEvent.click(page.getByRole("button", { name: "다음" }));
+
+  await expect.element(page.getByText("위치 및 코스")).toBeInTheDocument();
 });
 
 test("선택한 카테고리 하나만 눌린 상태로 표시한다", async () => {
@@ -98,14 +83,4 @@ test("선택한 카테고리 하나만 눌린 상태로 표시한다", async () 
   await expect
     .element(page.getByRole("button", { name: "친목" }))
     .toHaveAttribute("aria-pressed", "false");
-});
-
-test("모두 입력하면 위치·코스 단계로 이동한다", async () => {
-  renderMeetingInfo();
-
-  await userEvent.fill(page.getByRole("textbox", { name: "모임 이름" }), "성수 나들이");
-  await userEvent.click(page.getByRole("button", { name: "친목" }));
-  await userEvent.click(page.getByRole("button", { name: "다음" }));
-
-  await expect.element(page.getByText("위치 및 코스")).toBeInTheDocument();
 });
