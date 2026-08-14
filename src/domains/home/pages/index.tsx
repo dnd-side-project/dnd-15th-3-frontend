@@ -22,23 +22,6 @@ import {
   title,
 } from "./index.css";
 
-const ENTRIES = [
-  {
-    to: "/new/profile",
-    size: "large",
-    title: "모임 생성",
-    description: "모임방을 생성해요!",
-    illustration: "/static/home-card-create.webp",
-  },
-  {
-    to: "/join",
-    size: "small",
-    title: "모임 참여",
-    description: "모임방에 참여해요!",
-    illustration: "/static/home-card-join.webp",
-  },
-] as const;
-
 export function HomePage() {
   return (
     <Layout>
@@ -51,21 +34,40 @@ export function HomePage() {
         </div>
 
         <nav className={cards}>
-          {ENTRIES.map((entry) => (
-            <Link className={card({ size: entry.size })} key={entry.to} to={entry.to}>
-              {entry.size === "large" ? <HomeConfetti aria-hidden className={confetti} /> : null}
-              <img alt="" className={illustration({ size: entry.size })} src={entry.illustration} />
-              <div className={cardContent({ size: entry.size })}>
-                <div className={cardTexts}>
-                  <span className={cardTitle}>{entry.title}</span>
-                  <span className={cardDescription}>{entry.description}</span>
-                </div>
-                <span aria-hidden className={arrow}>
-                  <ArrowUpRightIcon height={12} width={12} />
-                </span>
+          <Link className={card({ size: "large" })} to="/new/profile">
+            <HomeConfetti aria-hidden className={confetti} />
+            <img
+              alt=""
+              className={illustration({ size: "large" })}
+              src="/static/home-card-create.webp"
+            />
+            <div className={cardContent({ size: "large" })}>
+              <div className={cardTexts}>
+                <span className={cardTitle}>모임 생성</span>
+                <span className={cardDescription}>모임방을 생성해요!</span>
               </div>
-            </Link>
-          ))}
+              <span aria-hidden className={arrow}>
+                <ArrowUpRightIcon height={12} width={12} />
+              </span>
+            </div>
+          </Link>
+
+          <Link className={card({ size: "small" })} to="/join">
+            <img
+              alt=""
+              className={illustration({ size: "small" })}
+              src="/static/home-card-join.webp"
+            />
+            <div className={cardContent({ size: "small" })}>
+              <div className={cardTexts}>
+                <span className={cardTitle}>모임 참여</span>
+                <span className={cardDescription}>모임방에 참여해요!</span>
+              </div>
+              <span aria-hidden className={arrow}>
+                <ArrowUpRightIcon height={12} width={12} />
+              </span>
+            </div>
+          </Link>
         </nav>
       </main>
     </Layout>

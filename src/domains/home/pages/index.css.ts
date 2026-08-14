@@ -4,7 +4,6 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "../../../styles/theme.css";
 
 const colors = {
-  logo: "#3592FF",
   title: "#3D3D3D",
   description: "#707D91",
   cardBackground: "#ECEFF5",
@@ -21,7 +20,6 @@ export const root = style({
 
 export const logo = style({
   display: "block",
-  color: colors.logo,
 });
 
 export const intro = style({
