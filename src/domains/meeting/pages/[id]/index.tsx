@@ -62,6 +62,18 @@ function formatDate(date: string) {
   return `${year?.slice(2)}. ${month}. ${day}`;
 }
 
+function InfoCell({ Icon, value }: { Icon: typeof CalendarIcon; value: string }) {
+  return (
+    <button className={infoCell} type="button">
+      <Icon aria-hidden height={24} width={24} />
+      <span className={infoValue}>
+        {value}
+        <CaretDownIcon aria-hidden height={14} width={14} />
+      </span>
+    </button>
+  );
+}
+
 export function MeetingPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -113,19 +125,9 @@ export function MeetingPage() {
           </div>
 
           <div className={infoCard}>
-            {[
-              { field: "date", Icon: CalendarIcon, value: formatDate(meeting.date) },
-              { field: "time", Icon: ClockIcon, value: meeting.time },
-              { field: "location", Icon: MapPinIcon, value: meeting.firstLocation.displayName },
-            ].map(({ field, Icon, value }) => (
-              <button className={infoCell} key={field} type="button">
-                <Icon aria-hidden height={24} width={24} />
-                <span className={infoValue}>
-                  {value}
-                  <CaretDownIcon aria-hidden height={14} width={14} />
-                </span>
-              </button>
-            ))}
+            <InfoCell Icon={CalendarIcon} value={formatDate(meeting.date)} />
+            <InfoCell Icon={ClockIcon} value={meeting.time} />
+            <InfoCell Icon={MapPinIcon} value={meeting.firstLocation.displayName} />
           </div>
         </div>
 
