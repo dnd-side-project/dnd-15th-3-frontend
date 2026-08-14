@@ -6,7 +6,7 @@ import { Layout } from "../../../../components/layout";
 import { LocationButton } from "../../../../components/location-button";
 import { Toggle } from "../../../../components/toggle";
 import { useCurrentPosition } from "../../../../hooks/use-current-position";
-import { cx } from "../../../../lib/cx";
+import { cx } from "../../../../utils/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
 import { MeetingMap } from "../meeting-map";
