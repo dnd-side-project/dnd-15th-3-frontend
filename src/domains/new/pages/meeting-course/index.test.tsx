@@ -1,23 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { FormProvider, useForm } from "react-hook-form";
-import { createMemoryRouter, Outlet, RouterProvider } from "react-router";
-import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
+import { createMemoryRouter, RouterProvider } from "react-router";
+import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import { EMPTY_DRAFT, type MeetingDraft } from "../../draft";
-
-// 이 화면만 검증하므로 앞 단계를 채운 폼을 바로 깐다.
-function FilledFormLayout() {
-  const methods = useForm<MeetingDraft>({
-    defaultValues: { ...EMPTY_DRAFT, nickname: "면킬러", name: "을지로 나들이" },
-  });
-  return (
-    <FormProvider {...methods}>
-      <Outlet />
-    </FormProvider>
-  );
-}
+import { formLayout } from "../../test-utils";
 import { MeetingCoursePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
@@ -49,7 +36,7 @@ function renderMeetingCourse() {
     [
       {
         path: "/new",
-        Component: FilledFormLayout,
+        Component: formLayout({ nickname: "면킬러", name: "을지로 나들이" }),
         children: [
           { path: "meeting-course", Component: MeetingCoursePage },
           { path: "meeting-schedule", Component: () => <p>날짜와 시간</p> },
@@ -65,10 +52,6 @@ function renderMeetingCourse() {
     </QueryClientProvider>,
   );
 }
-
-beforeEach(() => {
-  sessionStorage.clear();
-});
 
 afterEach(() => {
   fetchMock.mockReset();
