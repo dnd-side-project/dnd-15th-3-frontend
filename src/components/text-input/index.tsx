@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
 import SearchIcon from "../../assets/icon-search.svg?react";
+import { cx } from "../../utils/cx";
 
 import { adornment, charCounter, field, input, sendButton, wrapper } from "./index.css";
 
@@ -31,7 +32,7 @@ export function TextInput({
   };
 
   return (
-    <span className={[field, wrapper({ shape }), className].filter(Boolean).join(" ")}>
+    <span className={cx(field, wrapper({ shape }), className)}>
       <input
         className={input}
         maxLength={maxLength}

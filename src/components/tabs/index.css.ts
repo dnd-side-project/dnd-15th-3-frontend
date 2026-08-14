@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../styles/text";
+
 import { vars } from "../../styles/theme.css";
 
 const colors = {
@@ -36,10 +38,7 @@ export const tab = recipe({
     borderRadius: vars.radius.full,
     backgroundColor: "transparent",
     color: colors.label,
-    fontFamily: vars.font.body,
-    fontSize: 15,
-    lineHeight: 1.2,
-    fontWeight: 600,
+    ...text({ size: 15, weight: 600, lineHeight: 1.2 }),
     cursor: "pointer",
     transition: "background-color 0.15s ease, color 0.15s ease",
     "@media": {

@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../styles/text";
+
 import { vars } from "../../styles/theme.css";
 
 const colors = {
@@ -83,10 +85,7 @@ export const badge = recipe({
     padding: "0 3px",
     borderRadius: vars.radius.full,
     color: colors.surface,
-    fontFamily: vars.font.body,
-    fontSize: 12,
-    fontWeight: 600,
-    lineHeight: 1.2,
+    ...text({ size: 12, weight: 600, lineHeight: 1.2 }),
   },
   variants: {
     tone: {

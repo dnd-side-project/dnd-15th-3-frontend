@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "../../styles/theme.css";
+import { text } from "../../styles/text";
 
 const colors = {
   title: "#262626",
@@ -31,10 +31,7 @@ export const title = style({
   minWidth: 0,
   overflow: "hidden",
   color: colors.title,
-  fontFamily: vars.font.body,
-  fontSize: 18,
-  fontWeight: 600,
-  lineHeight: 1.6,
+  ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
   textAlign: "center",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
