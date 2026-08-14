@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
-import { getAccessToken } from "./access-token";
+import { getAccessToken } from "../../utils/access-token";
 import { meetingQueries } from "./api/queries";
 import type { MeetingPermissions } from "./api/types";
 
