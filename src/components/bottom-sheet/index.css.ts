@@ -22,9 +22,16 @@ export const header = recipe({
       },
       md: { borderTopRightRadius: 24, borderTopLeftRadius: 24 },
     },
+    shadow: {
+      true: {
+        boxShadow: "0px 4px 70px rgba(0, 0, 0, 0.2)",
+      },
+      false: {},
+    },
   },
   defaultVariants: {
-    topBorderRadius: "sm",
+    topBorderRadius: "md",
+    shadow: false,
   },
 });
 
@@ -38,9 +45,36 @@ export const dragIndicator = style({
 export const container = style({
   margin: "0 auto",
 });
-export const backdrop = {
-  background: "none",
-};
+export const backdrop = style({
+  backgroundColor: "rgba(0,0,0,0.25)",
+});
 export const content = style({
   backgroundColor: "#FFFFFF",
+});
+
+export const viewStack = style({
+  position: "relative",
+  overflow: "hidden",
+});
+
+export const viewLayer = recipe({
+  base: {
+    position: "absolute",
+    inset: 0,
+    overflow: "auto",
+    visibility: "hidden",
+    opacity: 0,
+    pointerEvents: "none",
+    zIndex: 0,
+  },
+  variants: {
+    active: {
+      true: {
+        visibility: "visible",
+        opacity: 1,
+        pointerEvents: "auto",
+        zIndex: 1,
+      },
+    },
+  },
 });
