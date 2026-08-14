@@ -86,12 +86,7 @@ export function ProfilePage() {
         </div>
       </div>
 
-      <BottomSheet
-        isOpen={sheetOpen}
-        topBorderRadius="md"
-        onClose={closeSheet}
-        onTapBackdrop={closeSheet}
-      >
+      <BottomSheet hasBackdrop isOpen={sheetOpen} onClose={closeSheet} onTapBackdrop={closeSheet}>
         <div className={sheetBody}>
           <div className={sheetTexts}>
             <h2 className={sheetTitle}>원하는 모습을 선택해주세요!</h2>
