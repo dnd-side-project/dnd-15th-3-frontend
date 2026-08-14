@@ -7,7 +7,7 @@ import type { MeetingTypeCode } from "../../../catalog/api/types";
 import { useMeetingTypes } from "../../../catalog/hooks";
 import { MEETING_TYPE_ICONS } from "../../../catalog/meeting-type-icons";
 import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 
 import { intro, name, nameLabel, typeCard, typeIcon, typeLabel, types } from "./index.css";
 
