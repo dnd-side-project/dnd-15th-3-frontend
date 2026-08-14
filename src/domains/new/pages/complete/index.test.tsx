@@ -1,10 +1,21 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createMemoryRouter, RouterProvider } from "react-router";
+import { FormProvider, useForm } from "react-hook-form";
+import { createMemoryRouter, Outlet, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import { newMeetingLayout } from "../../layout";
+import { EMPTY_DRAFT, type MeetingDraft } from "../../draft";
+
+// 이 화면만 검증하므로 앞 단계를 채운 폼을 바로 깐다.
+function FilledFormLayout() {
+  const methods = useForm<MeetingDraft>({ defaultValues: { ...EMPTY_DRAFT, ...DRAFT } });
+  return (
+    <FormProvider {...methods}>
+      <Outlet />
+    </FormProvider>
+  );
+}
 import { CompletePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
@@ -40,7 +51,7 @@ const MEETING = {
   selectedCourse: null,
 };
 
-const DRAFT = {
+const DRAFT: MeetingDraft = {
   nickname: "방장모모",
   profileAvatarId: "momo-blue",
   name: "을지로·성수 나들이",
@@ -63,7 +74,7 @@ function renderComplete(initialEntry: string) {
     [
       {
         path: "/new",
-        Component: newMeetingLayout,
+        Component: FilledFormLayout,
         children: [{ path: "complete", Component: CompletePage }],
       },
     ],
@@ -89,7 +100,6 @@ afterEach(() => {
 });
 
 test("초안을 들고 들어오면 모임을 만들고 초대코드를 보여준다", async () => {
-  sessionStorage.setItem("momo.meeting-draft", JSON.stringify(DRAFT));
   fetchMock.mockResolvedValue(
     new Response(JSON.stringify(MEETING), {
       status: 201,
@@ -121,8 +131,6 @@ test("초안을 들고 들어오면 모임을 만들고 초대코드를 보여�
 });
 
 test("code 가 이미 있으면 다시 만들지 않는다", async () => {
-  sessionStorage.setItem("momo.meeting-draft", JSON.stringify(DRAFT));
-
   renderComplete("/new/complete?code=DNDF0R");
 
   await expect.element(page.getByText("DNDF0R")).toBeInTheDocument();
@@ -130,7 +138,6 @@ test("code 가 이미 있으면 다시 만들지 않는다", async () => {
 });
 
 test("만드는 동안에는 진행 상태를 알린다", async () => {
-  sessionStorage.setItem("momo.meeting-draft", JSON.stringify(DRAFT));
   fetchMock.mockReturnValue(new Promise(() => {}));
 
   renderComplete("/new/complete");

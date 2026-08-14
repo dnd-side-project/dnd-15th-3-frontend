@@ -2,6 +2,7 @@ import "@fontsource/montserrat/latin-500.css";
 import "@fontsource/montserrat/latin-600.css";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
 
 import CompleteConfetti from "../../../../assets/complete-confetti.svg?react";
@@ -14,7 +15,7 @@ import { getUserKey } from "../../../../utils/user-key";
 import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
 import { createMeeting } from "../../../meeting/api";
 import type { CreateMeetingRequest, MeetingScreen } from "../../../meeting/api/types";
-import { useMeetingDraft, type MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../draft";
 
 import {
   badge,
@@ -80,7 +81,8 @@ function toCreateRequest(
 export function CompletePage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { draft } = useMeetingDraft();
+  const { getValues } = useFormContext<MeetingDraft>();
+  const draft = getValues();
 
   const invitationCode = searchParams.get("code") ?? "";
   const { meetingId, remember } = useCreatedMeetingId(invitationCode);
