@@ -12,7 +12,7 @@ import { catalogQueries } from "../../../catalog/api/queries";
 import type { FirstMeetingPlaceResponse } from "../../../catalog/api/types";
 import { CourseCategoryPicker } from "../../../catalog/components/course-category-picker";
 import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 
 import {
   empty,
