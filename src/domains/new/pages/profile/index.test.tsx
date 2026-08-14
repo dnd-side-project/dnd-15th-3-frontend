@@ -4,7 +4,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import { newMeetingLayout } from "../../layout";
+import { NewMeetingLayout } from "../../layout";
 import { ProfilePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
@@ -30,7 +30,7 @@ function renderProfile(initialEntry = "/new/profile") {
     [
       {
         path: "/new",
-        Component: newMeetingLayout,
+        Component: NewMeetingLayout,
         children: [
           { path: "profile", Component: ProfilePage },
           { path: "profile-avatar", Component: ProfilePage },
@@ -88,4 +88,11 @@ test("시트에서 고른 캐릭터를 저장하면 프로필에 반영한다", 
   await expect
     .element(page.getByRole("img", { name: "내 프로필" }))
     .toHaveAttribute("src", "/static/avatar-momo-yellow.webp");
+});
+
+test("닉네임 없이 다음 단계 URL 로 들어오면 프로필 작성으로 돌려보낸다", async () => {
+  renderProfile("/new/meeting-info");
+
+  await expect.element(page.getByText("닉네임을 적어볼까요?")).toBeInTheDocument();
+  await expect.element(page.getByText("모임명 및 카테고리")).not.toBeInTheDocument();
 });

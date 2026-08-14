@@ -1,5 +1,3 @@
-import { createContext, use, useCallback, useState, type ReactNode } from "react";
-
 import type { FirstMeetingPlaceResponse } from "../catalog/api/types";
 import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "../catalog/api/types";
 
@@ -16,7 +14,7 @@ export interface MeetingDraft {
   time: string;
 }
 
-const EMPTY_DRAFT: MeetingDraft = {
+export const EMPTY_DRAFT: MeetingDraft = {
   nickname: "",
   profileAvatarId: "momo-blue",
   name: "",
@@ -27,53 +25,16 @@ const EMPTY_DRAFT: MeetingDraft = {
   time: "",
 };
 
-const STORAGE_KEY = "momo.meeting-draft";
+export const FIRST_STEP = "/new/profile";
 
-function readDraft(): MeetingDraft {
-  const stored = sessionStorage.getItem(STORAGE_KEY);
-  if (stored === null) {
-    return EMPTY_DRAFT;
-  }
-
-  try {
-    return { ...EMPTY_DRAFT, ...(JSON.parse(stored) as Partial<MeetingDraft>) };
-  } catch {
-    return EMPTY_DRAFT;
-  }
-}
-
-interface DraftContextValue {
-  draft: MeetingDraft;
-  patch: (values: Partial<MeetingDraft>) => void;
-  clear: () => void;
-}
-
-const DraftContext = createContext<DraftContextValue | null>(null);
-
-export function MeetingDraftProvider({ children }: { children: ReactNode }) {
-  const [draft, setDraft] = useState(readDraft);
-
-  // 새로고침이나 뒤로 가기에도 단계별 입력이 남아 있도록 세션에 함께 저장한다.
-  const patch = useCallback((values: Partial<MeetingDraft>) => {
-    setDraft((previous) => {
-      const next = { ...previous, ...values };
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, []);
-
-  const clear = useCallback(() => {
-    sessionStorage.removeItem(STORAGE_KEY);
-    setDraft(EMPTY_DRAFT);
-  }, []);
-
-  return <DraftContext value={{ draft, patch, clear }}>{children}</DraftContext>;
-}
-
-export function useMeetingDraft() {
-  const value = use(DraftContext);
-  if (value === null) {
-    throw new Error("useMeetingDraft 는 MeetingDraftProvider 안에서만 쓸 수 있어요");
-  }
-  return value;
-}
+/**
+ * 각 단계에 들어가려면 앞 단계가 채워져 있어야 한다. 폼은 메모리에만 있으므로
+ * 새로고침하거나 URL 로 바로 들어오면 조건을 못 채워 첫 단계로 돌아간다.
+ */
+export const STEP_REQUIRES: Record<string, (draft: MeetingDraft) => boolean> = {
+  "/new/meeting-info": (draft) => draft.nickname !== "",
+  "/new/meeting-course": (draft) => draft.nickname !== "" && draft.name !== "",
+  "/new/meeting-schedule": (draft) =>
+    draft.firstLocation !== null && draft.categorySlugs.length > 0,
+  "/new/complete": (draft) => draft.date !== "" && draft.time !== "",
+};

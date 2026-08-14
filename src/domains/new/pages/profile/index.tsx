@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
 
 import ArrowsClockwiseIcon from "../../../../assets/icon-arrows-clockwise.svg?react";
@@ -10,7 +11,7 @@ import { NicknameInput } from "../../../../components/text-input";
 import type { ProfileAvatarId } from "../../../catalog/api/types";
 import { useProfileAvatars } from "../../../catalog/hooks";
 import { StepPage } from "../../components/step-page";
-import { useMeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../draft";
 
 import {
   avatar,
@@ -35,27 +36,29 @@ const AVATAR_PATH = "/new/profile-avatar";
 export function ProfilePage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { draft, patch } = useMeetingDraft();
+  const { control, register, getValues, setValue } = useFormContext<MeetingDraft>();
   const avatars = useProfileAvatars();
+  const [nicknameValue, avatarId] = useWatch({ control, name: ["nickname", "profileAvatarId"] });
 
   const sheetOpen = location.pathname === AVATAR_PATH;
-  const [pending, setPending] = useState<ProfileAvatarId>(draft.profileAvatarId);
+  // 시트에서 고른 값은 저장을 눌러야 폼에 반영한다.
+  const [pending, setPending] = useState<ProfileAvatarId>(() => getValues("profileAvatarId"));
 
   const openSheet = () => {
-    setPending(draft.profileAvatarId);
+    setPending(getValues("profileAvatarId"));
     void navigate(AVATAR_PATH);
   };
 
   const closeSheet = () => void navigate(-1);
 
   const save = () => {
-    patch({ profileAvatarId: pending });
+    setValue("profileAvatarId", pending);
     closeSheet();
   };
 
   return (
     <StepPage
-      primaryDisabled={draft.nickname.length === 0}
+      primaryDisabled={nicknameValue.length === 0}
       title="프로필 작성"
       onPrimary={() => void navigate("/new/meeting-info")}
     >
@@ -63,7 +66,7 @@ export function ProfilePage() {
         <div className={profile}>
           <SpeechBubble>원하는 모습을 선택해보세요!</SpeechBubble>
           <div className={avatar}>
-            <MomoAvatar alt="내 프로필" avatarId={draft.profileAvatarId} size="large" />
+            <MomoAvatar alt="내 프로필" avatarId={avatarId} size="large" />
             <button
               aria-label="프로필 이미지 변경"
               className={changeButton}
@@ -80,8 +83,7 @@ export function ProfilePage() {
           <NicknameInput
             showCount
             maxLength={NICKNAME_MAX_LENGTH}
-            value={draft.nickname}
-            onChange={(event) => patch({ nickname: event.target.value })}
+            {...register("nickname", { required: true, maxLength: NICKNAME_MAX_LENGTH })}
           />
         </div>
       </div>
