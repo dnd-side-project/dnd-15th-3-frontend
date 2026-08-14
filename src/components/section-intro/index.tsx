@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { cx } from "../../lib/cx";
+import { cx } from "../../utils/cx";
 
 import { description as descriptionStyle, root, title as titleStyle } from "./index.css";
 
