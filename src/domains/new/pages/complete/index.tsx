@@ -82,7 +82,6 @@ export function CompletePage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { getValues } = useFormContext<MeetingDraft>();
-  const draft = getValues();
 
   const invitationCode = searchParams.get("code") ?? "";
   const { meetingId, remember } = useCreatedMeetingId(invitationCode);
@@ -102,6 +101,7 @@ export function CompletePage() {
   // 이 화면에 도착하는 순간 모임을 만든다. 새로고침해도 code 가 남아 있어 다시 만들지 않는다.
   const requested = useRef(false);
   useEffect(() => {
+    const draft = getValues();
     const { meetingTypeCode, firstLocation } = draft;
     if (
       requested.current ||
@@ -113,7 +113,7 @@ export function CompletePage() {
     }
     requested.current = true;
     mutate(toCreateRequest(draft, meetingTypeCode, firstLocation));
-  }, [draft, invitationCode, mutate]);
+  }, [getValues, invitationCode, mutate]);
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(invitationCode);
@@ -159,7 +159,7 @@ export function CompletePage() {
               <ShareButtonGroup
                 description={`초대코드 ${invitationCode}`}
                 imageUrl={`${window.location.origin}/static/momo-kakao-share.png`}
-                title={draft.name}
+                title={getValues("name")}
                 onMore={() => void navigator.share?.({ text: invitationCode })}
               />
             </div>
