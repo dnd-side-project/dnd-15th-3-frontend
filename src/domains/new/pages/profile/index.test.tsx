@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
+import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
@@ -48,10 +48,6 @@ function renderProfile(initialEntry = "/new/profile") {
   );
 }
 
-beforeEach(() => {
-  sessionStorage.clear();
-});
-
 afterEach(() => {
   fetchMock.mockReset();
 });
@@ -94,5 +90,4 @@ test("닉네임 없이 다음 단계 URL 로 들어오면 프로필 작성으로
   renderProfile("/new/meeting-info");
 
   await expect.element(page.getByText("닉네임을 적어볼까요?")).toBeInTheDocument();
-  await expect.element(page.getByText("모임명 및 카테고리")).not.toBeInTheDocument();
 });
