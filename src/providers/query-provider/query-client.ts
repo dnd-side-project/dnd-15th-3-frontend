@@ -10,8 +10,3 @@ export const queryClient = new QueryClient({
     },
   },
 });
-
-// 모임 유형·카테고리·아바타는 거의 변하지 않아 세션 동안 다시 받지 않는다.
-for (const name of ["meeting-types", "categories", "profile-avatars"]) {
-  queryClient.setQueryDefaults(["catalog", name], { staleTime: Number.POSITIVE_INFINITY });
-}
