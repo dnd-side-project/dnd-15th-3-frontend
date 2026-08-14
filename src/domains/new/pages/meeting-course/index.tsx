@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useDeferredValue, useState } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import SearchIcon from "../../../../assets/icon-search.svg?react";
@@ -11,7 +12,7 @@ import { catalogQueries } from "../../../catalog/api/queries";
 import type { FirstMeetingPlaceResponse } from "../../../catalog/api/types";
 import { CourseCategoryPicker } from "../../../catalog/components/course-category-picker";
 import { StepPage } from "../../components/step-page";
-import { useMeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../draft";
 
 import {
   empty,
@@ -30,7 +31,11 @@ import {
 
 export function MeetingCoursePage() {
   const navigate = useNavigate();
-  const { draft, patch } = useMeetingDraft();
+  const { control, setValue } = useFormContext<MeetingDraft>();
+  const [firstLocation, categorySlugs] = useWatch({
+    control,
+    name: ["firstLocation", "categorySlugs"],
+  });
 
   const [sheetOpen, setSheetOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -38,23 +43,23 @@ export function MeetingCoursePage() {
   const { data: places } = useQuery(catalogQueries.firstMeetingPlaces(deferredKeyword));
 
   const select = (place: FirstMeetingPlaceResponse) => {
-    patch({ firstLocation: place });
+    setValue("firstLocation", place);
     setSheetOpen(false);
   };
 
   return (
     <StepPage
-      primaryDisabled={draft.firstLocation === null || draft.categorySlugs.length === 0}
+      primaryDisabled={firstLocation === null || categorySlugs.length === 0}
       title="모임생성"
       onPrimary={() => void navigate("/new/meeting-schedule")}
     >
       <div className={location}>
         <span className={locationLabel}>모일 위치</span>
         <button className={locationField} type="button" onClick={() => setSheetOpen(true)}>
-          {draft.firstLocation === null ? (
+          {firstLocation === null ? (
             <span className={locationPlaceholder}>위치를 검색해주세요</span>
           ) : (
-            <span>{draft.firstLocation.name}</span>
+            <span>{firstLocation.name}</span>
           )}
           <SearchIcon aria-hidden className={searchIcon} height={24} width={24} />
         </button>
@@ -67,9 +72,12 @@ export function MeetingCoursePage() {
       />
 
       <div className={picker}>
-        <CourseCategoryPicker
-          value={draft.categorySlugs}
-          onChange={(categorySlugs) => patch({ categorySlugs })}
+        <Controller
+          control={control}
+          name="categorySlugs"
+          render={({ field }) => (
+            <CourseCategoryPicker value={field.value} onChange={field.onChange} />
+          )}
         />
       </div>
 
