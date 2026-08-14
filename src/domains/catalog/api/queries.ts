@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { filled } from "../../../lib/query";
+import { filled } from "../../../utils/query";
 import {
   getCategories,
   getMeetingTypes,
