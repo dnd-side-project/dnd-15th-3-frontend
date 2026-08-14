@@ -33,7 +33,6 @@ function renderProfile(initialEntry = "/new/profile") {
         Component: NewMeetingLayout,
         children: [
           { path: "profile", Component: ProfilePage },
-          { path: "profile-avatar", Component: ProfilePage },
           { path: "meeting-info", Component: () => <p>모임명 및 카테고리</p> },
         ],
       },
@@ -76,8 +75,9 @@ test("프로필 이미지 변경을 누르면 캐릭터 선택 시트가 열린�
 });
 
 test("시트에서 고른 캐릭터를 저장하면 프로필에 반영한다", async () => {
-  renderProfile("/new/profile-avatar");
+  renderProfile();
 
+  await userEvent.click(page.getByRole("button", { name: "프로필 이미지 변경" }));
   await userEvent.click(page.getByRole("button", { name: "노란 모모" }));
   await userEvent.click(page.getByRole("button", { name: "저장" }));
 

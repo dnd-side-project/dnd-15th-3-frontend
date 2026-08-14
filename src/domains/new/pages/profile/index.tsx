@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 import ArrowsClockwiseIcon from "../../../../assets/icon-arrows-clockwise.svg?react";
 import { BottomSheet } from "../../../../components/bottom-sheet";
@@ -11,7 +11,7 @@ import { NicknameInput } from "../../../../components/text-input";
 import type { ProfileAvatarId } from "../../../catalog/api/types";
 import { useProfileAvatars } from "../../../catalog/hooks";
 import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 
 import {
   avatar,
@@ -31,25 +31,23 @@ import {
 } from "./index.css";
 
 const NICKNAME_MAX_LENGTH = 10;
-const AVATAR_PATH = "/new/profile-avatar";
 
 export function ProfilePage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { control, register, getValues, setValue } = useFormContext<MeetingDraft>();
   const avatars = useProfileAvatars();
   const [nicknameValue, avatarId] = useWatch({ control, name: ["nickname", "profileAvatarId"] });
 
-  const sheetOpen = location.pathname === AVATAR_PATH;
+  const [sheetOpen, setSheetOpen] = useState(false);
   // 시트에서 고른 값은 저장을 눌러야 폼에 반영한다.
   const [pending, setPending] = useState<ProfileAvatarId>(() => getValues("profileAvatarId"));
 
   const openSheet = () => {
     setPending(getValues("profileAvatarId"));
-    void navigate(AVATAR_PATH);
+    setSheetOpen(true);
   };
 
-  const closeSheet = () => void navigate(-1);
+  const closeSheet = () => setSheetOpen(false);
 
   const save = () => {
     setValue("profileAvatarId", pending);
