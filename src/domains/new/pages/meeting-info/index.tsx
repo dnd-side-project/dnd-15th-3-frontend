@@ -1,3 +1,4 @@
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import { SectionIntro } from "../../../../components/section-intro";
@@ -6,7 +7,7 @@ import type { MeetingTypeCode } from "../../../catalog/api/types";
 import { useMeetingTypes } from "../../../catalog/hooks";
 import { MEETING_TYPE_ICONS } from "../../../catalog/meeting-type-icons";
 import { StepPage } from "../../components/step-page";
-import { useMeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../draft";
 
 import { intro, name, nameLabel, typeCard, typeIcon, typeLabel, types } from "./index.css";
 
@@ -40,12 +41,13 @@ function MeetingTypeCard({
 
 export function MeetingInfoPage() {
   const navigate = useNavigate();
-  const { draft, patch } = useMeetingDraft();
+  const { control, register } = useFormContext<MeetingDraft>();
   const meetingTypes = useMeetingTypes();
+  const [meetingName, meetingTypeCode] = useWatch({ control, name: ["name", "meetingTypeCode"] });
 
   return (
     <StepPage
-      primaryDisabled={draft.name.length === 0 || draft.meetingTypeCode === null}
+      primaryDisabled={meetingName.length === 0 || meetingTypeCode === null}
       title="모임생성"
       onPrimary={() => void navigate("/new/meeting-course")}
     >
@@ -56,8 +58,7 @@ export function MeetingInfoPage() {
           aria-label="모임 이름"
           maxLength={NAME_MAX_LENGTH}
           placeholder="모임이름을 입력해주세요"
-          value={draft.name}
-          onChange={(event) => patch({ name: event.target.value })}
+          {...register("name", { required: true, maxLength: NAME_MAX_LENGTH })}
         />
       </div>
 
@@ -67,17 +68,24 @@ export function MeetingInfoPage() {
         title="어떤 모임인가요?"
       />
 
-      <div className={types}>
-        {meetingTypes.map((meetingType) => (
-          <MeetingTypeCard
-            code={meetingType.code}
-            key={meetingType.code}
-            label={meetingType.name}
-            selected={draft.meetingTypeCode === meetingType.code}
-            onSelect={() => patch({ meetingTypeCode: meetingType.code })}
-          />
-        ))}
-      </div>
+      <Controller
+        control={control}
+        name="meetingTypeCode"
+        render={({ field }) => (
+          <div className={types}>
+            {meetingTypes.map((meetingType) => (
+              <MeetingTypeCard
+                code={meetingType.code}
+                key={meetingType.code}
+                label={meetingType.name}
+                selected={field.value === meetingType.code}
+                onSelect={() => field.onChange(meetingType.code)}
+              />
+            ))}
+          </div>
+        )}
+        rules={{ required: true }}
+      />
     </StepPage>
   );
 }
