@@ -42,9 +42,11 @@ export function MeetingCoursePage() {
   const deferredKeyword = useDeferredValue(keyword.trim());
   const { data: places } = useQuery(catalogQueries.firstMeetingPlaces(deferredKeyword));
 
+  const closeSheet = () => setSheetOpen(false);
+
   const select = (place: FirstMeetingPlaceResponse) => {
     setValue("firstLocation", place);
-    setSheetOpen(false);
+    closeSheet();
   };
 
   return (
@@ -81,12 +83,7 @@ export function MeetingCoursePage() {
         />
       </div>
 
-      <BottomSheet
-        hasBackdrop
-        isOpen={sheetOpen}
-        onClose={() => setSheetOpen(false)}
-        onTapBackdrop={() => setSheetOpen(false)}
-      >
+      <BottomSheet hasBackdrop isOpen={sheetOpen} onClose={closeSheet} onTapBackdrop={closeSheet}>
         <div className={sheetBody}>
           <div className={sheetSearch}>
             <TextInput
