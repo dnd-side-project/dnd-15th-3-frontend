@@ -10,10 +10,10 @@ import { CtaButton } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
 import { ShareButtonGroup } from "../../../../components/share-button";
 import { setAccessToken } from "../../../../utils/access-token";
+import { getUserKey } from "../../../../utils/user-key";
 import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
 import { createMeeting } from "../../../meeting/api";
 import type { CreateMeetingRequest, MeetingScreen } from "../../../meeting/api/types";
-import { getUserKey } from "../../../user/user-key";
 import { useMeetingDraft, type MeetingDraft } from "../../draft";
 
 import {
