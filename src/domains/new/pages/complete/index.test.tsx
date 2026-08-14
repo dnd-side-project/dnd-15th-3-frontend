@@ -1,54 +1,20 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { FormProvider, useForm } from "react-hook-form";
-import { createMemoryRouter, Outlet, RouterProvider } from "react-router";
+import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import { EMPTY_DRAFT, type MeetingDraft } from "../../draft";
-
-// 이 화면만 검증하므로 앞 단계를 채운 폼을 바로 깐다.
-function FilledFormLayout() {
-  const methods = useForm<MeetingDraft>({ defaultValues: { ...EMPTY_DRAFT, ...DRAFT } });
-  return (
-    <FormProvider {...methods}>
-      <Outlet />
-    </FormProvider>
-  );
-}
+import type { MeetingDraft } from "../../draft";
+import { formLayout } from "../../test-utils";
 import { CompletePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
 
+// 이 화면은 응답에서 세 값만 쓴다.
 const MEETING = {
   id: "1",
-  meetingId: "1",
   invitationCode: "DNDF0R",
   participantAccessToken: "host-session-token",
-  invitationUrl: "https://momo.example/invite/DNDF0R",
-  name: "을지로·성수 나들이",
-  date: "2026-08-05",
-  time: "18:00",
-  role: "HOST",
-  isHost: true,
-  permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
-  meetingType: { id: "1", code: "SOCIAL", name: "친목" },
-  meetingTypeCode: "SOCIAL",
-  host: { userKey: "device-1", nickname: "방장모모", profileAvatarId: "momo-blue" },
-  categorySlugs: ["restaurant"],
-  firstLocation: {
-    id: "101",
-    displayName: "을지로3가역",
-    address: "서울",
-    latitude: 1,
-    longitude: 2,
-    syncVersion: 1,
-  },
-  viewerParticipantId: "11",
-  participants: [],
-  categorySteps: [],
-  recommendations: [],
-  selectedCourse: null,
 };
 
 const DRAFT: MeetingDraft = {
@@ -74,7 +40,7 @@ function renderComplete(initialEntry: string) {
     [
       {
         path: "/new",
-        Component: FilledFormLayout,
+        Component: formLayout(DRAFT),
         children: [{ path: "complete", Component: CompletePage }],
       },
     ],
