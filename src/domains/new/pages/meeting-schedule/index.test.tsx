@@ -4,7 +4,7 @@ import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 import { formLayout } from "../../test-utils";
 import { MeetingSchedulePage } from "./index";
 

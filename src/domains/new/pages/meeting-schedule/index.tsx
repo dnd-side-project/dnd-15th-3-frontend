@@ -5,7 +5,7 @@ import { SectionIntro } from "../../../../components/section-intro";
 import { DayPicker } from "../../components/day-picker";
 import { StepPage } from "../../components/step-page";
 import { TimePicker } from "../../components/time-picker";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 import type { Time } from "../../types/time";
 import { formatTwoDigits } from "../../utils/time";
 
