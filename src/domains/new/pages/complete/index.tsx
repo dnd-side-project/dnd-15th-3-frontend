@@ -15,7 +15,7 @@ import { getUserKey } from "../../../../utils/user-key";
 import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
 import { createMeeting } from "../../../meeting/api";
 import type { CreateMeetingRequest, MeetingScreen } from "../../../meeting/api/types";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 
 import {
   badge,

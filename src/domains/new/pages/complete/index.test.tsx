@@ -4,7 +4,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
-import type { MeetingDraft } from "../../draft";
+import type { MeetingDraft } from "../../constants";
 import { formLayout } from "../../test-utils";
 import { CompletePage } from "./index";
 
