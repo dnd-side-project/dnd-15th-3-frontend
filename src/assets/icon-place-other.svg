@@ -1,0 +1,7 @@
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="icon-place-other" maskUnits="userSpaceOnUse" x="0" y="0" width="12" height="12">
+<rect width="12" height="12" fill="white"/>
+<path d="M3.6527 5.99766V6.00266M6.00278 5.99766V6.00266M8.35273 5.99766V6.00266" stroke="black" stroke-width="1.56" stroke-linecap="round"/>
+</mask>
+<rect width="12" height="12" rx="6" fill="currentColor" mask="url(#icon-place-other)"/>
+</svg>
