@@ -23,7 +23,7 @@ export const search = style({
 });
 
 export const results = style({
-  height: 102,
+  height: 103,
   display: "flex",
   flexDirection: "column",
   padding: "0 20px",
@@ -33,6 +33,7 @@ export const results = style({
 export const result = style({
   width: "100%",
   padding: "16px 3px",
+  height: 51,
   border: "none",
   borderTop: `1px solid ${colors.divider}`,
   background: "none",
