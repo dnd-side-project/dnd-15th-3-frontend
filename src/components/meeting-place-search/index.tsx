@@ -44,7 +44,6 @@ export function MeetingPlaceSearch({
 
   const {
     data: places,
-    error,
     isError,
     isPending,
   } = useQuery({
@@ -87,7 +86,7 @@ export function MeetingPlaceSearch({
             {isPending ? (
               <p className={styles.empty}>검색 중...</p>
             ) : isError ? (
-              <p className={styles.empty}>{error.message}</p>
+              <p className={styles.empty}>장소 정보를 불러오지 못했습니다.</p>
             ) : places === undefined || places.length === 0 ? (
               <p className={styles.empty}>{emptyMessage}</p>
             ) : (
