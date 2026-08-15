@@ -16,23 +16,29 @@ import {
   pasteButton,
   title,
   codeInputArea,
+  toastStyle,
 } from "./index.css";
 
 export function JoinCodePage() {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
+  const showToast = (message: string) => {
+    setToast({ key: Date.now(), message });
+  };
   const handlePaste = async () => {
     setLoading(true);
     try {
       const text = (await navigator.clipboard.readText()).trim();
       if (text.length === 0) {
+        showToast("붙여놓을 초대코드가 없습니다.");
         return;
       }
       setCode(text.slice(0, 6));
     } catch {
-      // clipboard read failed
+      showToast("붙여놓을 초대코드가 없습니다.");
     } finally {
       setLoading(false);
     }
@@ -73,6 +79,17 @@ export function JoinCodePage() {
           primaryDisabled={code.length !== 6}
         />
       </div>
+      {toast ? (
+        <div
+          key={toast.key}
+          className={toastStyle}
+          role="status"
+          aria-live="polite"
+          onAnimationEnd={() => setToast(null)}
+        >
+          {toast.message}
+        </div>
+      ) : null}
     </div>
   );
 }
