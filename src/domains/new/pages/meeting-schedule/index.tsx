@@ -1,41 +1,19 @@
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
+import { DayPicker } from "../../../../components/day-picker";
 import { SectionIntro } from "../../../../components/section-intro";
-import { DayPicker } from "../../components/day-picker";
+import { TimePicker } from "../../../../components/time-picker";
+import {
+  parseDateString,
+  parseTimeString,
+  toDateString,
+  toTimeString,
+} from "../../../../utils/time";
 import { StepPage } from "../../components/step-page";
-import { TimePicker } from "../../components/time-picker";
 import type { MeetingDraft } from "../../constants";
-import type { Time } from "../../types/time";
-import { formatTwoDigits } from "../../utils/time";
 
 import { fields, intro } from "./index.css";
-
-/** CreateMeetingDto.date 는 YYYY-MM-DD */
-function toDateString(date: Date) {
-  return `${date.getFullYear()}-${formatTwoDigits(date.getMonth() + 1)}-${formatTwoDigits(date.getDate())}`;
-}
-
-/** CreateMeetingDto.time 은 HH:mm */
-function toTimeString(time: Time) {
-  return `${formatTwoDigits(time.hours)}:${formatTwoDigits(time.minutes)}`;
-}
-
-function parseDate(value: string) {
-  if (value === "") {
-    return undefined;
-  }
-  const [year, month, day] = value.split("-").map(Number);
-  return new Date(year!, month! - 1, day!);
-}
-
-function parseTime(value: string): Time | null {
-  if (value === "") {
-    return null;
-  }
-  const [hours, minutes] = value.split(":").map(Number);
-  return { hours: hours!, minutes: minutes! };
-}
 
 export function MeetingSchedulePage() {
   const navigate = useNavigate();
@@ -59,7 +37,7 @@ export function MeetingSchedulePage() {
           control={control}
           name="date"
           render={({ field }) => {
-            const selected = parseDate(field.value);
+            const selected = parseDateString(field.value);
             return (
               <DayPicker
                 date={selected}
@@ -75,7 +53,7 @@ export function MeetingSchedulePage() {
           control={control}
           name="time"
           render={({ field }) => {
-            const selected = parseTime(field.value);
+            const selected = parseTimeString(field.value);
             return (
               <TimePicker
                 meetingTime={selected}

@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
 import { TimePicker } from ".";
-import { withLayout } from "../../../../components/layout/index.decorators";
-import { type Time } from "../../types/time";
+import { type Time } from "../../utils/time";
+import { withLayout } from "../layout/index.decorators";
 const meta = {
   component: TimePicker,
   title: "components/new/TimePicker",

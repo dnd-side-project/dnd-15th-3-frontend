@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
 import { DayPicker } from ".";
-import { withLayout } from "../../../../components/layout/index.decorators";
+import { withLayout } from "../layout/index.decorators";
 const meta = {
   component: DayPicker,
   title: "components/new/DayPicker",

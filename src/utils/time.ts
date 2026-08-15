@@ -1,4 +1,10 @@
-import type { Time, TimeWithPeriod } from "../types/time";
+export interface Time {
+  hours: number;
+  minutes: number;
+}
+export interface TimeWithPeriod extends Time {
+  period: "AM" | "PM";
+}
 
 const MINUTE_STEP = 5;
 const HOUR_STEP = 1;
@@ -28,3 +34,27 @@ export const toTimeWithPeriod = (time: Time): TimeWithPeriod => {
 
 export const formatTime = (time: TimeWithPeriod) =>
   `${formatTwoDigits(time.hours)}:${formatTwoDigits(time.minutes)} ${time.period}`;
+
+/** YYYY-MM-DD */
+export const toDateString = (date: Date) =>
+  `${date.getFullYear()}-${formatTwoDigits(date.getMonth() + 1)}-${formatTwoDigits(date.getDate())}`;
+
+/** HH:mm */
+export const toTimeString = (time: Time) =>
+  `${formatTwoDigits(time.hours)}:${formatTwoDigits(time.minutes)}`;
+
+export function parseDateString(value: string) {
+  if (value === "") {
+    return undefined;
+  }
+  const [year, month, day] = value.split("-").map(Number);
+  return new Date(year!, month! - 1, day!);
+}
+
+export function parseTimeString(value: string): Time | null {
+  if (value === "") {
+    return null;
+  }
+  const [hours, minutes] = value.split(":").map(Number);
+  return { hours: hours!, minutes: minutes! };
+}
