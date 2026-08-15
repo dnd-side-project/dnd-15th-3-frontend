@@ -1,11 +1,22 @@
+import { FormProvider, useForm } from "react-hook-form";
 import { Outlet } from "react-router";
 
 import { Layout } from "../../../components/layout";
+import { type JoinDraft } from "../types/draft";
 
 export function JoinLayout() {
+  const methods = useForm<JoinDraft>({
+    defaultValues: {
+      nickname: "",
+      profileAvatarId: "momo-blue",
+      invitationCode: "",
+    },
+  });
   return (
     <Layout>
-      <Outlet />
+      <FormProvider {...methods}>
+        <Outlet />
+      </FormProvider>
     </Layout>
   );
 }
