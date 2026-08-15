@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
 import ArrowUpRightIcon from "../../../../assets/icon-arrow-up-right.svg?react";
@@ -14,8 +15,14 @@ import CourseLines from "../../../../assets/meeting-course-lines.svg?react";
 import CourseNavigation from "../../../../assets/meeting-course-navigation.svg?react";
 import HeaderConfetti from "../../../../assets/meeting-header-confetti.svg?react";
 import { CtaButton, CtaButtonRow } from "../../../../components/cta-button";
+import { DayPickerSheet } from "../../../../components/day-picker";
+import { Dropdown, Item, Trigger, createMenuHandle } from "../../../../components/dropdown-menu";
 import { Layout } from "../../../../components/layout";
 import { MomoAvatar } from "../../../../components/momo-avatar";
+import { TimePickerSheet } from "../../../../components/time-picker";
+import { parseDateString, parseTimeString } from "../../../../utils/time";
+import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
+import { useMeetingTypes } from "../../../catalog/hooks";
 import { useMeeting, useMeetingPermissions } from "../../hooks";
 
 import {
@@ -62,9 +69,27 @@ function formatDate(date: string) {
   return `${year?.slice(2)}. ${month}. ${day}`;
 }
 
-function InfoCell({ Icon, value }: { Icon: typeof CalendarIcon; value: string }) {
+// 고칠 수 없는 참여자에게는 펼침 표시를 두지 않는다.
+function InfoCell({
+  Icon,
+  value,
+  onOpen,
+}: {
+  Icon: typeof CalendarIcon;
+  value: string;
+  onOpen?: () => void;
+}) {
+  if (onOpen === undefined) {
+    return (
+      <span className={infoCell}>
+        <Icon aria-hidden height={24} width={24} />
+        <span className={infoValue}>{value}</span>
+      </span>
+    );
+  }
+
   return (
-    <button className={infoCell} type="button">
+    <button className={infoCell} type="button" onClick={onOpen}>
       <Icon aria-hidden height={24} width={24} />
       <span className={infoValue}>
         {value}
@@ -74,11 +99,23 @@ function InfoCell({ Icon, value }: { Icon: typeof CalendarIcon; value: string })
   );
 }
 
+type Sheet = "date" | "time" | "location";
+
 export function MeetingPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting, isPending } = useMeeting();
   const { canManageMeeting } = useMeetingPermissions();
+  const meetingTypes = useMeetingTypes();
+  const typeMenu = createMenuHandle();
+
+  const [sheet, setSheet] = useState<Sheet | null>(null);
+  const closeSheet = () => setSheet(null);
+  // TODO: backend meeting 수정 api 구현 필요
+  const save = () => {
+    alert("TODO: backend meeting 수정 api 구현 필요");
+    closeSheet();
+  };
 
   if (isPending || meeting === undefined) {
     return (
@@ -108,26 +145,60 @@ export function MeetingPage() {
           </div>
 
           <div className={typeRow}>
-            <button className={typeBadge} type="button">
-              {meeting.meetingType.name}
-              <CaretDownIcon aria-hidden height={16} width={16} />
-            </button>
+            {canManageMeeting ? (
+              <>
+                <Trigger className={typeBadge} handle={typeMenu}>
+                  {meeting.meetingType.name}
+                  <CaretDownIcon aria-hidden height={16} width={16} />
+                </Trigger>
+                <Dropdown handle={typeMenu} size="md">
+                  {meetingTypes.map((type) => (
+                    <Item
+                      key={type.code}
+                      selected={type.code === meeting.meetingTypeCode}
+                      onClick={save}
+                    >
+                      {type.name}
+                    </Item>
+                  ))}
+                </Dropdown>
+              </>
+            ) : (
+              <span className={typeBadge}>{meeting.meetingType.name}</span>
+            )}
             <span className={typeSuffix}>모임이에요!</span>
           </div>
 
           <div className={titleRow}>
             <h1 className={title}>{meeting.name}</h1>
             {canManageMeeting ? (
-              <button aria-label="모임 이름 수정" className={editButton} type="button">
+              <button
+                aria-label="모임 이름 수정"
+                className={editButton}
+                type="button"
+                onClick={save}
+              >
                 <PenIcon aria-hidden height={30} width={29} />
               </button>
             ) : null}
           </div>
 
           <div className={infoCard}>
-            <InfoCell Icon={CalendarIcon} value={formatDate(meeting.date)} />
-            <InfoCell Icon={ClockIcon} value={meeting.time} />
-            <InfoCell Icon={MapPinIcon} value={meeting.firstLocation.displayName} />
+            <InfoCell
+              Icon={CalendarIcon}
+              value={formatDate(meeting.date)}
+              onOpen={canManageMeeting ? () => setSheet("date") : undefined}
+            />
+            <InfoCell
+              Icon={ClockIcon}
+              value={meeting.time}
+              onOpen={canManageMeeting ? () => setSheet("time") : undefined}
+            />
+            <InfoCell
+              Icon={MapPinIcon}
+              value={meeting.firstLocation.displayName}
+              onOpen={canManageMeeting ? () => setSheet("location") : undefined}
+            />
           </div>
         </div>
 
@@ -178,7 +249,12 @@ export function MeetingPage() {
             </Link>
 
             {canManageMeeting && meeting.selectedCourse !== null ? (
-              <button aria-label="코스 수정" className={courseEditButton} type="button">
+              <button
+                aria-label="코스 수정"
+                className={courseEditButton}
+                type="button"
+                onClick={save}
+              >
                 <PenSmallIcon aria-hidden height={32} width={32} />
               </button>
             ) : null}
@@ -199,6 +275,20 @@ export function MeetingPage() {
           )}
         </div>
       </div>
+
+      <DayPickerSheet
+        date={parseDateString(meeting.date)}
+        isOpen={sheet === "date"}
+        onClose={closeSheet}
+        onConfirm={save}
+      />
+      <TimePickerSheet
+        isOpen={sheet === "time"}
+        time={parseTimeString(meeting.time)}
+        onClose={closeSheet}
+        onConfirm={save}
+      />
+      <PlaceSearchSheet isOpen={sheet === "location"} onClose={closeSheet} onSelect={save} />
     </Layout>
   );
 }

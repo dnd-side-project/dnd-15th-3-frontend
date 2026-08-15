@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
-import { page } from "vite-plus/test/browser/context";
+import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
 import type { MeetingScreen } from "../../api/types";
@@ -43,13 +43,22 @@ const MEETING: MeetingScreen = {
   selectedCourse: null,
 };
 
+const MEETING_TYPES = [
+  { id: "1", code: "SOCIAL", name: "친목" },
+  { id: "2", code: "DATING_HOBBY", name: "데이트" },
+];
+
 function renderMeeting(meeting: MeetingScreen = MEETING) {
-  fetchMock.mockResolvedValue(
-    new Response(JSON.stringify(meeting), {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    }),
-  );
+  fetchMock.mockImplementation((input) => {
+    const url = new Request(input).url;
+    const body = url.includes("/meeting-types") ? MEETING_TYPES : meeting;
+    return Promise.resolve(
+      new Response(JSON.stringify(body), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+  });
 
   const router = createMemoryRouter([{ path: "/meeting/:id", Component: MeetingPage }], {
     initialEntries: ["/meeting/1"],
@@ -154,4 +163,28 @@ test("코스가 정해지기 전에는 코스 수정 버튼이 없다", async ()
 
   await expect.element(page.getByRole("button", { name: "공유하기" })).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "코스 수정" })).not.toBeInTheDocument();
+});
+
+test("개설자는 날짜를 눌러 날짜 선택 시트를 연다", async () => {
+  renderMeeting();
+
+  await userEvent.click(page.getByRole("button", { name: /26. 08. 05/ }));
+
+  await expect.element(page.getByRole("button", { name: "확인" })).toBeInTheDocument();
+});
+
+test("개설자는 모임 유형을 눌러 유형 목록을 연다", async () => {
+  renderMeeting();
+
+  await userEvent.click(page.getByRole("button", { name: "친목" }));
+
+  await expect.element(page.getByRole("menuitem", { name: "데이트" })).toBeInTheDocument();
+});
+
+test("모임을 관리할 수 없으면 날짜·시간·장소를 누를 수 없다", async () => {
+  renderMeeting(MEMBER);
+
+  await expect.element(page.getByText("26. 08. 05")).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: /26. 08. 05/ })).not.toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "친목" })).not.toBeInTheDocument();
 });
