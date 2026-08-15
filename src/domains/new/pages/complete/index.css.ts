@@ -104,7 +104,6 @@ export const code = style({
   fontFamily: "Montserrat, sans-serif",
   fontSize: 32,
   fontWeight: 600,
-  // 마지막 글자 뒤에도 자간이 붙어 글자가 왼쪽으로 밀린다. Figma 는 이 여백을 폭에 넣지 않는다.
   marginRight: -5,
   letterSpacing: 5,
   lineHeight: 1.6,
