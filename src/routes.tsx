@@ -12,7 +12,7 @@ import { ChoicePage } from "./domains/meeting/pages/[id]/choice";
 import { CoursePage } from "./domains/meeting/pages/[id]/course";
 import { CourseDetailPage } from "./domains/meeting/pages/[id]/course/[courseId]";
 import { MyPage } from "./domains/meeting/pages/[id]/my";
-import { newMeetingLayout } from "./domains/new/layout";
+import { NewMeetingLayout } from "./domains/new/layout";
 import { CompletePage } from "./domains/new/pages/complete";
 import { MeetingCoursePage } from "./domains/new/pages/meeting-course";
 import { MeetingInfoPage } from "./domains/new/pages/meeting-info";
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/new",
-    Component: newMeetingLayout,
+    Component: NewMeetingLayout,
     children: [
       {
         path: "profile",
