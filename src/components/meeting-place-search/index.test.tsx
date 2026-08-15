@@ -85,7 +85,5 @@ test("검색 중 오류가 발생하면 에러 메시지를 표시한다", async
 
   await userEvent.type(page.getByRole("textbox", { name: "위치 검색" }), "강남");
 
-  await expect
-    .element(page.getByText("카카오 REST API 키가 설정되지 않았습니다."))
-    .toBeInTheDocument();
+  await expect.element(page.getByText("장소 정보를 불러오지 못했습니다.")).toBeInTheDocument();
 });
