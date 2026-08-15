@@ -10,7 +10,8 @@ const colors = {
   otpBackground: "#ECEFF5",
   otpBorder: "#E1E6EE",
   otpFilled: "#E5EEF9",
-  otpFilledBorder: "#66ADFF",
+  otpFilledBorder: "#C5E0FF",
+  otpTextColor: "#66ADFF",
   toastBackground: "rgba(62, 62, 62, 0.8)",
 };
 
@@ -94,7 +95,7 @@ export const toastStyle = style({
   left: "50%",
   transform: "translateX(-50%)",
   bottom: "calc(97px + env(safe-area-inset-bottom))",
-  maxWidth: 353,
+  whiteSpace: "nowrap",
   padding: "8px 20px",
   borderRadius: 30,
   backgroundColor: colors.toastBackground,
@@ -102,7 +103,6 @@ export const toastStyle = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 500,
-  lineHeight: 1.625,
   textAlign: "left",
   zIndex: 100,
   animation: `${toastFade} 3000ms ease-out forwards`,
@@ -127,8 +127,8 @@ export const otpInput = style({
   border: `2px solid ${colors.otpBorder}`,
   borderRadius: 6,
   backgroundColor: colors.otpBackground,
-  color: "transparent",
-  caretColor: "transparent",
+  color: colors.otpTextColor,
+  caretColor: "66ADFF",
   fontFamily: '"Montserrat"',
   fontSize: 32,
   fontWeight: 600,
@@ -139,7 +139,7 @@ export const otpInput = style({
   selectors: {
     "&[data-filled]": {
       backgroundColor: colors.otpFilled,
-      color: colors.otpFilledBorder,
+      color: colors.otpTextColor,
       borderColor: colors.otpFilledBorder,
     },
     "&:focus": {
