@@ -14,7 +14,6 @@ export const container = style({
   display: "flex",
   flexDirection: "column",
   gap: 30,
-  height: 227,
   paddingTop: 11,
   paddingBottom: 30,
 });
@@ -24,6 +23,7 @@ export const search = style({
 });
 
 export const results = style({
+  height: 102,
   display: "flex",
   flexDirection: "column",
   padding: "0 20px",
@@ -57,7 +57,6 @@ export const empty = style({
   fontFamily: vars.font.body,
   fontSize: 16,
   fontWeight: 400,
-  textAlign: "center",
 });
 
 export const searchIcon = style({
