@@ -93,8 +93,6 @@ export const codeRow = style({
   transform: "translateX(-50%)",
   alignItems: "center",
   gap: 16,
-  width: 209,
-  height: 51,
   padding: 0,
   border: "none",
   background: "none",
