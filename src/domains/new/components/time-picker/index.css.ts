@@ -1,26 +1,30 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { text } from "../../../../styles/text";
+
+import { vars } from "../../../../styles/theme.css";
+
 export const trigger = style({
   borderRadius: 8,
   display: "flex",
   alignItems: "center",
   columnGap: 15,
-  width: 168,
+  flex: 1,
   height: 54,
   backgroundColor: "#ECEFF5",
   color: "#707D91",
   border: 0,
-  padding: "13px 15px",
-  fontFamily: "sans-serif",
-  fontSize: "1rem",
+  padding: "15px 13px",
+  ...text({ size: 16, weight: 500 }),
+  whiteSpace: "nowrap",
 });
 
 export const timePickArea = style({
-  paddingTop: 20.65,
+  paddingTop: 21,
   paddingBottom: 15,
-  fontFamily: "sans-serif",
-  fontSize: 26.64,
+  fontFamily: vars.font.body,
+  fontSize: 27,
   color: "#262626",
   display: "flex",
   flexDirection: "column",
@@ -32,16 +36,16 @@ export const timePickArea = style({
 export const stepper = style({
   display: "flex",
   flexDirection: "column",
-  width: 53.88,
+  width: 54,
   alignItems: "center",
-  rowGap: 14.97,
+  rowGap: 15,
 });
 
 export const stepperButton = style({
   borderStyle: "none",
   borderRadius: 100,
   backgroundColor: "white",
-  padding: 8.98,
+  padding: 9,
   color: "#6D6D6D",
   margin: 0,
   display: "flex",
@@ -61,7 +65,7 @@ export const confirmButton = recipe({
     textAlign: "center",
     paddingBlock: 12,
     fontSize: 18,
-    width: 353,
+    alignSelf: "stretch",
     height: 53,
     margin: "10px 20px",
     fontWeight: 600,
@@ -87,15 +91,15 @@ export const confirmButton = recipe({
 });
 export const stepperGroup = style({
   display: "flex",
-  columnGap: 67.35,
+  columnGap: 67,
   alignItems: "center",
   justifyContent: "center",
-  width: 380.65,
-  marginBlock: 2.65,
+  width: "100%",
+  marginBlock: 3,
 });
 
 export const timeGroup = style({
   display: "flex",
-  columnGap: 35.92,
+  columnGap: 36,
   alignItems: "center",
 });

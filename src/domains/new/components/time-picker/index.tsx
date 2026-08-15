@@ -24,9 +24,9 @@ function StepperButton({ stepType, onClick }: StepperButtonProps) {
   return (
     <button className={styles.stepperButton} onClick={onClick}>
       {stepType === "up" ? (
-        <ArrowUpIcon width={35.92} height={35.92} />
+        <ArrowUpIcon width={36} height={36} />
       ) : (
-        <ArrowDownIcon width={35.92} height={35.92} />
+        <ArrowDownIcon width={36} height={36} />
       )}
     </button>
   );
@@ -39,7 +39,7 @@ interface TimePickerProps {
 export function TimePicker({ meetingTime, setMeetingTime }: TimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const meetingTimeWithPeriod = meetingTime ? toTimeWithPeriod(meetingTime) : null;
-  const timeString = meetingTimeWithPeriod ? formatTime(meetingTimeWithPeriod) : "-- --:--";
+  const timeString = meetingTimeWithPeriod ? formatTime(meetingTimeWithPeriod) : "-- -- : --";
   const [inputTime, setInputTime] = useState<TimeWithPeriod>(
     meetingTimeWithPeriod ?? {
       hours: 12,
@@ -58,7 +58,12 @@ export function TimePicker({ meetingTime, setMeetingTime }: TimePickerProps) {
       <button className={styles.trigger} onClick={() => setIsOpen((isOpen) => !isOpen)}>
         <ClockIcon width={24} height={24} /> {timeString}
       </button>
-      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)} topBorderRadius="md">
+      <BottomSheet
+        hasBackdrop
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onTapBackdrop={() => setIsOpen(false)}
+      >
         <div className={styles.timePickArea}>
           <div className={styles.stepperGroup}>
             <div className={styles.timeGroup}>

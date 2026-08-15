@@ -26,5 +26,5 @@ export const toTimeWithPeriod = (time: Time): TimeWithPeriod => {
   };
 };
 
-export const formatTime = (t: TimeWithPeriod) =>
-  `${t.period === "AM" ? "오전" : "오후"} ${formatTwoDigits(t.hours)}:${formatTwoDigits(t.minutes)}`;
+export const formatTime = (time: TimeWithPeriod) =>
+  `${formatTwoDigits(time.hours)}:${formatTwoDigits(time.minutes)} ${time.period}`;

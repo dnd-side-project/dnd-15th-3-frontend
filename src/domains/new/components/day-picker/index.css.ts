@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
+
+import { text } from "../../../../styles/text";
 export const confirmButton = recipe({
   base: {
     borderStyle: "none",
@@ -43,14 +45,14 @@ export const trigger = style({
   display: "flex",
   alignItems: "center",
   columnGap: 15,
-  width: 168,
+  flex: 1,
   height: 54,
   backgroundColor: "#ECEFF5",
   color: "#707D91",
   border: 0,
-  padding: "13px 15px",
-  fontFamily: "sans-serif",
-  fontSize: "1rem",
+  padding: "15px 13px",
+  ...text({ size: 16, weight: 500 }),
+  whiteSpace: "nowrap",
   cursor: "pointer",
 });
 
@@ -70,7 +72,7 @@ export const monthCaption = style({
   width: 83,
   fontWeight: 700,
   textAlign: "center",
-  fontSize: "1rem",
+  fontSize: 16,
   paddingLeft: 8,
 });
 export const navigation = style({
@@ -89,10 +91,10 @@ export const weekdays = style({
   color: "#888888",
 });
 export const weekday = style({
-  fontSize: "1rem",
+  fontSize: 16,
   fontWeight: 400,
-  padding: "0px 0px 15px 0px ",
-  width: 43.32,
+  padding: "0 0 15px",
+  width: 43,
 });
 
 export const today = style({
@@ -103,20 +105,20 @@ export const monthGrid = style({
   fontSize: 16,
   paddingTop: 19,
   borderSpacing: `8px 0`,
-  paddingBottom: 12.6,
+  paddingBottom: 13,
 });
 
 export const day = style({
   borderWidth: 0,
   padding: 0,
-  height: 43.32,
-  width: 43.32,
+  height: 43,
+  width: 43,
 });
 export const dayButton = style({
   borderWidth: 0,
   padding: 0,
-  height: 43.32,
-  width: 43.32,
+  height: 43,
+  width: 43,
   backgroundColor: "transparent",
   color: "inherit",
   cursor: "pointer",
