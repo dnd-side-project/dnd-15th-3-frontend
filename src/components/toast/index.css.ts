@@ -26,7 +26,7 @@ export const root = style({
   whiteSpace: "nowrap",
   transform:
     "translateY(calc(var(--toast-index) * 8px)) scale(calc(1 - var(--toast-index) * 0.05))",
-  transition: "opacity 450ms ease-out, transform 450ms ease-out",
+  transition: "opacity 350ms ease-out, transform 350ms ease-out",
   touchAction: "none",
   pointerEvents: "auto",
   selectors: {
@@ -47,7 +47,7 @@ export const root = style({
   },
   "@media": {
     "(prefers-reduced-motion: reduce)": {
-      transition: "opacity 450ms ease-out",
+      transition: "opacity 350ms ease-out",
       selectors: {
         "&[data-starting-style], &[data-ending-style]": { transform: "none" },
       },
@@ -56,7 +56,7 @@ export const root = style({
 });
 
 export const content = style({
-  transition: "opacity 450ms ease-out",
+  transition: "opacity 350ms ease-out",
   selectors: {
     "&[data-behind]": { opacity: 0 },
   },
