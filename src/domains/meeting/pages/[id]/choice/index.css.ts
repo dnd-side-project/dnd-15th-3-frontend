@@ -2,22 +2,11 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../../../../styles/text";
 
-const colors = {
-  surface: "#FFFFFF",
-  heading: "#262626",
-  muted: "#707D91",
-  scrim: "rgba(0, 0, 0, 0.59)",
-  cardText: "#FFFFFF",
-  caret: "rgba(242, 243, 247, 0.59)",
-  previewCard: "#ECEFF5",
-  emptyDescription: "#7D7D7D",
-};
-
 export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: colors.surface,
+  background: "#FFFFFF",
 });
 
 export const toggle = style({
@@ -40,7 +29,7 @@ export const bar = style({
 });
 
 export const count = style({
-  color: colors.heading,
+  color: "#262626",
   ...text({ size: 18, weight: 600, lineHeight: "22px" }),
 });
 
@@ -51,7 +40,7 @@ export const sort = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: colors.muted,
+  color: "#707D91",
   ...text({ size: 16, weight: 500, lineHeight: "17px" }),
   cursor: "pointer",
 });
@@ -74,7 +63,7 @@ export const emptyPreviewCard = style({
   position: "absolute",
   width: 48,
   borderRadius: 5,
-  backgroundColor: colors.previewCard,
+  backgroundColor: "#ECEFF5",
 });
 
 export const emptyTexts = style({
@@ -87,13 +76,13 @@ export const emptyTexts = style({
 
 export const emptyTitle = style({
   margin: 0,
-  color: colors.heading,
+  color: "#262626",
   ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const emptyDescription = style({
   margin: 0,
-  color: colors.emptyDescription,
+  color: "#7D7D7D",
   ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 
@@ -134,14 +123,14 @@ export const cardImage = style({
   display: "block",
   width: "100%",
   height: "100%",
-  backgroundColor: colors.previewCard,
+  backgroundColor: "#ECEFF5",
   objectFit: "cover",
 });
 
 export const cardScrim = style({
   position: "absolute",
   inset: 0,
-  background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, ${colors.scrim} 58%)`,
+  background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, ${"rgba(0, 0, 0, 0.59)"} 58%)`,
 });
 
 export const cardBody = style({
@@ -173,7 +162,7 @@ export const cardName = style({
   display: "flex",
   alignItems: "center",
   gap: 6,
-  color: colors.cardText,
+  color: "#FFFFFF",
   ...text({ size: 16, weight: 600, lineHeight: "20px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -181,7 +170,7 @@ export const cardName = style({
 });
 
 export const cardAddress = style({
-  color: colors.cardText,
+  color: "#FFFFFF",
   ...text({ size: 12, weight: 500, lineHeight: "12px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -190,7 +179,7 @@ export const cardAddress = style({
 
 export const cardCaret = style({
   flexShrink: 0,
-  color: colors.caret,
+  color: "rgba(242, 243, 247, 0.59)",
 });
 
 export const preferences = style({
@@ -205,13 +194,13 @@ export const footer = style({
   bottom: 0,
   display: "flex",
   padding: "10px 20px calc(20px + env(safe-area-inset-bottom))",
-  backgroundColor: colors.surface,
+  backgroundColor: "#FFFFFF",
   boxShadow: "0 4px 11.9px rgba(0, 0, 0, 0.25)",
 });
 
 export const status = style({
   padding: "40px 20px",
-  color: colors.muted,
+  color: "#707D91",
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });
