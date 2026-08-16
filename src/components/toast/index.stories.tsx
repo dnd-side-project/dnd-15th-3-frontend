@@ -26,7 +26,6 @@ export const Link: Story = {
   },
 };
 
-// 버튼을 눌러 나타났다 사라지는 동작을 확인한다.
 function Playground() {
   const { toast, show } = useToast();
 
