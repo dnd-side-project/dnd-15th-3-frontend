@@ -4,13 +4,6 @@ import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-const colors = {
-  pillBackground: "#3D4A5C",
-  pillText: "#FFFFFF",
-  sheet: "#FFFFFF",
-  grabber: "#D1D1D1",
-};
-
 export const root = style({
   position: "relative",
   display: "flex",
@@ -68,9 +61,9 @@ export const meetingPill = style({
   padding: "0 7px",
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.pillBackground,
+  backgroundColor: "#3D4A5C",
   boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
-  color: colors.pillText,
+  color: "#FFFFFF",
   ...text({ size: 14, weight: 600, lineHeight: "22px" }),
   cursor: "pointer",
 });
@@ -84,7 +77,7 @@ export const pillIcon = style({
 export const sheet = style({
   pointerEvents: "auto",
   borderRadius: "24px 24px 0 0",
-  backgroundColor: colors.sheet,
+  backgroundColor: "#FFFFFF",
   boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
 });
 
@@ -99,5 +92,5 @@ export const grabberBar = style({
   width: 50,
   height: 5,
   borderRadius: 10,
-  backgroundColor: colors.grabber,
+  backgroundColor: "#D1D1D1",
 });

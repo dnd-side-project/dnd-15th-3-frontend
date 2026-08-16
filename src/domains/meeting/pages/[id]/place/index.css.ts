@@ -4,19 +4,6 @@ import { text } from "../../../../../styles/text";
 
 import { vars } from "../../../../../styles/theme.css";
 
-const colors = {
-  pillBackground: "#3D4A5C",
-  pillText: "#FFFFFF",
-  divider: "#DAE1EC",
-  placeName: "#262626",
-  placeAddress: "#707D91",
-  addBackground: "#ECEFF5",
-  addIcon: "#A4B1C5",
-  noticeIcon: "#E0E0E0",
-  noticeTitle: "#000000",
-  noticeDescription: "#6D6D6D",
-};
-
 export const search = style({
   padding: "11px 20px 0",
 });
@@ -36,7 +23,7 @@ export const result = style({
   width: "100%",
   padding: "17px 20px",
   border: "none",
-  borderTop: `1px solid ${colors.divider}`,
+  borderTop: `1px solid ${"#DAE1EC"}`,
   background: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -47,7 +34,7 @@ export const thumbnail = style({
   width: 96,
   height: 71,
   borderRadius: 5,
-  backgroundColor: colors.addBackground,
+  backgroundColor: "#ECEFF5",
   objectFit: "cover",
 });
 
@@ -63,7 +50,7 @@ export const resultName = style({
   display: "flex",
   alignItems: "center",
   gap: 8,
-  color: colors.placeName,
+  color: "#262626",
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -71,7 +58,7 @@ export const resultName = style({
 });
 
 export const resultAddress = style({
-  color: colors.placeAddress,
+  color: "#707D91",
   ...text({ size: 16, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -87,8 +74,8 @@ export const addButton = style({
   height: 36,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.addBackground,
-  color: colors.addIcon,
+  backgroundColor: "#ECEFF5",
+  color: "#A4B1C5",
   cursor: "pointer",
 });
 
@@ -102,20 +89,20 @@ export const notice = style({
 
 export const noticeIcon = style({
   marginBottom: 18,
-  color: colors.noticeIcon,
+  color: "#E0E0E0",
 });
 
 export const noticeTitle = style({
   alignSelf: "stretch",
   margin: 0,
-  color: colors.noticeTitle,
+  color: "#000000",
   ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const noticeDescription = style({
   alignSelf: "stretch",
   margin: "1px 0 0",
-  color: colors.noticeDescription,
+  color: "#6D6D6D",
   ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 

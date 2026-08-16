@@ -5,18 +5,11 @@ import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-const colors = {
-  fallback: "#E9EEF5",
-  muted: "#707D91",
-  current: "#3793FF",
-  currentHalo: "rgba(55, 147, 255, 0.25)",
-};
-
 export const root = recipe({
   base: {
     position: "absolute",
     inset: 0,
-    backgroundColor: colors.fallback,
+    backgroundColor: "#E9EEF5",
   },
   variants: {
     interactive: {
@@ -36,7 +29,7 @@ export const notice = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: colors.muted,
+  color: "#707D91",
   ...text({ size: 16, weight: 500 }),
   pointerEvents: "none",
 });
@@ -52,6 +45,6 @@ export const currentDot = style({
   height: 18,
   border: "3px solid #FFFFFF",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.current,
-  boxShadow: `0 0 0 6px ${colors.currentHalo}`,
+  backgroundColor: "#3793FF",
+  boxShadow: `0 0 0 6px ${"rgba(55, 147, 255, 0.25)"}`,
 });
