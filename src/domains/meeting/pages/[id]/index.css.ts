@@ -5,8 +5,6 @@ import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-const textShadow = "0 0 4px rgba(0, 0, 0, 0.25)";
-
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -101,7 +99,7 @@ export const title = style({
   whiteSpace: "nowrap",
   color: "#FFFFFF",
   ...text({ size: 26, weight: 600, lineHeight: 1.2 }),
-  textShadow,
+  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
 });
 
 export const editButton = style({
@@ -156,7 +154,7 @@ export const infoValue = style({
   ...text({ size: 14, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
-  textShadow,
+  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
   whiteSpace: "nowrap",
 });
 
@@ -340,7 +338,7 @@ export const cardTitle = style({
   margin: 0,
   color: "#FFFFFF",
   ...text({ size: 16, weight: 600, lineHeight: 1.23 }),
-  textShadow,
+  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
   whiteSpace: "nowrap",
 });
 
