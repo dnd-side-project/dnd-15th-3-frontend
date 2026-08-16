@@ -10,6 +10,8 @@ import CopyIcon from "../../../../assets/icon-copy.svg?react";
 import { CtaButton } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
 import { ShareButtonGroup } from "../../../../components/share-button";
+import { Toast } from "../../../../components/toast";
+import { useToast } from "../../../../hooks/use-toast";
 import { setAccessToken } from "../../../../utils/access-token";
 import { getUserKey } from "../../../../utils/user-key";
 import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
@@ -85,7 +87,9 @@ export function CompletePage() {
 
   const invitationCode = searchParams.get("code") ?? "";
   const { meetingId, remember } = useCreatedMeetingId(invitationCode);
-  const [copied, setCopied] = useState(false);
+  const { toast, show } = useToast();
+
+  const invitationUrl = `${window.location.origin}/join?code=${invitationCode}`;
 
   const settle = (meeting: MeetingScreen) => {
     setAccessToken(meeting.id, meeting.participantAccessToken);
@@ -117,11 +121,13 @@ export function CompletePage() {
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(invitationCode);
-    setCopied(true);
+    show("초대 코드가 복사되었습니다.");
   };
 
   return (
     <Layout>
+      <Toast toast={toast} />
+
       <div className={root}>
         <div className={texts}>
           <h1 className={title}>모임 방이 만들어졌어요!</h1>
@@ -139,7 +145,7 @@ export function CompletePage() {
               <img alt="" className={cardImage} src="/static/complete-momo.webp" />
               <span className={badge}>초대코드</span>
               <button
-                aria-label={copied ? "초대코드 복사 완료" : "초대코드 복사"}
+                aria-label="초대코드 복사"
                 className={codeRow}
                 type="button"
                 onClick={copyCode}
@@ -159,8 +165,16 @@ export function CompletePage() {
               <ShareButtonGroup
                 description={`초대코드 ${invitationCode}`}
                 imageUrl={`${window.location.origin}/static/momo-kakao-share.png`}
+                link={invitationUrl}
                 title={getValues("name")}
-                onMore={() => void navigator.share?.({ text: invitationCode })}
+                onCopyLink={() => show("링크가 복사되었습니다.")}
+                onMore={() =>
+                  void navigator.share?.({
+                    title: getValues("name"),
+                    text: `초대코드 ${invitationCode}`,
+                    url: invitationUrl,
+                  })
+                }
               />
             </div>
           </>

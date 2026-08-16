@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
-import { page } from "vite-plus/test/browser/context";
+import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../test-utils";
 import type { MeetingDraft } from "../../constants";
@@ -110,4 +110,26 @@ test("만드는 동안에는 진행 상태를 알린다", async () => {
 
   await expect.element(page.getByText("모임 방 만드는 중")).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "모임 시작하기" })).toBeDisabled();
+});
+
+test("초대코드를 복사하면 토스트로 알린다", async () => {
+  const writeText = vi.spyOn(navigator.clipboard, "writeText").mockResolvedValue();
+  renderComplete("/new/complete?code=DNDF0R");
+
+  await userEvent.click(page.getByRole("button", { name: "초대코드 복사" }));
+
+  expect(writeText).toHaveBeenCalledWith("DNDF0R");
+  await expect.element(page.getByRole("status")).toHaveTextContent("초대 코드가 복사되었습니다.");
+  writeText.mockRestore();
+});
+
+test("링크를 복사하면 초대 주소를 넣고 토스트로 알린다", async () => {
+  const writeText = vi.spyOn(navigator.clipboard, "writeText").mockResolvedValue();
+  renderComplete("/new/complete?code=DNDF0R");
+
+  await userEvent.click(page.getByRole("button", { name: "링크 복사" }));
+
+  expect(writeText).toHaveBeenCalledWith(`${window.location.origin}/join?code=DNDF0R`);
+  await expect.element(page.getByRole("status")).toHaveTextContent("링크가 복사되었습니다.");
+  writeText.mockRestore();
 });
