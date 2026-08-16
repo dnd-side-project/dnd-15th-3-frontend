@@ -7,7 +7,9 @@ const colors = {
   text: "#FFFFFF",
 };
 
-const FADE_MS = 300;
+const FADE_MS = 450;
+const PEEK = 8;
+const GAP = 10;
 
 export const viewport = style({
   position: "fixed",
@@ -31,18 +33,22 @@ export const root = style({
   color: colors.text,
   ...text({ size: 16, weight: 500, lineHeight: 1.6 }),
   whiteSpace: "nowrap",
-  transform: `translateY(var(--toast-offset-y)) scale(calc(1 - var(--toast-index) * 0.06))`,
+  transform: `translateY(calc(var(--toast-index) * ${PEEK}px))
+              scale(calc(1 - var(--toast-index) * 0.05))`,
   transition: `opacity ${FADE_MS}ms ease-out, transform ${FADE_MS}ms ease-out`,
   touchAction: "none",
   pointerEvents: "auto",
   selectors: {
+    "&[data-expanded]": {
+      transform: `translateY(calc(var(--toast-offset-y) + var(--toast-index) * ${GAP}px))`,
+    },
     "&[data-starting-style], &[data-ending-style]": {
       opacity: 0,
       transform: "translateY(-140%) scale(0.96)",
     },
     "&[data-swiping]": {
       transition: "none",
-      transform: `translateY(calc(var(--toast-offset-y) + var(--toast-swipe-movement-y)))`,
+      transform: `translateY(calc(var(--toast-index) * ${PEEK}px + var(--toast-swipe-movement-y)))`,
     },
     "&[data-ending-style][data-swipe-direction='up']": {
       transform: `translateY(calc(var(--toast-swipe-movement-y) - 140%))`,

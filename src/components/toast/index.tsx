@@ -5,7 +5,7 @@ import { toast } from "./manager";
 
 import { content, root, title, viewport } from "./index.css";
 
-const TIMEOUT_MS = 600;
+const TIMEOUT_MS = 3000;
 
 function ToastList() {
   const { toasts } = BaseToast.useToastManager();
