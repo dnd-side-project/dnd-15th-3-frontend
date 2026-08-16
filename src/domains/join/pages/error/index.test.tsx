@@ -9,7 +9,7 @@ function renderError() {
   const router = createMemoryRouter(
     [
       { path: "/join/error", Component: JoinErrorPage },
-      { path: "/join", Component: () => <p>모임 참여</p> },
+      { path: "/join/code", Component: () => <p>모임 참여</p> },
     ],
     { initialEntries: ["/join/error"] },
   );
