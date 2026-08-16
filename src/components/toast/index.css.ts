@@ -2,15 +2,6 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../styles/text";
 
-const colors = {
-  background: "rgba(62, 62, 62, 0.8)",
-  text: "#FFFFFF",
-};
-
-const FADE_MS = 450;
-const PEEK = 8;
-const GAP = 10;
-
 export const viewport = style({
   position: "fixed",
   top: 40,
@@ -28,19 +19,19 @@ export const root = style({
   zIndex: "calc(1000 - var(--toast-index))",
   padding: "8px 20px",
   borderRadius: 30,
-  backgroundColor: colors.background,
+  backgroundColor: "rgba(62, 62, 62, 0.8)",
   backdropFilter: "blur(4px)",
-  color: colors.text,
+  color: "#FFFFFF",
   ...text({ size: 16, weight: 500, lineHeight: 1.6 }),
   whiteSpace: "nowrap",
-  transform: `translateY(calc(var(--toast-index) * ${PEEK}px))
-              scale(calc(1 - var(--toast-index) * 0.05))`,
-  transition: `opacity ${FADE_MS}ms ease-out, transform ${FADE_MS}ms ease-out`,
+  transform:
+    "translateY(calc(var(--toast-index) * 8px)) scale(calc(1 - var(--toast-index) * 0.05))",
+  transition: "opacity 450ms ease-out, transform 450ms ease-out",
   touchAction: "none",
   pointerEvents: "auto",
   selectors: {
     "&[data-expanded]": {
-      transform: `translateY(calc(var(--toast-offset-y) + var(--toast-index) * ${GAP}px))`,
+      transform: "translateY(calc(var(--toast-offset-y) + var(--toast-index) * 10px))",
     },
     "&[data-starting-style], &[data-ending-style]": {
       opacity: 0,
@@ -48,15 +39,15 @@ export const root = style({
     },
     "&[data-swiping]": {
       transition: "none",
-      transform: `translateY(calc(var(--toast-index) * ${PEEK}px + var(--toast-swipe-movement-y)))`,
+      transform: "translateY(calc(var(--toast-index) * 8px + var(--toast-swipe-movement-y)))",
     },
     "&[data-ending-style][data-swipe-direction='up']": {
-      transform: `translateY(calc(var(--toast-swipe-movement-y) - 140%))`,
+      transform: "translateY(calc(var(--toast-swipe-movement-y) - 140%))",
     },
   },
   "@media": {
     "(prefers-reduced-motion: reduce)": {
-      transition: `opacity ${FADE_MS}ms ease-out`,
+      transition: "opacity 450ms ease-out",
       selectors: {
         "&[data-starting-style], &[data-ending-style]": { transform: "none" },
       },
@@ -65,7 +56,7 @@ export const root = style({
 });
 
 export const content = style({
-  transition: `opacity ${FADE_MS}ms ease-out`,
+  transition: "opacity 450ms ease-out",
   selectors: {
     "&[data-behind]": { opacity: 0 },
   },
