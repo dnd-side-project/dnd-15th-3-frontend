@@ -59,6 +59,10 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/join/error",
+    Component: JoinErrorPage,
+  },
+  {
     path: "/debug/api-test",
     Component: ApiTestPage,
   },
