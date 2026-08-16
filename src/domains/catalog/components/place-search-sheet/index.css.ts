@@ -2,13 +2,6 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../../../styles/text";
 
-const colors = {
-  description: "#707D91",
-  icon: "#707D91",
-  divider: "#ECEFF5",
-  resultText: "#000000",
-};
-
 export const body = style({
   display: "flex",
   flexDirection: "column",
@@ -23,7 +16,7 @@ export const search = style({
 
 export const searchIcon = style({
   flexShrink: 0,
-  color: colors.icon,
+  color: "#707D91",
 });
 
 export const results = style({
@@ -37,19 +30,19 @@ export const result = style({
   width: "100%",
   padding: "16px 3px",
   border: "none",
-  borderTop: `1px solid ${colors.divider}`,
+  borderTop: `1px solid ${"#ECEFF5"}`,
   background: "none",
-  color: colors.resultText,
+  color: "#000000",
   ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
   textAlign: "left",
   cursor: "pointer",
   selectors: {
-    "&:last-child": { borderBottom: `1px solid ${colors.divider}` },
+    "&:last-child": { borderBottom: `1px solid ${"#ECEFF5"}` },
   },
 });
 
 export const empty = style({
   padding: "16px 3px",
-  color: colors.description,
+  color: "#707D91",
   ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
 });

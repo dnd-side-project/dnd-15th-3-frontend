@@ -104,7 +104,7 @@ export const today = style({
 export const monthGrid = style({
   fontSize: 16,
   paddingTop: 19,
-  borderSpacing: `8px 0`,
+  borderSpacing: "8px 0",
   paddingBottom: 13,
 });
 

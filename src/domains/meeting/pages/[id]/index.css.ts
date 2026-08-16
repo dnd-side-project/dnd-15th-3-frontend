@@ -5,26 +5,13 @@ import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-const colors = {
-  surface: "#FFFFFF",
-  white: "#FFFFFF",
-  heading: "#3D3D3D",
-  participant: "#707D91",
-  crown: "#FF46A9",
-  crownGlyph: "#FFECF6",
-  cardSubText: "#F1F8FF",
-  overlay: "rgba(0, 0, 0, 0.1)",
-  editBackdrop: "rgba(255, 255, 255, 0.14)",
-  courseEdit: "#4C9FFF",
-};
-
 const textShadow = "0 0 4px rgba(0, 0, 0, 0.25)";
 
 export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: colors.surface,
+  background: "#FFFFFF",
 });
 
 export const header = style({
@@ -60,7 +47,7 @@ export const backButton = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: colors.white,
+  color: "#FFFFFF",
   cursor: "pointer",
 });
 
@@ -82,7 +69,7 @@ export const typeBadge = style({
   border: "none",
   borderRadius: 6,
   background: "radial-gradient(circle at 90% 100%, #3D96FF 0%, rgba(133, 189, 255, 0.26) 100%)",
-  color: colors.white,
+  color: "#FFFFFF",
   ...text({ size: 14, weight: 500 }),
   letterSpacing: -0.36,
   lineHeight: 1.2,
@@ -90,7 +77,7 @@ export const typeBadge = style({
 });
 
 export const typeSuffix = style({
-  color: colors.white,
+  color: "#FFFFFF",
   ...text({ size: 16, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
@@ -112,7 +99,7 @@ export const title = style({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  color: colors.white,
+  color: "#FFFFFF",
   ...text({ size: 26, weight: 600, lineHeight: 1.2 }),
   textShadow,
 });
@@ -127,8 +114,8 @@ export const editButton = style({
   padding: 0,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.editBackdrop,
-  color: colors.white,
+  backgroundColor: "rgba(255, 255, 255, 0.14)",
+  color: "#FFFFFF",
   cursor: "pointer",
 });
 
@@ -152,7 +139,7 @@ export const infoCell = style({
   padding: "18px 0 11px",
   border: "none",
   background: "none",
-  color: colors.white,
+  color: "#FFFFFF",
   cursor: "pointer",
   selectors: {
     "&:not(:first-child)": {
@@ -175,7 +162,7 @@ export const infoValue = style({
 
 export const sectionTitle = style({
   margin: "0 0 0 29px",
-  color: colors.heading,
+  color: "#3D3D3D",
   ...text({ size: 18, weight: 600, lineHeight: 1.65 }),
 });
 
@@ -209,13 +196,13 @@ export const crown = style({
   width: 18,
   height: 18,
   borderRadius: vars.radius.full,
-  backgroundColor: colors.crown,
-  color: colors.crownGlyph,
+  backgroundColor: "#FF46A9",
+  color: "#FFECF6",
 });
 
 export const participantName = style({
   width: "100%",
-  color: colors.participant,
+  color: "#707D91",
   ...text({ size: 14, weight: 600, lineHeight: 1.6 }),
   overflow: "hidden",
   textAlign: "center",
@@ -252,9 +239,9 @@ export const courseEditButton = style({
   padding: 0,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.courseEdit,
+  backgroundColor: "#4C9FFF",
   boxShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
-  color: colors.white,
+  color: "#FFFFFF",
   cursor: "pointer",
 });
 
@@ -322,8 +309,8 @@ export const cardArrow = recipe({
     width: 28,
     height: 28,
     borderRadius: vars.radius.full,
-    backgroundColor: colors.overlay,
-    color: colors.white,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    color: "#FFFFFF",
   },
   variants: {
     card: {
@@ -351,7 +338,7 @@ export const cardTexts = recipe({
 
 export const cardTitle = style({
   margin: 0,
-  color: colors.white,
+  color: "#FFFFFF",
   ...text({ size: 16, weight: 600, lineHeight: 1.23 }),
   textShadow,
   whiteSpace: "nowrap",
@@ -359,7 +346,7 @@ export const cardTitle = style({
 
 export const cardDescription = style({
   margin: 0,
-  color: colors.cardSubText,
+  color: "#F1F8FF",
   ...text({ size: 13, weight: 500, lineHeight: 1.65 }),
   whiteSpace: "nowrap",
 });
@@ -373,7 +360,7 @@ export const footer = style({
 
 export const status = style({
   padding: "40px 20px",
-  color: colors.participant,
+  color: "#707D91",
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });
