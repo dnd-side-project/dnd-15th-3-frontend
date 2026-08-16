@@ -30,10 +30,10 @@ test("말풍선 텍스트를 렌더링한다", async () => {
   await expect.element(page.getByText("찾을 수 없어요...")).toBeInTheDocument();
 });
 
-test("다시 시도 버튼을 누르면 /join 으로 이동한다", async () => {
+test("다시 입력하기 버튼을 누르면 /join/code 으로 이동한다", async () => {
   renderError();
 
-  await userEvent.click(page.getByRole("button", { name: "다시 시도" }));
+  await userEvent.click(page.getByRole("button", { name: "다시 입력하기" }));
 
   await expect.element(page.getByText("모임 참여")).toBeInTheDocument();
 });
