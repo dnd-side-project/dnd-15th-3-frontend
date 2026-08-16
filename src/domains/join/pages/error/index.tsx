@@ -41,7 +41,7 @@ export function JoinErrorPage() {
           </div>
         </div>
         <div className={footer}>
-          <CtaButton onClick={() => void navigate("/join")}>다시 입력하기</CtaButton>
+          <CtaButton onClick={() => void navigate("/join/code")}>다시 입력하기</CtaButton>
         </div>
       </main>
     </Layout>
