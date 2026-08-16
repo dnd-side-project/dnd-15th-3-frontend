@@ -5,18 +5,11 @@ import { text } from "../../../../../styles/text";
 
 export const surfaceColor = "#FFFFFF";
 
-const colors = {
-  surface: surfaceColor,
-  action: "#A8A8A8",
-  actionBackdrop: "rgba(185, 185, 185, 0.14)",
-  editing: "#3793FF",
-};
-
 export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: colors.surface,
+  background: surfaceColor,
 });
 
 export const intro = style({
@@ -36,14 +29,14 @@ export const editButton = recipe({
     padding: 0,
     border: "none",
     borderRadius: 16,
-    backgroundColor: colors.actionBackdrop,
+    backgroundColor: "rgba(185, 185, 185, 0.14)",
     cursor: "pointer",
   },
   variants: {
     // 저장 상태를 알리는 시안이 없어 아이콘 색으로만 구분한다.
     editing: {
-      true: { color: colors.editing },
-      false: { color: colors.action },
+      true: { color: "#3793FF" },
+      false: { color: "#A8A8A8" },
     },
   },
   defaultVariants: {
@@ -57,7 +50,7 @@ export const picker = style({
 
 export const status = style({
   padding: "40px 20px",
-  color: colors.action,
+  color: "#A8A8A8",
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });
