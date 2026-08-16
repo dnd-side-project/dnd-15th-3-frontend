@@ -4,17 +4,6 @@ import { text } from "../../../../../../styles/text";
 
 import { vars } from "../../../../../../styles/theme.css";
 
-const colors = {
-  headerBackground: "rgba(255, 255, 255, 0.93)",
-  title: "#262626",
-  address: "#7D7D7D",
-  addBackground: "#ECEFF5",
-  addIcon: "#A4B1C5",
-  linkBackground: "#F2F3F7",
-  icon: "#606060",
-  photo: "#ECEFF5",
-};
-
 // 시트 껍데기는 MapSheet 이 그리고, 이 화면만 내용을 세로로 쌓는다.
 export const sheetLayout = style({
   display: "flex",
@@ -28,7 +17,7 @@ export const header = style({
   alignItems: "center",
   height: 49,
   padding: "10px 20px",
-  backgroundColor: colors.headerBackground,
+  backgroundColor: "rgba(255, 255, 255, 0.93)",
 });
 
 export const backButton = style({
@@ -40,12 +29,12 @@ export const backButton = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: colors.icon,
+  color: "#606060",
   cursor: "pointer",
 });
 
 export const headerTitle = style({
-  color: colors.title,
+  color: "#262626",
   ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
   textAlign: "center",
 });
@@ -62,7 +51,7 @@ export const photo = style({
   flex: "0 0 100%",
   height: 213,
   borderRadius: 10,
-  backgroundColor: colors.photo,
+  backgroundColor: "#ECEFF5",
   objectFit: "cover",
   scrollSnapAlign: "start",
 });
@@ -88,7 +77,7 @@ export const name = style({
   alignItems: "center",
   gap: 7,
   margin: "0 3px",
-  color: colors.title,
+  color: "#262626",
   ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -99,7 +88,7 @@ export const address = style({
   display: "flex",
   gap: 0,
   margin: "0 3px",
-  color: colors.address,
+  color: "#7D7D7D",
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -123,8 +112,8 @@ export const addButton = style({
   height: 44,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: colors.addBackground,
-  color: colors.addIcon,
+  backgroundColor: "#ECEFF5",
+  color: "#A4B1C5",
   cursor: "pointer",
 });
 
@@ -136,8 +125,8 @@ export const externalLink = style({
   margin: "10px 0 calc(30px + env(safe-area-inset-bottom)) 20px",
   padding: "0 6px",
   borderRadius: 5,
-  backgroundColor: colors.linkBackground,
-  color: colors.address,
+  backgroundColor: "#F2F3F7",
+  color: "#7D7D7D",
   ...text({ size: 14, weight: 400, lineHeight: 1.2 }),
   textDecoration: "none",
 });
@@ -149,7 +138,7 @@ export const externalLogo = style({
 
 export const status = style({
   padding: "24px 20px calc(30px + env(safe-area-inset-bottom))",
-  color: colors.address,
+  color: "#7D7D7D",
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });
