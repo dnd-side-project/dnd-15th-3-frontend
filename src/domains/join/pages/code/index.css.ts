@@ -128,7 +128,7 @@ export const otpInput = style({
   borderRadius: 6,
   backgroundColor: colors.otpBackground,
   color: colors.otpTextColor,
-  caretColor: "66ADFF",
+  caretColor: "#66ADFF",
   fontFamily: '"Montserrat"',
   fontSize: 32,
   fontWeight: 600,
