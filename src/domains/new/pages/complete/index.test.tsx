@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
+import { ToastProvider } from "../../../../components/toast";
 import { render } from "../../../../test-utils";
 import type { MeetingDraft } from "../../constants";
 import { formLayout } from "../../test-utils";
@@ -51,7 +52,9 @@ function renderComplete(initialEntry: string) {
     <QueryClientProvider
       client={new QueryClient({ defaultOptions: { mutations: { retry: false } } })}
     >
-      <RouterProvider router={router} />
+      <ToastProvider>
+        <RouterProvider router={router} />
+      </ToastProvider>
     </QueryClientProvider>,
   );
 }
@@ -119,7 +122,7 @@ test("초대코드를 복사하면 토스트로 알린다", async () => {
   await userEvent.click(page.getByRole("button", { name: "초대코드 복사" }));
 
   expect(writeText).toHaveBeenCalledWith("DNDF0R");
-  await expect.element(page.getByRole("status")).toHaveTextContent("초대 코드가 복사되었습니다.");
+  await expect.element(page.getByText("초대 코드가 복사되었습니다.")).toBeInTheDocument();
   writeText.mockRestore();
 });
 
@@ -130,6 +133,6 @@ test("링크를 복사하면 초대 주소를 넣고 토스트로 알린다", as
   await userEvent.click(page.getByRole("button", { name: "링크 복사" }));
 
   expect(writeText).toHaveBeenCalledWith(`${window.location.origin}/join?code=DNDF0R`);
-  await expect.element(page.getByRole("status")).toHaveTextContent("링크가 복사되었습니다.");
+  await expect.element(page.getByText("링크가 복사되었습니다.")).toBeInTheDocument();
   writeText.mockRestore();
 });

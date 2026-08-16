@@ -10,8 +10,7 @@ import CopyIcon from "../../../../assets/icon-copy.svg?react";
 import { CtaButton } from "../../../../components/cta-button";
 import { Layout } from "../../../../components/layout";
 import { ShareButtonGroup } from "../../../../components/share-button";
-import { Toast } from "../../../../components/toast";
-import { useToast } from "../../../../hooks/use-toast";
+import { toast } from "../../../../components/toast/manager";
 import { setAccessToken } from "../../../../utils/access-token";
 import { getUserKey } from "../../../../utils/user-key";
 import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
@@ -87,8 +86,6 @@ export function CompletePage() {
 
   const invitationCode = searchParams.get("code") ?? "";
   const { meetingId, remember } = useCreatedMeetingId(invitationCode);
-  const { toast, show } = useToast();
-
   const invitationUrl = `${window.location.origin}/join?code=${invitationCode}`;
 
   const settle = (meeting: MeetingScreen) => {
@@ -121,13 +118,11 @@ export function CompletePage() {
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(invitationCode);
-    show("초대 코드가 복사되었습니다.");
+    toast.add({ title: "초대 코드가 복사되었습니다." });
   };
 
   return (
     <Layout>
-      <Toast toast={toast} />
-
       <div className={root}>
         <div className={texts}>
           <h1 className={title}>모임 방이 만들어졌어요!</h1>
@@ -167,7 +162,7 @@ export function CompletePage() {
                 imageUrl={`${window.location.origin}/static/momo-kakao-share.png`}
                 link={invitationUrl}
                 title={getValues("name")}
-                onCopyLink={() => show("링크가 복사되었습니다.")}
+                onCopyLink={() => toast.add({ title: "링크가 복사되었습니다." })}
                 onMore={() =>
                   void navigator.share?.({
                     title: getValues("name"),
