@@ -1,19 +1,33 @@
-import type { ToastState } from "../../hooks/use-toast";
+import { Toast as BaseToast } from "@base-ui/react";
+import type { PropsWithChildren } from "react";
 
-import { toast as toastStyle } from "./index.css";
+import { toast } from "./manager";
 
-interface ToastProps {
-  toast: ToastState | null;
+import { content, root, title, viewport } from "./index.css";
+
+const TIMEOUT_MS = 600;
+
+function ToastList() {
+  const { toasts } = BaseToast.useToastManager();
+
+  return toasts.map((item) => (
+    <BaseToast.Root className={root} key={item.id} swipeDirection="up" toast={item}>
+      <BaseToast.Content className={content}>
+        <BaseToast.Title className={title} />
+      </BaseToast.Content>
+    </BaseToast.Root>
+  ));
 }
 
-export function Toast({ toast }: ToastProps) {
-  if (toast === null) {
-    return null;
-  }
-
+export function ToastProvider({ children }: PropsWithChildren) {
   return (
-    <div className={toastStyle} data-visible={toast.visible} role="status">
-      {toast.message}
-    </div>
+    <BaseToast.Provider timeout={TIMEOUT_MS} toastManager={toast}>
+      {children}
+      <BaseToast.Portal>
+        <BaseToast.Viewport className={viewport}>
+          <ToastList />
+        </BaseToast.Viewport>
+      </BaseToast.Portal>
+    </BaseToast.Provider>
   );
 }

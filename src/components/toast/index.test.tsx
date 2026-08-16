@@ -1,40 +1,52 @@
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { useToast } from "../../hooks/use-toast";
 import { render } from "../../test-utils";
-import { Toast } from "./index";
+import { ToastProvider } from "./index";
+import { toast } from "./manager";
 
-function Playground() {
-  const { toast, show } = useToast();
-
+function Buttons() {
   return (
     <>
-      <Toast toast={toast} />
-      <button type="button" onClick={() => show("초대 코드가 복사되었습니다.")}>
-        띄우기
+      <button type="button" onClick={() => toast.add({ title: "초대 코드가 복사되었습니다." })}>
+        초대 코드 복사
+      </button>
+      <button type="button" onClick={() => toast.add({ title: "링크가 복사되었습니다." })}>
+        링크 복사
       </button>
     </>
   );
 }
 
-test("문구가 없으면 아무것도 그리지 않는다", async () => {
-  render(<Toast toast={null} />);
+function renderToasts() {
+  render(
+    <ToastProvider>
+      <Buttons />
+    </ToastProvider>,
+  );
+}
 
-  await expect.element(page.getByRole("status")).not.toBeInTheDocument();
-});
+test("띄우기 전에는 아무것도 없다", async () => {
+  renderToasts();
 
-test("문구를 상태 알림으로 보여준다", async () => {
-  render(<Toast toast={{ message: "링크가 복사되었습니다.", visible: true }} />);
-
-  await expect.element(page.getByRole("status")).toHaveTextContent("링크가 복사되었습니다.");
+  await expect.element(page.getByText("초대 코드가 복사되었습니다.")).not.toBeInTheDocument();
 });
 
 test("띄우면 나타났다가 스스로 사라진다", async () => {
-  render(<Playground />);
+  renderToasts();
 
-  await userEvent.click(page.getByRole("button", { name: "띄우기" }));
+  await userEvent.click(page.getByRole("button", { name: "초대 코드 복사" }));
 
   await expect.element(page.getByText("초대 코드가 복사되었습니다.")).toBeInTheDocument();
   await expect.element(page.getByText("초대 코드가 복사되었습니다.")).not.toBeInTheDocument();
+});
+
+test("잇따라 띄우면 함께 쌓인다", async () => {
+  renderToasts();
+
+  await userEvent.click(page.getByRole("button", { name: "초대 코드 복사" }));
+  await userEvent.click(page.getByRole("button", { name: "링크 복사" }));
+
+  await expect.element(page.getByText("링크가 복사되었습니다.")).toBeInTheDocument();
+  await expect.element(page.getByText("초대 코드가 복사되었습니다.")).toBeInTheDocument();
 });
