@@ -2,14 +2,6 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../../../styles/text";
 
-const colors = {
-  title: "#3793FF",
-  description: "#707D91",
-  divider: "#DAE1EC",
-  dividerLabel: "#6D6D6D",
-  code: "#FFFFFF",
-};
-
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -28,13 +20,13 @@ export const texts = style({
 
 export const title = style({
   margin: 0,
-  color: colors.title,
+  color: "#3793FF",
   ...text({ size: 24, weight: 600, lineHeight: 1.2 }),
 });
 
 export const description = style({
   margin: 0,
-  color: colors.description,
+  color: "#707D91",
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -78,7 +70,7 @@ export const badge = style({
   borderRadius: 20,
   background: "linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0%, rgba(10, 123, 255, 0.25) 100%)",
   backdropFilter: "blur(4px)",
-  color: colors.code,
+  color: "#FFFFFF",
   fontFamily: "Montserrat, sans-serif",
   fontSize: 14,
   fontWeight: 500,
@@ -96,7 +88,7 @@ export const codeRow = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: colors.code,
+  color: "#FFFFFF",
   cursor: "pointer",
 });
 
@@ -120,11 +112,11 @@ export const divider = style({
 export const dividerLine = style({
   flex: 1,
   height: 1,
-  backgroundColor: colors.divider,
+  backgroundColor: "#DAE1EC",
 });
 
 export const dividerLabel = style({
-  color: colors.dividerLabel,
+  color: "#6D6D6D",
   ...text({ size: 16, weight: 600, lineHeight: 1.6 }),
 });
 
@@ -142,7 +134,7 @@ export const footer = style({
 
 export const status = style({
   margin: "51px 20px 0",
-  color: colors.description,
+  color: "#707D91",
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });
