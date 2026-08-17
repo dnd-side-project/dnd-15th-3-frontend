@@ -4,7 +4,7 @@ import { text } from "../../styles/text";
 
 export const viewport = style({
   position: "fixed",
-  top: 40,
+  top: 63,
   left: "50%",
   zIndex: 100,
   display: "flex",
