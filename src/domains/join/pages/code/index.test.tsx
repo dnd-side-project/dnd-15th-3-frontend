@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
+import { ToastProvider } from "../../../../components/toast";
 import { render } from "../../../../test-utils";
 import type { JoinDraft } from "../../types/draft";
 import { JoinCodePage } from "./index";
@@ -20,7 +21,11 @@ function renderCodePage() {
     { path: "/", Component: JoinCodePageWrapper },
     { path: "/join/complete", element: <div data-testid="complete" /> },
   ]);
-  render(<RouterProvider router={router} />);
+  render(
+    <ToastProvider>
+      <RouterProvider router={router} />
+    </ToastProvider>,
+  );
 }
 
 function JoinCodePageWrapper() {
@@ -58,7 +63,7 @@ test("간편 붙여넣기 클릭 시 클립보드가 비어 있으면 안내 토
 
   await userEvent.click(page.getByRole("button", { name: "간편 붙여넣기" }));
 
-  await expect.element(page.getByRole("status")).toHaveTextContent("붙여놓을 초대코드가 없습니다.");
+  await expect.element(page.getByText("붙여놓을 초대코드가 없습니다.")).toBeInTheDocument();
 });
 
 test("비 영숫자를 붙여넣은 뒤 다음 버튼을 누르면 유효하지 않다는 토스트를 띄운다", async () => {
@@ -70,7 +75,7 @@ test("비 영숫자를 붙여넣은 뒤 다음 버튼을 누르면 유효하지 
   await expect.element(page.getByRole("button", { name: "다음" })).toBeEnabled();
   await userEvent.click(page.getByRole("button", { name: "다음" }));
 
-  await expect.element(page.getByRole("status")).toHaveTextContent("유효하지 않은 초대코드입니다.");
+  await expect.element(page.getByText("유효하지 않은 초대코드입니다.")).toBeInTheDocument();
 });
 
 test("6자리 영숫자를 타이핑하면 다음 버튼이 활성화된다", async () => {
