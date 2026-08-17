@@ -1,7 +1,12 @@
-import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useFormContext } from "react-hook-form";
+import { Navigate, useNavigate, useSearchParams } from "react-router";
 
 import LocationIcon from "../../../../assets/icon-marker.svg?react";
 import { CtaButtonRow } from "../../../../components/cta-button";
+import { previewInvitation } from "../../../meeting/api";
+import type { JoinDraft } from "../../types/draft";
 
 import {
   body,
@@ -20,6 +25,28 @@ import {
 
 export function JoinCompletePage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get("code") ?? "";
+  const { setValue } = useFormContext<JoinDraft>();
+
+  const { data, isError } = useQuery({
+    queryKey: ["meeting", "invitation-preview", code] as const,
+    queryFn: () => previewInvitation(code),
+    enabled: code.length > 0,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setValue("invitationCode", data.invitationCode, { shouldValidate: true });
+    }
+  }, [data, setValue]);
+
+  if (!code || isError) {
+    return <Navigate to="/join/error" replace />;
+  }
+  if (!data) {
+    return null;
+  }
 
   return (
     <main className={root}>
@@ -31,12 +58,12 @@ export function JoinCompletePage() {
         <article className={card}>
           <div className={locationRow}>
             <LocationIcon className={locationIcon} />
-            <span>서울특별시 강남구</span>
+            <span>{data.locationId}</span>
           </div>
-          <h2 className={cardTitle}>을지로·성수 나들이</h2>
+          <h2 className={cardTitle}>{data.name}</h2>
           <div className={dateTimePill}>
-            <span>2026.07.25</span>
-            <span>13:00</span>
+            <span>{data.date.replace(/-/g, ".")}</span>
+            <span>{data.time}</span>
           </div>
           <img alt="" className={momoImage} src="/static/momo-celebrate.webp" />
         </article>
