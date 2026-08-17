@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { Navigate, useNavigate, useSearchParams } from "react-router";
 
 import LocationIcon from "../../../../assets/icon-marker.svg?react";
+import { Confetti } from "../../../../components/confetti";
 import { CtaButtonRow } from "../../../../components/cta-button";
 import { previewInvitation } from "../../../meeting/api";
 import type { JoinDraft } from "../../types/draft";
@@ -50,6 +51,7 @@ export function JoinCompletePage() {
 
   return (
     <main className={root}>
+      <Confetti />
       <section className={body}>
         <div className={textSection}>
           <h1 className={title}>모임 방에 초대되었습니다!</h1>
