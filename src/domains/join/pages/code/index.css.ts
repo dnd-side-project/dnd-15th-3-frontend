@@ -12,19 +12,11 @@ const colors = {
   otpFilled: "#E5EEF9",
   otpFilledBorder: "#C5E0FF",
   otpTextColor: "#66ADFF",
-  toastBackground: "rgba(62, 62, 62, 0.8)",
 };
 
 const spin = keyframes({
   from: { transform: "rotate(0deg)" },
   to: { transform: "rotate(360deg)" },
-});
-
-const toastFade = keyframes({
-  "0%": { opacity: 0 },
-  "6.67%": { opacity: 1 },
-  "93.33%": { opacity: 1 },
-  "100%": { opacity: 0 },
 });
 
 export const page = style({
@@ -88,27 +80,6 @@ globalStyle(`${pasteButton} > svg`, {
 
 export const ctaArea = style({
   padding: "16px 20px calc(20px + env(safe-area-inset-bottom))",
-});
-
-export const toastStyle = style({
-  position: "fixed",
-  left: "50%",
-  transform: "translateX(-50%)",
-  bottom: "calc(97px + env(safe-area-inset-bottom))",
-  whiteSpace: "nowrap",
-  padding: "8px 20px",
-  borderRadius: 30,
-  backgroundColor: colors.toastBackground,
-  color: "#FFFFFF",
-  fontFamily: vars.font.body,
-  fontSize: 16,
-  fontWeight: 500,
-  textAlign: "left",
-  zIndex: 100,
-  animation: `${toastFade} 3000ms ease-out forwards`,
-  "@media": {
-    "(prefers-reduced-motion: reduce)": { animation: "none" },
-  },
 });
 
 export const otpRoot = style({

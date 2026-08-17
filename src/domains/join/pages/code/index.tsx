@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 
 import LoaderCircleIcon from "../../../../assets/icon-loader-circle.svg?react";
 import { CtaButtonRow } from "../../../../components/cta-button";
+import { toast } from "../../../../components/toast/manager";
 import { TopAppBar } from "../../../../components/top-app-bar";
 import type { JoinDraft } from "../../types/draft";
 
@@ -18,7 +19,6 @@ import {
   pasteButton,
   title,
   codeInputArea,
-  toastStyle,
 } from "./index.css";
 
 export function JoinCodePage() {
@@ -37,10 +37,9 @@ export function JoinCodePage() {
   });
   const { ref, value, onChange, onBlur } = field;
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
   const showToast = (message: string) => {
-    setToast({ key: Date.now(), message });
+    toast.add({ title: message });
   };
   const handlePaste = async () => {
     setLoading(true);
@@ -102,17 +101,6 @@ export function JoinCodePage() {
           primaryDisabled={value.length !== 6}
         />
       </div>
-      {toast ? (
-        <div
-          key={toast.key}
-          className={toastStyle}
-          role="status"
-          aria-live="polite"
-          onAnimationEnd={() => setToast(null)}
-        >
-          {toast.message}
-        </div>
-      ) : null}
     </div>
   );
 }
