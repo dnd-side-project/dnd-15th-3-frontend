@@ -20,7 +20,11 @@ interface PlaceSearchSheetProps {
 export function PlaceSearchSheet({ isOpen, onSelect, onClose }: PlaceSearchSheetProps) {
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
-  const { data: places } = useQuery(catalogQueries.firstMeetingPlaces(deferredKeyword));
+  const {
+    data: places,
+    isError,
+    isPending,
+  } = useQuery(catalogQueries.firstMeetingPlaces(deferredKeyword));
 
   return (
     <BottomSheet hasBackdrop isOpen={isOpen} onClose={onClose} onTapBackdrop={onClose}>
@@ -38,7 +42,11 @@ export function PlaceSearchSheet({ isOpen, onSelect, onClose }: PlaceSearchSheet
 
         {deferredKeyword.length > 0 ? (
           <div className={results}>
-            {places === undefined || places.length === 0 ? (
+            {isError ? (
+              <p className={empty}>장소 정보를 불러오지 못했습니다.</p>
+            ) : isPending ? (
+              <p className={empty}>검색 중</p>
+            ) : places.length === 0 ? (
               <p className={empty}>검색 결과가 없어요</p>
             ) : (
               places.map((place) => (
