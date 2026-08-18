@@ -137,7 +137,7 @@ export interface MeetingInvitation {
   name: string;
   date: string;
   time: string;
-  locationId: string;
+  locationName: string;
 }
 
 export interface JoinMeetingRequest extends ParticipantProfile {

@@ -17,7 +17,7 @@ const INVITATION = {
   name: "성수 나들이",
   date: "2026-08-18",
   time: "19:00",
-  locationId: "성수동",
+  locationName: "성수동",
 };
 
 function FormProbe() {

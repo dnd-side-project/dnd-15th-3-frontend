@@ -60,7 +60,7 @@ export function JoinCompletePage() {
         <article className={card}>
           <div className={locationRow}>
             <LocationIcon className={locationIcon} />
-            <span>{data.locationId}</span>
+            <span>{data.locationName}</span>
           </div>
           <h2 className={cardTitle}>{data.name}</h2>
           <div className={dateTimePill}>
