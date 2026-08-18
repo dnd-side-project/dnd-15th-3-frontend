@@ -76,9 +76,10 @@ export interface PlaceDetail {
   categorySlug: CategorySlug;
   name: string;
   address: string;
+  /** @deprecated `imageUrls` 를 사용합니다. */
   primaryImageUrl?: string;
-  imageUrls?: string[];
-  previewUrl?: string;
+  imageUrls: string[];
+  previewUrl: string;
 }
 
 export interface FirstMeetingPlaceResponse {

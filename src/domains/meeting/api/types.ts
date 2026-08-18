@@ -42,7 +42,10 @@ export interface PlaceSummary {
   address: string;
   latitude: number;
   longitude: number;
-  /** 이미지 수집 전에는 null */
+  /**
+   * 이미지 수집 전에는 null.
+   * @deprecated 서버 `PlaceSummaryDto` 에 없는 필드입니다. 추가를 요청 중입니다.
+   */
   previewUrl: string | null;
 }
 

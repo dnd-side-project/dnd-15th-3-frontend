@@ -50,7 +50,7 @@ test("본문이 있으면 JSON 으로 직렬화해 보낸다", async () => {
 
 test("실패 응답은 서버 메시지를 담은 ApiError 로 던진다", async () => {
   fetchMock.mockResolvedValue(
-    jsonResponse({ message: "유효하지 않은 초대 코드입니다.", statusCode: 404 }, 404),
+    jsonResponse({ code: "INVITATION_NOT_FOUND", message: "유효하지 않은 초대 코드입니다." }, 404),
   );
 
   await expect(request("/api/v1/meetings/invitation/preview")).rejects.toMatchObject({

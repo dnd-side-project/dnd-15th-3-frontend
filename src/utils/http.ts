@@ -1,9 +1,14 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://momo-dev.jinmu.me";
 
+interface FieldError {
+  field: string;
+  reason: string;
+}
+
 interface ErrorBody {
-  message?: string | string[];
-  error?: string;
-  statusCode?: number;
+  code?: string;
+  message?: string;
+  fieldErrors?: FieldError[];
 }
 
 export class ApiError extends Error {
@@ -11,8 +16,7 @@ export class ApiError extends Error {
   readonly body: ErrorBody | null;
 
   constructor(status: number, body: ErrorBody | null) {
-    const message = Array.isArray(body?.message) ? body.message.join(", ") : body?.message;
-    super(message ?? `요청에 실패했어요 (${status})`);
+    super(body?.message ?? `요청에 실패했어요 (${status})`);
     this.name = "ApiError";
     this.status = status;
     this.body = body;
