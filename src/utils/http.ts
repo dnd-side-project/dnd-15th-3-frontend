@@ -22,7 +22,7 @@ export class ApiError extends Error {
 type QueryValue = string | number | boolean | undefined;
 
 interface RequestOptions {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   query?: Record<string, QueryValue>;
   body?: unknown;
   signal?: AbortSignal;
