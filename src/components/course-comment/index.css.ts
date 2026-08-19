@@ -26,6 +26,12 @@ export const list = style({
   backgroundColor: "#FFFFFF",
 });
 
+export const scrollContainer = style({
+  height: 297,
+  overflowY: "auto",
+  paddingBlock: 10,
+});
+
 export const row = style({
   display: "flex",
   gap: 7,

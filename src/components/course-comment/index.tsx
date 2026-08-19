@@ -23,6 +23,7 @@ import {
   nickname,
   row,
   rowMine,
+  scrollContainer,
   sendButton,
   timestamp,
 } from "./index.css";
@@ -222,7 +223,7 @@ export function CourseCommentSheet({
       disableContentDrag
       avoidKeyboard={isIOS()}
     >
-      <div ref={listRef} style={{ height: 297, overflowY: "auto", paddingBlock: 10 }}>
+      <div ref={listRef} className={scrollContainer}>
         <CourseCommentList comments={comments} />
       </div>
       <CourseCommentInput
