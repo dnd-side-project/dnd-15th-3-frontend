@@ -2,10 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 
-import { BottomSheet } from "../bottom-sheet";
 import { withLayout } from "../layout/index.decorators";
 import type { CourseComment } from "./index";
-import { CourseCommentInput, CourseCommentList } from "./index";
+import { CourseCommentSheet } from "./index";
 
 const baseComments: CourseComment[] = [
   {
@@ -59,59 +58,6 @@ type Story = StoryObj<typeof meta>;
 export default meta;
 
 function DefaultStory() {
-  const [comments, setComments] = useState<CourseComment[]>(baseComments);
-  const [value, setValue] = useState("");
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleSend = () => {
-    const trimmed = value.trim();
-    if (trimmed.length === 0) {
-      return;
-    }
-    const next: CourseComment = {
-      commentId: String(comments.length + 1),
-      nickname: "나",
-      profileAvatarId: "momo-blue",
-      authorRole: "MEMBER",
-      isMine: true,
-      content: trimmed,
-      createdAt: new Date().toISOString(),
-    };
-    setComments((prev) => [...prev, next]);
-    setValue("");
-  };
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-        minHeight: 0,
-      }}
-    >
-      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", paddingBlock: 10 }}>
-        <CourseCommentList comments={comments} />
-      </div>
-      <CourseCommentInput
-        avatarId="momo-blue"
-        isHost={false}
-        onChange={handleChange}
-        onSend={handleSend}
-        value={value}
-      />
-    </div>
-  );
-}
-
-export const Default: Story = {
-  render: () => <DefaultStory />,
-};
-
-function InBottomSheetStory() {
   const [isOpen, setIsOpen] = useState(true);
   const [comments, setComments] = useState<CourseComment[]>(baseComments);
   const [value, setValue] = useState("");
@@ -139,44 +85,26 @@ function InBottomSheetStory() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
+    <div>
       <div style={{ padding: 20 }}>
         <button onClick={() => setIsOpen(true)} type="button">
           코스 댓글 바텀시트 열기
         </button>
       </div>
-      <BottomSheet
-        hasBackdrop
+      <CourseCommentSheet
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        onTapBackdrop={() => setIsOpen(false)}
-        topBorderRadius="md"
-        avoidKeyboard={false}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            maxHeight: "100dvh",
-          }}
-        >
-          <div style={{ flex: 1, minHeight: 0, overflowY: "auto", paddingBlock: 10 }}>
-            <CourseCommentList comments={comments} />
-          </div>
-          <CourseCommentInput
-            avatarId="momo-blue"
-            isHost
-            onChange={handleChange}
-            onSend={handleSend}
-            value={value}
-          />
-        </div>
-      </BottomSheet>
+        comments={comments}
+        value={value}
+        onChange={handleChange}
+        onSend={handleSend}
+        avatarId="momo-blue"
+        isHost
+      />
     </div>
   );
 }
 
-export const InBottomSheet: Story = {
-  render: () => <InBottomSheetStory />,
+export const Default: Story = {
+  render: () => <DefaultStory />,
 };

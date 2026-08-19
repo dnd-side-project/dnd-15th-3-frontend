@@ -1,9 +1,11 @@
 import type { ChangeEvent } from "react";
+import { useEffect, useRef } from "react";
 
 import CrownIcon from "../../assets/icon-crown.svg?react";
 import SendIcon from "../../assets/icon-send.svg?react";
 import type { ProfileAvatarId } from "../../domains/catalog/api/types";
 import { cx } from "../../utils/cx";
+import { BottomSheet } from "../bottom-sheet";
 import { MomoAvatar } from "../momo-avatar";
 
 import {
@@ -48,6 +50,16 @@ function formatTime(iso: string): string {
   return `${hours}:${minutes}`;
 }
 
+function isIOS() {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+  return (
+    /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent))
+  );
+}
+
 interface AvatarWithCrownProps {
   avatarId: ProfileAvatarId;
   size: number;
@@ -68,11 +80,11 @@ function AvatarWithCrown({ avatarId, size, isHost, alt = "" }: AvatarWithCrownPr
   );
 }
 
-export interface CourseCommentItemProps {
+interface CourseCommentItemProps {
   comment: CourseComment;
 }
 
-export function CourseCommentItem({ comment }: CourseCommentItemProps) {
+function CourseCommentItem({ comment }: CourseCommentItemProps) {
   if (comment.isMine) {
     return (
       <div className={cx(row, rowMine)}>
@@ -102,11 +114,11 @@ export function CourseCommentItem({ comment }: CourseCommentItemProps) {
   );
 }
 
-export interface CourseCommentListProps {
+interface CourseCommentListProps {
   comments: CourseComment[];
 }
 
-export function CourseCommentList({ comments }: CourseCommentListProps) {
+function CourseCommentList({ comments }: CourseCommentListProps) {
   return (
     <div className={list}>
       {comments.map((comment) => (
@@ -116,7 +128,7 @@ export function CourseCommentList({ comments }: CourseCommentListProps) {
   );
 }
 
-export interface CourseCommentInputProps {
+interface CourseCommentInputProps {
   avatarId: ProfileAvatarId;
   isHost: boolean;
   value: string;
@@ -126,7 +138,7 @@ export interface CourseCommentInputProps {
   placeholder?: string;
 }
 
-export function CourseCommentInput({
+function CourseCommentInput({
   avatarId,
   isHost,
   value,
@@ -161,10 +173,65 @@ export function CourseCommentInput({
           disabled={!canSend}
           type="button"
           onClick={handleSend}
+          onMouseDown={(event) => event.preventDefault()}
         >
           <SendIcon aria-hidden height={20} width={20} />
         </button>
       </span>
     </div>
+  );
+}
+
+export interface CourseCommentSheetProps {
+  isOpen: boolean;
+  onClose: () => void;
+  comments: CourseComment[];
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSend: () => void;
+  avatarId: ProfileAvatarId;
+  isHost: boolean;
+}
+
+export function CourseCommentSheet({
+  isOpen,
+  onClose,
+  comments,
+  value,
+  onChange,
+  onSend,
+  avatarId,
+  isHost,
+}: CourseCommentSheetProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [comments, isOpen]);
+
+  return (
+    <BottomSheet
+      hasBackdrop
+      isOpen={isOpen}
+      onClose={onClose}
+      onTapBackdrop={onClose}
+      topBorderRadius="md"
+      disableContentDrag
+      avoidKeyboard={isIOS()}
+    >
+      <div ref={listRef} style={{ height: 297, overflowY: "auto", paddingBlock: 10 }}>
+        <CourseCommentList comments={comments} />
+      </div>
+      <CourseCommentInput
+        avatarId={avatarId}
+        isHost={isHost}
+        onChange={onChange}
+        onSend={onSend}
+        value={value}
+      />
+    </BottomSheet>
   );
 }
