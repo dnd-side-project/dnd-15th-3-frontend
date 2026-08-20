@@ -23,7 +23,7 @@ export class ApiError extends Error {
   }
 }
 
-type QueryValue = string | number | boolean | undefined;
+type QueryValue = string | number | boolean | undefined | string[];
 
 interface RequestOptions {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -35,7 +35,14 @@ interface RequestOptions {
 function buildUrl(path: string, query: RequestOptions["query"]) {
   const url = new URL(path, BASE_URL);
   for (const [key, value] of Object.entries(query ?? {})) {
-    if (value !== undefined) {
+    if (value === undefined) {
+      continue;
+    }
+    if (Array.isArray(value)) {
+      if (value.length > 0) {
+        url.searchParams.set(key, value.join(","));
+      }
+    } else {
       url.searchParams.set(key, String(value));
     }
   }

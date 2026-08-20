@@ -35,6 +35,14 @@ test("undefined 인 쿼리 파라미터는 보내지 않는다", async () => {
   expect(requestedUrl()).not.toContain("page");
 });
 
+test("배열 쿼리 파라미터는 콤마로 구분한다", async () => {
+  fetchMock.mockResolvedValue(jsonResponse([]));
+
+  await request("/api/v1/places/search", { query: { excludeIds: ["1", "2"] } });
+
+  expect(requestedUrl()).toContain("excludeIds=1%2C2");
+});
+
 test("본문이 있으면 JSON 으로 직렬화해 보낸다", async () => {
   fetchMock.mockResolvedValue(jsonResponse({}));
 
