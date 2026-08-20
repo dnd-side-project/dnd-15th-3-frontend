@@ -1,11 +1,21 @@
 import { request } from "../../../utils/http";
 import type {
+  AddRecommendationRequest,
   CoursePlan,
   CreateMeetingRequest,
   JoinMeetingRequest,
   MeetingInvitation,
+  MeetingLocation,
+  MeetingLocationResponse,
   MeetingScreen,
+  MeetingStatus,
+  MapPins,
+  PlacePreferenceResponse,
+  RecommendationPreview,
+  SimilarPlaceResponse,
+  UpdateCourseImageRequest,
   UpdateCoursePlanRequest,
+  UpdatePlacePreferenceRequest,
 } from "./types";
 
 export function createMeeting(body: CreateMeetingRequest) {
@@ -43,6 +53,89 @@ export function updateCoursePlan(
   body: UpdateCoursePlanRequest,
 ) {
   return request<CoursePlan>(`/api/v1/meetings/${meetingId}/course-plan`, {
+    method: "PUT",
+    query: { accessToken },
+    body,
+  });
+}
+
+export function getMeetingStatus(meetingId: string, accessToken: string, signal?: AbortSignal) {
+  return request<MeetingStatus>(`/api/v1/meetings/${meetingId}`, {
+    query: { accessToken },
+    signal,
+  });
+}
+
+export function getMapPins(meetingId: string, accessToken: string, signal?: AbortSignal) {
+  return request<MapPins>(`/api/v1/meetings/${meetingId}/places/pins`, {
+    query: { accessToken },
+    signal,
+  });
+}
+
+export function getRecommendations(meetingId: string, accessToken: string, signal?: AbortSignal) {
+  return request<RecommendationPreview[]>(`/api/v1/meetings/${meetingId}/recommendations`, {
+    query: { accessToken },
+    signal,
+  });
+}
+
+export interface GetSimilarPlacesParams {
+  excludeIds?: string[];
+  size?: number;
+}
+
+export function getSimilarPlaces(
+  meetingId: string,
+  placeId: string,
+  accessToken: string,
+  params?: GetSimilarPlacesParams,
+  signal?: AbortSignal,
+) {
+  return request<SimilarPlaceResponse[]>(
+    `/api/v1/meetings/${meetingId}/places/${placeId}/similar`,
+    { query: { accessToken, ...params }, signal },
+  );
+}
+
+export function updatePlacePreference(
+  meetingId: string,
+  recommendationId: string,
+  accessToken: string,
+  body: UpdatePlacePreferenceRequest,
+) {
+  return request<PlacePreferenceResponse>(
+    `/api/v1/meetings/${meetingId}/places/${recommendationId}/preference`,
+    { method: "PATCH", query: { accessToken }, body },
+  );
+}
+
+export function updateLocation(meetingId: string, accessToken: string, body: MeetingLocation) {
+  return request<MeetingLocationResponse>(`/api/v1/meetings/${meetingId}/location`, {
+    method: "PUT",
+    query: { accessToken },
+    body,
+  });
+}
+
+export function addRecommendation(
+  meetingId: string,
+  accessToken: string,
+  body: AddRecommendationRequest,
+) {
+  return request<RecommendationPreview>(`/api/v1/meetings/${meetingId}/recommendations`, {
+    method: "POST",
+    query: { accessToken },
+    body,
+  });
+}
+
+export function updateCourseImage(
+  meetingId: string,
+  accessToken: string,
+  body: UpdateCourseImageRequest,
+) {
+  return request<void>(`/api/v1/meetings/${meetingId}/course-image`, {
     method: "PUT",
     query: { accessToken },
     body,

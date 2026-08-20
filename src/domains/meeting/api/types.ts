@@ -146,3 +146,58 @@ export interface MeetingInvitation {
 export interface JoinMeetingRequest extends ParticipantProfile {
   invitationCode: string;
 }
+
+export type MeetingStatusKind =
+  | "RECOMMENDATION_COLLECTING"
+  | "COURSE_GENERATING"
+  | "COURSE_GENERATED"
+  | "COURSE_GENERATION_FAILED"
+  | "COURSE_CONFIRMED";
+
+export interface MeetingStatus {
+  status: MeetingStatusKind;
+  confirmedCourseCandidateId: string | null;
+}
+
+export interface MapPin {
+  placeId: string;
+  name: string;
+  category: string;
+  categorySlug: CategorySlug;
+  longitude: number;
+  latitude: number;
+}
+
+export interface MapPins {
+  startPlace: MapPin;
+  sharedPlaces: MapPin[];
+}
+
+export interface UpdatePlacePreferenceRequest {
+  preference: ViewerPreference;
+}
+
+export interface PlacePreferenceResponse {
+  likeCount: number;
+  dislikeCount: number;
+  myPreference: ViewerPreference;
+}
+
+export interface SimilarPlaceResponse {
+  id: string;
+  categoryId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  primaryImageUrl: string | null;
+  previewUrl: string;
+}
+
+export interface AddRecommendationRequest {
+  placeId: string;
+}
+
+export interface UpdateCourseImageRequest {
+  courseImageKey: string;
+}
