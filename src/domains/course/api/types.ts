@@ -77,7 +77,3 @@ export interface AddCoursePlaceRequest {
 export interface UpdateCoursePlacesRequest {
   recommendationIds: string[];
 }
-
-export interface ConfirmCourseRequest {
-  courseImageKey?: string;
-}

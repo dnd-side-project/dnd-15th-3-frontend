@@ -104,6 +104,8 @@ export interface MeetingScreen {
   name: string;
   date: string;
   time: string;
+  /** 확정된 코스 이미지의 공개 URL. 아직 생성 전이면 null */
+  courseImageUrl: string | null;
   role: ParticipantRole;
   isHost: boolean;
   permissions: MeetingPermissions;
@@ -140,7 +142,7 @@ export interface MeetingInvitation {
   name: string;
   date: string;
   time: string;
-  locationId: string;
+  locationName: string;
 }
 
 export interface JoinMeetingRequest extends ParticipantProfile {
@@ -170,7 +172,7 @@ export interface MapPin {
 
 export interface MapPins {
   startPlace: MapPin;
-  sharedPlaces: MapPin[];
+  sharedPlaces?: MapPin[];
 }
 
 export interface UpdatePlacePreferenceRequest {
@@ -191,13 +193,14 @@ export interface SimilarPlaceResponse {
   latitude: number;
   longitude: number;
   primaryImageUrl: string | null;
-  previewUrl: string;
+  previewUrl: string | null;
 }
 
 export interface AddRecommendationRequest {
   placeId: string;
 }
 
-export interface UpdateCourseImageRequest {
-  courseImageKey: string;
+export interface CourseImageResponse {
+  imageUrl: string;
+  uploadedAt: string;
 }

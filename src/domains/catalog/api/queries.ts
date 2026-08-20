@@ -45,11 +45,11 @@ export const catalogQueries = {
       enabled: filled(params.meetingId, params.accessToken),
     }),
 
-  placeDetail: (placeId: string) =>
+  placeDetail: (placeId: string, accessToken: string) =>
     queryOptions({
       queryKey: ["catalog", "place", placeId] as const,
-      queryFn: ({ signal }) => getPlaceDetail(placeId, signal),
-      enabled: filled(placeId),
+      queryFn: ({ signal }) => getPlaceDetail(placeId, accessToken, signal),
+      enabled: filled(placeId, accessToken),
     }),
 
   firstMeetingPlaces: (q: string) =>

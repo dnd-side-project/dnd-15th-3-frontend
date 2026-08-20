@@ -1,6 +1,7 @@
-import { request } from "../../../utils/http";
+import { request, requestBlob } from "../../../utils/http";
 import type {
   AddRecommendationRequest,
+  CourseImageResponse,
   CoursePlan,
   CreateMeetingRequest,
   JoinMeetingRequest,
@@ -13,7 +14,6 @@ import type {
   PlacePreferenceResponse,
   RecommendationPreview,
   SimilarPlaceResponse,
-  UpdateCourseImageRequest,
   UpdateCoursePlanRequest,
   UpdatePlacePreferenceRequest,
 } from "./types";
@@ -130,14 +130,19 @@ export function addRecommendation(
   });
 }
 
-export function updateCourseImage(
-  meetingId: string,
-  accessToken: string,
-  body: UpdateCourseImageRequest,
-) {
-  return request<void>(`/api/v1/meetings/${meetingId}/course-image`, {
+export function updateCourseImage(meetingId: string, accessToken: string, file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return request<CourseImageResponse>(`/api/v1/meetings/${meetingId}/course-image`, {
     method: "PUT",
     query: { accessToken },
-    body,
+    body: formData,
+  });
+}
+
+export function downloadCourseImage(meetingId: string, accessToken: string, signal?: AbortSignal) {
+  return requestBlob(`/api/v1/meetings/${meetingId}/course-image/download`, {
+    query: { accessToken },
+    signal,
   });
 }

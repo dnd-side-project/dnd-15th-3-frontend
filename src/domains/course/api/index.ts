@@ -3,7 +3,6 @@ import type { CategorySlug } from "../../catalog/api/types";
 import type { MeetingStatus } from "../../meeting/api/types";
 import type {
   AddCoursePlaceRequest,
-  ConfirmCourseRequest,
   CourseCandidateList,
   CourseComment,
   CourseDetail,
@@ -108,10 +107,10 @@ export function confirmCourse(
   meetingId: string,
   courseCandidateId: string,
   accessToken: string,
-  body: ConfirmCourseRequest,
+  signal?: AbortSignal,
 ) {
   return request<MeetingStatus>(
     `/api/v1/meetings/${meetingId}/courses/${courseCandidateId}/confirmation`,
-    { method: "POST", query: { accessToken }, body },
+    { method: "POST", query: { accessToken }, signal },
   );
 }

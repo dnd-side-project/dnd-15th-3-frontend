@@ -44,11 +44,17 @@ export interface ProfileAvatarResponse {
   name: string;
 }
 
+export interface PlaceSearchCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export interface PlaceSearchItem {
   id: string;
   name: string;
   address: string;
-  category: CategoryResponse;
+  category: PlaceSearchCategory;
   latitude: number;
   longitude: number;
   /** 모임 기준 위치로부터의 거리 */
