@@ -52,11 +52,13 @@ function buildUrl(path: string, query: RequestOptions["query"]) {
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { method = "GET", query, body, signal } = options;
 
+  const isFormData = body instanceof FormData;
+
   const response = await fetch(buildUrl(path, query), {
     method,
     signal,
-    headers: body === undefined ? undefined : { "content-type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body),
+    headers: body === undefined || isFormData ? undefined : { "content-type": "application/json" },
+    body: body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -68,4 +70,16 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   }
 
   return response.json() as Promise<T>;
+}
+
+export async function requestBlob(path: string, options: RequestOptions = {}): Promise<Blob> {
+  const { method = "GET", query, signal } = options;
+
+  const response = await fetch(buildUrl(path, query), { method, signal });
+
+  if (!response.ok) {
+    throw new ApiError(response.status, await response.json().catch(() => null));
+  }
+
+  return response.blob();
 }

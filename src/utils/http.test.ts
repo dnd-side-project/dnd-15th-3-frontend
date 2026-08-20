@@ -1,6 +1,6 @@
 import { afterEach, expect, test, vi } from "vite-plus/test";
 
-import { request } from "./http";
+import { request, requestBlob } from "./http";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");
 
@@ -72,4 +72,31 @@ test("본문을 읽을 수 없는 실패 응답도 상태 코드로 알린다", 
   fetchMock.mockResolvedValue(new Response("", { status: 502 }));
 
   await expect(request("/api/v1")).rejects.toThrowError("요청에 실패했어요 (502)");
+});
+
+test("FormData 본문은 JSON 으로 직렬화하지 않는다", async () => {
+  fetchMock.mockResolvedValue(jsonResponse({}));
+
+  const formData = new FormData();
+  formData.append("file", new Blob(["image-data"], { type: "image/png" }), "test.png");
+
+  await request("/api/v1/meetings/1/course-image", {
+    method: "PUT",
+    body: formData,
+  });
+
+  const [, init] = fetchMock.mock.calls[0]!;
+  expect(init?.method).toBe("PUT");
+  expect(init?.body).toBeInstanceOf(FormData);
+  expect(init?.headers).toBeUndefined();
+});
+
+test("requestBlob 는 Blob 응답을 반환한다", async () => {
+  const blob = new Blob(["binary-data"], { type: "image/png" });
+  fetchMock.mockResolvedValue(new Response(blob, { status: 200 }));
+
+  const result = await requestBlob("/api/v1/meetings/1/course-image/download");
+
+  expect(result).toBeInstanceOf(Blob);
+  expect(result.size).toBe(11);
 });
