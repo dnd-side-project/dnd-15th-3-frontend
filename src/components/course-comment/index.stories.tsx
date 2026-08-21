@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
-import type { ChangeEvent } from "react";
 
+import type { CourseComment } from "../../domains/course/api/types";
 import { withLayout } from "../layout/index.decorators";
-import type { CourseComment } from "./index";
 import { CourseCommentSheet } from "./index";
+
+const MEETING_ID = "meeting-1";
+const COURSE_CANDIDATE_ID = "course-1";
+const ACCESS_TOKEN = "token-1";
 
 const baseComments: CourseComment[] = [
   {
@@ -45,6 +49,11 @@ const baseComments: CourseComment[] = [
   },
 ];
 
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false, staleTime: Infinity } },
+});
+queryClient.setQueryData(["course", MEETING_ID, "comments", COURSE_CANDIDATE_ID], baseComments);
+
 const meta = {
   title: "components/CourseComment",
   parameters: {
@@ -59,49 +68,26 @@ export default meta;
 
 function DefaultStory() {
   const [isOpen, setIsOpen] = useState(true);
-  const [comments, setComments] = useState<CourseComment[]>(baseComments);
-  const [value, setValue] = useState("");
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleSend = () => {
-    const trimmed = value.trim();
-    if (trimmed.length === 0) {
-      return;
-    }
-    const next: CourseComment = {
-      commentId: String(comments.length + 1),
-      nickname: "나",
-      profileAvatarId: "momo-blue",
-      authorRole: "HOST",
-      isMine: true,
-      content: trimmed,
-      createdAt: new Date().toISOString(),
-    };
-    setComments((prev) => [...prev, next]);
-    setValue("");
-  };
 
   return (
-    <div>
-      <div style={{ padding: 20 }}>
-        <button onClick={() => setIsOpen(true)} type="button">
-          코스 댓글 바텀시트 열기
-        </button>
+    <QueryClientProvider client={queryClient}>
+      <div>
+        <div style={{ padding: 20 }}>
+          <button onClick={() => setIsOpen(true)} type="button">
+            코스 댓글 바텀시트 열기
+          </button>
+        </div>
+        <CourseCommentSheet
+          accessToken={ACCESS_TOKEN}
+          avatarId="momo-blue"
+          courseCandidateId={COURSE_CANDIDATE_ID}
+          isOpen={isOpen}
+          isHost
+          meetingId={MEETING_ID}
+          onClose={() => setIsOpen(false)}
+        />
       </div>
-      <CourseCommentSheet
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        comments={comments}
-        value={value}
-        onChange={handleChange}
-        onSend={handleSend}
-        avatarId="momo-blue"
-        isHost
-      />
-    </div>
+    </QueryClientProvider>
   );
 }
 

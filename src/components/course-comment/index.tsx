@@ -1,9 +1,13 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ChangeEvent } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import CrownIcon from "../../assets/icon-crown.svg?react";
 import SendIcon from "../../assets/icon-send.svg?react";
 import type { ProfileAvatarId } from "../../domains/catalog/api/types";
+import { createCourseComment } from "../../domains/course/api";
+import { courseQueries } from "../../domains/course/api/queries";
+import type { CourseComment } from "../../domains/course/api/types";
 import { cx } from "../../utils/cx";
 import { BottomSheet } from "../bottom-sheet";
 import { MomoAvatar } from "../momo-avatar";
@@ -27,19 +31,6 @@ import {
   sendButton,
   timestamp,
 } from "./index.css";
-
-export type CourseCommentAuthorRole = "HOST" | "MEMBER";
-
-export interface CourseComment {
-  commentId: string;
-  nickname: string;
-  profileAvatarId: ProfileAvatarId;
-  authorRole: CourseCommentAuthorRole;
-  isMine: boolean;
-  content: string;
-  /** ISO 8601 형식의 작성 시각 */
-  createdAt: string;
-}
 
 function formatTime(iso: string): string {
   const date = new Date(iso);
@@ -186,10 +177,9 @@ function CourseCommentInput({
 export interface CourseCommentSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  comments: CourseComment[];
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSend: () => void;
+  meetingId: string;
+  courseCandidateId: string;
+  accessToken: string;
   avatarId: ProfileAvatarId;
   isHost: boolean;
 }
@@ -197,14 +187,30 @@ export interface CourseCommentSheetProps {
 export function CourseCommentSheet({
   isOpen,
   onClose,
-  comments,
-  value,
-  onChange,
-  onSend,
+  meetingId,
+  courseCandidateId,
+  accessToken,
   avatarId,
   isHost,
 }: CourseCommentSheetProps) {
   const listRef = useRef<HTMLDivElement>(null);
+
+  const { data: comments } = useQuery({
+    ...courseQueries.comments(meetingId, courseCandidateId, accessToken),
+    enabled: isOpen,
+  });
+  const [value, setValue] = useState("");
+  const queryClient = useQueryClient();
+  const { mutate: sendComment, isPending } = useMutation({
+    mutationFn: (content: string) =>
+      createCourseComment(meetingId, courseCandidateId, accessToken, { content }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["course", meetingId, "comments", courseCandidateId],
+      });
+      setValue("");
+    },
+  });
 
   useEffect(() => {
     const el = listRef.current;
@@ -224,13 +230,18 @@ export function CourseCommentSheet({
       avoidKeyboard={isIOS()}
     >
       <div ref={listRef} className={scrollContainer}>
-        <CourseCommentList comments={comments} />
+        <CourseCommentList comments={comments ?? []} />
       </div>
       <CourseCommentInput
         avatarId={avatarId}
         isHost={isHost}
-        onChange={onChange}
-        onSend={onSend}
+        onChange={(event) => setValue(event.target.value)}
+        onSend={() => {
+          if (isPending) {
+            return;
+          }
+          sendComment(value.trim());
+        }}
         value={value}
       />
     </BottomSheet>
