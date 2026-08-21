@@ -152,7 +152,7 @@ export const input = style({
   outline: "none",
   background: "transparent",
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
-  color: "#213547",
+  color: "#707D91",
   "::placeholder": {
     color: colors.placeholder,
   },
