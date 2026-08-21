@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../styles/text";
 
@@ -32,11 +33,22 @@ export const scrollContainer = style({
   paddingBlock: 10,
 });
 
-export const row = style({
-  display: "flex",
-  gap: 7,
-  alignItems: "center",
-  padding: "10px 20px",
+export const row = recipe({
+  base: {
+    display: "flex",
+    gap: 7,
+    alignItems: "center",
+    padding: "10px 20px",
+  },
+  variants: {
+    variant: {
+      incoming: {},
+      mine: { justifyContent: "flex-end" },
+    },
+  },
+  defaultVariants: {
+    variant: "incoming",
+  },
 });
 
 export const avatarWrapper = style({
@@ -57,10 +69,6 @@ export const crown = style({
   borderRadius: vars.radius.full,
   backgroundColor: colors.crownBackground,
   color: colors.crownForeground,
-});
-
-export const rowMine = style({
-  justifyContent: "flex-end",
 });
 
 export const content = style({
@@ -86,25 +94,32 @@ export const timestamp = style({
   color: colors.timestamp,
 });
 
-export const bubble = style({
-  display: "inline-flex",
-  alignItems: "center",
-  padding: "6px 10px",
-  ...text({ size: 14, weight: 500, lineHeight: 1.4 }),
-  wordBreak: "break-word",
-  whiteSpace: "pre-wrap",
-});
-
-export const bubbleIncoming = style({
-  backgroundColor: colors.bubbleIncoming,
-  color: colors.bubbleIncomingText,
-  borderRadius: "0 10px 10px 10px",
-});
-
-export const bubbleMine = style({
-  backgroundColor: colors.bubbleMine,
-  color: colors.bubbleMineText,
-  borderRadius: "10px 0 10px 10px",
+export const bubble = recipe({
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+    padding: "6px 10px",
+    ...text({ size: 14, weight: 500, lineHeight: 1.4 }),
+    wordBreak: "break-word",
+    whiteSpace: "pre-wrap",
+  },
+  variants: {
+    variant: {
+      incoming: {
+        backgroundColor: colors.bubbleIncoming,
+        color: colors.bubbleIncomingText,
+        borderRadius: "0 10px 10px 10px",
+      },
+      mine: {
+        backgroundColor: colors.bubbleMine,
+        color: colors.bubbleMineText,
+        borderRadius: "10px 0 10px 10px",
+      },
+    },
+  },
+  defaultVariants: {
+    variant: "incoming",
+  },
 });
 
 export const inputBar = style({

@@ -8,15 +8,12 @@ import type { ProfileAvatarId } from "../../domains/catalog/api/types";
 import { createCourseComment } from "../../domains/course/api";
 import { courseQueries } from "../../domains/course/api/queries";
 import type { CourseComment } from "../../domains/course/api/types";
-import { cx } from "../../utils/cx";
 import { BottomSheet } from "../bottom-sheet";
 import { MomoAvatar } from "../momo-avatar";
 
 import {
   avatarWrapper,
   bubble,
-  bubbleIncoming,
-  bubbleMine,
   content,
   crown,
   input,
@@ -26,7 +23,6 @@ import {
   meta,
   nickname,
   row,
-  rowMine,
   scrollContainer,
   sendButton,
   timestamp,
@@ -79,16 +75,16 @@ interface CourseCommentItemProps {
 function CourseCommentItem({ comment }: CourseCommentItemProps) {
   if (comment.isMine) {
     return (
-      <div className={cx(row, rowMine)}>
+      <div className={row({ variant: "mine" })}>
         <div className={content}>
-          <div className={cx(bubble, bubbleMine)}>{comment.content}</div>
+          <div className={bubble({ variant: "mine" })}>{comment.content}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={row}>
+    <div className={row({ variant: "incoming" })}>
       <AvatarWithCrown
         alt={comment.nickname}
         avatarId={comment.profileAvatarId}
@@ -100,7 +96,7 @@ function CourseCommentItem({ comment }: CourseCommentItemProps) {
           <span className={nickname}>{comment.nickname}</span>
           <span className={timestamp}>{formatTime(comment.createdAt)}</span>
         </div>
-        <div className={cx(bubble, bubbleIncoming)}>{comment.content}</div>
+        <div className={bubble({ variant: "incoming" })}>{comment.content}</div>
       </div>
     </div>
   );
