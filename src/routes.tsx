@@ -16,6 +16,7 @@ import { ChoicePage } from "./domains/meeting/pages/[id]/choice";
 import { CoursePage } from "./domains/meeting/pages/[id]/course";
 import { CoursePlanPage } from "./domains/meeting/pages/[id]/course-plan";
 import { CourseDetailPage } from "./domains/meeting/pages/[id]/course/[courseId]";
+import { MeetingCourseDetailPage } from "./domains/meeting/pages/[id]/detail";
 import { MyPage } from "./domains/meeting/pages/[id]/my";
 import { PlaceSearchPage } from "./domains/meeting/pages/[id]/place";
 import { PlaceDetailPage } from "./domains/meeting/pages/[id]/place/[placeId]";
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: "my",
         Component: MyPage,
+      },
+      {
+        path: "detail",
+        Component: MeetingCourseDetailPage,
       },
       {
         path: "place",
