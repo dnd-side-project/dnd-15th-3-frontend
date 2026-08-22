@@ -104,7 +104,7 @@ export function JoinProfilePage() {
           <div className={profile}>
             <SpeechBubble>원하는 모습을 선택해보세요!</SpeechBubble>
             <div className={avatar}>
-              <MomoAvatar alt="내 프로필" avatarId={avatarId} size="large" />
+              <MomoAvatar alt="내 프로필" avatarId={avatarId} size={133} />
               <button
                 aria-label="프로필 이미지 변경"
                 className={changeButton}
@@ -143,7 +143,7 @@ export function JoinProfilePage() {
             <p className={sheetDescription}>마음에 드는 모모로 변경할 수 있어요.</p>
           </div>
 
-          <MomoAvatar avatarId={pending} className={preview} size="medium" />
+          <MomoAvatar avatarId={pending} className={preview} size={110} />
 
           <div className={options}>
             {avatars.map((item) => (
@@ -155,7 +155,7 @@ export function JoinProfilePage() {
                 type="button"
                 onClick={() => setPending(item.id)}
               >
-                <MomoAvatar avatarId={item.id} size="small" />
+                <MomoAvatar avatarId={item.id} size={70} />
               </button>
             ))}
           </div>
