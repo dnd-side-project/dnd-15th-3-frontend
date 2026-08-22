@@ -98,7 +98,7 @@ export const name = style({
   whiteSpace: "nowrap",
 });
 
-export const texts = style({
+export const address = style({
   color: "#7D7D7D",
   ...text({ size: 13, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
