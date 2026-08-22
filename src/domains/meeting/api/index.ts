@@ -40,6 +40,14 @@ export function getMeetingDetail(meetingId: string, accessToken: string, signal?
   });
 }
 
+export function addRecommendation(meetingId: string, accessToken: string, placeId: string) {
+  return request<void>(`/api/v1/meetings/${meetingId}/recommendations`, {
+    method: "POST",
+    query: { accessToken },
+    body: { placeId },
+  });
+}
+
 export function getCoursePlan(meetingId: string, accessToken: string, signal?: AbortSignal) {
   return request<CoursePlan>(`/api/v1/meetings/${meetingId}/course-plan`, {
     query: { accessToken },
