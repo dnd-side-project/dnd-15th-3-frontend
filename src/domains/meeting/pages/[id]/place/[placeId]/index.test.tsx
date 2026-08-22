@@ -73,9 +73,6 @@ function similarPlaces(names: string[]) {
     categoryId: "1",
     name,
     address: `서울 종로구 ${at + 1}`,
-    latitude: 37.57,
-    longitude: 126.99,
-    primaryImageUrl: null,
     previewUrl: null,
   }));
 }

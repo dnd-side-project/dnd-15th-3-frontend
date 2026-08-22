@@ -38,7 +38,6 @@ export interface SimilarPlacesParams {
   meetingId: string;
   placeId: string;
   accessToken: string;
-  /** 지금 보여 주고 있는 장소. 다음 추천에서 빠진다. */
   excludeIds?: string[];
   size?: number;
 }

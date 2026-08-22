@@ -32,7 +32,6 @@ import {
   similar,
   similarAddButton,
   similarAddress,
-  similarList,
   similarName,
   similarOpen,
   similarPlace,
@@ -43,8 +42,6 @@ import {
   summary,
   summaryTexts,
 } from "./index.css";
-
-const SIMILAR_COUNT = 4;
 
 export function PlaceDetailPage() {
   const navigate = useNavigate();
@@ -62,7 +59,6 @@ export function PlaceDetailPage() {
   const slug = detail?.categorySlug ?? categoryOf(recommendation?.categoryId ?? "");
   const photoUrls = detail?.imageUrls ?? [];
 
-  // 추천받기를 누르면 지금 보여 주는 곳을 빼고 다시 받는다.
   const [excludeIds, setExcludeIds] = useState<string[]>([]);
   const { data: similarPlaces = [] } = useQuery(
     catalogQueries.similarPlaces({
@@ -70,7 +66,7 @@ export function PlaceDetailPage() {
       placeId,
       accessToken: getAccessToken(id),
       excludeIds,
-      size: SIMILAR_COUNT,
+      size: 4,
     }),
   );
 
@@ -152,38 +148,36 @@ export function PlaceDetailPage() {
               <div className={similar}>
                 <h2 className={similarTitle}>이 장소와 비슷한 장소에요!</h2>
 
-                <div className={similarList}>
-                  {similarPlaces.map((place) => (
-                    <div className={similarPlace} key={place.id}>
-                      <button
-                        className={similarOpen}
-                        type="button"
-                        onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
-                      >
-                        {place.previewUrl === null ? (
-                          <span className={similarThumbnail} />
-                        ) : (
-                          <img alt="" className={similarThumbnail} src={place.previewUrl} />
-                        )}
-                        <span className={similarTexts}>
-                          <span className={similarName}>
-                            <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
-                            {place.name}
-                          </span>
-                          <span className={similarAddress}>{place.address}</span>
+                {similarPlaces.map((place) => (
+                  <div className={similarPlace} key={place.id}>
+                    <button
+                      className={similarOpen}
+                      type="button"
+                      onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
+                    >
+                      {place.previewUrl === null ? (
+                        <span className={similarThumbnail} />
+                      ) : (
+                        <img alt="" className={similarThumbnail} src={place.previewUrl} />
+                      )}
+                      <span className={similarTexts}>
+                        <span className={similarName}>
+                          <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
+                          {place.name}
                         </span>
-                      </button>
-                      <button
-                        aria-label={`${place.name} 코스에 담기`}
-                        className={similarAddButton}
-                        type="button"
-                        onClick={() => addPlace(place.id)}
-                      >
-                        <PlusIcon aria-hidden height={16} width={16} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                        <span className={similarAddress}>{place.address}</span>
+                      </span>
+                    </button>
+                    <button
+                      aria-label={`${place.name} 코스에 담기`}
+                      className={similarAddButton}
+                      type="button"
+                      onClick={() => addPlace(place.id)}
+                    >
+                      <PlusIcon aria-hidden height={16} width={16} />
+                    </button>
+                  </div>
+                ))}
 
                 <button
                   className={refresh}

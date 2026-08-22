@@ -4,7 +4,6 @@ import { text } from "../../../../../../styles/text";
 
 import { vars } from "../../../../../../styles/theme.css";
 
-// 시트 껍데기는 MapSheet 이 그리고, 이 화면만 내용을 세로로 쌓는다.
 export const sheetLayout = style({
   display: "flex",
   flexDirection: "column",
@@ -12,7 +11,6 @@ export const sheetLayout = style({
   overflowY: "auto",
 });
 
-// 시트가 화면보다 길면 안에서 스크롤한다. 사진처럼 높이가 정해진 칸이 눌리면 안 된다.
 globalStyle(`${sheetLayout} > *`, {
   flexShrink: 0,
 });
@@ -51,7 +49,6 @@ export const photos = style({
   gap: 12,
   padding: "0 20px 20px",
   overflowX: "auto",
-  // 스냅은 패딩을 무시하고 붙어서, 좌우 여백만큼 스냅 위치를 밀어 준다.
   scrollPadding: "0 20px",
   scrollSnapType: "x mandatory",
 });
@@ -138,7 +135,6 @@ export const similarTitle = style({
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
-// 구분선은 시안대로 좌우 20px 을 비워야 해서 테두리 대신 깔아 준다.
 export const similarPlace = style({
   position: "relative",
   display: "flex",
@@ -167,11 +163,6 @@ export const similarOpen = style({
   background: "none",
   textAlign: "left",
   cursor: "pointer",
-});
-
-export const similarList = style({
-  display: "flex",
-  flexDirection: "column",
 });
 
 export const similarThumbnail = style({
