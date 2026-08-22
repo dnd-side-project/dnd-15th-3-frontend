@@ -50,6 +50,8 @@ export const photos = style({
   gap: 12,
   padding: "0 20px 20px",
   overflowX: "auto",
+  // 스냅은 패딩을 무시하고 붙어서, 좌우 여백만큼 스냅 위치를 밀어 준다.
+  scrollPadding: "0 20px",
   scrollSnapType: "x mandatory",
 });
 
