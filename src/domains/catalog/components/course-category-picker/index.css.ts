@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
@@ -8,7 +9,6 @@ export const selected = style({
 });
 
 export const empty = style({
-  // 83px 인 선택 영역 안에서 시안의 문구 위치에 맞춘다.
   margin: 0,
   paddingTop: 43,
   color: "#A4B1C5",
@@ -17,7 +17,17 @@ export const empty = style({
   whiteSpace: "pre-line",
 });
 
-export const available = style({
-  marginTop: 71,
-  padding: "0 20px",
+export const available = recipe({
+  base: {
+    padding: "0 20px",
+  },
+  variants: {
+    gap: {
+      wide: { marginTop: 71 },
+      narrow: { marginTop: 49 },
+    },
+  },
+  defaultVariants: {
+    gap: "wide",
+  },
 });
