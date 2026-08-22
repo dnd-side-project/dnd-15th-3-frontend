@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
 
-import MapPinIcon from "../../../../../assets/icon-map-pin-simple.svg?react";
+import PushPinIcon from "../../../../../assets/icon-push-pin.svg?react";
 import ThumbsDownIcon from "../../../../../assets/icon-thumbs-down.svg?react";
 import ThumbsUpIcon from "../../../../../assets/icon-thumbs-up.svg?react";
 import { Chip, ChipGroup } from "../../../../../components/chip";
@@ -101,7 +101,7 @@ export function CourseEditPage() {
 
         <section className={selected}>
           <h2 className={selectedTitle}>
-            <MapPinIcon aria-hidden height={16} width={16} />
+            <PushPinIcon aria-hidden height={16} width={16} />
             현재 선택된 장소
           </h2>
           <p className={summary}>
