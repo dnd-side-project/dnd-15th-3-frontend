@@ -18,6 +18,7 @@ const MEETING: MeetingScreen = {
   name: "을지로·성수 나들이",
   date: "2026-08-05",
   time: "18:00",
+  courseImageUrl: null,
   role: "HOST",
   isHost: true,
   permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
