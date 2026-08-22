@@ -9,10 +9,8 @@ import { TopAppBar } from "../../../../../components/top-app-bar";
 import { getAccessToken } from "../../../../../utils/access-token";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { CourseCategoryPicker } from "../../../../catalog/components/course-category-picker";
-import { useCategories } from "../../../../catalog/hooks";
 import { updateCoursePlan } from "../../../api";
 import { meetingQueries } from "../../../api/queries";
-import type { CourseCategoryStep, CoursePlan } from "../../../api/types";
 import { useMeetingPermissions } from "../../../hooks";
 
 import { editButton, intro, picker, root, status, surfaceColor } from "./index.css";
@@ -20,40 +18,26 @@ import { editButton, intro, picker, root, status, surfaceColor } from "./index.c
 export function CoursePlanPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
-  const accessToken = getAccessToken(id);
   const queryClient = useQueryClient();
-  const { queryKey } = meetingQueries.coursePlan(id, accessToken);
+  const planQuery = meetingQueries.coursePlan(id, getAccessToken(id));
 
-  const { data: plan, isPending } = useQuery(meetingQueries.coursePlan(id, accessToken));
+  const { data: plan, isPending } = useQuery(planQuery);
   const { canManageMeeting } = useMeetingPermissions();
-  const categories = useCategories();
 
   const [editing, setEditing] = useState(false);
+  // 저장 응답을 기다리지 않고 먼저 보여줄 코스.
+  const [pending, setPending] = useState<CategorySlug[] | null>(null);
 
   const { mutate } = useMutation({
     mutationFn: (categorySlugs: CategorySlug[]) =>
-      updateCoursePlan(id, accessToken, {
-        categorySlugs,
-        version: queryClient.getQueryData<CoursePlan>(queryKey)?.version ?? 1,
-      }),
-    // 누른 즉시 화면을 바꾸고 요청은 뒤에서 보낸다.
-    onMutate: async (categorySlugs) => {
-      await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<CoursePlan>(queryKey);
-      queryClient.setQueryData<CoursePlan>(queryKey, (old) =>
-        old === undefined ? old : { ...old, categorySteps: toSteps(categorySlugs, categories) },
-      );
-      return { previous };
-    },
-    onError: (_error, _categorySlugs, context) => {
-      queryClient.setQueryData(queryKey, context?.previous);
-    },
+      updateCoursePlan(id, getAccessToken(id), { categorySlugs, version: plan?.version ?? 1 }),
+    onMutate: setPending,
+    onError: () => setPending(null),
     onSuccess: (saved) => {
-      queryClient.setQueryData(queryKey, saved);
+      queryClient.setQueryData(planQuery.queryKey, saved);
+      setPending(null);
     },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["meeting", id] });
-    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
   });
 
   if (isPending || plan === undefined) {
@@ -91,23 +75,11 @@ export function CoursePlanPage() {
         <div className={picker}>
           <CourseCategoryPicker
             gap="narrow"
-            value={plan.categorySteps.map((step) => step.slug)}
+            value={pending ?? plan.categorySteps.map((step) => step.slug)}
             onChange={editing ? mutate : undefined}
           />
         </div>
       </div>
     </Layout>
   );
-}
-
-function toSteps(
-  slugs: CategorySlug[],
-  categories: { slug: CategorySlug; name: string }[],
-): CourseCategoryStep[] {
-  return slugs.map((slug, at) => ({
-    id: `${slug}-${at}`,
-    name: categories.find((category) => category.slug === slug)?.name ?? slug,
-    slug,
-    order: at + 1,
-  }));
 }
