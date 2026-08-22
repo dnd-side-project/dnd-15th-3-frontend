@@ -23,6 +23,7 @@ import { TimePickerSheet } from "../../../../components/time-picker";
 import { parseDateString, parseTimeString } from "../../../../utils/time";
 import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
 import { useMeetingTypes } from "../../../catalog/hooks";
+import { MeetingMap } from "../../components/meeting-map";
 import { useMeeting, useMeetingPermissions } from "../../hooks";
 
 import {
@@ -45,7 +46,6 @@ import {
   infoCard,
   infoCell,
   infoValue,
-  mapImage,
   mapScrim,
   nav,
   participant,
@@ -126,6 +126,12 @@ export function MeetingPage() {
   }
 
   const shareUrl = `/new/complete?code=${meeting.invitationCode}`;
+
+  // 코스를 고르기 전에는 모임 위치만 찍는다.
+  const placeOf = new Map(meeting.recommendations.map(({ id, place }) => [id, place]));
+  const coursePlaces = (meeting.selectedCourse?.recommendationIds ?? [])
+    .map((recommendationId) => placeOf.get(recommendationId))
+    .filter((place) => place !== undefined);
 
   return (
     <Layout>
@@ -237,7 +243,12 @@ export function MeetingPage() {
             </Link>
 
             <Link className={card({ card: "map" })} to={`/meeting/${id}/place`}>
-              <img alt="" className={mapImage} src="/static/meeting-course-map.webp" />
+              <MeetingMap
+                interactive={false}
+                level={6}
+                origin={meeting.firstLocation}
+                places={coursePlaces}
+              />
               <span aria-hidden className={mapScrim} />
               <span aria-hidden className={cardArrow({ card: "map" })}>
                 <ArrowUpRightIcon height={12} width={12} />

@@ -284,15 +284,10 @@ export const courseNavigation = style({
   height: 80,
 });
 
-export const mapImage = style({
-  display: "block",
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-});
-
 export const mapScrim = style({
   position: "absolute",
+  // 지도 타일이 자체 z-index 를 쓰므로 그 위로 올린다.
+  zIndex: 1,
   inset: 0,
   background: "linear-gradient(0deg, rgba(74, 74, 74, 0.82) 0%, rgba(188, 197, 207, 0) 100%)",
 });
@@ -300,6 +295,7 @@ export const mapScrim = style({
 export const cardArrow = recipe({
   base: {
     position: "absolute",
+    zIndex: 1,
     top: 12,
     display: "flex",
     alignItems: "center",
@@ -321,6 +317,7 @@ export const cardArrow = recipe({
 export const cardTexts = recipe({
   base: {
     position: "absolute",
+    zIndex: 1,
     top: 155,
     right: 8,
     display: "flex",
