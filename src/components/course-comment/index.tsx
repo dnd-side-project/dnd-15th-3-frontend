@@ -2,31 +2,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ChangeEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 
-import CrownIcon from "../../assets/icon-crown.svg?react";
 import SendIcon from "../../assets/icon-send.svg?react";
 import type { ProfileAvatarId } from "../../domains/catalog/api/types";
 import { createCourseComment } from "../../domains/course/api";
 import { courseQueries } from "../../domains/course/api/queries";
 import type { CourseComment } from "../../domains/course/api/types";
+import { AvatarWithCrown } from "../avatar-with-crown";
 import { BottomSheet } from "../bottom-sheet";
-import { MomoAvatar } from "../momo-avatar";
+import { CourseCommentItem } from "../comment-item";
 
-import {
-  avatarWrapper,
-  bubble,
-  content,
-  crown,
-  input,
-  inputBar,
-  inputField,
-  list,
-  meta,
-  nickname,
-  row,
-  scrollContainer,
-  sendButton,
-  timestamp,
-} from "./index.css";
+import { input, inputBar, inputField, list, scrollContainer, sendButton } from "./index.css";
 
 function formatTime(iso: string): string {
   const date = new Date(iso);
@@ -48,60 +33,6 @@ function isIOS() {
   );
 }
 
-interface AvatarWithCrownProps {
-  avatarId: ProfileAvatarId;
-  size: number;
-  isHost: boolean;
-  alt?: string;
-}
-
-function AvatarWithCrown({ avatarId, size, isHost, alt = "" }: AvatarWithCrownProps) {
-  return (
-    <span className={avatarWrapper}>
-      <MomoAvatar alt={alt} avatarId={avatarId} size={size} />
-      {isHost ? (
-        <span aria-label="방장" className={crown} role="img">
-          <CrownIcon aria-hidden height={12} width={12} />
-        </span>
-      ) : null}
-    </span>
-  );
-}
-
-interface CourseCommentItemProps {
-  comment: CourseComment;
-}
-
-function CourseCommentItem({ comment }: CourseCommentItemProps) {
-  if (comment.isMine) {
-    return (
-      <div className={row({ variant: "mine" })}>
-        <div className={content}>
-          <div className={bubble({ variant: "mine" })}>{comment.content}</div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className={row({ variant: "incoming" })}>
-      <AvatarWithCrown
-        alt={comment.nickname}
-        avatarId={comment.profileAvatarId}
-        isHost={comment.authorRole === "HOST"}
-        size={40}
-      />
-      <div className={content}>
-        <div className={meta}>
-          <span className={nickname}>{comment.nickname}</span>
-          <span className={timestamp}>{formatTime(comment.createdAt)}</span>
-        </div>
-        <div className={bubble({ variant: "incoming" })}>{comment.content}</div>
-      </div>
-    </div>
-  );
-}
-
 interface CourseCommentListProps {
   comments: CourseComment[];
 }
@@ -110,7 +41,11 @@ function CourseCommentList({ comments }: CourseCommentListProps) {
   return (
     <div className={list}>
       {comments.map((comment) => (
-        <CourseCommentItem comment={comment} key={comment.commentId} />
+        <CourseCommentItem
+          comment={comment}
+          key={comment.commentId}
+          time={formatTime(comment.createdAt)}
+        />
       ))}
     </div>
   );
