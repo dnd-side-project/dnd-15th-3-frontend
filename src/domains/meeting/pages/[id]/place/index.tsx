@@ -9,6 +9,7 @@ import { PlaceIcon } from "../../../../../components/place-icon";
 import { PlaceSearchInput } from "../../../../../components/text-input";
 import { getAccessToken } from "../../../../../utils/access-token";
 import { catalogQueries } from "../../../../catalog/api/queries";
+import { useCategorySlug } from "../../../../catalog/hooks";
 import { MapScreen, MapSheet } from "../../../components/map-screen";
 
 import {
@@ -66,6 +67,7 @@ function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) 
 export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
+  const categoryOf = useCategorySlug();
 
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
@@ -113,7 +115,7 @@ export function PlaceSearchPage() {
                 )}
                 <span className={resultTexts}>
                   <span className={resultName}>
-                    <PlaceIcon category={place.category.slug} size={20} />
+                    <PlaceIcon category={categoryOf(place.category.id)} size={20} />
                     {place.name}
                   </span>
                   <span className={resultAddress}>{place.address}</span>
