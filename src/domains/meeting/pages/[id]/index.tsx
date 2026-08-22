@@ -242,7 +242,12 @@ export function MeetingPage() {
               </span>
             </Link>
 
-            <Link className={card({ card: "map" })} to={`/meeting/${id}/place`}>
+            <Link
+              className={card({ card: "map" })}
+              to={
+                meeting.selectedCourse === null ? `/meeting/${id}/place` : `/meeting/${id}/detail`
+              }
+            >
               <MeetingMap
                 interactive={false}
                 level={6}
@@ -264,7 +269,7 @@ export function MeetingPage() {
                 aria-label="코스 수정"
                 className={courseEditButton}
                 type="button"
-                onClick={save}
+                onClick={() => void navigate(`/meeting/${id}/edit`)}
               >
                 <PenSmallIcon aria-hidden height={32} width={32} />
               </button>
