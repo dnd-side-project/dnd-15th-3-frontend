@@ -1,5 +1,4 @@
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../../styles/text";
 
@@ -51,28 +50,7 @@ export const savedTitle = style({
 });
 
 export const chips = style({
-  display: "flex",
-  gap: 8,
   padding: "0 20px",
-  overflowX: "auto",
-});
-
-export const chip = recipe({
-  base: {
-    flexShrink: 0,
-    height: 34,
-    padding: "0 14px",
-    border: "none",
-    borderRadius: vars.radius.full,
-    ...text({ size: 14, weight: 500, lineHeight: 1.2 }),
-    cursor: "pointer",
-  },
-  variants: {
-    selected: {
-      true: { backgroundColor: "#DBECFF", color: "#3793FF" },
-      false: { backgroundColor: "#ECEFF5", color: "#707D91" },
-    },
-  },
 });
 
 export const savedList = style({

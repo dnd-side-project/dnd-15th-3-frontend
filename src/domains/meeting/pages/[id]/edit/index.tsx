@@ -5,6 +5,7 @@ import { Navigate, useNavigate, useParams } from "react-router";
 import MapPinIcon from "../../../../../assets/icon-map-pin-simple.svg?react";
 import ThumbsDownIcon from "../../../../../assets/icon-thumbs-down.svg?react";
 import ThumbsUpIcon from "../../../../../assets/icon-thumbs-up.svg?react";
+import { Chip, ChipGroup } from "../../../../../components/chip";
 import { CtaButton } from "../../../../../components/cta-button";
 import { Layout } from "../../../../../components/layout";
 import { PlaceIcon } from "../../../../../components/place-icon";
@@ -19,7 +20,6 @@ import { CoursePlaceStrip } from "../../../../course/components/course-place-str
 import { useMeeting } from "../../../hooks";
 
 import {
-  chip,
   chips,
   count,
   footer,
@@ -86,6 +86,14 @@ export function CourseEditPage() {
   const route = detail?.route ?? [];
   const inCourse = new Set(route.map((step) => step.recommendationId));
 
+  const addToCourse = (recommendationId: string) => {
+    if (inCourse.has(recommendationId)) {
+      toast.add({ title: "이미 추가된 장소입니다." });
+      return;
+    }
+    addPlace(recommendationId);
+  };
+
   return (
     <Layout>
       <div className={root}>
@@ -109,25 +117,20 @@ export function CourseEditPage() {
           <h2 className={savedTitle}>함께 저장된 장소</h2>
 
           <div className={chips}>
-            <button
-              aria-pressed={category === undefined}
-              className={chip({ selected: category === undefined })}
-              type="button"
-              onClick={() => setCategory(undefined)}
-            >
-              전체
-            </button>
-            {categories.map((item) => (
-              <button
-                aria-pressed={category === item.slug}
-                className={chip({ selected: category === item.slug })}
-                key={item.slug}
-                type="button"
-                onClick={() => setCategory(item.slug)}
-              >
-                {item.name}
-              </button>
-            ))}
+            <ChipGroup scroll>
+              <Chip selected={category === undefined} onClick={() => setCategory(undefined)}>
+                전체
+              </Chip>
+              {categories.map((item) => (
+                <Chip
+                  key={item.slug}
+                  selected={category === item.slug}
+                  onClick={() => setCategory(item.slug)}
+                >
+                  {item.name}
+                </Chip>
+              ))}
+            </ChipGroup>
           </div>
 
           <div className={savedList}>
@@ -136,13 +139,7 @@ export function CourseEditPage() {
                 className={savedPlace}
                 key={place.recommendationId}
                 type="button"
-                onClick={() => {
-                  if (inCourse.has(place.recommendationId)) {
-                    toast.add({ title: "이미 추가된 장소입니다." });
-                    return;
-                  }
-                  addPlace(place.recommendationId);
-                }}
+                onClick={() => addToCourse(place.recommendationId)}
               >
                 {place.primaryImageUrl === undefined ? (
                   <span className={thumbnail} />
