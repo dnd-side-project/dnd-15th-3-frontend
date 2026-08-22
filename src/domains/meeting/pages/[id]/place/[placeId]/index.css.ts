@@ -23,6 +23,7 @@ export const header = style({
   alignItems: "center",
   height: 49,
   padding: "10px 20px",
+  borderBottom: "1px solid #E5E5E5",
   backgroundColor: "rgba(255, 255, 255, 0.93)",
 });
 
@@ -128,7 +129,7 @@ export const addButton = style({
 export const similar = style({
   display: "flex",
   flexDirection: "column",
-  marginTop: 20,
+  marginTop: 25,
 });
 
 export const similarTitle = style({
@@ -137,14 +138,32 @@ export const similarTitle = style({
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
+// 구분선은 시안대로 좌우 20px 을 비워야 해서 테두리 대신 깔아 준다.
 export const similarPlace = style({
+  position: "relative",
   display: "flex",
   alignItems: "center",
   gap: 14,
-  width: "100%",
   padding: "17px 20px",
+  "::after": {
+    content: "",
+    position: "absolute",
+    right: 20,
+    bottom: 0,
+    left: 20,
+    height: 1,
+    backgroundColor: "#DAE1EC",
+  },
+});
+
+export const similarOpen = style({
+  display: "flex",
+  flex: 1,
+  alignItems: "center",
+  gap: 14,
+  minWidth: 0,
+  padding: 0,
   border: "none",
-  borderTop: "1px solid #DAE1EC",
   background: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -153,7 +172,6 @@ export const similarPlace = style({
 export const similarList = style({
   display: "flex",
   flexDirection: "column",
-  borderBottom: "1px solid #DAE1EC",
 });
 
 export const similarThumbnail = style({
@@ -211,8 +229,8 @@ export const refresh = style({
   alignSelf: "center",
   alignItems: "center",
   gap: 6,
-  height: 34,
-  margin: "20px 0 calc(30px + env(safe-area-inset-bottom))",
+  height: 32,
+  margin: "28px 0 calc(38px + env(safe-area-inset-bottom))",
   padding: "0 14px",
   border: "none",
   borderRadius: vars.radius.full,
