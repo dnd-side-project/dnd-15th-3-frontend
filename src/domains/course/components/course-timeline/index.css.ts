@@ -18,7 +18,6 @@ export const item = style({
   display: "flex",
   gap: 20,
   selectors: {
-    // 마지막 장소 뒤로는 선을 잇지 않는다.
     "&:not(:last-child)::before": {
       content: "",
       position: "absolute",
