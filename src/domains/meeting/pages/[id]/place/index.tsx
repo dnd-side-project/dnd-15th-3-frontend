@@ -87,7 +87,7 @@ export function PlaceSearchPage() {
   });
 
   return (
-    <MapScreen>
+    <MapScreen gradient>
       <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />

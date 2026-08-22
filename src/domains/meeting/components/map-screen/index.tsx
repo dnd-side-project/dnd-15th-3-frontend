@@ -20,12 +20,19 @@ import {
   meetingPill,
   pillIcon,
   root,
+  scrim,
   sheet,
   toggle,
+  topScrim,
 } from "./index.css";
 
+export interface MapScreenProps {
+  children: ReactNode;
+  gradient?: boolean;
+}
+
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
-export function MapScreen({ children }: { children: ReactNode }) {
+export function MapScreen({ children, gradient }: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
@@ -35,6 +42,12 @@ export function MapScreen({ children }: { children: ReactNode }) {
     <Layout>
       <div className={root}>
         <MeetingMap currentPosition={position} origin={meeting?.firstLocation} />
+
+        {gradient === true ? (
+          <div className={scrim}>
+            <div className={topScrim} />
+          </div>
+        ) : null}
 
         <div className={toggle}>
           <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />

@@ -12,12 +12,25 @@ export const root = style({
   overflow: "hidden",
 });
 
+export const scrim = style({
+  position: "absolute",
+  inset: 0,
+  zIndex: 1,
+  pointerEvents: "none",
+});
+
+export const topScrim = style({
+  position: "absolute",
+  inset: 0,
+  backgroundImage: "linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(102, 102, 102, 0.04) 36%)",
+});
+
 export const toggle = style({
   position: "absolute",
   top: 20,
   left: "50%",
   transform: "translateX(-50%)",
-  zIndex: 1,
+  zIndex: 2,
 });
 
 export const chips = style({
@@ -25,7 +38,7 @@ export const chips = style({
   top: 81,
   left: 0,
   right: 0,
-  zIndex: 1,
+  zIndex: 2,
   padding: "0 15px",
 });
 
@@ -36,7 +49,7 @@ export const bottomStack = style({
   right: 0,
   bottom: 0,
   left: 0,
-  zIndex: 1,
+  zIndex: 2,
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
