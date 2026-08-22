@@ -51,7 +51,7 @@ export function PlaceDetailPage() {
   const categoryOf = useCategorySlug();
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
-  const { data: detail } = useQuery(catalogQueries.placeDetail(placeId));
+  const { data: detail } = useQuery(catalogQueries.placeDetail(placeId, getAccessToken(id)));
 
   // 상세가 오기 전에는 추천 목록에 있는 이름·주소로 먼저 그린다.
   const name = detail?.name ?? recommendation?.place.name;
@@ -71,7 +71,7 @@ export function PlaceDetailPage() {
   );
 
   const { mutate: addPlace } = useMutation({
-    mutationFn: (target: string) => addRecommendation(id, getAccessToken(id), target),
+    mutationFn: (target: string) => addRecommendation(id, getAccessToken(id), { placeId: target }),
     onSuccess: () => {
       toast.add({ title: "장소가 저장되었습니다." });
       return queryClient.invalidateQueries({ queryKey: ["meeting", id] });
