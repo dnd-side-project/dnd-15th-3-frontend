@@ -1,6 +1,6 @@
-import ArrowUpRightIcon from "../../../../assets/icon-arrow-up-right.svg?react";
+import ArrowSquareOutIcon from "../../../../assets/icon-arrow-square-out.svg?react";
 import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
-import WalkIcon from "../../../../assets/icon-place-walk.svg?react";
+import FootprintsIcon from "../../../../assets/icon-footprints.svg?react";
 import { PlaceIcon } from "../../../../components/place-icon";
 import type { CourseRouteStep } from "../../api/types";
 
@@ -64,12 +64,12 @@ export function CourseTimeline({ route, onSelectPlace }: CourseTimelineProps) {
               {step.walkDurationToNextMin === null || next === undefined ? null : (
                 <div className={walk}>
                   <span className={walkTime}>
-                    <WalkIcon aria-hidden height={12} width={12} />
+                    <FootprintsIcon aria-hidden height={14} width={14} />
                     도보 {step.walkDurationToNextMin}분
                   </span>
                   <a className={routeLink} href={routeUrl(next)} rel="noreferrer" target="_blank">
                     경로 안내
-                    <ArrowUpRightIcon aria-hidden height={12} width={12} />
+                    <ArrowSquareOutIcon aria-hidden height={14} width={14} />
                   </a>
                 </div>
               )}
