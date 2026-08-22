@@ -33,7 +33,6 @@ export const editButton = recipe({
     cursor: "pointer",
   },
   variants: {
-    // 저장 상태를 알리는 시안이 없어 아이콘 색으로만 구분한다.
     editing: {
       true: { color: "#3793FF" },
       false: { color: "#A8A8A8" },

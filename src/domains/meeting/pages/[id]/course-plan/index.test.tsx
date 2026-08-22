@@ -126,7 +126,6 @@ test("응답을 기다리지 않고 코스에 먼저 붙인다", async () => {
   renderCoursePlan();
 
   await userEvent.click(page.getByRole("button", { name: "코스 편집" }));
-  // 저장 응답을 돌려주지 않아도 화면은 이미 바뀌어 있어야 한다.
   fetchMock.mockImplementation(() => new Promise(() => {}));
 
   await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
