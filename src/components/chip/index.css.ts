@@ -131,6 +131,8 @@ export const chipGroup = recipe({
     scroll: {
       true: {
         flexWrap: "nowrap",
+        // 여백을 스크롤 안쪽에 둬야 칩이 화면 끝까지 지나간다.
+        padding: "0 20px",
         overflowX: "auto",
         scrollbarWidth: "none",
         selectors: {

@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
 
+import PlusIcon from "../../../../../assets/icon-plus.svg?react";
 import PushPinIcon from "../../../../../assets/icon-push-pin.svg?react";
 import ThumbsDownIcon from "../../../../../assets/icon-thumbs-down.svg?react";
 import ThumbsUpIcon from "../../../../../assets/icon-thumbs-up.svg?react";
@@ -20,8 +21,8 @@ import { CoursePlaceStrip } from "../../../../course/components/course-place-str
 import { useMeeting } from "../../../hooks";
 
 import {
+  addPlaceButton,
   address,
-  chips,
   count,
   footer,
   name,
@@ -129,22 +130,29 @@ export function CourseEditPage() {
         <section className={saved}>
           <h2 className={savedTitle}>함께 저장된 장소</h2>
 
-          <div className={chips}>
-            <ChipGroup scroll>
-              <Chip selected={category === undefined} onClick={() => setCategory(undefined)}>
-                전체
+          <ChipGroup scroll>
+            <Chip selected={category === undefined} onClick={() => setCategory(undefined)}>
+              전체
+            </Chip>
+            {categories.map((item) => (
+              <Chip
+                key={item.slug}
+                selected={category === item.slug}
+                onClick={() => setCategory(item.slug)}
+              >
+                {item.name}
               </Chip>
-              {categories.map((item) => (
-                <Chip
-                  key={item.slug}
-                  selected={category === item.slug}
-                  onClick={() => setCategory(item.slug)}
-                >
-                  {item.name}
-                </Chip>
-              ))}
-            </ChipGroup>
-          </div>
+            ))}
+          </ChipGroup>
+
+          <button
+            className={addPlaceButton}
+            type="button"
+            onClick={() => void navigate(`/meeting/${id}/edit/place`)}
+          >
+            <PlusIcon aria-hidden height={20} width={20} />
+            장소 추가
+          </button>
 
           <div className={savedList}>
             {savedItems.map((place) => (
