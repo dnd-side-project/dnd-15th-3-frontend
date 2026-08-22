@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 import { text } from "../../../../../../styles/text";
 
@@ -9,6 +9,12 @@ export const sheetLayout = style({
   display: "flex",
   flexDirection: "column",
   gap: 7,
+  overflowY: "auto",
+});
+
+// 시트가 화면보다 길면 안에서 스크롤한다. 사진처럼 높이가 정해진 칸이 눌리면 안 된다.
+globalStyle(`${sheetLayout} > *`, {
+  flexShrink: 0,
 });
 
 export const header = style({
@@ -216,6 +222,7 @@ export const refresh = style({
 
 export const externalLink = style({
   display: "inline-flex",
+  alignSelf: "flex-start",
   alignItems: "center",
   gap: 6,
   height: 28,

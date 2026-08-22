@@ -32,12 +32,15 @@ export const chips = style({
 // 시트 높이가 화면마다 달라, 지도 위 버튼이 시트를 따라 올라오도록 함께 묶는다.
 export const bottomStack = style({
   position: "absolute",
+  // 시트가 화면보다 길어지면 위가 잘리므로 화면 안에 가둔다.
+  top: 0,
   right: 0,
   bottom: 0,
   left: 0,
   zIndex: 1,
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-end",
   gap: 14,
   // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
   pointerEvents: "none",
@@ -45,6 +48,7 @@ export const bottomStack = style({
 
 export const bottomActions = style({
   pointerEvents: "auto",
+  flexShrink: 0,
   display: "flex",
   flexDirection: "column",
   gap: 7,
@@ -76,6 +80,9 @@ export const pillIcon = style({
 
 export const sheet = style({
   pointerEvents: "auto",
+  display: "flex",
+  flexDirection: "column",
+  minHeight: 0,
   borderRadius: "24px 24px 0 0",
   backgroundColor: "#FFFFFF",
   boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
@@ -83,6 +90,7 @@ export const sheet = style({
 
 export const grabber = style({
   display: "flex",
+  flexShrink: 0,
   alignItems: "center",
   justifyContent: "center",
   height: 25,
