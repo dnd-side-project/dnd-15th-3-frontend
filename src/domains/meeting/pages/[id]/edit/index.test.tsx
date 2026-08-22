@@ -130,7 +130,7 @@ function renderCourseEdit() {
     [
       { path: "/meeting/:id/edit", Component: CourseEditPage },
       { path: "/meeting/:id/detail", Component: () => <p>모임 코스</p> },
-      { path: "/meeting/:id/place", Component: () => <p>장소 검색</p> },
+      { path: "/meeting/:id/edit/place", Component: () => <p>장소 검색</p> },
     ],
     { initialEntries: ["/meeting/1/edit"] },
   );
