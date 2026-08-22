@@ -1,4 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../../../styles/text";
 
@@ -109,18 +110,24 @@ export const addressValue = style({
   whiteSpace: "nowrap",
 });
 
-export const addButton = style({
-  display: "flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  width: 44,
-  height: 44,
-  border: "none",
-  borderRadius: vars.radius.full,
-  backgroundColor: "#ECEFF5",
-  color: "#A4B1C5",
-  cursor: "pointer",
+export const addButton = recipe({
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 44,
+    height: 44,
+    border: "none",
+    borderRadius: vars.radius.full,
+    cursor: "pointer",
+  },
+  variants: {
+    saved: {
+      true: { backgroundColor: "#3793FF", color: "#FFFFFF", cursor: "default" },
+      false: { backgroundColor: "#ECEFF5", color: "#A4B1C5" },
+    },
+  },
 });
 
 export const similar = style({

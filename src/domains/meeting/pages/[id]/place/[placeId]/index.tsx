@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import ArrowsClockwiseIcon from "../../../../../../assets/icon-arrows-clockwise.svg?react";
 import CaretLeftIcon from "../../../../../../assets/icon-caret-left.svg?react";
+import HeartIcon from "../../../../../../assets/icon-heart.svg?react";
 import PlusIcon from "../../../../../../assets/icon-plus.svg?react";
 import { PlaceIcon } from "../../../../../../components/place-icon";
 import { toast } from "../../../../../../components/toast/manager";
@@ -51,6 +52,7 @@ export function PlaceDetailPage() {
   const categoryOf = useCategorySlug();
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
+  const saved = recommendation !== undefined;
   const { data: detail } = useQuery(catalogQueries.placeDetail(placeId, getAccessToken(id)));
 
   // 상세가 오기 전에는 추천 목록에 있는 이름·주소로 먼저 그린다.
@@ -125,12 +127,17 @@ export function PlaceDetailPage() {
                 </span>
               </div>
               <button
-                aria-label="코스에 담기"
-                className={addButton}
+                aria-label={saved ? "코스에 담김" : "코스에 담기"}
+                className={addButton({ saved })}
+                disabled={saved}
                 type="button"
                 onClick={() => addPlace(placeId)}
               >
-                <PlusIcon aria-hidden height={20} width={20} />
+                {saved ? (
+                  <HeartIcon aria-hidden height={20} width={20} />
+                ) : (
+                  <PlusIcon aria-hidden height={20} width={20} />
+                )}
               </button>
             </div>
 

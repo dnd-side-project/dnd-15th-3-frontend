@@ -176,9 +176,15 @@ test("다른 장소 추천받기를 누르면 보고 있던 곳을 빼고 다시
 });
 
 test("코스에 담으면 저장했다고 알려준다", async () => {
-  renderPlaceDetail("201");
+  renderPlaceDetail("301");
 
   await userEvent.click(page.getByRole("button", { exact: true, name: "코스에 담기" }));
 
   await expect.element(page.getByText("장소가 저장되었습니다.")).toBeInTheDocument();
+});
+
+test("이미 담은 장소는 담기 버튼을 다르게 보여준다", async () => {
+  renderPlaceDetail("201");
+
+  await expect.element(page.getByRole("button", { name: "코스에 담김" })).toBeDisabled();
 });
