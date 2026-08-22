@@ -63,6 +63,18 @@ export interface PlaceSearchItem {
   previewUrl: string | null;
 }
 
+/** 검색 결과와 달리 카테고리를 id 로만 준다. */
+export interface SimilarPlace {
+  id: string;
+  categoryId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  primaryImageUrl: string | null;
+  previewUrl: string | null;
+}
+
 export type PlaceCollectionStatus = "PENDING" | "RUNNING" | "READY" | "PARTIAL" | "FAILED";
 
 export interface PlaceSearchResponse {

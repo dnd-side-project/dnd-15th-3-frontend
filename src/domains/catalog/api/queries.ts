@@ -6,10 +6,11 @@ import {
   getMeetingTypes,
   getPlaceDetail,
   getProfileAvatars,
+  getSimilarPlaces,
   searchFirstMeetingPlaces,
   searchPlaces,
 } from "./index";
-import type { SearchPlacesParams } from "./index";
+import type { SearchPlacesParams, SimilarPlacesParams } from "./index";
 
 export const catalogQueries = {
   meetingTypes: () =>
@@ -43,6 +44,19 @@ export const catalogQueries = {
       ] as const,
       queryFn: ({ signal }) => searchPlaces(params, signal),
       enabled: filled(params.meetingId, params.accessToken),
+    }),
+
+  similarPlaces: (params: SimilarPlacesParams) =>
+    queryOptions({
+      queryKey: [
+        "catalog",
+        "similar-places",
+        params.meetingId,
+        params.placeId,
+        params.excludeIds,
+      ] as const,
+      queryFn: ({ signal }) => getSimilarPlaces(params, signal),
+      enabled: filled(params.meetingId, params.placeId, params.accessToken),
     }),
 
   placeDetail: (placeId: string, accessToken: string) =>

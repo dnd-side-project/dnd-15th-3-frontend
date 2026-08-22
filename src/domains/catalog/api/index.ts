@@ -6,6 +6,7 @@ import type {
   PlaceDetail,
   PlaceSearchResponse,
   ProfileAvatarResponse,
+  SimilarPlace,
 } from "./types";
 
 export function getMeetingTypes(signal?: AbortSignal) {
@@ -31,6 +32,28 @@ export interface SearchPlacesParams {
 /** 키워드 검색이 아니라 모임 기준 위치 반경 안의 장소 목록이다. */
 export function searchPlaces(params: SearchPlacesParams, signal?: AbortSignal) {
   return request<PlaceSearchResponse>("/api/v1/places/search", { query: { ...params }, signal });
+}
+
+export interface SimilarPlacesParams {
+  meetingId: string;
+  placeId: string;
+  accessToken: string;
+  excludeIds?: string[];
+  size?: number;
+}
+
+export function getSimilarPlaces(
+  { meetingId, placeId, accessToken, excludeIds = [], size }: SimilarPlacesParams,
+  signal?: AbortSignal,
+) {
+  return request<SimilarPlace[]>(`/api/v1/meetings/${meetingId}/places/${placeId}/similar`, {
+    query: {
+      accessToken,
+      excludeIds: excludeIds.length === 0 ? undefined : excludeIds.join(","),
+      size,
+    },
+    signal,
+  });
 }
 
 export function getPlaceDetail(placeId: string, accessToken: string, signal?: AbortSignal) {
