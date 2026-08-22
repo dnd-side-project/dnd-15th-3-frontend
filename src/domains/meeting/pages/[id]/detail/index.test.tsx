@@ -102,6 +102,7 @@ function renderCourseDetail(meeting: unknown = MEETING) {
     [
       { path: "/meeting/:id/detail", Component: MeetingCourseDetailPage },
       { path: "/meeting/:id", Component: () => <p>모임 상세</p> },
+      { path: "/meeting/:id/place", Component: () => <p>장소 검색</p> },
       { path: "/meeting/:id/place/:placeId", Component: () => <p>장소 상세</p> },
     ],
     { initialEntries: ["/meeting/1/detail"] },
@@ -163,4 +164,12 @@ test("확정된 코스가 없으면 모임 상세로 돌려보낸다", async () 
   renderCourseDetail({ ...MEETING, selectedCourse: null });
 
   await expect.element(page.getByText("모임 상세")).toBeInTheDocument();
+});
+
+test("지도 크게 보기를 누르면 전체 화면 지도로 간다", async () => {
+  renderCourseDetail();
+
+  await userEvent.click(page.getByRole("button", { name: "지도 크게 보기" }));
+
+  await expect.element(page.getByText("장소 검색")).toBeInTheDocument();
 });
