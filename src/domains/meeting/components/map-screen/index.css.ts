@@ -97,35 +97,37 @@ export const sheet = recipe({
   },
 });
 
-export const grabber = style({
-  display: "flex",
-  flexShrink: 0,
-  touchAction: "none",
-  alignItems: "center",
-  justifyContent: "center",
-  height: 25,
-});
-
-export const grabberBar = recipe({
+export const grabber = recipe({
   base: {
-    width: 50,
-    height: 5,
-    borderRadius: 10,
-    backgroundColor: "#D1D1D1",
-    transition: "opacity 150ms ease-out",
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 25,
+    touchAction: "none",
+    selectors: {
+      "&::after": {
+        content: "",
+        width: 50,
+        height: 5,
+        borderRadius: 10,
+        backgroundColor: "#D1D1D1",
+        transition: "opacity 150ms ease-out",
+      },
+    },
     "@media": {
-      "(prefers-reduced-motion: reduce)": { transition: "none" },
+      "(prefers-reduced-motion: reduce)": {
+        selectors: { "&::after": { transition: "none" } },
+      },
     },
   },
   variants: {
     // 끝까지 펼치면 손잡이를 숨기되, 만지면 다시 보여 준다.
     hidden: {
       true: {
-        opacity: 0,
         selectors: {
-          [`${grabber}:hover &`]: { opacity: 1 },
-          [`${grabber}:active &`]: { opacity: 1 },
-          [`${grabber}:focus-within &`]: { opacity: 1 },
+          "&::after": { opacity: 0 },
+          "&:hover::after, &:active::after": { opacity: 1 },
         },
       },
       false: {},

@@ -10,14 +10,13 @@ import { cx } from "../../../../utils/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
 import { MeetingMap } from "../meeting-map";
-import { type Bounds, expandRatio, snapHeight } from "./expand";
+import { type Size, expandRatio, resize, snap } from "./expand";
 
 import {
   bottomActions,
   bottomStack,
   chips,
   grabber,
-  grabberBar,
   meetingPill,
   pillIcon,
   root,
@@ -76,25 +75,22 @@ export interface MapSheetProps {
 
 /** 지도 아래에 붙는 시트. 손잡이는 모든 지도 화면이 같아 여기서 그린다. */
 export function MapSheet({ className, expandable = false, children }: MapSheetProps) {
-  const [bounds, setBounds] = useState<Bounds | null>(null);
-  const [height, setHeight] = useState<number | null>(null);
+  const [size, setSize] = useState<Size | null>(null);
   const [dragging, setDragging] = useState(false);
-  const start = useRef<(Bounds & { pointerY: number; height: number }) | null>(null);
+  const start = useRef<{ pointerY: number; height: number } | null>(null);
 
   const grab = (event: PointerEvent<HTMLDivElement>) => {
     const node = event.currentTarget.parentElement;
-    const screen = node?.parentElement?.clientHeight;
-    if (node === null || screen === undefined) {
+    const full = node?.parentElement?.clientHeight;
+    if (node === null || full === undefined) {
       return;
     }
 
-    const current = Math.round(node.getBoundingClientRect().height);
     // 처음 끌 때의 높이를 기본 높이로 삼는다.
-    const next = bounds ?? { peek: current, full: screen };
-
+    const height = Math.round(node.getBoundingClientRect().height);
     event.currentTarget.setPointerCapture(event.pointerId);
-    start.current = { ...next, pointerY: event.clientY, height: current };
-    setBounds(next);
+    start.current = { pointerY: event.clientY, height };
+    setSize((current) => current ?? { height, peek: height, full });
     setDragging(true);
   };
 
@@ -102,42 +98,35 @@ export function MapSheet({ className, expandable = false, children }: MapSheetPr
     if (start.current === null) {
       return;
     }
-    const { peek, full, pointerY, height: from } = start.current;
-    setHeight(Math.min(full, Math.max(peek, from + (pointerY - event.clientY))));
+    const { pointerY, height } = start.current;
+    setSize(resize(size, height + (pointerY - event.clientY)));
   };
 
   const release = () => {
-    if (start.current === null || height === null) {
-      return;
-    }
-    const { peek, full } = start.current;
     start.current = null;
     setDragging(false);
-    setHeight(snapHeight(height, peek, full));
+    setSize(snap(size));
   };
 
-  const ratio =
-    bounds === null || height === null ? 0 : expandRatio(height, bounds.peek, bounds.full);
+  const ratio = expandRatio(size);
   const radius = Math.round(24 * (1 - ratio));
 
   return (
     <div
       className={cx(sheet({ dragging }), className)}
       style={
-        height === null
+        size === null
           ? undefined
-          : { flexShrink: 0, height, borderRadius: `${radius}px ${radius}px 0 0` }
+          : { flexShrink: 0, height: size.height, borderRadius: `${radius}px ${radius}px 0 0` }
       }
     >
       <div
-        className={grabber}
+        className={grabber({ hidden: ratio === 1 && !dragging })}
         onPointerCancel={release}
         onPointerDown={expandable ? grab : undefined}
         onPointerMove={move}
         onPointerUp={release}
-      >
-        <span className={grabberBar({ hidden: ratio === 1 && !dragging })} />
-      </div>
+      />
       {children}
     </div>
   );
