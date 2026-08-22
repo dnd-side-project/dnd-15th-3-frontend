@@ -192,10 +192,18 @@ test("저장하면 코스 순서대로 보내고 코스 상세로 간다", async
   expect(requests.some((request) => request.startsWith("PUT"))).toBe(true);
 });
 
-test("장소 추가를 누르면 장소 검색으로 간다", async () => {
+test("코스 끝의 장소 추가를 누르면 장소 검색으로 간다", async () => {
   renderCourseEdit();
 
-  await userEvent.click(page.getByRole("button", { name: "장소 추가" }));
+  await userEvent.click(page.getByLabelText("장소 추가"));
+
+  await expect.element(page.getByText("장소 검색")).toBeInTheDocument();
+});
+
+test("목록 위 장소 추가 카드도 장소 검색으로 간다", async () => {
+  renderCourseEdit();
+
+  await userEvent.click(page.getByText("장소 추가"));
 
   await expect.element(page.getByText("장소 검색")).toBeInTheDocument();
 });

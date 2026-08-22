@@ -49,8 +49,20 @@ export const savedTitle = style({
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
-export const chips = style({
-  padding: "0 20px",
+export const addPlaceButton = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 2,
+  height: 71,
+  margin: "0 20px",
+  border: "none",
+  borderRadius: 10,
+  backgroundColor: "#ECEFF5",
+  color: "#A4B1C5",
+  ...text({ size: 14, weight: 500, lineHeight: 1.4 }),
+  cursor: "pointer",
 });
 
 export const savedList = style({
