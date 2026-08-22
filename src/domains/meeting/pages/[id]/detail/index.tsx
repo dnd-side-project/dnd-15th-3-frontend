@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useParams } from "react-router";
 
+import ArrowsOutIcon from "../../../../../assets/icon-arrows-out-simple.svg?react";
 import { Layout } from "../../../../../components/layout";
 import { TopAppBar } from "../../../../../components/top-app-bar";
 import { getAccessToken } from "../../../../../utils/access-token";
@@ -10,7 +11,17 @@ import { CourseTimeline } from "../../../../course/components/course-timeline";
 import { MeetingMap } from "../../../components/meeting-map";
 import { useMeeting } from "../../../hooks";
 
-import { course, courseCount, courseTitle, map, plan, planTitle, root, status } from "./index.css";
+import {
+  course,
+  courseCount,
+  courseTitle,
+  expand,
+  map,
+  plan,
+  planTitle,
+  root,
+  status,
+} from "./index.css";
 
 export function MeetingCourseDetailPage() {
   const navigate = useNavigate();
@@ -59,6 +70,14 @@ export function MeetingCourseDetailPage() {
               }),
             )}
           />
+          <button
+            aria-label="지도 크게 보기"
+            className={expand}
+            type="button"
+            onClick={() => void navigate(`/meeting/${id}/place`)}
+          >
+            <ArrowsOutIcon aria-hidden height={16} width={16} />
+          </button>
         </div>
 
         <div className={course}>

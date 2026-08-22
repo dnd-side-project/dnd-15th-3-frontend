@@ -17,6 +17,16 @@ export function useMeeting() {
   return useQuery(meetingQueries.detail(id, getAccessToken(id)));
 }
 
+/** 확정된 코스의 장소. 순서대로 담긴다. */
+export function useCoursePlaces() {
+  const { data: meeting } = useMeeting();
+  const placeOf = new Map((meeting?.recommendations ?? []).map(({ id, place }) => [id, place]));
+
+  return (meeting?.selectedCourse?.recommendationIds ?? [])
+    .map((recommendationId) => placeOf.get(recommendationId))
+    .filter((place) => place !== undefined);
+}
+
 /** 응답 전에는 전부 false 라 수정 UI 가 깜빡이지 않는다. */
 export function useMeetingPermissions() {
   const { data } = useMeeting();
