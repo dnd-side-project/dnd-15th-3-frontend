@@ -20,6 +20,7 @@ import { CoursePlaceStrip } from "../../../../course/components/course-place-str
 import { useMeeting } from "../../../hooks";
 
 import {
+  address,
   chips,
   count,
   footer,
@@ -36,9 +37,17 @@ import {
   selectedTitle,
   status,
   summary,
-  texts,
   thumbnail,
 } from "./index.css";
+
+function Preference({ Icon, value }: { Icon: typeof ThumbsUpIcon; value: number }) {
+  return (
+    <span className={preference}>
+      <Icon aria-hidden height={14} width={14} />
+      <span className={count}>{value}</span>
+    </span>
+  );
+}
 
 export function CourseEditPage() {
   const navigate = useNavigate();
@@ -84,6 +93,7 @@ export function CourseEditPage() {
   }
 
   const route = detail?.route ?? [];
+  const savedItems = savedPlaces?.items ?? [];
   const inCourse = new Set(route.map((step) => step.recommendationId));
 
   const addToCourse = (recommendationId: string) => {
@@ -108,7 +118,7 @@ export function CourseEditPage() {
             <span>이동거리</span>
             <b>{detail?.totalDistanceKm ?? 0}km</b>
             <span>방문 장소</span>
-            <b>{detail?.totalCount ?? 0}</b>
+            <b>{route.length}</b>
           </p>
           <CoursePlaceStrip
             route={route}
@@ -137,7 +147,7 @@ export function CourseEditPage() {
           </div>
 
           <div className={savedList}>
-            {(savedPlaces?.items ?? []).map((place) => (
+            {savedItems.map((place) => (
               <button
                 className={savedPlace}
                 key={place.recommendationId}
@@ -154,17 +164,11 @@ export function CourseEditPage() {
                     <PlaceIcon category={place.categorySlug} size={20} />
                     {place.name}
                   </span>
-                  <span className={texts}>{place.address}</span>
+                  <span className={address}>{place.address}</span>
                 </span>
                 <span className={preferences}>
-                  <span className={preference}>
-                    <ThumbsUpIcon aria-hidden height={14} width={14} />
-                    <span className={count}>{place.likeCount}</span>
-                  </span>
-                  <span className={preference}>
-                    <ThumbsDownIcon aria-hidden height={14} width={14} />
-                    <span className={count}>{place.dislikeCount}</span>
-                  </span>
+                  <Preference Icon={ThumbsUpIcon} value={place.likeCount} />
+                  <Preference Icon={ThumbsDownIcon} value={place.dislikeCount} />
                 </span>
               </button>
             ))}
