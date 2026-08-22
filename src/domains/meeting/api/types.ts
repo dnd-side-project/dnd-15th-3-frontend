@@ -42,7 +42,10 @@ export interface PlaceSummary {
   address: string;
   latitude: number;
   longitude: number;
-  /** 이미지 수집 전에는 null */
+  /**
+   * 이미지 수집 전에는 null.
+   * @deprecated 서버 `PlaceSummaryDto` 에 없는 필드입니다. 추가를 요청 중입니다.
+   */
   previewUrl: string | null;
 }
 
@@ -101,6 +104,8 @@ export interface MeetingScreen {
   name: string;
   date: string;
   time: string;
+  /** 확정된 코스 이미지의 공개 URL. 아직 생성 전이면 null */
+  courseImageUrl: string | null;
   role: ParticipantRole;
   isHost: boolean;
   permissions: MeetingPermissions;
@@ -137,9 +142,65 @@ export interface MeetingInvitation {
   name: string;
   date: string;
   time: string;
-  locationId: string;
+  locationName: string;
 }
 
 export interface JoinMeetingRequest extends ParticipantProfile {
   invitationCode: string;
+}
+
+export type MeetingStatusKind =
+  | "RECOMMENDATION_COLLECTING"
+  | "COURSE_GENERATING"
+  | "COURSE_GENERATED"
+  | "COURSE_GENERATION_FAILED"
+  | "COURSE_CONFIRMED";
+
+export interface MeetingStatus {
+  status: MeetingStatusKind;
+  confirmedCourseCandidateId: string | null;
+}
+
+export interface MapPin {
+  placeId: string;
+  name: string;
+  category: string;
+  categorySlug: CategorySlug;
+  longitude: number;
+  latitude: number;
+}
+
+export interface MapPins {
+  startPlace: MapPin;
+  sharedPlaces?: MapPin[];
+}
+
+export interface UpdatePlacePreferenceRequest {
+  preference: ViewerPreference;
+}
+
+export interface PlacePreferenceResponse {
+  likeCount: number;
+  dislikeCount: number;
+  myPreference: ViewerPreference;
+}
+
+export interface SimilarPlaceResponse {
+  id: string;
+  categoryId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  primaryImageUrl: string | null;
+  previewUrl: string | null;
+}
+
+export interface AddRecommendationRequest {
+  placeId: string;
+}
+
+export interface CourseImageResponse {
+  imageUrl: string;
+  uploadedAt: string;
 }

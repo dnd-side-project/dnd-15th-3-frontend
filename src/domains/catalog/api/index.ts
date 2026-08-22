@@ -33,8 +33,11 @@ export function searchPlaces(params: SearchPlacesParams, signal?: AbortSignal) {
   return request<PlaceSearchResponse>("/api/v1/places/search", { query: { ...params }, signal });
 }
 
-export function getPlaceDetail(placeId: string, signal?: AbortSignal) {
-  return request<PlaceDetail>(`/api/v1/places/${placeId}`, { signal });
+export function getPlaceDetail(placeId: string, accessToken: string, signal?: AbortSignal) {
+  return request<PlaceDetail>(`/api/v1/places/${placeId}`, {
+    query: { accessToken },
+    signal,
+  });
 }
 
 export function searchFirstMeetingPlaces(q: string, signal?: AbortSignal) {
