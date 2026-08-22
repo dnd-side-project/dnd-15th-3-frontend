@@ -9,8 +9,10 @@ import { TopAppBar } from "../../../../../components/top-app-bar";
 import { getAccessToken } from "../../../../../utils/access-token";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { CourseCategoryPicker } from "../../../../catalog/components/course-category-picker";
+import { useCategories } from "../../../../catalog/hooks";
 import { updateCoursePlan } from "../../../api";
 import { meetingQueries } from "../../../api/queries";
+import type { CourseCategoryStep, CoursePlan } from "../../../api/types";
 import { useMeetingPermissions } from "../../../hooks";
 
 import { editButton, intro, picker, root, status, surfaceColor } from "./index.css";
@@ -20,20 +22,37 @@ export function CoursePlanPage() {
   const { id = "" } = useParams();
   const accessToken = getAccessToken(id);
   const queryClient = useQueryClient();
+  const { queryKey } = meetingQueries.coursePlan(id, accessToken);
 
   const { data: plan, isPending } = useQuery(meetingQueries.coursePlan(id, accessToken));
   const { canManageMeeting } = useMeetingPermissions();
+  const categories = useCategories();
 
-  // draft 가 있으면 편집 중이다.
-  const [draft, setDraft] = useState<CategorySlug[] | null>(null);
+  const [editing, setEditing] = useState(false);
 
-  const { mutate, isPending: isSaving } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (categorySlugs: CategorySlug[]) =>
-      updateCoursePlan(id, accessToken, { categorySlugs, version: plan?.version ?? 1 }),
-    onSuccess: async (saved) => {
-      queryClient.setQueryData(meetingQueries.coursePlan(id, accessToken).queryKey, saved);
+      updateCoursePlan(id, accessToken, {
+        categorySlugs,
+        version: queryClient.getQueryData<CoursePlan>(queryKey)?.version ?? 1,
+      }),
+    // 누른 즉시 화면을 바꾸고 요청은 뒤에서 보낸다.
+    onMutate: async (categorySlugs) => {
+      await queryClient.cancelQueries({ queryKey });
+      const previous = queryClient.getQueryData<CoursePlan>(queryKey);
+      queryClient.setQueryData<CoursePlan>(queryKey, (old) =>
+        old === undefined ? old : { ...old, categorySteps: toSteps(categorySlugs, categories) },
+      );
+      return { previous };
+    },
+    onError: (_error, _categorySlugs, context) => {
+      queryClient.setQueryData(queryKey, context?.previous);
+    },
+    onSuccess: (saved) => {
+      queryClient.setQueryData(queryKey, saved);
+    },
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["meeting", id] });
-      setDraft(null);
     },
   });
 
@@ -46,17 +65,6 @@ export function CoursePlanPage() {
     );
   }
 
-  const saved = plan.categorySteps.map((step) => step.slug);
-  const editing = draft !== null;
-
-  const toggleEditing = () => {
-    if (draft === null) {
-      setDraft(saved);
-      return;
-    }
-    mutate(draft);
-  };
-
   return (
     <Layout>
       <div className={root}>
@@ -66,11 +74,10 @@ export function CoursePlanPage() {
           action={
             canManageMeeting ? (
               <button
-                aria-label={editing ? "코스 저장" : "코스 편집"}
+                aria-label={editing ? "코스 편집 끝내기" : "코스 편집"}
                 className={editButton({ editing })}
-                disabled={isSaving}
                 type="button"
-                onClick={toggleEditing}
+                onClick={() => setEditing(!editing)}
               >
                 <PenIcon aria-hidden height={30} width={29} />
               </button>
@@ -84,11 +91,23 @@ export function CoursePlanPage() {
         <div className={picker}>
           <CourseCategoryPicker
             gap="narrow"
-            value={draft ?? saved}
-            onChange={editing ? setDraft : undefined}
+            value={plan.categorySteps.map((step) => step.slug)}
+            onChange={editing ? mutate : undefined}
           />
         </div>
       </div>
     </Layout>
   );
+}
+
+function toSteps(
+  slugs: CategorySlug[],
+  categories: { slug: CategorySlug; name: string }[],
+): CourseCategoryStep[] {
+  return slugs.map((slug, at) => ({
+    id: `${slug}-${at}`,
+    name: categories.find((category) => category.slug === slug)?.name ?? slug,
+    slug,
+    order: at + 1,
+  }));
 }

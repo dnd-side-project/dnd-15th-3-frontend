@@ -107,12 +107,11 @@ test("모임을 관리할 수 없으면 편집 버튼을 감춘다", async () =>
   await expect.element(page.getByRole("button", { name: "코스 편집" })).not.toBeInTheDocument();
 });
 
-test("편집 중에 담은 코스를 저장하면 조회한 version 으로 PUT 한다", async () => {
+test("카테고리를 누르면 바로 조회한 version 으로 PUT 한다", async () => {
   renderCoursePlan();
 
   await userEvent.click(page.getByRole("button", { name: "코스 편집" }));
   await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
-  await userEvent.click(page.getByRole("button", { name: "코스 저장" }));
 
   const put = fetchMock.mock.calls.find(([, init]) => init?.method === "PUT");
   expect(put).toBeDefined();
@@ -121,4 +120,36 @@ test("편집 중에 담은 코스를 저장하면 조회한 version 으로 PUT �
     categorySlugs: ["restaurant", "cafe", "bar"],
     version: 3,
   });
+});
+
+test("응답을 기다리지 않고 코스에 먼저 붙인다", async () => {
+  renderCoursePlan();
+
+  await userEvent.click(page.getByRole("button", { name: "코스 편집" }));
+  // 저장 응답을 돌려주지 않아도 화면은 이미 바뀌어 있어야 한다.
+  fetchMock.mockImplementation(() => new Promise(() => {}));
+
+  await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
+
+  const course = page.getByRole("button", { pressed: true });
+  await expect.element(course.last()).toHaveTextContent("술 · 바");
+});
+
+test("저장에 실패하면 누르기 전으로 되돌린다", async () => {
+  renderCoursePlan();
+
+  await userEvent.click(page.getByRole("button", { name: "코스 편집" }));
+  fetchMock.mockImplementation((input) => {
+    const url = new Request(input).url;
+    if (url.includes("/categories")) {
+      return Promise.resolve(jsonResponse(CATEGORIES));
+    }
+    return Promise.resolve(new Response("", { status: 409 }));
+  });
+
+  await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
+
+  await expect
+    .element(page.getByRole("button", { pressed: true }).last())
+    .toHaveTextContent("카페");
 });
