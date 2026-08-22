@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
@@ -77,19 +78,29 @@ export const pillIcon = style({
   height: 23,
 });
 
-export const sheet = style({
-  pointerEvents: "auto",
-  display: "flex",
-  flexDirection: "column",
-  minHeight: 0,
-  borderRadius: "24px 24px 0 0",
-  backgroundColor: "#FFFFFF",
-  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+export const sheet = recipe({
+  base: {
+    pointerEvents: "auto",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 0,
+    borderRadius: "24px 24px 0 0",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+  },
+  variants: {
+    dragging: {
+      // 끄는 동안에는 손가락을 그대로 따라와야 한다.
+      true: {},
+      false: { transition: "height 250ms ease-out, border-radius 250ms ease-out" },
+    },
+  },
 });
 
 export const grabber = style({
   display: "flex",
   flexShrink: 0,
+  touchAction: "none",
   alignItems: "center",
   justifyContent: "center",
   height: 25,
