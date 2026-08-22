@@ -16,6 +16,7 @@ import {
   bottomActions,
   bottomStack,
   chips,
+  headerSlot,
   grabber,
   meetingPill,
   pillIcon,
@@ -27,11 +28,12 @@ import {
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
 export interface MapScreenProps {
   children: ReactNode;
+  header?: ReactNode;
   places?: MeetingMapPlace[];
   onSelectPlace?: (placeId: string) => void;
 }
 
-export function MapScreen({ children, places, onSelectPlace }: MapScreenProps) {
+export function MapScreen({ children, header, places, onSelectPlace }: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
@@ -46,6 +48,8 @@ export function MapScreen({ children, places, onSelectPlace }: MapScreenProps) {
           places={places}
           onSelectPlace={onSelectPlace}
         />
+
+        {header === undefined ? null : <div className={headerSlot}>{header}</div>}
 
         <div className={toggle}>
           <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />

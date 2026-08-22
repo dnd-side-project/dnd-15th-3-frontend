@@ -13,6 +13,14 @@ export const root = style({
   overflow: "hidden",
 });
 
+export const headerSlot = style({
+  position: "absolute",
+  top: 0,
+  right: 0,
+  left: 0,
+  zIndex: 2,
+});
+
 export const toggle = style({
   position: "absolute",
   top: 20,

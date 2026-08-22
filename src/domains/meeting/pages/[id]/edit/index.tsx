@@ -110,7 +110,10 @@ export function CourseEditPage() {
             <span>방문 장소</span>
             <b>{detail?.totalCount ?? 0}</b>
           </p>
-          <CoursePlaceStrip route={route} onAdd={() => void navigate(`/meeting/${id}/place`)} />
+          <CoursePlaceStrip
+            route={route}
+            onAdd={() => void navigate(`/meeting/${id}/edit/place`)}
+          />
         </section>
 
         <section className={saved}>
