@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p f51)",
+      "Bash(rm -f f51/*)",
+      "Bash(ffmpeg -v error -i 51.mp4 -vf \"fps=4,scale=437:-1\" f51/%03d.png)"
+    ]
+  }
+}

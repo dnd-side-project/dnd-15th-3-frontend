@@ -37,6 +37,7 @@ import {
   filters,
   footer,
   grid,
+  retry,
   preferences,
   root,
   sort,
@@ -113,11 +114,22 @@ function RecommendationCard({
 export function ChoicePage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
-  const { data: meeting, isPending } = useMeeting();
+  const { data: meeting, isPending, isError, refetch } = useMeeting();
   const categories = useCategories();
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
+
+  if (isError) {
+    return (
+      <Layout>
+        <p className={status}>추천 장소를 불러오지 못했습니다.</p>
+        <button className={retry} type="button" onClick={() => void refetch()}>
+          다시 시도
+        </button>
+      </Layout>
+    );
+  }
 
   if (isPending || meeting === undefined) {
     return (
@@ -127,6 +139,7 @@ export function ChoicePage() {
     );
   }
 
+  const hasPlaces = meeting.recommendations.length > 0;
   const visible = meeting.recommendations.filter(
     (recommendation) => filter === "all" || slugOf(recommendation.categoryId) === filter,
   );
@@ -179,9 +192,13 @@ export function ChoicePage() {
               ))}
             </div>
             <div className={emptyTexts}>
-              <p className={emptyTitle}>아직 저장된 장소가 없어요</p>
+              <p className={emptyTitle}>
+                {hasPlaces ? "이 카테고리에 저장된 장소가 없어요" : "아직 저장된 장소가 없어요"}
+              </p>
               <p className={emptyDescription}>
-                가고 싶은 장소를 저장하고 친구들과 함께 모임 코스를 만들어 보세요.
+                {hasPlaces
+                  ? "다른 카테고리를 눌러 보세요."
+                  : "가고 싶은 장소를 저장하고 친구들과 함께 모임 코스를 만들어 보세요."}
               </p>
             </div>
           </div>
@@ -205,7 +222,7 @@ export function ChoicePage() {
 
         <div className={footer}>
           <CtaButton
-            disabled={visible.length === 0 || !meeting.permissions.canSelectCourse}
+            disabled={!hasPlaces || !meeting.permissions.canSelectCourse}
             onClick={() => void navigate(`/meeting/${id}/course`)}
           >
             코스 생성하기

@@ -11,6 +11,7 @@ const fetchMock = vi.spyOn(globalThis, "fetch");
 const CATEGORIES = [
   { id: "1", slug: "restaurant", name: "음식점" },
   { id: "2", slug: "cafe", name: "카페" },
+  { id: "3", slug: "bar", name: "술 · 바" },
 ];
 
 const MEETING = {
@@ -84,11 +85,14 @@ function jsonResponse(body: unknown) {
   });
 }
 
-function renderChoice(meeting: typeof MEETING = MEETING) {
+function renderChoice(meeting: typeof MEETING = MEETING, { failed = false } = {}) {
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse(CATEGORIES));
+    }
+    if (failed) {
+      return Promise.resolve(new Response("", { status: 500 }));
     }
     return Promise.resolve(jsonResponse(meeting));
   });
@@ -153,4 +157,20 @@ test("보여줄 장소가 없으면 빈 상태를 보여주고 코스 생성을 
 
   await expect.element(page.getByText("아직 저장된 장소가 없어요")).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeDisabled();
+});
+
+test("고른 카테고리에만 장소가 없으면 코스 생성은 막지 않는다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "술 · 바" }));
+
+  await expect.element(page.getByText("이 카테고리에 저장된 장소가 없어요")).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeEnabled();
+});
+
+test("불러오지 못하면 다시 시도를 보여준다", async () => {
+  renderChoice(MEETING, { failed: true });
+
+  await expect.element(page.getByText("추천 장소를 불러오지 못했습니다.")).toBeInTheDocument();
+  await expect.element(page.getByRole("button", { name: "다시 시도" })).toBeInTheDocument();
 });

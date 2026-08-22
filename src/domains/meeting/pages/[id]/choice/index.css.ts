@@ -2,6 +2,8 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../../../../styles/text";
 
+import { vars } from "../../../../../styles/theme.css";
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -192,10 +194,23 @@ export const preferences = style({
 export const footer = style({
   position: "sticky",
   bottom: 0,
+  marginTop: "auto",
   display: "flex",
   padding: "10px 20px calc(20px + env(safe-area-inset-bottom))",
   backgroundColor: "#FFFFFF",
   boxShadow: "0 4px 11.9px rgba(0, 0, 0, 0.25)",
+});
+
+export const retry = style({
+  alignSelf: "center",
+  height: 40,
+  padding: "0 20px",
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: "#ECEFF5",
+  color: "#3D4A5C",
+  ...text({ size: 15, weight: 600, lineHeight: 1.2 }),
+  cursor: "pointer",
 });
 
 export const status = style({
