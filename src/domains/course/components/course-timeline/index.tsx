@@ -19,7 +19,6 @@ import {
   walkTime,
 } from "./index.css";
 
-/** 카카오맵 길찾기는 도착지 이름과 좌표를 받는다. */
 function routeUrl(step: CourseRouteStep) {
   return `https://map.kakao.com/link/to/${encodeURIComponent(step.name)},${step.latitude},${step.longitude}`;
 }

@@ -32,6 +32,8 @@ export function MeetingCourseDetailPage() {
     return <Navigate replace to={`/meeting/${id}`} />;
   }
 
+  const route = detail?.route ?? [];
+
   return (
     <Layout>
       <div className={root}>
@@ -47,23 +49,25 @@ export function MeetingCourseDetailPage() {
             interactive={false}
             level={6}
             origin={meeting.firstLocation}
-            places={(detail?.route ?? []).map((step) => ({
-              id: step.recommendationId,
-              name: step.name,
-              latitude: step.latitude,
-              longitude: step.longitude,
-              previewUrl: step.primaryImageUrl,
-            }))}
+            places={route.map(
+              ({ recommendationId, name, latitude, longitude, primaryImageUrl }) => ({
+                id: recommendationId,
+                name,
+                latitude,
+                longitude,
+                previewUrl: primaryImageUrl,
+              }),
+            )}
           />
         </div>
 
         <div className={course}>
           <h2 className={courseTitle}>오늘의 모임 코스</h2>
-          <span className={courseCount}>방문 장소 {detail?.totalCount ?? 0}</span>
+          <span className={courseCount}>방문 장소 {route.length}</span>
         </div>
 
         <CourseTimeline
-          route={detail?.route ?? []}
+          route={route}
           onSelectPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
         />
       </div>
