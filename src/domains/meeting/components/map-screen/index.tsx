@@ -136,7 +136,7 @@ export function MapSheet({ className, expandable = false, children }: MapSheetPr
         onPointerMove={move}
         onPointerUp={release}
       >
-        <span className={grabberBar} />
+        <span className={grabberBar({ hidden: ratio === 1 && !dragging })} />
       </div>
       {children}
     </div>

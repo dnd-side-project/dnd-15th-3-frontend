@@ -106,9 +106,29 @@ export const grabber = style({
   height: 25,
 });
 
-export const grabberBar = style({
-  width: 50,
-  height: 5,
-  borderRadius: 10,
-  backgroundColor: "#D1D1D1",
+export const grabberBar = recipe({
+  base: {
+    width: 50,
+    height: 5,
+    borderRadius: 10,
+    backgroundColor: "#D1D1D1",
+    transition: "opacity 150ms ease-out",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": { transition: "none" },
+    },
+  },
+  variants: {
+    // 끝까지 펼치면 손잡이를 숨기되, 만지면 다시 보여 준다.
+    hidden: {
+      true: {
+        opacity: 0,
+        selectors: {
+          [`${grabber}:hover &`]: { opacity: 1 },
+          [`${grabber}:active &`]: { opacity: 1 },
+          [`${grabber}:focus-within &`]: { opacity: 1 },
+        },
+      },
+      false: {},
+    },
+  },
 });
