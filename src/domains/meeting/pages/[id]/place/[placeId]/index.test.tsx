@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
-import { page } from "vite-plus/test/browser/context";
+import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { render } from "../../../../../../test-utils";
 import { PlaceDetailPage } from "./index";
@@ -66,6 +66,17 @@ const PLACE_DETAIL = {
   previewUrl: "/static/popup-momo.webp",
 };
 
+const NEARBY = Array.from({ length: 6 }, (_, at) => ({
+  id: `3${at}`,
+  name: `비슷한 장소 ${at + 1}`,
+  address: `서울 종로구 ${at + 1}`,
+  category: { id: "1", slug: "restaurant", name: "음식점" },
+  latitude: 37.57,
+  longitude: 126.99,
+  distanceMeters: 100,
+  previewUrl: null,
+}));
+
 function jsonResponse(body: unknown) {
   return new Response(JSON.stringify(body), {
     status: 200,
@@ -78,6 +89,19 @@ function renderPlaceDetail(placeId: string) {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
+    }
+    if (url.includes("/places/search")) {
+      return Promise.resolve(
+        jsonResponse({
+          items: NEARBY,
+          page: 0,
+          size: 20,
+          total: NEARBY.length,
+          hasNext: false,
+          collectionStatus: "COMPLETED",
+          lastSyncedAt: null,
+        }),
+      );
     }
     if (url.includes("/places/")) {
       return Promise.resolve(jsonResponse(PLACE_DETAIL));
@@ -133,4 +157,24 @@ test("카카오맵 상세정보로 나가는 링크를 건다", async () => {
       "href",
       "https://map.kakao.com/link/search/%EA%B4%91%EC%9E%A5%EC%8B%9C%EC%9E%A5%20%EC%88%9C%EB%8C%80%EB%B3%B6%EC%9D%8C",
     );
+});
+
+test("같은 카테고리의 주변 장소를 네 곳 보여준다", async () => {
+  renderPlaceDetail("201");
+
+  await expect.element(page.getByText("이 장소와 비슷한 장소에요!")).toBeInTheDocument();
+  await expect.element(page.getByText("비슷한 장소 1")).toBeInTheDocument();
+  await expect.element(page.getByText("비슷한 장소 4")).toBeInTheDocument();
+  await expect.element(page.getByText("비슷한 장소 5")).not.toBeInTheDocument();
+});
+
+test("다른 장소 추천받기를 누르면 다음 네 곳으로 넘긴다", async () => {
+  renderPlaceDetail("201");
+
+  await userEvent.click(page.getByRole("button", { name: "다른 장소 추천받기" }));
+
+  // 여섯 곳이라 다섯째부터 네 곳, 모자란 자리는 앞에서 다시 채운다.
+  await expect.element(page.getByText("비슷한 장소 5")).toBeInTheDocument();
+  await expect.element(page.getByText("비슷한 장소 6")).toBeInTheDocument();
+  await expect.element(page.getByText("비슷한 장소 3")).not.toBeInTheDocument();
 });

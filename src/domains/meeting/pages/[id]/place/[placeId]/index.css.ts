@@ -117,12 +117,109 @@ export const addButton = style({
   cursor: "pointer",
 });
 
+export const similar = style({
+  display: "flex",
+  flexDirection: "column",
+  marginTop: 20,
+});
+
+export const similarTitle = style({
+  margin: "0 0 4px 20px",
+  color: "#262626",
+  ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
+});
+
+export const similarPlace = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 14,
+  width: "100%",
+  padding: "17px 20px",
+  border: "none",
+  borderTop: "1px solid #DAE1EC",
+  background: "none",
+  textAlign: "left",
+  cursor: "pointer",
+});
+
+export const similarList = style({
+  display: "flex",
+  flexDirection: "column",
+  borderBottom: "1px solid #DAE1EC",
+});
+
+export const similarThumbnail = style({
+  flexShrink: 0,
+  width: 96,
+  height: 71,
+  borderRadius: 5,
+  backgroundColor: "#ECEFF5",
+  objectFit: "cover",
+});
+
+export const similarTexts = style({
+  display: "flex",
+  flex: 1,
+  flexDirection: "column",
+  gap: 6,
+  minWidth: 0,
+});
+
+export const similarName = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  color: "#262626",
+  ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});
+
+export const similarAddress = style({
+  color: "#707D91",
+  ...text({ size: 16, weight: 500, lineHeight: 1.4 }),
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});
+
+export const similarAddButton = style({
+  display: "flex",
+  flexShrink: 0,
+  alignItems: "center",
+  justifyContent: "center",
+  width: 36,
+  height: 36,
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: "#ECEFF5",
+  color: "#A4B1C5",
+  cursor: "pointer",
+});
+
+export const refresh = style({
+  display: "inline-flex",
+  alignSelf: "center",
+  alignItems: "center",
+  gap: 6,
+  height: 34,
+  margin: "20px 0 calc(30px + env(safe-area-inset-bottom))",
+  padding: "0 14px",
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: "#F1F8FF",
+  color: "#3793FF",
+  ...text({ size: 14, weight: 500, lineHeight: 1.2 }),
+  cursor: "pointer",
+});
+
 export const externalLink = style({
   display: "inline-flex",
   alignItems: "center",
   gap: 6,
   height: 28,
-  margin: "10px 0 calc(30px + env(safe-area-inset-bottom)) 20px",
+  margin: "10px 0 0 20px",
   padding: "0 6px",
   borderRadius: 5,
   backgroundColor: "#F2F3F7",
