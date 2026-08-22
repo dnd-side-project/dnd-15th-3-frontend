@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { text } from "../../../../styles/text";
+import { text } from "../../styles/text";
 export const confirmButton = recipe({
   base: {
     borderStyle: "none",
@@ -104,7 +104,7 @@ export const today = style({
 export const monthGrid = style({
   fontSize: 16,
   paddingTop: 19,
-  borderSpacing: `8px 0`,
+  borderSpacing: "8px 0",
   paddingBottom: 13,
 });
 

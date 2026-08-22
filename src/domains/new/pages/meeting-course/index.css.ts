@@ -9,8 +9,6 @@ const colors = {
   fieldText: "#3D3D3D",
   placeholder: "#707D91",
   icon: "#707D91",
-  divider: "#ECEFF5",
-  resultText: "#000000",
 };
 
 export const location = style({
@@ -59,44 +57,4 @@ export const intro = style({
 
 export const picker = style({
   marginTop: 25,
-});
-
-export const sheetBody = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: 30,
-  paddingTop: 11,
-  paddingBottom: 30,
-});
-
-export const sheetSearch = style({
-  padding: "0 20px",
-});
-
-export const results = style({
-  display: "flex",
-  flexDirection: "column",
-  padding: "0 20px",
-});
-
-export const result = style({
-  display: "block",
-  width: "100%",
-  padding: "16px 3px",
-  border: "none",
-  borderTop: `1px solid ${colors.divider}`,
-  background: "none",
-  color: colors.resultText,
-  ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
-  textAlign: "left",
-  cursor: "pointer",
-  selectors: {
-    "&:last-child": { borderBottom: `1px solid ${colors.divider}` },
-  },
-});
-
-export const empty = style({
-  padding: "16px 3px",
-  color: colors.description,
-  ...text({ size: 16, weight: 400, lineHeight: 1.2 }),
 });
