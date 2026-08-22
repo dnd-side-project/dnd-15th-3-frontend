@@ -11,6 +11,7 @@ import { getAccessToken } from "../../../../../utils/access-token";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { useCategorySlug } from "../../../../catalog/hooks";
 import { MapScreen, MapSheet } from "../../../components/map-screen";
+import { useCoursePlaces } from "../../../hooks";
 
 import {
   addButton,
@@ -68,6 +69,7 @@ export function PlaceSearchPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const categoryOf = useCategorySlug();
+  const coursePlaces = useCoursePlaces();
 
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
@@ -87,7 +89,10 @@ export function PlaceSearchPage() {
   });
 
   return (
-    <MapScreen>
+    <MapScreen
+      places={coursePlaces}
+      onSelectPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
+    >
       <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
