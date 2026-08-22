@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 
 import { ApiTestPage } from "./domains/debug/pages/api-test";
 import { KakaoMapPage } from "./domains/debug/pages/kakao-map";
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: JoinCodePage,
+        Component: () => <Navigate to="code" replace />,
       },
       {
         path: "code",
