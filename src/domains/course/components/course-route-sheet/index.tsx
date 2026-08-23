@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { MultiViewBottomSheet } from "../../../../components/bottom-sheet";
 import { CtaButton } from "../../../../components/cta-button";
+import type { RouteMarkerTone } from "../../../../components/route-marker";
 import { CourseFeedbackInput } from "../../../../components/text-input";
 import { courseQueries } from "../../api/queries";
 import { CourseTimeline } from "../course-timeline";
@@ -20,13 +21,7 @@ import {
   view2Body,
 } from "./index.css";
 
-const COURSE_TONES = {
-  blue: { primary: "#3793FF", surface: "#F1F8FF" },
-  pink: { primary: "#FF46A9", surface: "#FFECF6" },
-  purple: { primary: "#A754EB", surface: "#F6EEFD" },
-} as const;
-
-export type CourseTone = keyof typeof COURSE_TONES;
+export type CourseTone = RouteMarkerTone;
 
 export interface CourseRouteSheetProps {
   isOpen: boolean;
@@ -65,10 +60,6 @@ export function CourseRouteSheet({
     ...courseQueries.detail(meetingId, courseCandidateId, accessToken),
     enabled: isOpen,
   });
-  const toneStyle = {
-    ["--course-tone" as string]: COURSE_TONES[tone].primary,
-    ["--course-tone-surface" as string]: COURSE_TONES[tone].surface,
-  };
   const views = [
     {
       snapIndex: 1,
@@ -97,7 +88,7 @@ export function CourseRouteSheet({
             snapIndex: 2,
             height: 730,
             children: (
-              <div className={view2Body} style={toneStyle}>
+              <div className={view2Body({ tone })}>
                 <section className={courseHeader}>
                   {courseBadgeLabel ? (
                     <span className={courseBadge}>{courseBadgeLabel}</span>
@@ -114,7 +105,11 @@ export function CourseRouteSheet({
                 </section>
 
                 <div className={timelineScroll}>
-                  <CourseTimeline onSelectPlace={onSelectPlace} route={courseDetail.route} />
+                  <CourseTimeline
+                    onSelectPlace={onSelectPlace}
+                    route={courseDetail.route}
+                    tone={tone}
+                  />
                 </div>
 
                 <div className={footer({ shadow: true })}>

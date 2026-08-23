@@ -6,6 +6,7 @@ import { text } from "../../../../styles/text";
 import { vars } from "../../../../styles/theme.css";
 
 const courseColor = createVar();
+const courseSurfaceColor = createVar();
 
 export const list = recipe({
   base: {
@@ -18,9 +19,9 @@ export const list = recipe({
   },
   variants: {
     tone: {
-      blue: { vars: { [courseColor]: "#3793FF" } },
-      pink: { vars: { [courseColor]: "#FF46A9" } },
-      purple: { vars: { [courseColor]: "#A754EB" } },
+      blue: { vars: { [courseColor]: "#3793FF", [courseSurfaceColor]: "#F4F9FF" } },
+      pink: { vars: { [courseColor]: "#FF46A9", [courseSurfaceColor]: "#FFECF6" } },
+      purple: { vars: { [courseColor]: "#A754EB", [courseSurfaceColor]: "#F6EEFD" } },
     },
   },
   defaultVariants: {
@@ -124,8 +125,8 @@ export const walk = style({
   height: 30,
   padding: "0 12px",
   borderRadius: 8,
-  backgroundColor: "#F4F9FF",
-  color: "#3793FF",
+  backgroundColor: courseSurfaceColor,
+  color: courseColor,
   ...text({ size: 13, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -139,6 +140,6 @@ export const routeLink = style({
   display: "inline-flex",
   alignItems: "center",
   gap: 4,
-  color: "#3793FF",
+  color: courseColor,
   textDecoration: "none",
 });
