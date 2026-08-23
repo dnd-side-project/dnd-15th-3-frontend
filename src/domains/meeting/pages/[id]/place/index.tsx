@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { type ReactNode, useDeferredValue, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import PlusIcon from "../../../../../assets/icon-plus.svg?react";
@@ -7,6 +7,7 @@ import RetryLargeIcon from "../../../../../assets/icon-retry-large.svg?react";
 import SearchLargeIcon from "../../../../../assets/icon-search-large.svg?react";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PlaceSearchInput } from "../../../../../components/text-input";
+import { useDebouncedValue } from "../../../../../hooks/use-debounced-value";
 import { getAccessToken } from "../../../../../utils/access-token";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { useCategorySlug } from "../../../../catalog/hooks";
@@ -77,19 +78,17 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
   const coursePlaces = useCoursePlaces();
 
   const [keyword, setKeyword] = useState("");
-  const deferredKeyword = useDeferredValue(keyword.trim());
-  // 검색은 받아 둔 목록에서 걸러내므로 한 번에 최대치(50)까지 받는다.
+  const query = useDebouncedValue(keyword.trim());
   const { data: places, isError } = useQuery(
-    catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id), size: 50 }),
+    catalogQueries.places({ meetingId: id, accessToken: getAccessToken(id), q: query, size: 50 }),
   );
 
-  const matched = (places?.items ?? []).filter(
-    (place) => place.name.includes(deferredKeyword) || place.address.includes(deferredKeyword),
-  );
+  const matched = places?.items ?? [];
+  const collection = places?.collectionStatus;
   const sheetNotice = searchNotice({
     failed: isError,
-    collecting: places?.collectionStatus === "PENDING" || places?.collectionStatus === "RUNNING",
-    keyword: deferredKeyword,
+    collecting: collection === undefined || collection === "PENDING" || collection === "RUNNING",
+    keyword: query,
     matchCount: matched.length,
   });
 
@@ -100,7 +99,7 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
         </div>
 
-        {deferredKeyword.length === 0 ? null : sheetNotice !== null ? (
+        {query.length === 0 ? null : sheetNotice !== null ? (
           <div className={notice}>
             <sheetNotice.Icon aria-hidden className={noticeIcon} {...sheetNotice.iconSize} />
             <p className={noticeTitle}>{sheetNotice.title}</p>

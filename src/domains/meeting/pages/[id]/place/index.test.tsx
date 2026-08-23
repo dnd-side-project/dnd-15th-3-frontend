@@ -67,10 +67,14 @@ function jsonResponse(body: unknown, status = 200) {
   });
 }
 
+const searchRequests: string[] = [];
+
 function renderPlaceSearch(places: unknown = PLACES, placesStatus = 200) {
+  searchRequests.length = 0;
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
     if (url.includes("/places/search")) {
+      searchRequests.push(url);
       return Promise.resolve(jsonResponse(places, placesStatus));
     }
     if (url.includes("/categories")) {
@@ -104,6 +108,21 @@ beforeEach(() => {
 afterEach(() => {
   fetchMock.mockReset();
   localStorage.clear();
+  searchRequests.length = 0;
+});
+
+test("타이핑이 멎은 뒤에 검색어를 한 번만 서버로 넘긴다", async () => {
+  renderPlaceSearch();
+  const input = page.getByRole("textbox", { name: "장소 검색" });
+  await expect.element(input).toBeInTheDocument();
+
+  for (const step of ["광", "광장", "광장시", "광장시장"]) {
+    await userEvent.fill(input, step);
+  }
+  await expect.element(page.getByText("광장시장 순대볶음")).toBeInTheDocument();
+
+  const queried = searchRequests.map((url) => new URL(url).searchParams.get("q")).filter(Boolean);
+  expect(queried).toEqual(["광장시장"]);
 });
 
 test("모임의 코스 카테고리를 지도 위에 순서대로 겹쳐 보여준다", async () => {

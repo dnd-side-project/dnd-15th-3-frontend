@@ -24,12 +24,13 @@ export function getProfileAvatars(signal?: AbortSignal) {
 export interface SearchPlacesParams {
   meetingId: string;
   accessToken: string;
+  q?: string;
   categoryId?: string;
   page?: number;
   size?: number;
 }
 
-/** 키워드 검색이 아니라 모임 기준 위치 반경 안의 장소 목록이다. */
+/** 모임 기준 위치 반경 안의 장소 목록. `q` 를 주면 서버가 걸러 준다. */
 export function searchPlaces(params: SearchPlacesParams, signal?: AbortSignal) {
   return request<PlaceSearchResponse>("/api/v1/places/search", { query: { ...params }, signal });
 }
@@ -56,9 +57,14 @@ export function getSimilarPlaces(
   });
 }
 
-export function getPlaceDetail(placeId: string, accessToken: string, signal?: AbortSignal) {
+export function getPlaceDetail(
+  placeId: string,
+  meetingId: string,
+  accessToken: string,
+  signal?: AbortSignal,
+) {
   return request<PlaceDetail>(`/api/v1/places/${placeId}`, {
-    query: { accessToken },
+    query: { meetingId, accessToken },
     signal,
   });
 }
