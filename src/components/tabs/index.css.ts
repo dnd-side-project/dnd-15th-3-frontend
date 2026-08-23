@@ -19,6 +19,7 @@ export const root = style({
 });
 
 export const list = style({
+  position: "relative",
   display: "flex",
   alignItems: "center",
   height: 45,
@@ -27,8 +28,24 @@ export const list = style({
   backgroundColor: colors.track,
 });
 
+export const indicator = style({
+  position: "absolute",
+  top: "var(--active-tab-top)",
+  left: "var(--active-tab-left)",
+  width: "var(--active-tab-width)",
+  height: "var(--active-tab-height)",
+  borderRadius: vars.radius.full,
+  backgroundColor: colors.activeBackground,
+  transition: "left 0.2s ease, width 0.2s ease",
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+});
+
 export const tab = recipe({
   base: {
+    position: "relative",
+    zIndex: 1,
     flex: 1,
     display: "flex",
     alignItems: "center",
@@ -40,17 +57,14 @@ export const tab = recipe({
     color: colors.label,
     ...text({ size: 15, weight: 600, lineHeight: 1.2 }),
     cursor: "pointer",
-    transition: "background-color 0.15s ease, color 0.15s ease",
+    transition: "color 0.15s ease",
     "@media": {
       "(prefers-reduced-motion: reduce)": { transition: "none" },
     },
   },
   variants: {
     active: {
-      true: {
-        backgroundColor: colors.activeBackground,
-        color: colors.activeLabel,
-      },
+      true: { color: colors.activeLabel },
       false: {},
     },
   },
