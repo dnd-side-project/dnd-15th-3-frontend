@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
@@ -9,9 +10,11 @@ import { Layout } from "../../../../../components/layout";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PreferenceButton } from "../../../../../components/preference-button";
 import { Toggle } from "../../../../../components/toggle";
+import { getAccessToken } from "../../../../../utils/access-token";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
-import type { RecommendationPreview } from "../../../api/types";
+import { updatePlacePreference } from "../../../api";
+import type { RecommendationPreview, ViewerPreference } from "../../../api/types";
 import { useMeeting } from "../../../hooks";
 
 import {
@@ -47,6 +50,13 @@ import {
 
 type Filter = CategorySlug | "all";
 
+type Preference = ViewerPreference | null;
+
+interface PreferenceChange {
+  recommendationId: string;
+  preference: Preference;
+}
+
 /** 왼쪽·오른쪽 열이 6장 주기로 반복하는 카드 높이 */
 const CARD_HEIGHTS = [
   [249, 164, 212],
@@ -66,11 +76,13 @@ function RecommendationCard({
   height,
   slug,
   onOpen,
+  onPreferenceChange,
 }: {
   recommendation: RecommendationPreview;
   height: number;
   slug: CategorySlug;
   onOpen: () => void;
+  onPreferenceChange: (preference: Preference) => void;
 }) {
   const { place } = recommendation;
 
@@ -99,11 +111,13 @@ function RecommendationCard({
             count={recommendation.likeCount}
             selected={recommendation.viewerPreference === "LIKE"}
             type="like"
+            onToggle={(next) => onPreferenceChange(next ? "LIKE" : null)}
           />
           <PreferenceButton
             count={recommendation.dislikeCount}
             selected={recommendation.viewerPreference === "DISLIKE"}
             type="dislike"
+            onToggle={(next) => onPreferenceChange(next ? "DISLIKE" : null)}
           />
         </span>
       </span>
@@ -114,11 +128,19 @@ function RecommendationCard({
 export function ChoicePage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
+  const queryClient = useQueryClient();
   const { data: meeting, isPending, isError, refetch } = useMeeting();
   const categories = useCategories();
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
+
+  // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
+  const { mutate: setPreference } = useMutation({
+    mutationFn: ({ recommendationId, preference }: PreferenceChange) =>
+      updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
 
   if (isError) {
     return (
@@ -213,6 +235,9 @@ export function ChoicePage() {
                     recommendation={recommendation}
                     slug={slugOf(recommendation.categoryId)}
                     onOpen={() => void navigate(`/meeting/${id}/place/${recommendation.place.id}`)}
+                    onPreferenceChange={(preference) =>
+                      setPreference({ recommendationId: recommendation.id, preference })
+                    }
                   />
                 ))}
               </div>

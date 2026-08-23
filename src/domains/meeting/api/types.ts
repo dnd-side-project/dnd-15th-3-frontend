@@ -176,13 +176,14 @@ export interface MapPins {
 }
 
 export interface UpdatePlacePreferenceRequest {
-  preference: ViewerPreference;
+  /** null 이면 눌러 둔 선호도를 되돌린다. */
+  preference: ViewerPreference | null;
 }
 
 export interface PlacePreferenceResponse {
   likeCount: number;
   dislikeCount: number;
-  myPreference: ViewerPreference;
+  myPreference: ViewerPreference | null;
 }
 
 export interface SimilarPlaceResponse {
