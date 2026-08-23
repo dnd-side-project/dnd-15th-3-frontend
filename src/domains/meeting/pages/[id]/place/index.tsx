@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useDeferredValue, useState } from "react";
+import { type ReactNode, useDeferredValue, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import PlusIcon from "../../../../../assets/icon-plus.svg?react";
@@ -11,6 +11,7 @@ import { getAccessToken } from "../../../../../utils/access-token";
 import { catalogQueries } from "../../../../catalog/api/queries";
 import { useCategorySlug } from "../../../../catalog/hooks";
 import { MapScreen, MapSheet } from "../../../components/map-screen";
+import { useCoursePlaces } from "../../../hooks";
 
 import {
   addButton,
@@ -64,10 +65,17 @@ function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) 
   return null;
 }
 
-export function PlaceSearchPage() {
-  const navigate = useNavigate();
+export interface PlaceSearchProps {
+  header?: ReactNode;
+  onSelect: (placeId: string) => void;
+  gradient?: boolean;
+}
+
+/** 지도 위에서 모임 주변 장소를 찾는 화면. 코스 수정에서도 같은 화면을 쓴다. */
+export function PlaceSearch({ header, onSelect, gradient }: PlaceSearchProps) {
   const { id = "" } = useParams();
   const categoryOf = useCategorySlug();
+  const coursePlaces = useCoursePlaces();
 
   const [keyword, setKeyword] = useState("");
   const deferredKeyword = useDeferredValue(keyword.trim());
@@ -87,7 +95,7 @@ export function PlaceSearchPage() {
   });
 
   return (
-    <MapScreen gradient>
+    <MapScreen gradient={gradient} header={header} places={coursePlaces} onSelectPlace={onSelect}>
       <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
@@ -106,7 +114,7 @@ export function PlaceSearchPage() {
                 className={result}
                 key={place.id}
                 type="button"
-                onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
+                onClick={() => onSelect(place.id)}
               >
                 {place.previewUrl === null ? (
                   <span className={thumbnail} />
@@ -131,5 +139,17 @@ export function PlaceSearchPage() {
         <div className={sheetBottom} />
       </MapSheet>
     </MapScreen>
+  );
+}
+
+export function PlaceSearchPage() {
+  const navigate = useNavigate();
+  const { id = "" } = useParams();
+
+  return (
+    <PlaceSearch
+      gradient
+      onSelect={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
+    />
   );
 }
