@@ -81,6 +81,7 @@ export function CourseDetailPage() {
     <MapScreen
       bottomOffset={197}
       hideChips
+      hideToggle
       header={
         tabItems.length > 0 ? (
           <div className={tabs}>

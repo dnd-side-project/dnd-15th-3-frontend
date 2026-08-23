@@ -34,6 +34,7 @@ export interface MapScreenProps {
   onSelectPlace?: (placeId: string) => void;
   bottomOffset?: number;
   hideChips?: boolean;
+  hideToggle?: boolean;
   tone?: RouteMarkerTone;
   routeLineColor?: string;
 }
@@ -45,6 +46,7 @@ export function MapScreen({
   onSelectPlace,
   bottomOffset = 0,
   hideChips,
+  hideToggle,
   tone,
   routeLineColor,
 }: MapScreenProps) {
@@ -67,9 +69,11 @@ export function MapScreen({
 
         {header === undefined ? null : <div className={headerSlot}>{header}</div>}
 
-        <div className={toggle}>
-          <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
-        </div>
+        {hideToggle === true ? null : (
+          <div className={toggle}>
+            <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
+          </div>
+        )}
 
         {hideChips === true ? null : (
           <div className={chips}>
