@@ -85,11 +85,18 @@ function jsonResponse(body: unknown) {
   });
 }
 
+/** 선호도 요청의 `[URL, body]`. 어떤 값을 보냈는지 확인한다. */
+const preferenceCalls: [string, unknown][] = [];
+
 function renderChoice(meeting: typeof MEETING = MEETING, { failed = false } = {}) {
-  fetchMock.mockImplementation((input) => {
+  fetchMock.mockImplementation((input, init) => {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse(CATEGORIES));
+    }
+    if (url.includes("/preference")) {
+      preferenceCalls.push([url, JSON.parse(init?.body as string)]);
+      return Promise.resolve(jsonResponse({ likeCount: 0, dislikeCount: 0, myPreference: null }));
     }
     if (failed) {
       return Promise.resolve(new Response("", { status: 500 }));
@@ -118,6 +125,7 @@ beforeEach(() => {
 
 afterEach(() => {
   fetchMock.mockReset();
+  preferenceCalls.length = 0;
   localStorage.clear();
 });
 
@@ -131,6 +139,35 @@ test("추천 장소와 선호도 수를 보여준다", async () => {
   await expect
     .element(page.getByRole("button", { name: "싫어요 1" }))
     .toHaveAttribute("aria-pressed", "false");
+});
+
+test("좋아요를 누르면 선호도를 보낸다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "좋아요 2" }));
+
+  await expect.poll(() => preferenceCalls).toHaveLength(1);
+  const [url, body] = preferenceCalls[0];
+  expect(url).toContain("/meetings/1/places/22/preference");
+  expect(body).toEqual({ preference: "LIKE" });
+});
+
+test("이미 누른 좋아요를 다시 누르면 취소한다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "좋아요 3" }));
+
+  await expect.poll(() => preferenceCalls).toHaveLength(1);
+  expect(preferenceCalls[0][1]).toEqual({ preference: null });
+});
+
+test("좋아요를 누른 장소의 싫어요를 누르면 싫어요로 바꾼다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "싫어요 1" }));
+
+  await expect.poll(() => preferenceCalls).toHaveLength(1);
+  expect(preferenceCalls[0][1]).toEqual({ preference: "DISLIKE" });
 });
 
 test("카테고리를 고르면 해당 장소만 남는다", async () => {

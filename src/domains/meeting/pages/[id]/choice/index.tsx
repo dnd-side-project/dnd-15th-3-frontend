@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
@@ -9,9 +10,11 @@ import { Layout } from "../../../../../components/layout";
 import { PlaceIcon } from "../../../../../components/place-icon";
 import { PreferenceButton } from "../../../../../components/preference-button";
 import { Toggle } from "../../../../../components/toggle";
+import { getAccessToken } from "../../../../../utils/access-token";
 import type { CategorySlug } from "../../../../catalog/api/types";
 import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
-import type { RecommendationPreview } from "../../../api/types";
+import { updatePlacePreference } from "../../../api";
+import type { RecommendationPreview, ViewerPreference } from "../../../api/types";
 import { useMeeting } from "../../../hooks";
 
 import {
@@ -66,11 +69,13 @@ function RecommendationCard({
   height,
   slug,
   onOpen,
+  onPreference,
 }: {
   recommendation: RecommendationPreview;
   height: number;
   slug: CategorySlug;
   onOpen: () => void;
+  onPreference: (preference: ViewerPreference | null) => void;
 }) {
   const { place } = recommendation;
 
@@ -95,15 +100,18 @@ function RecommendationCard({
           <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
         </span>
         <span className={preferences}>
+          {/* 이미 누른 쪽을 다시 누르면 취소이므로 null 을 보낸다. */}
           <PreferenceButton
             count={recommendation.likeCount}
             selected={recommendation.viewerPreference === "LIKE"}
             type="like"
+            onToggle={(next) => onPreference(next ? "LIKE" : null)}
           />
           <PreferenceButton
             count={recommendation.dislikeCount}
             selected={recommendation.viewerPreference === "DISLIKE"}
             type="dislike"
+            onToggle={(next) => onPreference(next ? "DISLIKE" : null)}
           />
         </span>
       </span>
@@ -114,11 +122,24 @@ function RecommendationCard({
 export function ChoicePage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
+  const queryClient = useQueryClient();
   const { data: meeting, isPending, isError, refetch } = useMeeting();
   const categories = useCategories();
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
+
+  // 반대쪽 선호도는 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
+  const { mutate: setPreference } = useMutation({
+    mutationFn: ({
+      recommendationId,
+      preference,
+    }: {
+      recommendationId: string;
+      preference: ViewerPreference | null;
+    }) => updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
 
   if (isError) {
     return (
@@ -213,6 +234,9 @@ export function ChoicePage() {
                     recommendation={recommendation}
                     slug={slugOf(recommendation.categoryId)}
                     onOpen={() => void navigate(`/meeting/${id}/place/${recommendation.place.id}`)}
+                    onPreference={(preference) =>
+                      setPreference({ recommendationId: recommendation.id, preference })
+                    }
                   />
                 ))}
               </div>
