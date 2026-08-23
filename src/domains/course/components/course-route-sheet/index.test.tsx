@@ -2,8 +2,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
-import type { CourseDetail } from "../../api/types";
+import type { CourseDetail } from "@/domains/course/api/types";
+import { render } from "@/test-utils";
+
 import { CourseRouteSheet } from "./index";
 
 const MEETING_ID = "meeting-1";

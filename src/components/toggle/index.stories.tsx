@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import type { ToggleProps } from "./index";
 import { Toggle } from "./index";
 

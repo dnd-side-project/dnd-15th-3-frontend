@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Navigate, useNavigate, useSearchParams } from "react-router";
 
-import LocationIcon from "../../../../assets/icon-marker.svg?react";
-import { Confetti } from "../../../../components/confetti";
-import { CtaButtonRow } from "../../../../components/cta-button";
-import { previewInvitation } from "../../../meeting/api";
-import type { JoinDraft } from "../../types/draft";
+import LocationIcon from "@/assets/icon-marker.svg?react";
+import { Confetti } from "@/components/confetti";
+import { CtaButtonRow } from "@/components/cta-button";
+import type { JoinDraft } from "@/domains/join/types/draft";
+import { previewInvitation } from "@/domains/meeting/api";
 
 import {
   body,

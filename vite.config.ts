@@ -30,9 +30,10 @@ export default defineConfig({
       typeAware: true,
       typeCheck: true,
     },
-    plugins: ["oxc", "react", "typescript"],
+    plugins: ["oxc", "react", "typescript", "import"],
     rules: {
       curly: ["error", "all"],
+      "import/no-relative-parent-imports": "error",
       "react/exhaustive-deps": "warn",
       "react/only-export-components": [
         "warn",

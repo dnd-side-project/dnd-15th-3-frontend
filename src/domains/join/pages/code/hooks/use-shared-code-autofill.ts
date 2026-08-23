@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
 
-import type { JoinDraft } from "../../../types/draft";
+import type { JoinDraft } from "@/domains/join/types/draft";
 
 export const INVITATION_CODE = /^[A-Za-z0-9]{6}$/;
 

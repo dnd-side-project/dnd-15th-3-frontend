@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
-import PlusIcon from "../../../../assets/icon-plus.svg?react";
-import { PlaceIcon } from "../../../../components/place-icon";
-import type { CourseRouteStep } from "../../api/types";
+import PlusIcon from "@/assets/icon-plus.svg?react";
+import { PlaceIcon } from "@/components/place-icon";
+import type { CourseRouteStep } from "@/domains/course/api/types";
 
 import { addButton, arrow, name, place, root, thumbnail } from "./index.css";
 

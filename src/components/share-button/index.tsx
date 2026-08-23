@@ -1,7 +1,7 @@
-import DotsThreeIcon from "../../assets/icon-dots-three.svg?react";
-import LinkIcon from "../../assets/icon-link-2.svg?react";
-import MessageCircleFillIcon from "../../assets/icon-message-circle-fill.svg?react";
-import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share";
+import DotsThreeIcon from "@/assets/icon-dots-three.svg?react";
+import LinkIcon from "@/assets/icon-link-2.svg?react";
+import MessageCircleFillIcon from "@/assets/icon-message-circle-fill.svg?react";
+import { type ShareLinkParams, useKakaoShare } from "@/hooks/use-kakao-share";
 
 import { group, iconButton } from "./index.css";
 

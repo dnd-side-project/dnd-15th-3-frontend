@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { ProgressBar } from "./index";
 
 const meta = {

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
 
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { ShareButtonGroup } from "./index";
 
 const meta = {

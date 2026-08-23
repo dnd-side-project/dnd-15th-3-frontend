@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { MultiViewBottomSheet } from "../../../../components/bottom-sheet";
-import { CtaButton } from "../../../../components/cta-button";
-import type { RouteMarkerTone } from "../../../../components/route-marker";
-import { CourseFeedbackInput } from "../../../../components/text-input";
-import { courseQueries } from "../../api/queries";
-import { CourseTimeline } from "../course-timeline";
+import { MultiViewBottomSheet } from "@/components/bottom-sheet";
+import { CtaButton } from "@/components/cta-button";
+import type { RouteMarkerTone } from "@/components/route-marker";
+import { CourseFeedbackInput } from "@/components/text-input";
+import { courseQueries } from "@/domains/course/api/queries";
+import { CourseTimeline } from "@/domains/course/components/course-timeline";
 
 import {
   buttonRow,

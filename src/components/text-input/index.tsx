@@ -1,9 +1,9 @@
 import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 import { useState } from "react";
 
-import ChatCircleIcon from "../../assets/icon-chat-circle.svg?react";
-import SearchIcon from "../../assets/icon-search.svg?react";
-import { cx } from "../../utils/cx";
+import ChatCircleIcon from "@/assets/icon-chat-circle.svg?react";
+import SearchIcon from "@/assets/icon-search.svg?react";
+import { cx } from "@/utils/cx";
 
 import { adornment, charCounter, field, input, sendButton, wrapper } from "./index.css";
 

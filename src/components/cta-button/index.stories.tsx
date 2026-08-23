@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import ExportIcon from "../../assets/icon-export.svg?react";
-import { withLayout } from "../layout/index.decorators";
+import ExportIcon from "@/assets/icon-export.svg?react";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { CtaButton, CtaButtonRow } from "./index";
 
 const meta = {

@@ -2,19 +2,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import PenSmallIcon from "../../../../../../assets/icon-pen-small.svg?react";
-import { CourseCommentSheet } from "../../../../../../components/course-comment";
-import type { RouteMarkerTone } from "../../../../../../components/route-marker";
-import { Tabs } from "../../../../../../components/tabs";
-import { confirmCourse } from "../../../../../../domains/course/api";
-import { courseQueries } from "../../../../../../domains/course/api/queries";
-import {
-  CourseRouteSheet,
-  type CourseTone,
-} from "../../../../../../domains/course/components/course-route-sheet";
-import { getAccessToken } from "../../../../../../utils/access-token";
-import { MapScreen } from "../../../../components/map-screen";
-import { useMeeting, useMeetingPermissions } from "../../../../hooks";
+import PenSmallIcon from "@/assets/icon-pen-small.svg?react";
+import { CourseCommentSheet } from "@/components/course-comment";
+import type { RouteMarkerTone } from "@/components/route-marker";
+import { Tabs } from "@/components/tabs";
+import { confirmCourse } from "@/domains/course/api";
+import { courseQueries } from "@/domains/course/api/queries";
+import { CourseRouteSheet, type CourseTone } from "@/domains/course/components/course-route-sheet";
+import { MapScreen } from "@/domains/meeting/components/map-screen";
+import { useMeeting, useMeetingPermissions } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import { editFab, tabs } from "./index.css";
 

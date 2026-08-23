@@ -4,8 +4,9 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
-import type { JoinDraft } from "../../types/draft";
+import type { JoinDraft } from "@/domains/join/types/draft";
+import { render } from "@/test-utils";
+
 import { JoinCompletePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");

@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { filled } from "../../../utils/query";
+import { filled } from "@/utils/query";
+
 import type { GetSimilarPlacesParams } from "./index";
 import {
   getCoursePlan,

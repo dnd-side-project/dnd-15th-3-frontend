@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import LoaderIcon from "../../assets/icon-loader-circle.svg?react";
-import { withLayout } from "../layout/index.decorators";
+import LoaderIcon from "@/assets/icon-loader-circle.svg?react";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { SpeechBubble } from "./index";
 
 const meta = {

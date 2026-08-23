@@ -3,10 +3,11 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { ToastProvider } from "../../../../components/toast";
-import { render } from "../../../../test-utils";
-import type { MeetingDraft } from "../../constants";
-import { formLayout } from "../../test-utils";
+import { ToastProvider } from "@/components/toast";
+import type { MeetingDraft } from "@/domains/new/constants";
+import { formLayout } from "@/domains/new/test-utils";
+import { render } from "@/test-utils";
+
 import { CompletePage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");

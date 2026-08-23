@@ -1,16 +1,17 @@
 import { type PointerEvent, type ReactNode, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
-import { Layout } from "../../../../components/layout";
-import { LocationButton } from "../../../../components/location-button";
-import type { RouteMarkerTone } from "../../../../components/route-marker";
-import { Toggle } from "../../../../components/toggle";
-import { useCurrentPosition } from "../../../../hooks/use-current-position";
-import { cx } from "../../../../utils/cx";
-import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
-import { useMeeting } from "../../hooks";
-import { MeetingMap, type MeetingMapPlace } from "../meeting-map";
+import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
+import { Layout } from "@/components/layout";
+import { LocationButton } from "@/components/location-button";
+import type { RouteMarkerTone } from "@/components/route-marker";
+import { Toggle } from "@/components/toggle";
+import { CourseCategoryChips } from "@/domains/catalog/components/course-category-chips";
+import { MeetingMap, type MeetingMapPlace } from "@/domains/meeting/components/meeting-map";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { useCurrentPosition } from "@/hooks/use-current-position";
+import { cx } from "@/utils/cx";
+
 import { type Size, expandRatio, resize, snap } from "./expand";
 
 import {

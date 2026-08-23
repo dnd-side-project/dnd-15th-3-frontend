@@ -3,9 +3,10 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../../../test-utils";
-import type { CourseCandidateList, CourseDetail } from "../../../../../course/api/types";
-import type { MeetingPermissions, MeetingScreen } from "../../../../api/types";
+import type { CourseCandidateList, CourseDetail } from "@/domains/course/api/types";
+import type { MeetingPermissions, MeetingScreen } from "@/domains/meeting/api/types";
+import { render } from "@/test-utils";
+
 import { CourseDetailPage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");

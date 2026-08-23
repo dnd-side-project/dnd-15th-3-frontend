@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useParams } from "react-router";
 
-import ArrowsOutIcon from "../../../../../assets/icon-arrows-out-simple.svg?react";
-import { Layout } from "../../../../../components/layout";
-import { TopAppBar } from "../../../../../components/top-app-bar";
-import { getAccessToken } from "../../../../../utils/access-token";
-import { CourseCategoryChips } from "../../../../catalog/components/course-category-chips";
-import { courseQueries } from "../../../../course/api/queries";
-import { CourseTimeline } from "../../../../course/components/course-timeline";
-import { MeetingMap } from "../../../components/meeting-map";
-import { useMeeting } from "../../../hooks";
+import ArrowsOutIcon from "@/assets/icon-arrows-out-simple.svg?react";
+import { Layout } from "@/components/layout";
+import { TopAppBar } from "@/components/top-app-bar";
+import { CourseCategoryChips } from "@/domains/catalog/components/course-category-chips";
+import { courseQueries } from "@/domains/course/api/queries";
+import { CourseTimeline } from "@/domains/course/components/course-timeline";
+import { MeetingMap } from "@/domains/meeting/components/meeting-map";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   course,

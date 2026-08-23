@@ -3,8 +3,9 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
-import { formLayout } from "../../test-utils";
+import { formLayout } from "@/domains/new/test-utils";
+import { render } from "@/test-utils";
+
 import { MeetingInfoPage } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");

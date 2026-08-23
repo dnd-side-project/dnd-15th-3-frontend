@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { CustomOverlayMap, Map, Polyline, useKakaoLoader, useMap } from "react-kakao-maps-sdk";
 
-import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
-import type { Coordinates } from "../../../../hooks/use-current-position";
-import type { MeetingLocationResponse } from "../../api/types";
+import { RouteMarker, type RouteMarkerTone } from "@/components/route-marker";
+import type { MeetingLocationResponse } from "@/domains/meeting/api/types";
+import type { Coordinates } from "@/hooks/use-current-position";
 
 import { currentDot, map, notice, originMarker, root } from "./index.css";
 

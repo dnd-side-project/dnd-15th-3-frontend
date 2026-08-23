@@ -2,15 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import ActivityIcon from "../../assets/icon-place-activity.svg?react";
-import BarIcon from "../../assets/icon-place-bar.svg?react";
-import CafeIcon from "../../assets/icon-place-cafe.svg?react";
-import CultureIcon from "../../assets/icon-place-culture.svg?react";
-import OtherIcon from "../../assets/icon-place-other.svg?react";
-import RestaurantIcon from "../../assets/icon-place-restaurant.svg?react";
-import ShoppingIcon from "../../assets/icon-place-shopping.svg?react";
-import WalkIcon from "../../assets/icon-place-walk.svg?react";
-import { withLayout } from "../layout/index.decorators";
+import ActivityIcon from "@/assets/icon-place-activity.svg?react";
+import BarIcon from "@/assets/icon-place-bar.svg?react";
+import CafeIcon from "@/assets/icon-place-cafe.svg?react";
+import CultureIcon from "@/assets/icon-place-culture.svg?react";
+import OtherIcon from "@/assets/icon-place-other.svg?react";
+import RestaurantIcon from "@/assets/icon-place-restaurant.svg?react";
+import ShoppingIcon from "@/assets/icon-place-shopping.svg?react";
+import WalkIcon from "@/assets/icon-place-walk.svg?react";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { Chip, ChipGroup } from "./index";
 
 const ICON_SIZE = 20;

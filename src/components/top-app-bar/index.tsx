@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import CaretLeftIcon from "../../assets/icon-caret-left.svg?react";
+import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
 
 import { iconButton, root, slot, title as titleStyle } from "./index.css";
 

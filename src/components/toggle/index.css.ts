@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { vars } from "../../styles/theme.css";
+import { vars } from "@/styles/theme.css";
 
 const colors = {
   background: "rgba(242, 243, 247, 0.69)",

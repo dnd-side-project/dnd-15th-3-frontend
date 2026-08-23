@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { text } from "../../../../styles/text";
+import { text } from "@/styles/text";
 
 export const root = style({
   display: "flex",

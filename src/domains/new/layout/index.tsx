@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { Navigate, Outlet, useLocation } from "react-router";
 
-import { EMPTY_DRAFT, FIRST_STEP, STEP_REQUIRES, type MeetingDraft } from "../constants";
+import { EMPTY_DRAFT, FIRST_STEP, STEP_REQUIRES, type MeetingDraft } from "@/domains/new/constants";
 
 export function NewMeetingLayout() {
   const methods = useForm<MeetingDraft>({ defaultValues: EMPTY_DRAFT });

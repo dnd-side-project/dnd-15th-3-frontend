@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-import ArrowsClockwiseIcon from "../../../../assets/icon-arrows-clockwise.svg?react";
-import { BottomSheet } from "../../../../components/bottom-sheet";
-import { CtaButton } from "../../../../components/cta-button";
-import { MomoAvatar } from "../../../../components/momo-avatar";
-import { SpeechBubble } from "../../../../components/speech-bubble";
-import { NicknameInput } from "../../../../components/text-input";
-import type { ProfileAvatarId } from "../../../catalog/api/types";
-import { useProfileAvatars } from "../../../catalog/hooks";
-import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../constants";
+import ArrowsClockwiseIcon from "@/assets/icon-arrows-clockwise.svg?react";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { CtaButton } from "@/components/cta-button";
+import { MomoAvatar } from "@/components/momo-avatar";
+import { SpeechBubble } from "@/components/speech-bubble";
+import { NicknameInput } from "@/components/text-input";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
+import { useProfileAvatars } from "@/domains/catalog/hooks";
+import { StepPage } from "@/domains/new/components/step-page";
+import type { MeetingDraft } from "@/domains/new/constants";
 
 import {
   avatar,

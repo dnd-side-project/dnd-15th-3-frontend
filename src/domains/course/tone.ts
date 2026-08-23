@@ -1,4 +1,4 @@
-import type { RouteMarkerTone } from "../../components/route-marker";
+import type { RouteMarkerTone } from "@/components/route-marker";
 
 /** 코스 후보 순서대로 쓰는 색. A·B·C 를 색으로 구분한다. */
 const COURSE_TONES: RouteMarkerTone[] = ["blue", "pink", "purple"];

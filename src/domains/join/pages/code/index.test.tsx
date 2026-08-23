@@ -3,9 +3,10 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { ToastProvider } from "../../../../components/toast";
-import { render } from "../../../../test-utils";
-import type { JoinDraft } from "../../types/draft";
+import { ToastProvider } from "@/components/toast";
+import type { JoinDraft } from "@/domains/join/types/draft";
+import { render } from "@/test-utils";
+
 import { JoinCodePage } from "./index";
 
 function mockClipboard(text: string) {

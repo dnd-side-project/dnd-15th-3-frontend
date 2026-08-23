@@ -3,15 +3,15 @@ import { useState } from "react";
 import { useFormContext, useController } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-import LoaderCircleIcon from "../../../../assets/icon-loader-circle.svg?react";
-import { CtaButtonRow } from "../../../../components/cta-button";
-import { toast } from "../../../../components/toast/manager";
-import { TopAppBar } from "../../../../components/top-app-bar";
-import { cx } from "../../../../utils/cx";
-import type { JoinDraft } from "../../types/draft";
+import LoaderCircleIcon from "@/assets/icon-loader-circle.svg?react";
+import { CtaButtonRow } from "@/components/cta-button";
+import { toast } from "@/components/toast/manager";
+import { TopAppBar } from "@/components/top-app-bar";
+import type { JoinDraft } from "@/domains/join/types/draft";
+import { cx } from "@/utils/cx";
+
 import { INVITATION_CODE, useSharedCodeAutoFill } from "./hooks/use-shared-code-autofill";
 
-import { surfaceColor } from "../../../../components/layout/index.css";
 import {
   ctaArea,
   content,
@@ -23,6 +23,7 @@ import {
   title,
   codeInputArea,
 } from "./index.css";
+import { surfaceColor } from "@/components/layout/index.css";
 
 export function JoinCodePage() {
   const navigate = useNavigate();

@@ -5,18 +5,18 @@ import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
 
-import CompleteConfetti from "../../../../assets/complete-confetti.svg?react";
-import CopyIcon from "../../../../assets/icon-copy.svg?react";
-import { CtaButton } from "../../../../components/cta-button";
-import { Layout } from "../../../../components/layout";
-import { ShareButtonGroup } from "../../../../components/share-button";
-import { toast } from "../../../../components/toast/manager";
-import { setAccessToken } from "../../../../utils/access-token";
-import { getUserKey } from "../../../../utils/user-key";
-import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "../../../catalog/api/types";
-import { createMeeting } from "../../../meeting/api";
-import type { CreateMeetingRequest, MeetingScreen } from "../../../meeting/api/types";
-import type { MeetingDraft } from "../../constants";
+import CompleteConfetti from "@/assets/complete-confetti.svg?react";
+import CopyIcon from "@/assets/icon-copy.svg?react";
+import { CtaButton } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { ShareButtonGroup } from "@/components/share-button";
+import { toast } from "@/components/toast/manager";
+import type { FirstMeetingPlaceResponse, MeetingTypeCode } from "@/domains/catalog/api/types";
+import { createMeeting } from "@/domains/meeting/api";
+import type { CreateMeetingRequest, MeetingScreen } from "@/domains/meeting/api/types";
+import type { MeetingDraft } from "@/domains/new/constants";
+import { setAccessToken } from "@/utils/access-token";
+import { getUserKey } from "@/utils/user-key";
 
 import {
   badge,

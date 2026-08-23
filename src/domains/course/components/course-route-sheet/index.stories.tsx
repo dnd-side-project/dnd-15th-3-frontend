@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { CourseCommentSheet } from "../../../../components/course-comment";
-import { withLayout } from "../../../../components/layout/index.decorators";
-import type { CourseComment, CourseDetail, CourseRouteStep } from "../../api/types";
+import { CourseCommentSheet } from "@/components/course-comment";
+import { withLayout } from "@/components/layout/index.decorators";
+import type { CourseComment, CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
+
 import { CourseRouteSheet, type CourseTone } from "./index";
 
 const MEETING_ID = "meeting-1";

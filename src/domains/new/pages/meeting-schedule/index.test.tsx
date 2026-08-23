@@ -3,9 +3,10 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
-import type { MeetingDraft } from "../../constants";
-import { formLayout } from "../../test-utils";
+import type { MeetingDraft } from "@/domains/new/constants";
+import { formLayout } from "@/domains/new/test-utils";
+import { render } from "@/test-utils";
+
 import { MeetingSchedulePage } from "./index";
 
 // 폼에 담긴 값을 화면으로 꺼내 확인한다.

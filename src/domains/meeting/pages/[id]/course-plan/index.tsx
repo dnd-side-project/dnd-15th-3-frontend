@@ -2,16 +2,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import PenIcon from "../../../../../assets/icon-pen.svg?react";
-import { Layout } from "../../../../../components/layout";
-import { SectionIntro } from "../../../../../components/section-intro";
-import { TopAppBar } from "../../../../../components/top-app-bar";
-import { getAccessToken } from "../../../../../utils/access-token";
-import type { CategorySlug } from "../../../../catalog/api/types";
-import { CourseCategoryPicker } from "../../../../catalog/components/course-category-picker";
-import { updateCoursePlan } from "../../../api";
-import { meetingQueries } from "../../../api/queries";
-import { useMeetingPermissions } from "../../../hooks";
+import PenIcon from "@/assets/icon-pen.svg?react";
+import { Layout } from "@/components/layout";
+import { SectionIntro } from "@/components/section-intro";
+import { TopAppBar } from "@/components/top-app-bar";
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import { CourseCategoryPicker } from "@/domains/catalog/components/course-category-picker";
+import { updateCoursePlan } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
+import { useMeetingPermissions } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import { editButton, intro, picker, root, status, surfaceColor } from "./index.css";
 

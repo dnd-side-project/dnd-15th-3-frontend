@@ -1,9 +1,9 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { text } from "../../styles/text";
+import { text } from "@/styles/text";
 
-import { vars } from "../../styles/theme.css";
+import { vars } from "@/styles/theme.css";
 
 const colors = {
   surface: "#FFFFFF",

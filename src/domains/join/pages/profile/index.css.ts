@@ -1,9 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
-import { text } from "../../../../styles/text";
+import { text } from "@/styles/text";
 
-import { surfaceColor } from "../../../../components/layout/index.css";
-import { vars } from "../../../../styles/theme.css";
+import { surfaceColor } from "@/components/layout/index.css";
+import { vars } from "@/styles/theme.css";
 
 const colors = {
   heading: "#3D3D3D",

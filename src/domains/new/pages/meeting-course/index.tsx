@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-import SearchIcon from "../../../../assets/icon-search.svg?react";
-import { SectionIntro } from "../../../../components/section-intro";
-import { CourseCategoryPicker } from "../../../catalog/components/course-category-picker";
-import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
-import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../constants";
+import SearchIcon from "@/assets/icon-search.svg?react";
+import { SectionIntro } from "@/components/section-intro";
+import { CourseCategoryPicker } from "@/domains/catalog/components/course-category-picker";
+import { PlaceSearchSheet } from "@/domains/catalog/components/place-search-sheet";
+import { StepPage } from "@/domains/new/components/step-page";
+import type { MeetingDraft } from "@/domains/new/constants";
 
 import {
   intro,

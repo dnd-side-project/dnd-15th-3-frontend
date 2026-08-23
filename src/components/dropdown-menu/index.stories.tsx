@@ -1,8 +1,9 @@
 import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { Dropdown, Item, createMenuHandle, Trigger } from ".";
-import { withLayout } from "../layout/index.decorators";
 
 const meta = {
   component: Dropdown,

@@ -1,5 +1,5 @@
-import type { FirstMeetingPlaceResponse } from "../catalog/api/types";
-import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "../catalog/api/types";
+import type { FirstMeetingPlaceResponse } from "@/domains/catalog/api/types";
+import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "@/domains/catalog/api/types";
 
 export interface MeetingDraft {
   nickname: string;

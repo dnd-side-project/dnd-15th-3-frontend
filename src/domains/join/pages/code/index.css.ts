@@ -1,7 +1,7 @@
 import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
-import { surfaceColor } from "../../../../components/layout/index.css";
-import { vars } from "../../../../styles/theme.css";
+import { surfaceColor } from "@/components/layout/index.css";
+import { vars } from "@/styles/theme.css";
 
 const colors = {
   pasteBackground: "#ECEFF5",

@@ -1,7 +1,8 @@
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { ToastProvider } from "./index";
 import { toast } from "./manager";
 

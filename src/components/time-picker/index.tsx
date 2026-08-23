@@ -1,9 +1,10 @@
 import { useState, type ButtonHTMLAttributes, type Dispatch, type SetStateAction } from "react";
 
-import ArrowDownIcon from "../../assets/icon-arrow-down.svg?react";
-import ArrowUpIcon from "../../assets/icon-arrow-up.svg?react";
-import ClockIcon from "../../assets/icon-clock.svg?react";
-import type { Time, TimeWithPeriod } from "../../utils/time";
+import ArrowDownIcon from "@/assets/icon-arrow-down.svg?react";
+import ArrowUpIcon from "@/assets/icon-arrow-up.svg?react";
+import ClockIcon from "@/assets/icon-clock.svg?react";
+import { BottomSheet } from "@/components/bottom-sheet";
+import type { Time, TimeWithPeriod } from "@/utils/time";
 import {
   formatTwoDigits,
   stepHour,
@@ -12,8 +13,7 @@ import {
   toTimeWithPeriod,
   togglePeriod,
   formatTime,
-} from "../../utils/time";
-import { BottomSheet } from "../bottom-sheet";
+} from "@/utils/time";
 
 import * as styles from "./index.css";
 

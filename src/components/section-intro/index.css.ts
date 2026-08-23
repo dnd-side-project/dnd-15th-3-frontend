@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { text } from "../../styles/text";
+import { text } from "@/styles/text";
 
 const colors = {
   title: "#3D3D3D",

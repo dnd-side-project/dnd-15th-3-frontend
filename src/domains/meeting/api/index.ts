@@ -1,4 +1,5 @@
-import { request, requestBlob } from "../../../utils/http";
+import { request, requestBlob } from "@/utils/http";
+
 import type {
   AddRecommendationRequest,
   CourseImageResponse,

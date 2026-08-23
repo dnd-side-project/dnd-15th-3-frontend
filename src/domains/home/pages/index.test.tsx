@@ -2,7 +2,8 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import { render } from "../../../test-utils";
+import { render } from "@/test-utils";
+
 import { HomePage } from "./index";
 
 function renderHome() {

@@ -1,5 +1,5 @@
-import GridIcon from "../../assets/icon-grid.svg?react";
-import MapIcon from "../../assets/icon-map.svg?react";
+import GridIcon from "@/assets/icon-grid.svg?react";
+import MapIcon from "@/assets/icon-map.svg?react";
 
 import { indicator, item, root } from "./index.css";
 
