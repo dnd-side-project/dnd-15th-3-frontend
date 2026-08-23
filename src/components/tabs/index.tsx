@@ -1,7 +1,7 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import type { ReactNode } from "react";
 
-import { list, root, tab } from "./index.css";
+import { indicator, list, root, tab } from "./index.css";
 
 export interface TabItem {
   label: string;
@@ -24,6 +24,7 @@ export function Tabs({ items, value, onChange, label }: TabsProps) {
       onValueChange={(next) => onChange(next as string)}
     >
       <BaseTabs.List aria-label={label} className={list}>
+        <BaseTabs.Indicator className={indicator} />
         {items.map((item) => (
           <BaseTabs.Tab
             key={item.value}
