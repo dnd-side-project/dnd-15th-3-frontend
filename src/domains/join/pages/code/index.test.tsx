@@ -16,16 +16,21 @@ function mockClipboard(text: string) {
   });
 }
 
-function renderCodePage() {
-  const router = createMemoryRouter([
-    { path: "/", Component: JoinCodePageWrapper },
-    { path: "/join/complete", element: <div data-testid="complete" /> },
-  ]);
+function renderCodePage(initialEntry = "/join/code") {
+  const router = createMemoryRouter(
+    [
+      { path: "/", element: <div data-testid="home" /> },
+      { path: "/join/code", Component: JoinCodePageWrapper },
+      { path: "/join/complete", element: <div data-testid="complete" /> },
+    ],
+    { initialEntries: ["/", initialEntry], initialIndex: 1 },
+  );
   render(
     <ToastProvider>
       <RouterProvider router={router} />
     </ToastProvider>,
   );
+  return router;
 }
 
 function JoinCodePageWrapper() {
@@ -91,5 +96,28 @@ test("비 영숫자를 타이핑하면 입력이 거부되어 다음 버튼이 �
 
   await userEvent.type(firstOtpSlot(), "!@#$%^&*");
 
+  await expect.element(page.getByRole("button", { name: "다음" })).toBeDisabled();
+});
+
+test("초대 링크로 들어오면 코드를 채우고 참여 확인 화면으로 넘어간다", async () => {
+  renderCodePage("/join/code?code=ABC123");
+
+  await expect.element(firstOtpSlot()).toHaveValue("A");
+  await expect.element(page.getByTestId("complete")).toBeInTheDocument();
+});
+
+test("초대 링크로 넘어간 뒤 뒤로 오면 코드 입력 화면을 다시 거치지 않는다", async () => {
+  const router = renderCodePage("/join/code?code=ABC123");
+
+  await expect.element(page.getByTestId("complete")).toBeInTheDocument();
+  await router.navigate(-1);
+
+  await expect.element(page.getByTestId("home")).toBeInTheDocument();
+});
+
+test("초대 링크의 코드가 6자리 영숫자가 아니면 직접 입력받는다", async () => {
+  renderCodePage("/join/code?code=ABC");
+
+  await expect.element(firstOtpSlot()).toHaveValue("");
   await expect.element(page.getByRole("button", { name: "다음" })).toBeDisabled();
 });
