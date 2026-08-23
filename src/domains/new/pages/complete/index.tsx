@@ -86,7 +86,7 @@ export function CompletePage() {
 
   const invitationCode = searchParams.get("code") ?? "";
   const { meetingId, remember } = useCreatedMeetingId(invitationCode);
-  const invitationUrl = `${window.location.origin}/join?code=${invitationCode}`;
+  const invitationUrl = `${window.location.origin}/join/code?code=${invitationCode}`;
 
   const settle = (meeting: MeetingScreen) => {
     setAccessToken(meeting.id, meeting.participantAccessToken);

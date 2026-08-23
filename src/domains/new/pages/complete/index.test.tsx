@@ -132,7 +132,7 @@ test("링크를 복사하면 초대 주소를 넣고 토스트로 알린다", as
 
   await userEvent.click(page.getByRole("button", { name: "링크 복사" }));
 
-  expect(writeText).toHaveBeenCalledWith(`${window.location.origin}/join?code=DNDF0R`);
+  expect(writeText).toHaveBeenCalledWith(`${window.location.origin}/join/code?code=DNDF0R`);
   await expect.element(page.getByText("링크가 복사되었습니다.")).toBeInTheDocument();
   writeText.mockRestore();
 });
