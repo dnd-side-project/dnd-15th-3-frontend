@@ -176,7 +176,7 @@ export interface MapPins {
 }
 
 export interface UpdatePlacePreferenceRequest {
-  /** null 이면 눌러 둔 좋아요·싫어요를 되돌린다. */
+  /** null 이면 눌러 둔 선호도를 되돌린다. */
   preference: ViewerPreference | null;
 }
 

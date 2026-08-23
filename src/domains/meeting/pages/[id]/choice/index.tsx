@@ -50,6 +50,13 @@ import {
 
 type Filter = CategorySlug | "all";
 
+type Preference = ViewerPreference | null;
+
+interface PreferenceChange {
+  recommendationId: string;
+  preference: Preference;
+}
+
 /** 왼쪽·오른쪽 열이 6장 주기로 반복하는 카드 높이 */
 const CARD_HEIGHTS = [
   [249, 164, 212],
@@ -69,13 +76,13 @@ function RecommendationCard({
   height,
   slug,
   onOpen,
-  onPreference,
+  onPreferenceChange,
 }: {
   recommendation: RecommendationPreview;
   height: number;
   slug: CategorySlug;
   onOpen: () => void;
-  onPreference: (preference: ViewerPreference | null) => void;
+  onPreferenceChange: (preference: Preference) => void;
 }) {
   const { place } = recommendation;
 
@@ -100,18 +107,17 @@ function RecommendationCard({
           <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
         </span>
         <span className={preferences}>
-          {/* 이미 누른 쪽을 다시 누르면 취소이므로 null 을 보낸다. */}
           <PreferenceButton
             count={recommendation.likeCount}
             selected={recommendation.viewerPreference === "LIKE"}
             type="like"
-            onToggle={(next) => onPreference(next ? "LIKE" : null)}
+            onToggle={(next) => onPreferenceChange(next ? "LIKE" : null)}
           />
           <PreferenceButton
             count={recommendation.dislikeCount}
             selected={recommendation.viewerPreference === "DISLIKE"}
             type="dislike"
-            onToggle={(next) => onPreference(next ? "DISLIKE" : null)}
+            onToggle={(next) => onPreferenceChange(next ? "DISLIKE" : null)}
           />
         </span>
       </span>
@@ -129,15 +135,10 @@ export function ChoicePage() {
 
   const [filter, setFilter] = useState<Filter>("all");
 
-  // 반대쪽 선호도는 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
+  // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
-    mutationFn: ({
-      recommendationId,
-      preference,
-    }: {
-      recommendationId: string;
-      preference: ViewerPreference | null;
-    }) => updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
+    mutationFn: ({ recommendationId, preference }: PreferenceChange) =>
+      updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
   });
 
@@ -234,7 +235,7 @@ export function ChoicePage() {
                     recommendation={recommendation}
                     slug={slugOf(recommendation.categoryId)}
                     onOpen={() => void navigate(`/meeting/${id}/place/${recommendation.place.id}`)}
-                    onPreference={(preference) =>
+                    onPreferenceChange={(preference) =>
                       setPreference({ recommendationId: recommendation.id, preference })
                     }
                   />
