@@ -1,4 +1,4 @@
-import { CustomOverlayMap, Map, useKakaoLoader } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, Polyline, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
@@ -25,6 +25,8 @@ export interface MeetingMapProps {
   /** 마커 색. 한 코스 안에서는 같은 색을 쓴다. */
   tone?: RouteMarkerTone;
   onSelectPlace?: (placeId: string) => void;
+  /** 주어지면 마커 사이를 잇는 실선을 그린다. */
+  routeLineColor?: string;
 }
 
 const SEOUL_CITY_HALL: Coordinates = { lat: 37.5665, lng: 126.978 };
@@ -42,6 +44,7 @@ export function MeetingMap({
   interactive = true,
   tone = "blue",
   onSelectPlace,
+  routeLineColor,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
   const focus = origin ?? places[0];
@@ -65,6 +68,16 @@ export function MeetingMap({
             />
           </CustomOverlayMap>
         )}
+
+        {routeLineColor !== undefined && places.length > 1 ? (
+          <Polyline
+            path={places.map(toCoordinates)}
+            strokeColor={routeLineColor}
+            strokeOpacity={1}
+            strokeStyle="solid"
+            strokeWeight={3}
+          />
+        ) : null}
 
         {places.map((place, index) => (
           <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>

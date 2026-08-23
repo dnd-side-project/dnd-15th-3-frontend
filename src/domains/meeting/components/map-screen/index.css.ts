@@ -21,6 +21,19 @@ export const headerSlot = style({
   zIndex: 2,
 });
 
+export const scrim = style({
+  position: "absolute",
+  inset: 0,
+  zIndex: 1,
+  pointerEvents: "none",
+});
+
+export const topScrim = style({
+  position: "absolute",
+  inset: 0,
+  backgroundImage: "linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(102, 102, 102, 0.04) 36%)",
+});
+
 export const toggle = style({
   position: "absolute",
   top: 20,
@@ -38,7 +51,6 @@ export const chips = style({
   padding: "0 15px",
 });
 
-// 시트 높이가 화면마다 달라, 지도 위 버튼이 시트를 따라 올라오도록 함께 묶는다.
 export const bottomStack = style({
   position: "absolute",
   top: 0,
@@ -50,8 +62,8 @@ export const bottomStack = style({
   flexDirection: "column",
   justifyContent: "flex-end",
   gap: 14,
-  // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
   pointerEvents: "none",
+  paddingBottom: "var(--bottom-offset, 0px)",
 });
 
 export const bottomActions = style({

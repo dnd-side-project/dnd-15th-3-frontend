@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
 import { Layout } from "../../../../components/layout";
 import { LocationButton } from "../../../../components/location-button";
+import type { RouteMarkerTone } from "../../../../components/route-marker";
 import { Toggle } from "../../../../components/toggle";
 import { useCurrentPosition } from "../../../../hooks/use-current-position";
 import { cx } from "../../../../utils/cx";
@@ -31,9 +32,24 @@ export interface MapScreenProps {
   header?: ReactNode;
   places?: MeetingMapPlace[];
   onSelectPlace?: (placeId: string) => void;
+  bottomOffset?: number;
+  hideChips?: boolean;
+  hideToggle?: boolean;
+  tone?: RouteMarkerTone;
+  routeLineColor?: string;
 }
 
-export function MapScreen({ children, header, places, onSelectPlace }: MapScreenProps) {
+export function MapScreen({
+  children,
+  header,
+  places,
+  onSelectPlace,
+  bottomOffset = 0,
+  hideChips,
+  hideToggle,
+  tone,
+  routeLineColor,
+}: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
@@ -41,23 +57,29 @@ export function MapScreen({ children, header, places, onSelectPlace }: MapScreen
 
   return (
     <Layout>
-      <div className={root}>
+      <div className={root} style={{ ["--bottom-offset" as string]: `${bottomOffset}px` }}>
         <MeetingMap
           currentPosition={position}
           origin={meeting?.firstLocation}
           places={places}
           onSelectPlace={onSelectPlace}
+          tone={tone}
+          routeLineColor={routeLineColor}
         />
 
         {header === undefined ? null : <div className={headerSlot}>{header}</div>}
 
-        <div className={toggle}>
-          <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
-        </div>
+        {hideToggle === true ? null : (
+          <div className={toggle}>
+            <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
+          </div>
+        )}
 
-        <div className={chips}>
-          <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
-        </div>
+        {hideChips === true ? null : (
+          <div className={chips}>
+            <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
+          </div>
+        )}
 
         <div className={bottomStack}>
           <div className={bottomActions}>
@@ -81,7 +103,6 @@ export function MapScreen({ children, header, places, onSelectPlace }: MapScreen
 }
 
 export interface MapSheetProps {
-  /** 시트 안쪽 배치가 화면마다 달라 덧붙일 수 있게 열어 둔다. */
   className?: string;
   /** 손잡이를 끌어 전체 화면까지 펼 수 있게 한다. */
   expandable?: boolean;
