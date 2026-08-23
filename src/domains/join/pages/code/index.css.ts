@@ -19,6 +19,13 @@ const spin = keyframes({
   to: { transform: "rotate(360deg)" },
 });
 
+/** 글자가 들어찰 때 한 번 튕긴다. */
+const pop = keyframes({
+  "0%": { transform: "scale(0.88)", opacity: 0.4 },
+  "60%": { transform: "scale(1.08)", opacity: 1 },
+  "100%": { transform: "scale(1)", opacity: 1 },
+});
+
 export const page = style({
   display: "flex",
   flexDirection: "column",
@@ -88,6 +95,9 @@ export const otpRoot = style({
   width: "100%",
 });
 
+/** 초대 링크의 코드를 채우는 동안에는 손대지 못하게 한다. */
+export const otpRootAuto = style({ pointerEvents: "none" });
+
 export const otpInput = style({
   flex: "1 1 0%",
   minWidth: 0,
@@ -112,9 +122,15 @@ export const otpInput = style({
       backgroundColor: colors.otpFilled,
       color: colors.otpTextColor,
       borderColor: colors.otpFilledBorder,
+      animation: `${pop} 0.22s ease-out`,
     },
     "&:focus": {
       borderColor: colors.otpFilledBorder,
+    },
+  },
+  "@media": {
+    "(prefers-reduced-motion: reduce)": {
+      selectors: { "&[data-filled]": { animation: "none" } },
     },
   },
 });

@@ -7,7 +7,9 @@ import LoaderCircleIcon from "../../../../assets/icon-loader-circle.svg?react";
 import { CtaButtonRow } from "../../../../components/cta-button";
 import { toast } from "../../../../components/toast/manager";
 import { TopAppBar } from "../../../../components/top-app-bar";
+import { cx } from "../../../../utils/cx";
 import type { JoinDraft } from "../../types/draft";
+import { INVITATION_CODE, useSharedCodeAutoFill } from "./hooks/use-shared-code-autofill";
 
 import { surfaceColor } from "../../../../components/layout/index.css";
 import {
@@ -15,6 +17,7 @@ import {
   content,
   otpInput,
   otpRoot,
+  otpRootAuto,
   page,
   pasteButton,
   title,
@@ -30,13 +33,14 @@ export function JoinCodePage() {
     rules: {
       required: true,
       pattern: {
-        value: /^[A-Za-z0-9]{6}$/,
+        value: INVITATION_CODE,
         message: "유효하지 않은 초대코드입니다.",
       },
     },
   });
   const { ref, value, onChange, onBlur } = field;
   const [loading, setLoading] = useState(false);
+  const autoFilling = useSharedCodeAutoFill();
 
   const showToast = (message: string) => {
     toast.add({ title: message });
@@ -74,7 +78,8 @@ export function JoinCodePage() {
             ref={ref}
             length={6}
             validationType="alphanumeric"
-            className={otpRoot}
+            className={cx(otpRoot, autoFilling && otpRootAuto)}
+            readOnly={autoFilling}
             value={value}
             onValueChange={onChange}
             onBlur={onBlur}
@@ -87,7 +92,12 @@ export function JoinCodePage() {
               />
             ))}
           </OTPField.Root>
-          <button type="button" className={pasteButton} disabled={loading} onClick={handlePaste}>
+          <button
+            type="button"
+            className={pasteButton}
+            disabled={loading || autoFilling}
+            onClick={handlePaste}
+          >
             {loading ? <LoaderCircleIcon aria-hidden height={20} width={20} /> : null}
             간편 붙여넣기
           </button>
@@ -98,7 +108,7 @@ export function JoinCodePage() {
           onSecondary={() => navigate(-1)}
           primaryLabel="다음"
           onPrimary={handleClickCtaPrimary}
-          primaryDisabled={value.length !== 6}
+          primaryDisabled={value.length !== 6 || autoFilling}
         />
       </div>
     </div>
