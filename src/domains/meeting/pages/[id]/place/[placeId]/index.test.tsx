@@ -84,9 +84,13 @@ function jsonResponse(body: unknown) {
   });
 }
 
+const requests: string[] = [];
+
 function renderPlaceDetail(placeId: string) {
+  requests.length = 0;
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
+    requests.push(url);
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
     }
@@ -130,6 +134,18 @@ beforeEach(() => {
 afterEach(() => {
   fetchMock.mockReset();
   localStorage.clear();
+  requests.length = 0;
+});
+
+// 빠뜨리면 400 이라 상세가 통째로 빈다.
+test("장소 상세를 조회할 때 meetingId 를 함께 보낸다", async () => {
+  renderPlaceDetail("301");
+
+  await expect.element(page.getByText("광장시장 순대볶음")).toBeInTheDocument();
+
+  const detail = requests.find((url) => /\/api\/v1\/places\/301(\?|$)/.test(url));
+  expect(detail).toBeDefined();
+  expect(new URL(detail ?? "").searchParams.get("meetingId")).toBe("1");
 });
 
 test("추천 목록에 있는 장소의 이름과 주소를 보여준다", async () => {

@@ -53,7 +53,7 @@ export function PlaceDetailPage() {
 
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
   const saved = recommendation !== undefined;
-  const { data: detail } = useQuery(catalogQueries.placeDetail(placeId, getAccessToken(id)));
+  const { data: detail } = useQuery(catalogQueries.placeDetail(placeId, id, getAccessToken(id)));
 
   // 상세가 오기 전에는 추천 목록에 있는 이름·주소로 먼저 그린다.
   const name = detail?.name ?? recommendation?.place.name;
