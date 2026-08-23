@@ -1,16 +1,32 @@
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-export const list = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: 12,
-  margin: 0,
-  padding: "0 25px 0 30px",
-  listStyle: "none",
+const courseColor = createVar();
+const courseSurfaceColor = createVar();
+
+export const list = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    margin: 0,
+    padding: "0 25px 0 30px",
+    listStyle: "none",
+  },
+  variants: {
+    tone: {
+      blue: { vars: { [courseColor]: "#3793FF", [courseSurfaceColor]: "#F4F9FF" } },
+      pink: { vars: { [courseColor]: "#FF46A9", [courseSurfaceColor]: "#FFECF6" } },
+      purple: { vars: { [courseColor]: "#A754EB", [courseSurfaceColor]: "#F6EEFD" } },
+    },
+  },
+  defaultVariants: {
+    tone: "blue",
+  },
 });
 
 export const item = style({
@@ -25,7 +41,7 @@ export const item = style({
       bottom: -12,
       left: 10,
       width: 1,
-      backgroundColor: "var(--course-tone, #3793FF)",
+      backgroundColor: courseColor,
     },
   },
 });
@@ -39,7 +55,7 @@ export const badge = style({
   width: 20,
   height: 20,
   borderRadius: vars.radius.full,
-  backgroundColor: "var(--course-tone, #3793FF)",
+  backgroundColor: courseColor,
   color: "#FFFFFF",
   ...text({ size: 12, weight: 600, lineHeight: 1 }),
 });
@@ -109,8 +125,8 @@ export const walk = style({
   height: 30,
   padding: "0 12px",
   borderRadius: 8,
-  backgroundColor: "var(--course-tone-surface, #F4F9FF)",
-  color: "var(--course-tone, #3793FF)",
+  backgroundColor: courseSurfaceColor,
+  color: courseColor,
   ...text({ size: 13, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -124,6 +140,6 @@ export const routeLink = style({
   display: "inline-flex",
   alignItems: "center",
   gap: 4,
-  color: "var(--course-tone, #3793FF)",
+  color: courseColor,
   textDecoration: "none",
 });

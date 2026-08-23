@@ -1,7 +1,10 @@
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
+
+const courseColor = createVar();
+const courseSurfaceColor = createVar();
 
 export const inputRow = style({
   padding: "0 20px",
@@ -11,10 +14,22 @@ export const buttonRow = style({
   padding: "10px 20px",
 });
 
-export const view2Body = style({
-  display: "flex",
-  flexDirection: "column",
-  height: "100%",
+export const view2Body = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+  },
+  variants: {
+    tone: {
+      blue: { vars: { [courseColor]: "#3793FF", [courseSurfaceColor]: "#F1F8FF" } },
+      pink: { vars: { [courseColor]: "#FF46A9", [courseSurfaceColor]: "#FFECF6" } },
+      purple: { vars: { [courseColor]: "#A754EB", [courseSurfaceColor]: "#F6EEFD" } },
+    },
+  },
+  defaultVariants: {
+    tone: "blue",
+  },
 });
 
 export const courseHeader = style({
@@ -26,10 +41,10 @@ export const courseHeader = style({
 export const courseBadge = style({
   display: "inline-flex",
   alignItems: "center",
-  backgroundColor: "var(--course-tone-surface, #F1F8FF)",
+  backgroundColor: courseSurfaceColor,
   borderRadius: 4,
   padding: "3px 10px",
-  color: "var(--course-tone, #3793FF)",
+  color: courseColor,
   ...text({ size: 14, weight: 500 }),
 });
 
