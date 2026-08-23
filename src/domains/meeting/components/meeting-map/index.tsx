@@ -22,15 +22,12 @@ export interface MeetingMapProps {
   level?: number;
   /** 카드 안에 넣을 때는 조작을 막아 링크가 클릭을 받게 한다. */
   interactive?: boolean;
-  onSelectPlace?: (placeId: string) => void;
-  /** 코스 하나를 같은 색으로 그릴 때 지정. 주지 않으면 순서마다 돌려 쓴다. */
+  /** 마커 색. 한 코스 안에서는 같은 색을 쓴다. */
   tone?: RouteMarkerTone;
+  onSelectPlace?: (placeId: string) => void;
   /** 주어지면 마커 사이를 잇는 실선을 그린다. */
   routeLineColor?: string;
 }
-
-// 코스 순서마다 마커 색을 돌려 쓴다.
-const TONES: RouteMarkerTone[] = ["blue", "pink", "purple"];
 
 const SEOUL_CITY_HALL: Coordinates = { lat: 37.5665, lng: 126.978 };
 
@@ -45,8 +42,8 @@ export function MeetingMap({
   currentPosition = null,
   level = 4,
   interactive = true,
+  tone = "blue",
   onSelectPlace,
-  tone,
   routeLineColor,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
@@ -88,7 +85,7 @@ export function MeetingMap({
               imageAlt={place.name}
               imageUrl={place.previewUrl}
               index={index + 1}
-              tone={tone ?? TONES[index % TONES.length]}
+              tone={tone}
               onClick={onSelectPlace && (() => onSelectPlace(place.id))}
             />
           </CustomOverlayMap>

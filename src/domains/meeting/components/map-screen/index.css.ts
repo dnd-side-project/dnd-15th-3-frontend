@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
@@ -10,6 +11,14 @@ export const root = style({
   flexDirection: "column",
   flex: 1,
   overflow: "hidden",
+});
+
+export const headerSlot = style({
+  position: "absolute",
+  top: 0,
+  right: 0,
+  left: 0,
+  zIndex: 2,
 });
 
 export const scrim = style({
@@ -30,7 +39,7 @@ export const toggle = style({
   top: 20,
   left: "50%",
   transform: "translateX(-50%)",
-  zIndex: 2,
+  zIndex: 1,
 });
 
 export const chips = style({
@@ -38,25 +47,22 @@ export const chips = style({
   top: 81,
   left: 0,
   right: 0,
-  zIndex: 2,
+  zIndex: 1,
   padding: "0 15px",
 });
 
-// 시트 높이가 화면마다 달라, 지도 위 버튼이 시트를 따라 올라오도록 함께 묶는다.
 export const bottomStack = style({
   position: "absolute",
   top: 0,
   right: 0,
   bottom: 0,
   left: 0,
-  zIndex: 2,
+  zIndex: 1,
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
   gap: 14,
-  // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
   pointerEvents: "none",
-  // 시트 위로 버튼을 올릴 때 화면이 주는 여백.
   paddingBottom: "var(--bottom-offset, 0px)",
 });
 
@@ -92,27 +98,57 @@ export const pillIcon = style({
   height: 23,
 });
 
-export const sheet = style({
-  pointerEvents: "auto",
-  display: "flex",
-  flexDirection: "column",
-  minHeight: 0,
-  borderRadius: "24px 24px 0 0",
-  backgroundColor: "#FFFFFF",
-  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+export const sheet = recipe({
+  base: {
+    pointerEvents: "auto",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 0,
+    borderRadius: "24px 24px 0 0",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+  },
+  variants: {
+    dragging: {
+      true: {},
+      false: { transition: "height 250ms ease-out, border-radius 250ms ease-out" },
+    },
+  },
 });
 
-export const grabber = style({
-  display: "flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  height: 25,
-});
-
-export const grabberBar = style({
-  width: 50,
-  height: 5,
-  borderRadius: 10,
-  backgroundColor: "#D1D1D1",
+export const grabber = recipe({
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 25,
+    touchAction: "none",
+    selectors: {
+      "&::after": {
+        content: "",
+        width: 50,
+        height: 5,
+        borderRadius: 10,
+        backgroundColor: "#D1D1D1",
+        transition: "opacity 150ms ease-out",
+      },
+    },
+    "@media": {
+      "(prefers-reduced-motion: reduce)": {
+        selectors: { "&::after": { transition: "none" } },
+      },
+    },
+  },
+  variants: {
+    hidden: {
+      true: {
+        selectors: {
+          "&::after": { opacity: 0 },
+          "&:hover::after, &:active::after": { opacity: 1 },
+        },
+      },
+      false: {},
+    },
+  },
 });

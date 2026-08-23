@@ -81,7 +81,8 @@ export function CourseDetailPage() {
     <MapScreen
       gradient
       bottomOffset={197}
-      topControl={
+      hideChips
+      header={
         tabItems.length > 0 ? (
           <div className={tabs}>
             <Tabs
@@ -93,12 +94,10 @@ export function CourseDetailPage() {
           </div>
         ) : null
       }
-      chips={null}
-      mapProps={{
-        tone,
-        routeLineColor: toneStyle.primary,
-        places,
-      }}
+      places={places}
+      tone={tone}
+      routeLineColor={toneStyle.primary}
+      onSelectPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
     >
       {canManageMeeting ? (
         <button

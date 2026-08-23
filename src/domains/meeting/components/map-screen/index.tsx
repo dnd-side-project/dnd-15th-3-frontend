@@ -1,22 +1,24 @@
-import type { ReactNode } from "react";
+import { type PointerEvent, type ReactNode, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
 import { Layout } from "../../../../components/layout";
 import { LocationButton } from "../../../../components/location-button";
+import type { RouteMarkerTone } from "../../../../components/route-marker";
 import { Toggle } from "../../../../components/toggle";
 import { useCurrentPosition } from "../../../../hooks/use-current-position";
 import { cx } from "../../../../utils/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
-import { MeetingMap, type MeetingMapProps } from "../meeting-map";
+import { MeetingMap, type MeetingMapPlace } from "../meeting-map";
+import { type Size, expandRatio, resize, snap } from "./expand";
 
 import {
   bottomActions,
   bottomStack,
-  chips as chipsStyle,
+  chips,
   grabber,
-  grabberBar,
+  headerSlot,
   meetingPill,
   pillIcon,
   root,
@@ -28,25 +30,26 @@ import {
 
 export interface MapScreenProps {
   children: ReactNode;
+  header?: ReactNode;
+  places?: MeetingMapPlace[];
+  onSelectPlace?: (placeId: string) => void;
   gradient?: boolean;
-  /** 상단 컨트롤 영역. 주지 않으면 기본 Toggle 을 그린다. */
-  topControl?: ReactNode;
-  /** 카테고리 칩 영역. 주지 않으면 기본 CourseCategoryChips 를 그리고, null 이면 숨긴다. */
-  chips?: ReactNode | null;
-  /** MeetingMap 에 전달할 추가 prop. origin/currentPosition 은 화면이 정한다. */
-  mapProps?: Omit<MeetingMapProps, "origin" | "currentPosition">;
-  /** 하단 액션 버튼을 시트 위로 올릴 때 시트 높이만큼의 여백. */
   bottomOffset?: number;
+  hideChips?: boolean;
+  tone?: RouteMarkerTone;
+  routeLineColor?: string;
 }
 
-/** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
 export function MapScreen({
   children,
+  header,
+  places,
+  onSelectPlace,
   gradient,
-  topControl,
-  chips,
-  mapProps,
   bottomOffset = 0,
+  hideChips,
+  tone,
+  routeLineColor,
 }: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -56,7 +59,14 @@ export function MapScreen({
   return (
     <Layout>
       <div className={root} style={{ ["--bottom-offset" as string]: `${bottomOffset}px` }}>
-        <MeetingMap currentPosition={position} origin={meeting?.firstLocation} {...mapProps} />
+        <MeetingMap
+          currentPosition={position}
+          origin={meeting?.firstLocation}
+          places={places}
+          onSelectPlace={onSelectPlace}
+          tone={tone}
+          routeLineColor={routeLineColor}
+        />
 
         {gradient === true ? (
           <div className={scrim}>
@@ -64,17 +74,15 @@ export function MapScreen({
           </div>
         ) : null}
 
+        {header === undefined ? null : <div className={headerSlot}>{header}</div>}
+
         <div className={toggle}>
-          {topControl ?? (
-            <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
-          )}
+          <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
         </div>
 
-        {chips === null ? null : (
-          <div className={chipsStyle}>
-            {chips ?? (
-              <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
-            )}
+        {hideChips === true ? null : (
+          <div className={chips}>
+            <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
           </div>
         )}
 
@@ -100,18 +108,63 @@ export function MapScreen({
 }
 
 export interface MapSheetProps {
-  /** 시트 안쪽 배치가 화면마다 달라 덧붙일 수 있게 열어 둔다. */
   className?: string;
+  expandable?: boolean;
   children: ReactNode;
 }
 
-/** 지도 아래에 붙는 시트. 손잡이는 모든 지도 화면이 같아 여기서 그린다. */
-export function MapSheet({ className, children }: MapSheetProps) {
+export function MapSheet({ className, expandable = false, children }: MapSheetProps) {
+  const [size, setSize] = useState<Size | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const start = useRef<{ pointerY: number; height: number } | null>(null);
+
+  const grab = (event: PointerEvent<HTMLDivElement>) => {
+    const node = event.currentTarget.parentElement;
+    const full = node?.parentElement?.clientHeight;
+    if (node === null || full === undefined) {
+      return;
+    }
+
+    const height = Math.round(node.getBoundingClientRect().height);
+    event.currentTarget.setPointerCapture(event.pointerId);
+    start.current = { pointerY: event.clientY, height };
+    setSize((current) => current ?? { height, peek: height, full });
+    setDragging(true);
+  };
+
+  const move = (event: PointerEvent<HTMLDivElement>) => {
+    if (start.current === null) {
+      return;
+    }
+    const { pointerY, height } = start.current;
+    setSize(resize(size, height + (pointerY - event.clientY)));
+  };
+
+  const release = () => {
+    start.current = null;
+    setDragging(false);
+    setSize(snap(size));
+  };
+
+  const ratio = expandRatio(size);
+  const radius = Math.round(24 * (1 - ratio));
+
   return (
-    <div className={cx(sheet, className)}>
-      <div className={grabber}>
-        <span className={grabberBar} />
-      </div>
+    <div
+      className={cx(sheet({ dragging }), className)}
+      style={
+        size === null
+          ? undefined
+          : { flexShrink: 0, height: size.height, borderRadius: `${radius}px ${radius}px 0 0` }
+      }
+    >
+      <div
+        className={grabber({ hidden: ratio === 1 && !dragging })}
+        onPointerCancel={release}
+        onPointerDown={expandable ? grab : undefined}
+        onPointerMove={move}
+        onPointerUp={release}
+      />
       {children}
     </div>
   );
