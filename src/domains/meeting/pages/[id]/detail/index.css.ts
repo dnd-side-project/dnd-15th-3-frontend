@@ -2,6 +2,8 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "../../../../../styles/text";
 
+import { vars } from "../../../../../styles/theme.css";
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
@@ -30,6 +32,24 @@ export const map = style({
   margin: "13px 20px 0",
   borderRadius: 12,
   overflow: "hidden",
+});
+
+export const expand = style({
+  position: "absolute",
+  zIndex: 1,
+  top: 12,
+  right: 12,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 32,
+  height: 32,
+  border: "none",
+  borderRadius: vars.radius.full,
+  backgroundColor: "rgba(255, 255, 255, 0.9)",
+  boxShadow: "0 0 4px rgba(0, 0, 0, 0.15)",
+  color: "#707D91",
+  cursor: "pointer",
 });
 
 export const course = style({

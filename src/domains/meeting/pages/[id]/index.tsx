@@ -24,7 +24,7 @@ import { parseDateString, parseTimeString } from "../../../../utils/time";
 import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
 import { useMeetingTypes } from "../../../catalog/hooks";
 import { MeetingMap } from "../../components/meeting-map";
-import { useMeeting, useMeetingPermissions } from "../../hooks";
+import { useCoursePlaces, useMeeting, useMeetingPermissions } from "../../hooks";
 
 import {
   backButton,
@@ -107,6 +107,7 @@ export function MeetingPage() {
   const { data: meeting, isPending } = useMeeting();
   const { canManageMeeting } = useMeetingPermissions();
   const meetingTypes = useMeetingTypes();
+  const coursePlaces = useCoursePlaces();
   const typeMenu = createMenuHandle();
 
   const [sheet, setSheet] = useState<Sheet | null>(null);
@@ -126,12 +127,6 @@ export function MeetingPage() {
   }
 
   const shareUrl = `/new/complete?code=${meeting.invitationCode}`;
-
-  // 코스를 고르기 전에는 모임 위치만 찍는다.
-  const placeOf = new Map(meeting.recommendations.map(({ id, place }) => [id, place]));
-  const coursePlaces = (meeting.selectedCourse?.recommendationIds ?? [])
-    .map((recommendationId) => placeOf.get(recommendationId))
-    .filter((place) => place !== undefined);
 
   return (
     <Layout>

@@ -2,6 +2,7 @@ import ArrowSquareOutIcon from "../../../../assets/icon-arrow-square-out.svg?rea
 import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
 import FootprintsIcon from "../../../../assets/icon-footprints.svg?react";
 import { PlaceIcon } from "../../../../components/place-icon";
+import type { RouteMarkerTone } from "../../../../components/route-marker";
 import type { CourseRouteStep } from "../../api/types";
 
 import {
@@ -25,12 +26,14 @@ function routeUrl(step: CourseRouteStep) {
 
 export interface CourseTimelineProps {
   route: CourseRouteStep[];
+  /** 코스마다 다른 색. 확정된 코스는 파랑이다. */
+  tone?: RouteMarkerTone;
   onSelectPlace?: (placeId: string) => void;
 }
 
-export function CourseTimeline({ route, onSelectPlace }: CourseTimelineProps) {
+export function CourseTimeline({ route, tone, onSelectPlace }: CourseTimelineProps) {
   return (
-    <ol className={list}>
+    <ol className={list({ tone })}>
       {route.map((step, index) => {
         const next = route[index + 1];
 

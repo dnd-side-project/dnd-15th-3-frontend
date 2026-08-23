@@ -1,16 +1,31 @@
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
 import { vars } from "../../../../styles/theme.css";
 
-export const list = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: 12,
-  margin: 0,
-  padding: "0 25px 0 30px",
-  listStyle: "none",
+const courseColor = createVar();
+
+export const list = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    margin: 0,
+    padding: "0 25px 0 30px",
+    listStyle: "none",
+  },
+  variants: {
+    tone: {
+      blue: { vars: { [courseColor]: "#3793FF" } },
+      pink: { vars: { [courseColor]: "#FF46A9" } },
+      purple: { vars: { [courseColor]: "#A754EB" } },
+    },
+  },
+  defaultVariants: {
+    tone: "blue",
+  },
 });
 
 export const item = style({
@@ -25,7 +40,7 @@ export const item = style({
       bottom: -12,
       left: 10,
       width: 1,
-      backgroundColor: "#3793FF",
+      backgroundColor: courseColor,
     },
   },
 });
@@ -39,7 +54,7 @@ export const badge = style({
   width: 20,
   height: 20,
   borderRadius: vars.radius.full,
-  backgroundColor: "#3793FF",
+  backgroundColor: courseColor,
   color: "#FFFFFF",
   ...text({ size: 12, weight: 600, lineHeight: 1 }),
 });

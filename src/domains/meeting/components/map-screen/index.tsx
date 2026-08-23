@@ -9,7 +9,7 @@ import { useCurrentPosition } from "../../../../hooks/use-current-position";
 import { cx } from "../../../../utils/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
-import { MeetingMap } from "../meeting-map";
+import { MeetingMap, type MeetingMapPlace } from "../meeting-map";
 import { type Size, expandRatio, resize, snap } from "./expand";
 
 import {
@@ -25,7 +25,13 @@ import {
 } from "./index.css";
 
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
-export function MapScreen({ children }: { children: ReactNode }) {
+export interface MapScreenProps {
+  children: ReactNode;
+  places?: MeetingMapPlace[];
+  onSelectPlace?: (placeId: string) => void;
+}
+
+export function MapScreen({ children, places, onSelectPlace }: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
@@ -34,7 +40,12 @@ export function MapScreen({ children }: { children: ReactNode }) {
   return (
     <Layout>
       <div className={root}>
-        <MeetingMap currentPosition={position} origin={meeting?.firstLocation} />
+        <MeetingMap
+          currentPosition={position}
+          origin={meeting?.firstLocation}
+          places={places}
+          onSelectPlace={onSelectPlace}
+        />
 
         <div className={toggle}>
           <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
