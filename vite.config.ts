@@ -51,6 +51,11 @@ export default defineConfig({
     vanillaExtractPlugin({}),
     svgr({ svgrOptions: { icon: true } }),
   ]),
+  resolve: {
+    alias: {
+      "@": path.resolve(dirname, "src"),
+    },
+  },
   staged: {
     "*": "vp check --fix",
   },
