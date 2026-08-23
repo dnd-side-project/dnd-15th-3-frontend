@@ -41,6 +41,8 @@ export const originMarker = style({
 });
 
 export const currentDot = style({
+  // 인라인이면 지름이 먹지 않는다.
+  display: "block",
   width: 18,
   height: 18,
   border: "3px solid #FFFFFF",
