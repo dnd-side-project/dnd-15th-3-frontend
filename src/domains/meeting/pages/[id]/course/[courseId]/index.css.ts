@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../../../styles/theme.css";
 
 export const tabs = style({
+  margin: "20px auto 0",
   width: 353,
   height: 45,
 });
