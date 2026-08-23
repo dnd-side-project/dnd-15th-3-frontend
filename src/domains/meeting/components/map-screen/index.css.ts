@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "../../../../styles/text";
 
@@ -77,27 +78,59 @@ export const pillIcon = style({
   height: 23,
 });
 
-export const sheet = style({
-  pointerEvents: "auto",
-  display: "flex",
-  flexDirection: "column",
-  minHeight: 0,
-  borderRadius: "24px 24px 0 0",
-  backgroundColor: "#FFFFFF",
-  boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+export const sheet = recipe({
+  base: {
+    pointerEvents: "auto",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 0,
+    borderRadius: "24px 24px 0 0",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+  },
+  variants: {
+    dragging: {
+      // 끄는 동안에는 손가락을 그대로 따라와야 한다.
+      true: {},
+      false: { transition: "height 250ms ease-out, border-radius 250ms ease-out" },
+    },
+  },
 });
 
-export const grabber = style({
-  display: "flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  height: 25,
-});
-
-export const grabberBar = style({
-  width: 50,
-  height: 5,
-  borderRadius: 10,
-  backgroundColor: "#D1D1D1",
+export const grabber = recipe({
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 25,
+    touchAction: "none",
+    selectors: {
+      "&::after": {
+        content: "",
+        width: 50,
+        height: 5,
+        borderRadius: 10,
+        backgroundColor: "#D1D1D1",
+        transition: "opacity 150ms ease-out",
+      },
+    },
+    "@media": {
+      "(prefers-reduced-motion: reduce)": {
+        selectors: { "&::after": { transition: "none" } },
+      },
+    },
+  },
+  variants: {
+    // 끝까지 펼치면 손잡이를 숨기되, 만지면 다시 보여 준다.
+    hidden: {
+      true: {
+        selectors: {
+          "&::after": { opacity: 0 },
+          "&:hover::after, &:active::after": { opacity: 1 },
+        },
+      },
+      false: {},
+    },
+  },
 });

@@ -82,7 +82,7 @@ export function PlaceDetailPage() {
 
   return (
     <MapScreen>
-      <MapSheet className={sheetLayout}>
+      <MapSheet expandable className={sheetLayout}>
         <div className={header}>
           <button
             aria-label="뒤로 가기"
