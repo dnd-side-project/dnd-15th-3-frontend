@@ -1,4 +1,5 @@
-import { CustomOverlayMap, Map, Polyline, useKakaoLoader } from "react-kakao-maps-sdk";
+import { useEffect } from "react";
+import { CustomOverlayMap, Map, Polyline, useKakaoLoader, useMap } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
@@ -35,6 +36,21 @@ const toCoordinates = (place: { latitude: number; longitude: number }): Coordina
   lat: place.latitude,
   lng: place.longitude,
 });
+
+/** `center` 는 좌표 값이 같으면 지도를 옮기지 않아, 다시 잡을 때마다 좌표 객체를 보고 직접 옮긴다. */
+function CurrentPosition({ position }: { position: Coordinates }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setCenter(new kakao.maps.LatLng(position.lat, position.lng));
+  }, [map, position]);
+
+  return (
+    <CustomOverlayMap position={position}>
+      <span aria-label="현재 위치" className={currentDot} role="img" />
+    </CustomOverlayMap>
+  );
+}
 
 export function MeetingMap({
   origin,
@@ -91,11 +107,7 @@ export function MeetingMap({
           </CustomOverlayMap>
         ))}
 
-        {currentPosition === null ? null : (
-          <CustomOverlayMap position={currentPosition}>
-            <span aria-label="현재 위치" className={currentDot} role="img" />
-          </CustomOverlayMap>
-        )}
+        {currentPosition === null ? null : <CurrentPosition position={currentPosition} />}
       </Map>
 
       {loading ? <p className={notice}>지도 불러오는 중</p> : null}
