@@ -79,7 +79,6 @@ export function CourseDetailPage() {
 
   return (
     <MapScreen
-      gradient
       bottomOffset={197}
       hideChips
       header={

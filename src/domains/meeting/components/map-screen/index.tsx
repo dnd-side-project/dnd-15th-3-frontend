@@ -22,10 +22,8 @@ import {
   meetingPill,
   pillIcon,
   root,
-  scrim,
   sheet,
   toggle,
-  topScrim,
 } from "./index.css";
 
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
@@ -34,7 +32,6 @@ export interface MapScreenProps {
   header?: ReactNode;
   places?: MeetingMapPlace[];
   onSelectPlace?: (placeId: string) => void;
-  gradient?: boolean;
   bottomOffset?: number;
   hideChips?: boolean;
   tone?: RouteMarkerTone;
@@ -46,7 +43,6 @@ export function MapScreen({
   header,
   places,
   onSelectPlace,
-  gradient,
   bottomOffset = 0,
   hideChips,
   tone,
@@ -68,12 +64,6 @@ export function MapScreen({
           tone={tone}
           routeLineColor={routeLineColor}
         />
-
-        {gradient === true ? (
-          <div className={scrim}>
-            <div className={topScrim} />
-          </div>
-        ) : null}
 
         {header === undefined ? null : <div className={headerSlot}>{header}</div>}
 
