@@ -31,7 +31,7 @@ export function CourseDetailPage() {
   const { id = "", courseId = "" } = useParams();
   const accessToken = getAccessToken(id);
   const { data: meeting } = useMeeting();
-  const { canManageMeeting, canSelectCourse } = useMeetingPermissions();
+  const { canManageMeeting } = useMeetingPermissions();
 
   const { data: candidates } = useQuery(courseQueries.candidates(id, accessToken));
   const { data: courseDetail } = useQuery(courseQueries.detail(id, courseId, accessToken));
@@ -115,7 +115,7 @@ export function CourseDetailPage() {
         isOpen
         onClose={() => void navigate(`/meeting/${id}`)}
         onSelectCourse={() => confirm()}
-        selectDisabled={!canSelectCourse || isConfirming}
+        selectDisabled={!canManageMeeting || isConfirming}
         onOpenComments={() => setIsCommentSheetOpen(true)}
         courseBadgeLabel={toneStyle.label}
         meetingId={id}
