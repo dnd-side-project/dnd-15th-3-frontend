@@ -1,4 +1,4 @@
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
+import { RouterProvider, createBrowserRouter } from "react-router";
 
 import { ApiTestPage } from "./domains/debug/pages/api-test";
 import { KakaoMapPage } from "./domains/debug/pages/kakao-map";
@@ -10,6 +10,7 @@ import { JoinCodePage } from "./domains/join/pages/code";
 import { JoinCompletePage } from "./domains/join/pages/complete";
 import { JoinErrorPage } from "./domains/join/pages/error";
 import { JoinProfilePage } from "./domains/join/pages/profile";
+import { JoinRedirect } from "./domains/join/pages/redirect";
 import { meetingLayout } from "./domains/meeting/layout";
 import { MeetingPage } from "./domains/meeting/pages/[id]";
 import { ChoicePage } from "./domains/meeting/pages/[id]/choice";
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: () => <Navigate to="code" replace />,
+        Component: JoinRedirect,
       },
       {
         path: "code",
