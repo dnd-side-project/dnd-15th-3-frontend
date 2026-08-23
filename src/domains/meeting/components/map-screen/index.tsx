@@ -17,8 +17,8 @@ import {
   bottomActions,
   bottomStack,
   chips,
-  grabber,
   headerSlot,
+  grabber,
   meetingPill,
   pillIcon,
   root,
@@ -28,6 +28,7 @@ import {
   topScrim,
 } from "./index.css";
 
+/** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
 export interface MapScreenProps {
   children: ReactNode;
   header?: ReactNode;
@@ -109,10 +110,12 @@ export function MapScreen({
 
 export interface MapSheetProps {
   className?: string;
+  /** 손잡이를 끌어 전체 화면까지 펼 수 있게 한다. */
   expandable?: boolean;
   children: ReactNode;
 }
 
+/** 지도 아래에 붙는 시트. 손잡이는 모든 지도 화면이 같아 여기서 그린다. */
 export function MapSheet({ className, expandable = false, children }: MapSheetProps) {
   const [size, setSize] = useState<Size | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -125,6 +128,7 @@ export function MapSheet({ className, expandable = false, children }: MapSheetPr
       return;
     }
 
+    // 처음 끌 때의 높이를 기본 높이로 삼는다.
     const height = Math.round(node.getBoundingClientRect().height);
     event.currentTarget.setPointerCapture(event.pointerId);
     start.current = { pointerY: event.clientY, height };

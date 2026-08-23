@@ -110,6 +110,7 @@ export const sheet = recipe({
   },
   variants: {
     dragging: {
+      // 끄는 동안에는 손가락을 그대로 따라와야 한다.
       true: {},
       false: { transition: "height 250ms ease-out, border-radius 250ms ease-out" },
     },
@@ -141,6 +142,7 @@ export const grabber = recipe({
     },
   },
   variants: {
+    // 끝까지 펼치면 손잡이를 숨기되, 만지면 다시 보여 준다.
     hidden: {
       true: {
         selectors: {
