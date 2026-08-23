@@ -1,4 +1,4 @@
-import { CustomOverlayMap, Map, useKakaoLoader } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, Polyline, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "../../../../components/route-marker";
 import type { Coordinates } from "../../../../hooks/use-current-position";
@@ -23,6 +23,10 @@ export interface MeetingMapProps {
   /** 카드 안에 넣을 때는 조작을 막아 링크가 클릭을 받게 한다. */
   interactive?: boolean;
   onSelectPlace?: (placeId: string) => void;
+  /** 코스 하나를 같은 색으로 그릴 때 지정. 주지 않으면 순서마다 돌려 쓴다. */
+  tone?: RouteMarkerTone;
+  /** 주어지면 마커 사이를 잇는 실선을 그린다. */
+  routeLineColor?: string;
 }
 
 // 코스 순서마다 마커 색을 돌려 쓴다.
@@ -42,6 +46,8 @@ export function MeetingMap({
   level = 4,
   interactive = true,
   onSelectPlace,
+  tone,
+  routeLineColor,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
   const focus = origin ?? places[0];
@@ -66,13 +72,23 @@ export function MeetingMap({
           </CustomOverlayMap>
         )}
 
+        {routeLineColor !== undefined && places.length > 1 ? (
+          <Polyline
+            path={places.map(toCoordinates)}
+            strokeColor={routeLineColor}
+            strokeOpacity={1}
+            strokeStyle="solid"
+            strokeWeight={3}
+          />
+        ) : null}
+
         {places.map((place, index) => (
           <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
             <RouteMarker
               imageAlt={place.name}
               imageUrl={place.previewUrl}
               index={index + 1}
-              tone={TONES[index % TONES.length]}
+              tone={tone ?? TONES[index % TONES.length]}
               onClick={onSelectPlace && (() => onSelectPlace(place.id))}
             />
           </CustomOverlayMap>

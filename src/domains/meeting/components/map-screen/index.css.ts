@@ -56,6 +56,8 @@ export const bottomStack = style({
   gap: 14,
   // 버튼과 시트를 뺀 영역은 지도가 받아야 한다.
   pointerEvents: "none",
+  // 시트 위로 버튼을 올릴 때 화면이 주는 여백.
+  paddingBottom: "var(--bottom-offset, 0px)",
 });
 
 export const bottomActions = style({

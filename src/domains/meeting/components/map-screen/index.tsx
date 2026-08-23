@@ -9,12 +9,12 @@ import { useCurrentPosition } from "../../../../hooks/use-current-position";
 import { cx } from "../../../../utils/cx";
 import { CourseCategoryChips } from "../../../catalog/components/course-category-chips";
 import { useMeeting } from "../../hooks";
-import { MeetingMap } from "../meeting-map";
+import { MeetingMap, type MeetingMapProps } from "../meeting-map";
 
 import {
   bottomActions,
   bottomStack,
-  chips,
+  chips as chipsStyle,
   grabber,
   grabberBar,
   meetingPill,
@@ -29,10 +29,25 @@ import {
 export interface MapScreenProps {
   children: ReactNode;
   gradient?: boolean;
+  /** 상단 컨트롤 영역. 주지 않으면 기본 Toggle 을 그린다. */
+  topControl?: ReactNode;
+  /** 카테고리 칩 영역. 주지 않으면 기본 CourseCategoryChips 를 그리고, null 이면 숨긴다. */
+  chips?: ReactNode | null;
+  /** MeetingMap 에 전달할 추가 prop. origin/currentPosition 은 화면이 정한다. */
+  mapProps?: Omit<MeetingMapProps, "origin" | "currentPosition">;
+  /** 하단 액션 버튼을 시트 위로 올릴 때 시트 높이만큼의 여백. */
+  bottomOffset?: number;
 }
 
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
-export function MapScreen({ children, gradient }: MapScreenProps) {
+export function MapScreen({
+  children,
+  gradient,
+  topControl,
+  chips,
+  mapProps,
+  bottomOffset = 0,
+}: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
   const { data: meeting } = useMeeting();
@@ -40,8 +55,8 @@ export function MapScreen({ children, gradient }: MapScreenProps) {
 
   return (
     <Layout>
-      <div className={root}>
-        <MeetingMap currentPosition={position} origin={meeting?.firstLocation} />
+      <div className={root} style={{ ["--bottom-offset" as string]: `${bottomOffset}px` }}>
+        <MeetingMap currentPosition={position} origin={meeting?.firstLocation} {...mapProps} />
 
         {gradient === true ? (
           <div className={scrim}>
@@ -50,12 +65,18 @@ export function MapScreen({ children, gradient }: MapScreenProps) {
         ) : null}
 
         <div className={toggle}>
-          <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
+          {topControl ?? (
+            <Toggle value="map" onChange={() => void navigate(`/meeting/${id}/choice`)} />
+          )}
         </div>
 
-        <div className={chips}>
-          <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
-        </div>
+        {chips === null ? null : (
+          <div className={chipsStyle}>
+            {chips ?? (
+              <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
+            )}
+          </div>
+        )}
 
         <div className={bottomStack}>
           <div className={bottomActions}>
