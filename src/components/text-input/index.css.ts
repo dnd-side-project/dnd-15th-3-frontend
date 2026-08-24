@@ -107,11 +107,17 @@ export const sendButton = style({
   backgroundColor: colors.focusedBackground,
   color: colors.mutedForeground,
   cursor: "pointer",
+  outline: "none",
   ...motion,
   selectors: {
     [`${field}:focus-within &`]: {
       backgroundColor: colors.focusedSendBackground,
       color: colors.focusedSendForeground,
+    },
+    // 키보드로 버튼에 직접 닿았을 때.
+    "&:focus-visible": {
+      outline: `2px solid ${colors.focusedSendForeground}`,
+      outlineOffset: 2,
     },
   },
 });

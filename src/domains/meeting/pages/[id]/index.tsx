@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
+import HeaderConfetti from "@/assets/complete-confetti.svg?react";
 import ArrowUpRightIcon from "@/assets/icon-arrow-up-right.svg?react";
 import CalendarIcon from "@/assets/icon-calendar.svg?react";
 import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
@@ -13,7 +14,6 @@ import PenSmallIcon from "@/assets/icon-pen-small.svg?react";
 import PenIcon from "@/assets/icon-pen.svg?react";
 import CourseLines from "@/assets/meeting-course-lines.svg?react";
 import CourseNavigation from "@/assets/meeting-course-navigation.svg?react";
-import HeaderConfetti from "@/assets/meeting-header-confetti.svg?react";
 import { CtaButton, CtaButtonRow } from "@/components/cta-button";
 import { DayPickerSheet } from "@/components/day-picker";
 import { Dropdown, Item, Trigger, createMenuHandle } from "@/components/dropdown-menu";

@@ -40,6 +40,8 @@ export const palette = {
   blue28: "#D2DCF1",
   blue29: "#CCD6FF",
   blue30: "#72B9FF",
+  blue31: "#A4B7FF",
+  blue32: "#B6DAFF",
   // gray
   gray9: "#707D91",
   gray8: "#A4B1C5",
@@ -102,6 +104,7 @@ export const palette = {
   purple2: "#FF46A9",
   purple1: "#FFECF6",
   purple3: "#FF92E1",
+  purple4: "#E8A8D6",
   // indigo
   indigo2: "#A754EB",
   indigo1: "#F6EEFD",
@@ -115,6 +118,7 @@ export const palette = {
   yellow1: "#FEE500",
   yellow2: "#181600",
   yellow3: "#FFF4C0",
+  yellow4: "#FFF1B1",
   // green
   green1: "#28C55F",
   // teal

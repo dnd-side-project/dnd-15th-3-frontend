@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import PlusIcon from "@/assets/icon-plus.svg?react";
 import RetryLargeIcon from "@/assets/icon-retry-large.svg?react";
-import SearchLargeIcon from "@/assets/icon-search-large.svg?react";
+import SearchIcon from "@/assets/icon-search.svg?react";
 import { PlaceIcon } from "@/components/place-icon";
 import { PlaceSearchInput } from "@/components/text-input";
 import { catalogQueries } from "@/domains/catalog/api/queries";
@@ -49,16 +49,16 @@ function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) 
   }
   if (collecting) {
     return {
-      Icon: SearchLargeIcon,
-      iconSize: { width: 40, height: 40 },
+      Icon: SearchIcon,
+      iconSize: { width: 48, height: 48 },
       title: "주변 장소를 모으는 중이에요",
       description: "잠시만 기다려주세요!",
     };
   }
   if (matchCount === 0) {
     return {
-      Icon: SearchLargeIcon,
-      iconSize: { width: 40, height: 40 },
+      Icon: SearchIcon,
+      iconSize: { width: 48, height: 48 },
       title: `‘${keyword}'에 대한 검색 결과가 없어요`,
       description: "검색어를 다시 확인해주세요.",
     };
