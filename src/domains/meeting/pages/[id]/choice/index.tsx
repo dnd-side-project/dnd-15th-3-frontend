@@ -13,17 +13,11 @@ import { PreferenceButton } from "@/components/preference-button";
 import { Toggle } from "@/components/toggle";
 import type { CategorySlug } from "@/domains/catalog/api/types";
 import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
-import { generateCourse } from "@/domains/course/api";
-import { getMeetingStatus, updatePlacePreference } from "@/domains/meeting/api";
-import type {
-  MeetingStatus,
-  RecommendationPreview,
-  ViewerPreference,
-} from "@/domains/meeting/api/types";
-import { useMeeting } from "@/domains/meeting/hooks";
+import { updatePlacePreference } from "@/domains/meeting/api";
+import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
+import { useCourseGeneration, useMeeting } from "@/domains/meeting/hooks";
 import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
-import { pollUntil } from "@/utils/poll";
 
 import {
   bar,
@@ -151,27 +145,13 @@ export function ChoicePage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
   });
 
-  const { mutate: generate, isPending: isGenerating } = useMutation({
-    mutationFn: async () => {
-      const result = await generateCourse(id, getAccessToken(id));
-      if (result.status !== "COURSE_GENERATING") {
-        return result;
-      }
-      // 생성중이면 완료·실패가 날 때까지 폴링한다.
-      return pollUntil(
-        (signal) => getMeetingStatus(id, getAccessToken(id), signal),
-        (status: MeetingStatus) =>
-          status.status === "COURSE_GENERATED" || status.status === "COURSE_GENERATION_FAILED",
-      );
-    },
-    onSuccess: (data) => {
-      if (data.status === "COURSE_GENERATED") {
-        void queryClient.invalidateQueries({ queryKey: ["meeting", id] });
-        void queryClient.invalidateQueries({ queryKey: ["course", id] });
-        void navigate(`/meeting/${id}/course`);
-      } else {
-        setIsErrorPopupOpen(true);
-      }
+  const { generate, isGenerating } = useCourseGeneration(id, {
+    onSuccess: () => {
+      // 상태 폴링 쿼리(["meeting", id, "status"])가 켜 있는 동안 prefix 무효화하면
+      // 폴링이 한 번 더 도므로 상세 쿼리만 무효화한다.
+      void queryClient.invalidateQueries({ queryKey: ["meeting", id, "detail"] });
+      void queryClient.invalidateQueries({ queryKey: ["course", id] });
+      void navigate(`/meeting/${id}/course`);
     },
     onError: () => setIsErrorPopupOpen(true),
   });

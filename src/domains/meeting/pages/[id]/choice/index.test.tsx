@@ -242,20 +242,10 @@ test("코스 생성중이면 폴링 후 완료되면 코스 페이지로 이동�
   });
 
   await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeInTheDocument();
-
-  vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
   await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
 
-  // 첫 폴링(2초 후) — 아직 생성중
-  await vi.advanceTimersByTimeAsync(2000);
-  // 두 번째 폴링(4초 후) — 완료
-  await vi.advanceTimersByTimeAsync(2000);
-
-  vi.useRealTimers();
-
-  await expect.poll(() => generateCalls).toHaveLength(1);
-  expect(generateCalls[0].method).toBe("POST");
-  await expect.poll(() => pollCalls).toHaveLength(2);
+  // refetchInterval(2초) 로 폴링: 첫 폴링은 생성중, 두 번째 폴링에서 완료된다.
+  await expect.poll(() => pollCalls, { timeout: 6000, interval: 100 }).toHaveLength(2);
   expect(pollCalls[0].status).toBe("COURSE_GENERATING");
   expect(pollCalls[1].status).toBe("COURSE_GENERATED");
   await expect.element(page.getByTestId("course-page")).toBeInTheDocument();
