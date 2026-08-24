@@ -27,6 +27,12 @@ export const confetti = style({
   left: 7,
   width: 387,
   height: 226,
+  vars: {
+    "--confetti-a": palette.blue31,
+    "--confetti-b": palette.yellow4,
+    "--confetti-c": palette.blue32,
+    "--confetti-d": palette.purple4,
+  },
 });
 
 export const nav = style({
