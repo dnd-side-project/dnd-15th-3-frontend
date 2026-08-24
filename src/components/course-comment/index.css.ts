@@ -72,10 +72,16 @@ export const sendButton = style({
   backgroundColor: colors.sendBackground,
   color: vars.color.text.inverse,
   cursor: "pointer",
+  outline: "none",
   selectors: {
     "&:disabled": {
       opacity: 0.5,
       cursor: "not-allowed",
+    },
+    // 키보드로 버튼에 직접 닿았을 때.
+    "&:focus-visible": {
+      outline: `2px solid ${colors.sendBackground}`,
+      outlineOffset: 2,
     },
   },
 });
