@@ -95,7 +95,7 @@ const sampleCourseDetail: CourseDetail = {
 
 const meta = {
   component: MeetingCard,
-  title: "components/MeetingCard",
+  title: "components/MeetingCardFront",
   decorators: [
     (Story) => (
       <div
