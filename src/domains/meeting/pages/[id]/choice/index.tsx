@@ -8,15 +8,22 @@ import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
 import { PlaceIcon } from "@/components/place-icon";
+import { Popup } from "@/components/popup";
 import { PreferenceButton } from "@/components/preference-button";
 import { Toggle } from "@/components/toggle";
 import type { CategorySlug } from "@/domains/catalog/api/types";
 import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
-import { updatePlacePreference } from "@/domains/meeting/api";
-import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
+import { generateCourse } from "@/domains/course/api";
+import { getMeetingStatus, updatePlacePreference } from "@/domains/meeting/api";
+import type {
+  MeetingStatus,
+  RecommendationPreview,
+  ViewerPreference,
+} from "@/domains/meeting/api/types";
 import { useMeeting } from "@/domains/meeting/hooks";
 import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
+import { pollUntil } from "@/utils/poll";
 
 import {
   bar,
@@ -135,12 +142,38 @@ export function ChoicePage() {
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
     mutationFn: ({ recommendationId, preference }: PreferenceChange) =>
       updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
+
+  const { mutate: generate, isPending: isGenerating } = useMutation({
+    mutationFn: async () => {
+      const result = await generateCourse(id, getAccessToken(id));
+      if (result.status !== "COURSE_GENERATING") {
+        return result;
+      }
+      // 생성중이면 완료·실패가 날 때까지 폴링한다.
+      return pollUntil(
+        (signal) => getMeetingStatus(id, getAccessToken(id), signal),
+        (status: MeetingStatus) =>
+          status.status === "COURSE_GENERATED" || status.status === "COURSE_GENERATION_FAILED",
+      );
+    },
+    onSuccess: (data) => {
+      if (data.status === "COURSE_GENERATED") {
+        void queryClient.invalidateQueries({ queryKey: ["meeting", id] });
+        void queryClient.invalidateQueries({ queryKey: ["course", id] });
+        void navigate(`/meeting/${id}/course`);
+      } else {
+        setIsErrorPopupOpen(true);
+      }
+    },
+    onError: () => setIsErrorPopupOpen(true),
   });
 
   if (isError) {
@@ -248,13 +281,20 @@ export function ChoicePage() {
 
         <div className={footer}>
           <CtaButton
-            disabled={!hasPlaces || !meeting.permissions.canSelectCourse}
-            onClick={() => void navigate(`/meeting/${id}/course`)}
+            disabled={!hasPlaces || !meeting.permissions.canSelectCourse || isGenerating}
+            onClick={() => generate()}
           >
             코스 생성하기
           </CtaButton>
         </div>
       </div>
+
+      <Popup
+        description="잠시 후 다시 시도해 주세요"
+        onOpenChange={setIsErrorPopupOpen}
+        open={isErrorPopupOpen}
+        title="코스 생성에 실패했어요"
+      />
     </Layout>
   );
 }
