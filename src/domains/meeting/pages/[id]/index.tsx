@@ -1,30 +1,30 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
-import ArrowUpRightIcon from "../../../../assets/icon-arrow-up-right.svg?react";
-import CalendarIcon from "../../../../assets/icon-calendar.svg?react";
-import CaretDownIcon from "../../../../assets/icon-caret-down.svg?react";
-import CaretLeftIcon from "../../../../assets/icon-caret-left.svg?react";
-import ClockIcon from "../../../../assets/icon-clock.svg?react";
-import CrownIcon from "../../../../assets/icon-crown.svg?react";
-import ExportIcon from "../../../../assets/icon-export.svg?react";
-import MapPinIcon from "../../../../assets/icon-map-pin-simple.svg?react";
-import PenSmallIcon from "../../../../assets/icon-pen-small.svg?react";
-import PenIcon from "../../../../assets/icon-pen.svg?react";
-import CourseLines from "../../../../assets/meeting-course-lines.svg?react";
-import CourseNavigation from "../../../../assets/meeting-course-navigation.svg?react";
-import HeaderConfetti from "../../../../assets/meeting-header-confetti.svg?react";
-import { CtaButton, CtaButtonRow } from "../../../../components/cta-button";
-import { DayPickerSheet } from "../../../../components/day-picker";
-import { Dropdown, Item, Trigger, createMenuHandle } from "../../../../components/dropdown-menu";
-import { Layout } from "../../../../components/layout";
-import { MomoAvatar } from "../../../../components/momo-avatar";
-import { TimePickerSheet } from "../../../../components/time-picker";
-import { parseDateString, parseTimeString } from "../../../../utils/time";
-import { PlaceSearchSheet } from "../../../catalog/components/place-search-sheet";
-import { useMeetingTypes } from "../../../catalog/hooks";
-import { MeetingMap } from "../../components/meeting-map";
-import { useCoursePlaces, useMeeting, useMeetingPermissions } from "../../hooks";
+import ArrowUpRightIcon from "@/assets/icon-arrow-up-right.svg?react";
+import CalendarIcon from "@/assets/icon-calendar.svg?react";
+import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
+import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
+import ClockIcon from "@/assets/icon-clock.svg?react";
+import CrownIcon from "@/assets/icon-crown.svg?react";
+import ExportIcon from "@/assets/icon-export.svg?react";
+import MapPinIcon from "@/assets/icon-map-pin-simple.svg?react";
+import PenSmallIcon from "@/assets/icon-pen-small.svg?react";
+import PenIcon from "@/assets/icon-pen.svg?react";
+import CourseLines from "@/assets/meeting-course-lines.svg?react";
+import CourseNavigation from "@/assets/meeting-course-navigation.svg?react";
+import HeaderConfetti from "@/assets/meeting-header-confetti.svg?react";
+import { CtaButton, CtaButtonRow } from "@/components/cta-button";
+import { DayPickerSheet } from "@/components/day-picker";
+import { Dropdown, Item, Trigger, createMenuHandle } from "@/components/dropdown-menu";
+import { Layout } from "@/components/layout";
+import { MomoAvatar } from "@/components/momo-avatar";
+import { TimePickerSheet } from "@/components/time-picker";
+import { PlaceSearchSheet } from "@/domains/catalog/components/place-search-sheet";
+import { useMeetingTypes } from "@/domains/catalog/hooks";
+import { MeetingMap } from "@/domains/meeting/components/meeting-map";
+import { useCoursePlaces, useMeeting, useMeetingPermissions } from "@/domains/meeting/hooks";
+import { parseDateString, parseTimeString } from "@/utils/time";
 
 import {
   backButton,

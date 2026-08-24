@@ -2,20 +2,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import CaretDownIcon from "../../../../../assets/icon-caret-down.svg?react";
-import CaretRightIcon from "../../../../../assets/icon-caret-right.svg?react";
-import { Chip, ChipGroup } from "../../../../../components/chip";
-import { CtaButton } from "../../../../../components/cta-button";
-import { Layout } from "../../../../../components/layout";
-import { PlaceIcon } from "../../../../../components/place-icon";
-import { PreferenceButton } from "../../../../../components/preference-button";
-import { Toggle } from "../../../../../components/toggle";
-import { getAccessToken } from "../../../../../utils/access-token";
-import type { CategorySlug } from "../../../../catalog/api/types";
-import { useCategories, useCategorySlug } from "../../../../catalog/hooks";
-import { updatePlacePreference } from "../../../api";
-import type { RecommendationPreview, ViewerPreference } from "../../../api/types";
-import { useMeeting } from "../../../hooks";
+import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
+import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
+import { Chip, ChipGroup } from "@/components/chip";
+import { CtaButton } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { PlaceIcon } from "@/components/place-icon";
+import { PreferenceButton } from "@/components/preference-button";
+import { Toggle } from "@/components/toggle";
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
+import { updatePlacePreference } from "@/domains/meeting/api";
+import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   bar,

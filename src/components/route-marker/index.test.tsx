@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { RouteMarker } from "./index";
 
 test("순번 숫자를 배지에 보여준다", async () => {

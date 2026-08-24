@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import { Layout } from "../../../../../components/layout";
-import { getAccessToken } from "../../../../../utils/access-token";
-import { courseQueries } from "../../../../course/api/queries";
+import { Layout } from "@/components/layout";
+import { courseQueries } from "@/domains/course/api/queries";
+import { getAccessToken } from "@/utils/access-token";
 
 import { status } from "./index.css";
 

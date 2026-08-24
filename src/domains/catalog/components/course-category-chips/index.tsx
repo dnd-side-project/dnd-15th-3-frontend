@@ -1,7 +1,7 @@
-import { Chip, ChipGroup, type ChipVariant } from "../../../../components/chip";
-import type { CategorySlug } from "../../api/types";
-import { CategoryIcon } from "../../category-icons";
-import { useCategories } from "../../hooks";
+import { Chip, ChipGroup, type ChipVariant } from "@/components/chip";
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import { CategoryIcon } from "@/domains/catalog/category-icons";
+import { useCategories } from "@/domains/catalog/hooks";
 
 export interface CourseCategoryChipsProps {
   value: CategorySlug[];

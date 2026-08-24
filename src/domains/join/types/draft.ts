@@ -1,4 +1,4 @@
-import type { ProfileAvatarId } from "../../catalog/api/types";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
 
 export interface JoinDraft {
   userKey: string;

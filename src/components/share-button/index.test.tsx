@@ -1,8 +1,9 @@
 import { beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import type { ShareLinkParams } from "../../hooks/use-kakao-share";
-import { render } from "../../test-utils";
+import type { ShareLinkParams } from "@/hooks/use-kakao-share";
+import { render } from "@/test-utils";
+
 import { ShareButtonGroup } from "./index";
 
 const shareLink = vi.fn<(params: ShareLinkParams) => void>();

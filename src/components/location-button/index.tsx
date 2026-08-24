@@ -1,4 +1,4 @@
-import LocationIcon from "../../assets/icon-location.svg?react";
+import LocationIcon from "@/assets/icon-location.svg?react";
 
 import { button } from "./index.css";
 

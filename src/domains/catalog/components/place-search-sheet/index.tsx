@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useDeferredValue, useState } from "react";
 
-import SearchIcon from "../../../../assets/icon-search.svg?react";
-import { BottomSheet } from "../../../../components/bottom-sheet";
-import { Highlight } from "../../../../components/highlight";
-import { TextInput } from "../../../../components/text-input";
-import { catalogQueries } from "../../api/queries";
-import type { FirstMeetingPlaceResponse } from "../../api/types";
+import SearchIcon from "@/assets/icon-search.svg?react";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { Highlight } from "@/components/highlight";
+import { TextInput } from "@/components/text-input";
+import { catalogQueries } from "@/domains/catalog/api/queries";
+import type { FirstMeetingPlaceResponse } from "@/domains/catalog/api/types";
 
 import { body, empty, result, results, search, searchIcon } from "./index.css";
 

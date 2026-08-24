@@ -7,7 +7,7 @@ import "./styles/theme.css";
 import "./styles/global.css";
 import { ToastProvider } from "./components/toast";
 import { QueryProvider } from "./providers/query-provider";
-import { Routes } from "./routes.tsx";
+import { Routes } from "./routes";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -3,21 +3,20 @@ import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router";
 
-import ArrowsClockwiseIcon from "../../../../assets/icon-arrows-clockwise.svg?react";
-import { BottomSheet } from "../../../../components/bottom-sheet";
-import { CtaButton, CtaButtonRow } from "../../../../components/cta-button";
-import { MomoAvatar } from "../../../../components/momo-avatar";
-import { SpeechBubble } from "../../../../components/speech-bubble";
-import { NicknameInput } from "../../../../components/text-input";
-import { TopAppBar } from "../../../../components/top-app-bar";
-import { setAccessToken } from "../../../../utils/access-token";
-import { getUserKey } from "../../../../utils/user-key";
-import type { ProfileAvatarId } from "../../../catalog/api/types";
-import { useProfileAvatars } from "../../../catalog/hooks";
-import { joinMeeting, previewInvitation } from "../../../meeting/api";
-import type { JoinDraft } from "../../types/draft";
+import ArrowsClockwiseIcon from "@/assets/icon-arrows-clockwise.svg?react";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { CtaButton, CtaButtonRow } from "@/components/cta-button";
+import { MomoAvatar } from "@/components/momo-avatar";
+import { SpeechBubble } from "@/components/speech-bubble";
+import { NicknameInput } from "@/components/text-input";
+import { TopAppBar } from "@/components/top-app-bar";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
+import { useProfileAvatars } from "@/domains/catalog/hooks";
+import type { JoinDraft } from "@/domains/join/types/draft";
+import { joinMeeting, previewInvitation } from "@/domains/meeting/api";
+import { setAccessToken } from "@/utils/access-token";
+import { getUserKey } from "@/utils/user-key";
 
-import { surfaceColor } from "../../../../components/layout/index.css";
 import {
   avatar,
   changeButton,
@@ -37,6 +36,7 @@ import {
   sheetTexts,
   sheetTitle,
 } from "./index.css";
+import { surfaceColor } from "@/components/layout/index.css";
 
 const NICKNAME_MAX_LENGTH = 10;
 

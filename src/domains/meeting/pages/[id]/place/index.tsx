@@ -2,17 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { type ReactNode, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import PlusIcon from "../../../../../assets/icon-plus.svg?react";
-import RetryLargeIcon from "../../../../../assets/icon-retry-large.svg?react";
-import SearchLargeIcon from "../../../../../assets/icon-search-large.svg?react";
-import { PlaceIcon } from "../../../../../components/place-icon";
-import { PlaceSearchInput } from "../../../../../components/text-input";
-import { useDebouncedValue } from "../../../../../hooks/use-debounced-value";
-import { getAccessToken } from "../../../../../utils/access-token";
-import { catalogQueries } from "../../../../catalog/api/queries";
-import { useCategorySlug } from "../../../../catalog/hooks";
-import { MapScreen, MapSheet } from "../../../components/map-screen";
-import { useCoursePlaces } from "../../../hooks";
+import PlusIcon from "@/assets/icon-plus.svg?react";
+import RetryLargeIcon from "@/assets/icon-retry-large.svg?react";
+import SearchLargeIcon from "@/assets/icon-search-large.svg?react";
+import { PlaceIcon } from "@/components/place-icon";
+import { PlaceSearchInput } from "@/components/text-input";
+import { catalogQueries } from "@/domains/catalog/api/queries";
+import { useCategorySlug } from "@/domains/catalog/hooks";
+import { MapScreen, MapSheet } from "@/domains/meeting/components/map-screen";
+import { useCoursePlaces } from "@/domains/meeting/hooks";
+import { useDebouncedValue } from "@/hooks/use-debounced-value";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   addButton,

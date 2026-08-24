@@ -2,7 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
+import { render } from "@/test-utils";
+
 import { PlaceSearchSheet } from "./index";
 
 const fetchMock = vi.spyOn(globalThis, "fetch");

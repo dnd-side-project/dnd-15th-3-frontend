@@ -1,6 +1,6 @@
-import CrownIcon from "../../assets/icon-crown.svg?react";
-import type { ProfileAvatarId } from "../../domains/catalog/api/types";
-import { MomoAvatar } from "../momo-avatar";
+import CrownIcon from "@/assets/icon-crown.svg?react";
+import { MomoAvatar } from "@/components/momo-avatar";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
 
 import { avatarWrapper, crown } from "./index.css";
 

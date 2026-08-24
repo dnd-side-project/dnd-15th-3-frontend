@@ -1,4 +1,4 @@
-import { KakaoMap } from "../../../../components/kakao-map";
+import { KakaoMap } from "@/components/kakao-map";
 
 import { page } from "./index.css";
 

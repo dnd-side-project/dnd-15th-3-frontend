@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import CaretRightIcon from "../../assets/icon-caret-right.svg?react";
-import { withLayout } from "../layout/index.decorators";
+import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { TopAppBar } from "./index";
 
 import { iconButton } from "./index.css";

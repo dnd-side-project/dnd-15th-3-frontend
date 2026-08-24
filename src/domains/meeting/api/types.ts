@@ -1,4 +1,4 @@
-import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "../../catalog/api/types";
+import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "@/domains/catalog/api/types";
 
 export type ParticipantRole = "HOST" | "MEMBER";
 

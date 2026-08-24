@@ -2,14 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ChangeEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 
-import SendIcon from "../../assets/icon-send.svg?react";
-import type { ProfileAvatarId } from "../../domains/catalog/api/types";
-import { createCourseComment } from "../../domains/course/api";
-import { courseQueries } from "../../domains/course/api/queries";
-import type { CourseComment } from "../../domains/course/api/types";
-import { AvatarWithCrown } from "../avatar-with-crown";
-import { BottomSheet } from "../bottom-sheet";
-import { CourseCommentItem } from "../comment-item";
+import SendIcon from "@/assets/icon-send.svg?react";
+import { AvatarWithCrown } from "@/components/avatar-with-crown";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { CourseCommentItem } from "@/components/comment-item";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
+import { createCourseComment } from "@/domains/course/api";
+import { courseQueries } from "@/domains/course/api/queries";
+import type { CourseComment } from "@/domains/course/api/types";
 
 import { input, inputBar, inputField, list, scrollContainer, sendButton } from "./index.css";
 

@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
 
-import MomoShadow from "../../../../assets/momo-shadow.svg?react";
-import { CtaButton } from "../../../../components/cta-button";
-import { Layout } from "../../../../components/layout";
-import { SpeechBubble } from "../../../../components/speech-bubble";
+import MomoShadow from "@/assets/momo-shadow.svg?react";
+import { CtaButton } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { SpeechBubble } from "@/components/speech-bubble";
 
 import {
   description,

@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 
-import type { CourseComment } from "../../domains/course/api/types";
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+import type { CourseComment } from "@/domains/course/api/types";
+
 import { CourseCommentSheet } from "./index";
 
 const MEETING_ID = "meeting-1";

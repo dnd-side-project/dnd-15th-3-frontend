@@ -1,7 +1,7 @@
 import { Children, type ReactNode } from "react";
 
-import ArrowRightIcon from "../../assets/icon-arrow-right.svg?react";
-import XIcon from "../../assets/icon-x.svg?react";
+import ArrowRightIcon from "@/assets/icon-arrow-right.svg?react";
+import XIcon from "@/assets/icon-x.svg?react";
 
 import {
   chipConnector,

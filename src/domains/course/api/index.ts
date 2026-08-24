@@ -1,6 +1,7 @@
-import { request } from "../../../utils/http";
-import type { CategorySlug } from "../../catalog/api/types";
-import type { MeetingStatus } from "../../meeting/api/types";
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import type { MeetingStatus } from "@/domains/meeting/api/types";
+import { request } from "@/utils/http";
+
 import type {
   AddCoursePlaceRequest,
   CourseCandidateList,

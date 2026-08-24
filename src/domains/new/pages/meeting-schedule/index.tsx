@@ -1,17 +1,12 @@
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-import { DayPicker } from "../../../../components/day-picker";
-import { SectionIntro } from "../../../../components/section-intro";
-import { TimePicker } from "../../../../components/time-picker";
-import {
-  parseDateString,
-  parseTimeString,
-  toDateString,
-  toTimeString,
-} from "../../../../utils/time";
-import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../constants";
+import { DayPicker } from "@/components/day-picker";
+import { SectionIntro } from "@/components/section-intro";
+import { TimePicker } from "@/components/time-picker";
+import { StepPage } from "@/domains/new/components/step-page";
+import type { MeetingDraft } from "@/domains/new/constants";
+import { parseDateString, parseTimeString, toDateString, toTimeString } from "@/utils/time";
 
 import { fields, intro } from "./index.css";
 

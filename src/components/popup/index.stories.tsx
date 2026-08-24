@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
 
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import type { PopupProps } from "./index";
 import { Popup } from "./index";
 

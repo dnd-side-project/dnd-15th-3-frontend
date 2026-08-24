@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { TopAppBar } from "./index";
 
 test("제목을 렌더링한다", async () => {

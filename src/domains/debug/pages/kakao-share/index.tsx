@@ -1,4 +1,4 @@
-import { KakaoShareButton } from "../../../../components/kakao-share-button";
+import { KakaoShareButton } from "@/components/kakao-share-button";
 
 export function KakaoSharePage() {
   return (

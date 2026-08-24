@@ -2,18 +2,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import ArrowsClockwiseIcon from "../../../../../../assets/icon-arrows-clockwise.svg?react";
-import CaretLeftIcon from "../../../../../../assets/icon-caret-left.svg?react";
-import HeartIcon from "../../../../../../assets/icon-heart.svg?react";
-import PlusIcon from "../../../../../../assets/icon-plus.svg?react";
-import { PlaceIcon } from "../../../../../../components/place-icon";
-import { toast } from "../../../../../../components/toast/manager";
-import { getAccessToken } from "../../../../../../utils/access-token";
-import { catalogQueries } from "../../../../../catalog/api/queries";
-import { useCategorySlug } from "../../../../../catalog/hooks";
-import { addRecommendation } from "../../../../api";
-import { MapScreen, MapSheet } from "../../../../components/map-screen";
-import { useMeeting } from "../../../../hooks";
+import ArrowsClockwiseIcon from "@/assets/icon-arrows-clockwise.svg?react";
+import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
+import HeartIcon from "@/assets/icon-heart.svg?react";
+import PlusIcon from "@/assets/icon-plus.svg?react";
+import { PlaceIcon } from "@/components/place-icon";
+import { toast } from "@/components/toast/manager";
+import { catalogQueries } from "@/domains/catalog/api/queries";
+import { useCategorySlug } from "@/domains/catalog/hooks";
+import { addRecommendation } from "@/domains/meeting/api";
+import { MapScreen, MapSheet } from "@/domains/meeting/components/map-screen";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   addButton,

@@ -1,5 +1,5 @@
-import type { CourseComment } from "../../domains/course/api/types";
-import { AvatarWithCrown } from "../avatar-with-crown";
+import { AvatarWithCrown } from "@/components/avatar-with-crown";
+import type { CourseComment } from "@/domains/course/api/types";
 
 import { bubble, content, meta, nickname, row, timestamp } from "./index.css";
 

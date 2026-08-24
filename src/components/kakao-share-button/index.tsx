@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { type ShareLinkParams, useKakaoShare } from "../../hooks/use-kakao-share";
+import { type ShareLinkParams, useKakaoShare } from "@/hooks/use-kakao-share";
 
 import * as styles from "./index.css";
 

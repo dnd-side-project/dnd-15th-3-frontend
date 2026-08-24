@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
-import { withLayout } from "../layout/index.decorators";
+import { withLayout } from "@/components/layout/index.decorators";
+
 import { PreferenceButton } from "./index";
 
 interface SurfaceProps {

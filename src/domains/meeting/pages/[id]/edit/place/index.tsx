@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 
-import { toast } from "../../../../../../components/toast/manager";
-import { TopAppBar } from "../../../../../../components/top-app-bar";
-import { getAccessToken } from "../../../../../../utils/access-token";
-import { ApiError } from "../../../../../../utils/http";
-import { addCoursePlace } from "../../../../../course/api";
-import { addRecommendation } from "../../../../api";
-import { useMeeting } from "../../../../hooks";
-import { PlaceSearch } from "../../place";
+import { toast } from "@/components/toast/manager";
+import { TopAppBar } from "@/components/top-app-bar";
+import { addCoursePlace } from "@/domains/course/api";
+import { addRecommendation } from "@/domains/meeting/api";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { PlaceSearch } from "@/domains/meeting/pages/[id]/place";
+import { getAccessToken } from "@/utils/access-token";
+import { ApiError } from "@/utils/http";
 
 export function CoursePlaceAddPage() {
   const navigate = useNavigate();

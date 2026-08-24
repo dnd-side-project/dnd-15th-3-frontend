@@ -2,23 +2,23 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
 
-import PlusIcon from "../../../../../assets/icon-plus.svg?react";
-import PushPinIcon from "../../../../../assets/icon-push-pin.svg?react";
-import ThumbsDownIcon from "../../../../../assets/icon-thumbs-down.svg?react";
-import ThumbsUpIcon from "../../../../../assets/icon-thumbs-up.svg?react";
-import { Chip, ChipGroup } from "../../../../../components/chip";
-import { CtaButton } from "../../../../../components/cta-button";
-import { Layout } from "../../../../../components/layout";
-import { PlaceIcon } from "../../../../../components/place-icon";
-import { toast } from "../../../../../components/toast/manager";
-import { TopAppBar } from "../../../../../components/top-app-bar";
-import { getAccessToken } from "../../../../../utils/access-token";
-import type { CategorySlug } from "../../../../catalog/api/types";
-import { useCategories } from "../../../../catalog/hooks";
-import { addCoursePlace, updateCoursePlaces } from "../../../../course/api";
-import { courseQueries } from "../../../../course/api/queries";
-import { CoursePlaceStrip } from "../../../../course/components/course-place-strip";
-import { useMeeting } from "../../../hooks";
+import PlusIcon from "@/assets/icon-plus.svg?react";
+import PushPinIcon from "@/assets/icon-push-pin.svg?react";
+import ThumbsDownIcon from "@/assets/icon-thumbs-down.svg?react";
+import ThumbsUpIcon from "@/assets/icon-thumbs-up.svg?react";
+import { Chip, ChipGroup } from "@/components/chip";
+import { CtaButton } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { PlaceIcon } from "@/components/place-icon";
+import { toast } from "@/components/toast/manager";
+import { TopAppBar } from "@/components/top-app-bar";
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import { useCategories } from "@/domains/catalog/hooks";
+import { addCoursePlace, updateCoursePlaces } from "@/domains/course/api";
+import { courseQueries } from "@/domains/course/api/queries";
+import { CoursePlaceStrip } from "@/domains/course/components/course-place-strip";
+import { useMeeting } from "@/domains/meeting/hooks";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   addPlaceButton,

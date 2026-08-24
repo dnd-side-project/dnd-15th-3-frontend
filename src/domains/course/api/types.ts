@@ -1,5 +1,5 @@
-import type { CategorySlug, ProfileAvatarId } from "../../catalog/api/types";
-import type { ParticipantRole, ViewerPreference } from "../../meeting/api/types";
+import type { CategorySlug, ProfileAvatarId } from "@/domains/catalog/api/types";
+import type { ParticipantRole, ViewerPreference } from "@/domains/meeting/api/types";
 
 export interface CourseCandidateSummary {
   courseCandidateId: string;

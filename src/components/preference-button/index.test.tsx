@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { PreferenceButton } from "./index";
 
 test("like 타입은 좋아요와 count로 이름이 붙는다", async () => {

@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { CtaButton, CtaButtonRow } from "./index";
 
 test("라벨을 가진 버튼을 렌더링한다", async () => {

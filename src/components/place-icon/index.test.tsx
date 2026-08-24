@@ -1,7 +1,8 @@
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import type { PlaceIconProps } from "./index";
 import { PlaceIcon } from "./index";
 

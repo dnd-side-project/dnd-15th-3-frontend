@@ -1,8 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
-import { text } from "../../../../../styles/text";
+import { text } from "@/styles/text";
 
-import { vars } from "../../../../../styles/theme.css";
+import { vars } from "@/styles/theme.css";
 
 export const search = style({
   padding: "11px 20px 0",

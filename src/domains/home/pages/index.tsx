@@ -1,9 +1,9 @@
 import { Link } from "react-router";
 
-import HomeConfetti from "../../../assets/home-confetti.svg?react";
-import ArrowUpRightIcon from "../../../assets/icon-arrow-up-right.svg?react";
-import MomoLogo from "../../../assets/logo-momo.svg?react";
-import { Layout } from "../../../components/layout";
+import HomeConfetti from "@/assets/home-confetti.svg?react";
+import ArrowUpRightIcon from "@/assets/icon-arrow-up-right.svg?react";
+import MomoLogo from "@/assets/logo-momo.svg?react";
+import { Layout } from "@/components/layout";
 
 import {
   arrow,

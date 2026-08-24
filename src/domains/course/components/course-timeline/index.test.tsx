@@ -1,8 +1,9 @@
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
-import type { CourseRouteStep } from "../../api/types";
+import type { CourseRouteStep } from "@/domains/course/api/types";
+import { render } from "@/test-utils";
+
 import { CourseTimeline } from "./index";
 
 const ROUTE: CourseRouteStep[] = [

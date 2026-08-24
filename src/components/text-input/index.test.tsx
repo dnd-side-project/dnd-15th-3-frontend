@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { CourseFeedbackInput, NicknameInput, PlaceSearchInput, TextInput } from "./index";
 
 test("NicknameInput은 닉네임 textbox를 렌더링한다", async () => {

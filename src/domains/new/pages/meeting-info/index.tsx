@@ -1,13 +1,13 @@
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-import { SectionIntro } from "../../../../components/section-intro";
-import { TextInput } from "../../../../components/text-input";
-import type { MeetingTypeCode } from "../../../catalog/api/types";
-import { useMeetingTypes } from "../../../catalog/hooks";
-import { MEETING_TYPE_ICONS } from "../../../catalog/meeting-type-icons";
-import { StepPage } from "../../components/step-page";
-import type { MeetingDraft } from "../../constants";
+import { SectionIntro } from "@/components/section-intro";
+import { TextInput } from "@/components/text-input";
+import type { MeetingTypeCode } from "@/domains/catalog/api/types";
+import { useMeetingTypes } from "@/domains/catalog/hooks";
+import { MEETING_TYPE_ICONS } from "@/domains/catalog/meeting-type-icons";
+import { StepPage } from "@/domains/new/components/step-page";
+import type { MeetingDraft } from "@/domains/new/constants";
 
 import { intro, name, nameLabel, typeCard, typeIcon, typeLabel, types } from "./index.css";
 

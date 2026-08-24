@@ -1,7 +1,8 @@
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import { render } from "../../test-utils";
+import { render } from "@/test-utils";
+
 import { SpeechBubble } from "./index";
 
 test("children 텍스트를 렌더링한다", async () => {

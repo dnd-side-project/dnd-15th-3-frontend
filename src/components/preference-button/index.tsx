@@ -1,5 +1,5 @@
-import ThumbsDownIcon from "../../assets/icon-thumbs-down.svg?react";
-import ThumbsUpIcon from "../../assets/icon-thumbs-up.svg?react";
+import ThumbsDownIcon from "@/assets/icon-thumbs-down.svg?react";
+import ThumbsUpIcon from "@/assets/icon-thumbs-up.svg?react";
 
 import { preferenceButton } from "./index.css";
 

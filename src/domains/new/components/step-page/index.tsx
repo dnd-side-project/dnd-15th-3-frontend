@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router";
 
-import { CtaButtonRow } from "../../../../components/cta-button";
-import { Layout } from "../../../../components/layout";
-import { TopAppBar } from "../../../../components/top-app-bar";
+import { CtaButtonRow } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { TopAppBar } from "@/components/top-app-bar";
 
-import { surfaceColor } from "../../../../components/layout/index.css";
 import { body, footer } from "./index.css";
+import { surfaceColor } from "@/components/layout/index.css";
 
 export interface StepPageProps {
   title: string;

@@ -1,9 +1,9 @@
-import ArrowSquareOutIcon from "../../../../assets/icon-arrow-square-out.svg?react";
-import CaretRightIcon from "../../../../assets/icon-caret-right.svg?react";
-import FootprintsIcon from "../../../../assets/icon-footprints.svg?react";
-import { PlaceIcon } from "../../../../components/place-icon";
-import type { RouteMarkerTone } from "../../../../components/route-marker";
-import type { CourseRouteStep } from "../../api/types";
+import ArrowSquareOutIcon from "@/assets/icon-arrow-square-out.svg?react";
+import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
+import FootprintsIcon from "@/assets/icon-footprints.svg?react";
+import { PlaceIcon } from "@/components/place-icon";
+import type { RouteMarkerTone } from "@/components/route-marker";
+import type { CourseRouteStep } from "@/domains/course/api/types";
 
 import {
   address,

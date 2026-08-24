@@ -2,7 +2,8 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "../../../../test-utils";
+import { render } from "@/test-utils";
+
 import { JoinErrorPage } from "./index";
 
 function renderError() {

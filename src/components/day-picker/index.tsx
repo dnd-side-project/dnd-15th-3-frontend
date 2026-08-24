@@ -3,11 +3,11 @@ import { Chevron as RdpChevron } from "@daypicker/react";
 import { ko } from "@daypicker/react/locale";
 import { useState, type Dispatch, type SetStateAction, type ComponentProps } from "react";
 
-import CalendarIcon from "../../assets/icon-calendar.svg?react";
-import CaretLeftIcon from "../../assets/icon-caret-left.svg?react";
-import CaretRightIcon from "../../assets/icon-caret-right.svg?react";
-import { formatTwoDigits } from "../../utils/time";
-import { BottomSheet } from "../bottom-sheet";
+import CalendarIcon from "@/assets/icon-calendar.svg?react";
+import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
+import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { formatTwoDigits } from "@/utils/time";
 
 import * as styles from "./index.css";
 

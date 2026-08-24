@@ -1,5 +1,5 @@
-import type { ProfileAvatarId } from "../../domains/catalog/api/types";
-import { cx } from "../../utils/cx";
+import type { ProfileAvatarId } from "@/domains/catalog/api/types";
+import { cx } from "@/utils/cx";
 
 import { image, root } from "./index.css";
 
