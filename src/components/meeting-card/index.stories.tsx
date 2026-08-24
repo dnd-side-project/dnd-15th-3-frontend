@@ -120,6 +120,13 @@ const meta = {
     meetingName: "다같이 으쌰으쌰",
     meetingDate: "2026-07-25",
     meetingTime: "13:00",
+    size: "medium",
+  },
+  argTypes: {
+    size: {
+      control: "inline-radio",
+      options: ["medium", "large"],
+    },
   },
 } satisfies Meta<typeof MeetingCard>;
 
@@ -129,8 +136,54 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const Large: Story = {
+  args: {
+    size: "large",
+  },
+};
+
 export const LongRoute: Story = {
   args: {
+    courseDetail: {
+      courseName: "성수 데이트 풀코스",
+      totalDistanceKm: 3.4,
+      totalCount: 8,
+      route: [
+        ...sampleRoute,
+        {
+          recommendationId: "rec-7",
+          placeId: "place-7",
+          order: 7,
+          name: "남산타워",
+          category: "문화",
+          categorySlug: "culture",
+          address: "서울 용산구 용산동2가",
+          primaryImageUrl: null,
+          longitude: 126.988,
+          latitude: 37.551,
+          walkDurationToNextMin: 4,
+        },
+        {
+          recommendationId: "rec-8",
+          placeId: "place-8",
+          order: 8,
+          name: "명동",
+          category: "쇼핑",
+          categorySlug: "shopping",
+          address: "서울 중구 명동",
+          primaryImageUrl: null,
+          longitude: 126.985,
+          latitude: 37.561,
+          walkDurationToNextMin: null,
+        },
+      ],
+    },
+  },
+};
+
+export const LargeLongRoute: Story = {
+  args: {
+    size: "large",
     courseDetail: {
       courseName: "성수 데이트 풀코스",
       totalDistanceKm: 3.4,

@@ -28,6 +28,7 @@ export interface MeetingCardProps {
   meetingDate?: string;
   /** HH:mm */
   meetingTime?: string;
+  size?: "medium" | "large";
 }
 
 function formatDateTime(date: string, time: string) {
@@ -39,36 +40,42 @@ export function MeetingCard({
   meetingName,
   meetingDate,
   meetingTime,
+  size = "medium",
 }: MeetingCardProps) {
   const { route: steps } = courseDetail;
   const dateLabel = meetingDate && meetingTime ? formatDateTime(meetingDate, meetingTime) : null;
 
+  const logoWidth = size === "medium" ? 36 : 53;
+  const logoHeight = size === "medium" ? 9 : 13;
+
   return (
-    <article className={card}>
-      <div className={photoArea}>
-        <CompleteConfetti aria-hidden className={confetti} />
-        <img alt="" className={momoImage} src="/static/complete-momo.webp" />
-        {dateLabel ? <span className={dateStamp}>{dateLabel}</span> : null}
+    <article className={card({ size })}>
+      <div className={photoArea({ size })}>
+        <CompleteConfetti aria-hidden className={confetti({ size })} />
+        <img alt="" className={momoImage({ size })} src="/static/complete-momo.webp" />
+        {dateLabel ? <span className={dateStamp({ size })}>{dateLabel}</span> : null}
       </div>
 
-      <img alt="" aria-hidden className={heartDrawing} src="/static/heart-drawing.webp" />
+      <img alt="" aria-hidden className={heartDrawing({ size })} src="/static/heart-drawing.webp" />
 
-      <div className={body}>
-        <h2 className={title}>{meetingName}</h2>
-        <span className={routeLabel}>{"TODAY'S ROUTE"}</span>
+      <div className={body({ size })}>
+        <h2 className={title({ size })}>{meetingName}</h2>
+        <span className={routeLabel({ size })}>{"TODAY'S ROUTE"}</span>
 
-        <div className={route}>
+        <div className={route({ size })}>
           {steps.map((step, index) => (
-            <span className={routeItem} key={step.recommendationId}>
-              <span className={placeName}>{step.name}</span>
-              {index < steps.length - 1 ? <ArrowRightIcon aria-hidden className={arrow} /> : null}
+            <span className={routeItem({ size })} key={step.recommendationId}>
+              <span className={placeName({ size })}>{step.name}</span>
+              {index < steps.length - 1 ? (
+                <ArrowRightIcon aria-hidden className={arrow({ size })} />
+              ) : null}
             </span>
           ))}
         </div>
       </div>
 
-      <div className={footer}>
-        <MomoLogo aria-label="momo" height={9} role="img" width={36} />
+      <div className={footer({ size })}>
+        <MomoLogo aria-label="momo" height={logoHeight} role="img" width={logoWidth} />
       </div>
     </article>
   );
