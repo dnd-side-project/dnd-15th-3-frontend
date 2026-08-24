@@ -13,6 +13,7 @@ import { JoinProfilePage } from "./domains/join/pages/profile";
 import { JoinRedirect } from "./domains/join/pages/redirect";
 import { meetingLayout } from "./domains/meeting/layout";
 import { MeetingPage } from "./domains/meeting/pages/[id]";
+import { CardPage } from "./domains/meeting/pages/[id]/card";
 import { ChoicePage } from "./domains/meeting/pages/[id]/choice";
 import { CoursePage } from "./domains/meeting/pages/[id]/course";
 import { CoursePlanPage } from "./domains/meeting/pages/[id]/course-plan";
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: MeetingPage,
+      },
+      {
+        path: "card",
+        Component: CardPage,
       },
       {
         path: "my",
