@@ -122,6 +122,7 @@ export const dayButton = style({
   backgroundColor: "transparent",
   color: "inherit",
   cursor: "pointer",
+  fontSize: 16,
 });
 export const dayPickArea = style({
   paddingBottom: 15,
