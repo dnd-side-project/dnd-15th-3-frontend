@@ -1,6 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -22,8 +23,8 @@ export const header = style({
   alignItems: "center",
   height: 49,
   padding: "10px 20px",
-  borderBottom: "1px solid #E5E5E5",
-  backgroundColor: "rgba(255, 255, 255, 0.93)",
+  borderBottom: `1px solid ${palette.neutral4}`,
+  backgroundColor: palette.white6Alpha93,
 });
 
 export const backButton = style({
@@ -35,12 +36,12 @@ export const backButton = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: "#606060",
+  color: vars.color.icon.default,
   cursor: "pointer",
 });
 
 export const headerTitle = style({
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
   textAlign: "center",
 });
@@ -58,7 +59,7 @@ export const photo = style({
   flex: "0 0 100%",
   height: 213,
   borderRadius: 10,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
   scrollSnapAlign: "start",
 });
@@ -84,7 +85,7 @@ export const name = style({
   alignItems: "center",
   gap: 7,
   margin: "0 3px",
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 20, weight: 600, lineHeight: 1.2 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -95,7 +96,7 @@ export const address = style({
   display: "flex",
   gap: 0,
   margin: "0 3px",
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -124,8 +125,12 @@ export const addButton = recipe({
   },
   variants: {
     saved: {
-      true: { backgroundColor: "#3793FF", color: "#FFFFFF", cursor: "default" },
-      false: { backgroundColor: "#ECEFF5", color: "#A4B1C5" },
+      true: {
+        backgroundColor: vars.color.brand.primary,
+        color: vars.color.text.inverse,
+        cursor: "default",
+      },
+      false: { backgroundColor: vars.color.surface.muted, color: vars.color.text.tertiary },
     },
   },
 });
@@ -138,7 +143,7 @@ export const similar = style({
 
 export const similarTitle = style({
   margin: "0 0 4px 20px",
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
@@ -155,7 +160,7 @@ export const similarPlace = style({
     bottom: 0,
     left: 20,
     height: 1,
-    backgroundColor: "#DAE1EC",
+    backgroundColor: vars.color.surface.mutedStrong,
   },
 });
 
@@ -177,7 +182,7 @@ export const similarThumbnail = style({
   width: 96,
   height: 71,
   borderRadius: 5,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
@@ -193,7 +198,7 @@ export const similarName = style({
   display: "flex",
   alignItems: "center",
   gap: 8,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -201,7 +206,7 @@ export const similarName = style({
 });
 
 export const similarAddress = style({
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -217,8 +222,8 @@ export const similarAddButton = style({
   height: 36,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#ECEFF5",
-  color: "#A4B1C5",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.text.tertiary,
   cursor: "pointer",
 });
 
@@ -232,8 +237,8 @@ export const refresh = style({
   padding: "0 14px",
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#F1F8FF",
-  color: "#3793FF",
+  backgroundColor: vars.color.brand.surface,
+  color: vars.color.brand.primary,
   ...text({ size: 14, weight: 500, lineHeight: 1.2 }),
   cursor: "pointer",
 });
@@ -247,8 +252,8 @@ export const externalLink = style({
   margin: "10px 0 0 20px",
   padding: "0 6px",
   borderRadius: 5,
-  backgroundColor: "#F2F3F7",
-  color: "#7D7D7D",
+  backgroundColor: vars.color.surface.pressed,
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 14, weight: 400, lineHeight: 1.2 }),
   textDecoration: "none",
 });
@@ -260,7 +265,7 @@ export const externalLogo = style({
 
 export const status = style({
   padding: "24px 20px calc(30px + env(safe-area-inset-bottom))",
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });
