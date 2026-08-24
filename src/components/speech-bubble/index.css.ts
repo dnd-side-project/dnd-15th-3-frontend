@@ -2,9 +2,11 @@ import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  background: "#DBECFF",
-  text: "#3793FF",
+  background: vars.color.brand.subtle,
+  text: vars.color.brand.primary,
 };
 
 const spin = keyframes({

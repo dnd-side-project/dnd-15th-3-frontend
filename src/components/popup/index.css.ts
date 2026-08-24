@@ -1,13 +1,15 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
+
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  backdrop: "rgba(0, 0, 0, 0.4)",
-  background: "#FFFFFF",
-  icon: "#BBBBBB",
-  title: "#000000",
-  description: "#6D6D6D",
+  backdrop: palette.black9Alpha40,
+  background: vars.color.surface.default,
+  icon: palette.neutral8,
+  title: vars.color.text.strong,
+  description: vars.color.text.description,
 };
 
 export const backdrop = style({

@@ -3,6 +3,8 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 export const selected = style({
   minHeight: 83,
   padding: "0 20px",
@@ -11,7 +13,7 @@ export const selected = style({
 export const empty = style({
   margin: 0,
   paddingTop: 43,
-  color: "#A4B1C5",
+  color: vars.color.text.tertiary,
   ...text({ size: 14, weight: 400, lineHeight: "20px" }),
   textAlign: "center",
   whiteSpace: "pre-line",

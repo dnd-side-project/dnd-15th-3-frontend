@@ -1,20 +1,21 @@
 import { createVar, globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  unselectedBackground: "#ECEFF5",
-  unselectedText: "#707D91",
-  unselectedIcon: "#A4B1C5",
-  selectedBackground: "#DBECFF",
-  selectedText: "#3793FF",
-  overlayBackground: "rgba(255, 255, 255, 0.3)",
-  overlayBorder: "rgba(169, 169, 169, 0.22)",
-  overlayText: "#707D91",
-  overlayIcon: "#3793FF",
+  unselectedBackground: vars.color.surface.muted,
+  unselectedText: vars.color.text.secondary,
+  unselectedIcon: vars.color.text.tertiary,
+  selectedBackground: vars.color.brand.subtle,
+  selectedText: vars.color.brand.primary,
+  overlayBackground: palette.white9Alpha30,
+  overlayBorder: palette.neutral11Alpha22,
+  overlayText: vars.color.text.secondary,
+  overlayIcon: vars.color.brand.primary,
 };
 
 const iconColor = createVar();

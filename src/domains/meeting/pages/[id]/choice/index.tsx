@@ -15,6 +15,7 @@ import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
 import { updatePlacePreference } from "@/domains/meeting/api";
 import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
 import { useMeeting } from "@/domains/meeting/hooks";
+import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
 
 import {
@@ -68,7 +69,7 @@ const PREVIEW_CARDS = [
   { left: 14, top: 14, height: 82 },
   { left: 68, top: 14, height: 44 },
   { left: 68, top: 63, height: 68 },
-  { left: 14, top: 102, height: 44, background: "#D2DCF1" },
+  { left: 14, top: 102, height: 44, background: palette.blue28 },
 ];
 
 function RecommendationCard({

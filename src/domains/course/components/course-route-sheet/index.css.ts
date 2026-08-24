@@ -1,7 +1,10 @@
 import { createVar, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
+
+import { vars } from "@/styles/theme.css";
 
 const courseColor = createVar();
 const courseSurfaceColor = createVar();
@@ -22,9 +25,24 @@ export const view2Body = recipe({
   },
   variants: {
     tone: {
-      blue: { vars: { [courseColor]: "#3793FF", [courseSurfaceColor]: "#F1F8FF" } },
-      pink: { vars: { [courseColor]: "#FF46A9", [courseSurfaceColor]: "#FFECF6" } },
-      purple: { vars: { [courseColor]: "#A754EB", [courseSurfaceColor]: "#F6EEFD" } },
+      blue: {
+        vars: {
+          [courseColor]: vars.color.course.blue.main,
+          [courseSurfaceColor]: vars.color.course.blue.surface,
+        },
+      },
+      pink: {
+        vars: {
+          [courseColor]: vars.color.course.pink.main,
+          [courseSurfaceColor]: vars.color.course.pink.surface,
+        },
+      },
+      purple: {
+        vars: {
+          [courseColor]: vars.color.course.purple.main,
+          [courseSurfaceColor]: vars.color.course.purple.surface,
+        },
+      },
     },
   },
   defaultVariants: {
@@ -34,7 +52,7 @@ export const view2Body = recipe({
 
 export const courseHeader = style({
   flexShrink: 0,
-  borderBottom: "1px solid #ECEFF5",
+  borderBottom: `1px solid ${vars.color.surface.muted}`,
   padding: "0 20px 10px",
 });
 
@@ -51,7 +69,7 @@ export const courseBadge = style({
 export const courseTitle = style({
   margin: 0,
   padding: "6px 0 10px",
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 20, weight: 600, lineHeight: 1.4 }),
 });
 
@@ -64,7 +82,7 @@ export const statLabel = style({
   display: "inline-flex",
   alignItems: "center",
   gap: 5,
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 14, weight: 500 }),
 });
 
@@ -72,7 +90,7 @@ export const statValue = style({
   fontFamily: "Montserrat, sans-serif",
   fontSize: 14,
   fontWeight: 600,
-  color: "#454545",
+  color: palette.neutral21,
 });
 
 export const timelineScroll = style({
@@ -94,7 +112,7 @@ export const footer = recipe({
   variants: {
     shadow: {
       true: {
-        boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.25)",
+        boxShadow: `0 -4px 12px ${vars.color.overlay.scrim25}`,
         zIndex: 1,
       },
       false: {},

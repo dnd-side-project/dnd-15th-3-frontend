@@ -1,17 +1,19 @@
 import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
+
 import { surfaceColor } from "@/components/layout/index.css";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  pasteBackground: "#ECEFF5",
-  pasteText: "#A4B1C5",
-  titleText: "#000000",
-  otpBackground: "#ECEFF5",
-  otpBorder: "#E1E6EE",
-  otpFilled: "#E5EEF9",
-  otpFilledBorder: "#C5E0FF",
-  otpTextColor: "#66ADFF",
+  pasteBackground: vars.color.surface.muted,
+  pasteText: vars.color.text.tertiary,
+  titleText: vars.color.text.strong,
+  otpBackground: vars.color.surface.muted,
+  otpBorder: palette.gray6,
+  otpFilled: palette.blue4,
+  otpFilledBorder: palette.blue8,
+  otpTextColor: vars.color.brand.strong,
 };
 
 const spin = keyframes({
@@ -109,7 +111,7 @@ export const otpInput = style({
   borderRadius: 6,
   backgroundColor: colors.otpBackground,
   color: colors.otpTextColor,
-  caretColor: "#66ADFF",
+  caretColor: vars.color.brand.strong,
   fontFamily: '"Montserrat"',
   fontSize: 32,
   fontWeight: 600,

@@ -4,12 +4,12 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  title: "#3D3D3D",
-  description: "#707D91",
-  cardBackground: "#ECEFF5",
-  cardTitle: "#3793FF",
-  arrowBackground: "rgba(0, 0, 0, 0.1)",
-  arrowIcon: "#FFFFFF",
+  title: vars.color.text.heading,
+  description: vars.color.text.secondary,
+  cardBackground: vars.color.surface.muted,
+  cardTitle: vars.color.brand.primary,
+  arrowBackground: vars.color.overlay.scrim10,
+  arrowIcon: vars.color.surface.default,
 };
 
 export const root = style({
@@ -62,7 +62,7 @@ export const card = recipe({
     overflow: "hidden",
     borderRadius: 12,
     backgroundColor: colors.cardBackground,
-    boxShadow: "0 0 2px rgba(0, 0, 0, 0.25)",
+    boxShadow: `0 0 2px ${vars.color.overlay.scrim25}`,
     textDecoration: "none",
   },
   variants: {

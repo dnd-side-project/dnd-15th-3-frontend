@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -9,7 +10,7 @@ export const root = recipe({
   base: {
     position: "absolute",
     inset: 0,
-    backgroundColor: "#E9EEF5",
+    backgroundColor: vars.color.surface.muted,
   },
   variants: {
     interactive: {
@@ -29,7 +30,7 @@ export const notice = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500 }),
   pointerEvents: "none",
 });
@@ -45,8 +46,8 @@ export const currentDot = style({
   display: "block",
   width: 18,
   height: 18,
-  border: "3px solid #FFFFFF",
+  border: `3px solid ${vars.color.surface.default}`,
   borderRadius: vars.radius.full,
-  backgroundColor: "#3793FF",
-  boxShadow: `0 0 0 6px ${"rgba(55, 147, 255, 0.25)"}`,
+  backgroundColor: vars.color.brand.primary,
+  boxShadow: `0 0 0 6px ${palette.blue24Alpha25}`,
 });

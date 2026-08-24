@@ -8,7 +8,7 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  backgroundColor: "#FFFFFF",
+  backgroundColor: vars.color.surface.default,
 });
 
 export const selected = style({
@@ -16,7 +16,7 @@ export const selected = style({
   flexDirection: "column",
   gap: 10,
   padding: "20px 0",
-  backgroundColor: "#EEF6FF",
+  backgroundColor: vars.color.brand.surfaceAlt,
 });
 
 export const selectedTitle = style({
@@ -24,7 +24,7 @@ export const selectedTitle = style({
   alignItems: "center",
   gap: 6,
   margin: "0 20px",
-  color: "#3793FF",
+  color: vars.color.brand.primary,
   ...text({ size: 16, weight: 600, lineHeight: 1.4 }),
 });
 
@@ -32,7 +32,7 @@ export const summary = style({
   display: "flex",
   gap: 6,
   margin: "0 20px 14px",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 13, weight: 500, lineHeight: 1.4 }),
 });
 
@@ -45,7 +45,7 @@ export const saved = style({
 
 export const savedTitle = style({
   margin: "0 20px",
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
@@ -59,8 +59,8 @@ export const addPlaceButton = style({
   margin: "0 20px",
   border: "none",
   borderRadius: 10,
-  backgroundColor: "#ECEFF5",
-  color: "#A4B1C5",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.text.tertiary,
   ...text({ size: 14, weight: 500, lineHeight: 1.4 }),
   cursor: "pointer",
 });
@@ -76,7 +76,7 @@ export const savedPlace = style({
   gap: 14,
   padding: "14px 20px",
   border: "none",
-  borderTop: "1px solid #ECEFF5",
+  borderTop: `1px solid ${vars.color.surface.muted}`,
   background: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -87,7 +87,7 @@ export const thumbnail = style({
   width: 60,
   height: 60,
   borderRadius: 8,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
@@ -103,7 +103,7 @@ export const name = style({
   display: "flex",
   alignItems: "center",
   gap: 6,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 16, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -111,7 +111,7 @@ export const name = style({
 });
 
 export const address = style({
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 13, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -131,12 +131,12 @@ export const preference = style({
   height: 24,
   padding: "0 8px",
   borderRadius: vars.radius.full,
-  backgroundColor: "#F2F4F8",
-  color: "#A4B1C5",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.text.tertiary,
 });
 
 export const count = style({
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 12, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -148,7 +148,7 @@ export const footer = style({
 
 export const status = style({
   padding: "24px 20px",
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });

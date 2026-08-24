@@ -3,8 +3,8 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  crownBackground: "#FF46A9",
-  crownForeground: "#FFECF6",
+  crownBackground: vars.color.course.pink.main,
+  crownForeground: vars.color.course.pink.surface,
 };
 
 export const avatarWrapper = style({

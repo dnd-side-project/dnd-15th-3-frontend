@@ -16,8 +16,8 @@ export const button = style({
   padding: `${vars.space.sm} ${vars.space.lg}`,
   border: "none",
   borderRadius: vars.radius.md,
-  background: "#fee500",
-  color: "#181600",
+  background: vars.color.external.kakaoYellow,
+  color: vars.color.external.kakaoText,
   fontFamily: vars.font.body,
   fontSize: vars.fontSize.md,
   fontWeight: vars.fontWeight.bold,
@@ -29,6 +29,6 @@ export const button = style({
 
 export const error = style({
   margin: 0,
-  color: "#ff5a5a",
+  color: vars.color.status.error,
   fontSize: vars.fontSize.sm,
 });

@@ -1,13 +1,16 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
+
+import { vars } from "@/styles/theme.css";
 
 export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
   // 상태바 48px 를 뺀 프레임 기준으로 흰색 도달 지점을 옮겼다.
-  background: "linear-gradient(180deg, #D7ECFF 0%, #FFFDFD 42%)",
+  background: `linear-gradient(180deg, ${palette.blue6} 0%, ${palette.red1} 42%)`,
 });
 
 export const texts = style({
@@ -20,13 +23,13 @@ export const texts = style({
 
 export const title = style({
   margin: 0,
-  color: "#3793FF",
+  color: vars.color.brand.primary,
   ...text({ size: 24, weight: 600, lineHeight: 1.2 }),
 });
 
 export const description = style({
   margin: 0,
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
 });
 
@@ -36,8 +39,8 @@ export const card = style({
   height: 301,
   margin: "51px 20px 0",
   borderRadius: 12,
-  background: "linear-gradient(180deg, #479BFF 40%, #7DB9FF 72%)",
-  boxShadow: "0 3px 4px rgba(0, 0, 0, 0.25)",
+  background: `linear-gradient(180deg, ${palette.blue20} 40%, ${palette.blue14} 72%)`,
+  boxShadow: `0 3px 4px ${vars.color.overlay.scrim25}`,
 });
 
 export const confetti = style({
@@ -68,9 +71,9 @@ export const badge = style({
   width: 76,
   height: 38,
   borderRadius: 20,
-  background: "linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0%, rgba(10, 123, 255, 0.25) 100%)",
+  background: `linear-gradient(90deg, ${palette.white7Alpha12} 0%, ${palette.blue27Alpha25} 100%)`,
   backdropFilter: "blur(4px)",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   fontFamily: "Montserrat, sans-serif",
   fontSize: 14,
   fontWeight: 500,
@@ -88,7 +91,7 @@ export const codeRow = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   cursor: "pointer",
 });
 
@@ -112,11 +115,11 @@ export const divider = style({
 export const dividerLine = style({
   flex: 1,
   height: 1,
-  backgroundColor: "#DAE1EC",
+  backgroundColor: vars.color.surface.mutedStrong,
 });
 
 export const dividerLabel = style({
-  color: "#6D6D6D",
+  color: vars.color.text.description,
   ...text({ size: 16, weight: 600, lineHeight: 1.6 }),
 });
 
@@ -134,7 +137,7 @@ export const footer = style({
 
 export const status = style({
   margin: "51px 20px 0",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });

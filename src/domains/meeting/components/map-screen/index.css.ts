@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -31,7 +32,7 @@ export const scrim = style({
 export const topScrim = style({
   position: "absolute",
   inset: 0,
-  backgroundImage: "linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(102, 102, 102, 0.04) 36%)",
+  backgroundImage: `linear-gradient(180deg, ${vars.color.overlay.scrim20} 0%, ${palette.neutral16Alpha4} 36%)`,
 });
 
 export const toggle = style({
@@ -85,9 +86,9 @@ export const meetingPill = style({
   padding: "0 7px",
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#3D4A5C",
-  boxShadow: "0 0 6px rgba(0, 0, 0, 0.25)",
-  color: "#FFFFFF",
+  backgroundColor: vars.color.slate.text,
+  boxShadow: `0 0 6px ${vars.color.overlay.scrim25}`,
+  color: vars.color.text.inverse,
   ...text({ size: 14, weight: 600, lineHeight: "22px" }),
   cursor: "pointer",
 });
@@ -105,8 +106,8 @@ export const sheet = recipe({
     flexDirection: "column",
     minHeight: 0,
     borderRadius: "24px 24px 0 0",
-    backgroundColor: "#FFFFFF",
-    boxShadow: "0 4px 70px rgba(0, 0, 0, 0.2)",
+    backgroundColor: vars.color.surface.default,
+    boxShadow: `0 4px 70px ${vars.color.overlay.scrim20}`,
   },
   variants: {
     dragging: {
@@ -131,7 +132,7 @@ export const grabber = recipe({
         width: 50,
         height: 5,
         borderRadius: 10,
-        backgroundColor: "#D1D1D1",
+        backgroundColor: palette.neutral7,
         transition: "opacity 150ms ease-out",
       },
     },

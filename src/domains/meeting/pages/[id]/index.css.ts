@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -9,7 +10,7 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: "#FFFFFF",
+  background: vars.color.surface.default,
 });
 
 export const header = style({
@@ -17,7 +18,7 @@ export const header = style({
   height: 288,
   overflow: "hidden",
   // Figma 는 상태바 48px 를 포함한 336px 이다. 그라디언트 축이 프레임 위쪽에서 시작해 첫 스톱이 음수다.
-  background: "linear-gradient(167deg, #1E87FF -16%, #70B7FF 65%)",
+  background: `linear-gradient(167deg, ${palette.blue26} -16%, ${palette.blue15} 65%)`,
 });
 
 export const confetti = style({
@@ -45,7 +46,7 @@ export const backButton = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   cursor: "pointer",
 });
 
@@ -66,8 +67,8 @@ export const typeBadge = style({
   padding: "0 5px",
   border: "none",
   borderRadius: 6,
-  background: "radial-gradient(circle at 90% 100%, #3D96FF 0%, rgba(133, 189, 255, 0.26) 100%)",
-  color: "#FFFFFF",
+  background: `radial-gradient(circle at 90% 100%, ${palette.blue22} 0%, ${palette.blue13Alpha26} 100%)`,
+  color: vars.color.text.inverse,
   ...text({ size: 14, weight: 500 }),
   letterSpacing: -0.36,
   lineHeight: 1.2,
@@ -75,7 +76,7 @@ export const typeBadge = style({
 });
 
 export const typeSuffix = style({
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 16, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
@@ -97,9 +98,9 @@ export const title = style({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 26, weight: 600, lineHeight: 1.2 }),
-  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
+  textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
 });
 
 export const editButton = style({
@@ -112,8 +113,8 @@ export const editButton = style({
   padding: 0,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "rgba(255, 255, 255, 0.14)",
-  color: "#FFFFFF",
+  backgroundColor: palette.white3Alpha14,
+  color: vars.color.text.inverse,
   cursor: "pointer",
 });
 
@@ -125,7 +126,7 @@ export const infoCard = style({
   display: "flex",
   height: 81,
   borderRadius: 10,
-  background: "radial-gradient(120% 200% at 50% 120%, #95CFFF 0%, #55A8FF 50%, #4498FF 100%)",
+  background: `radial-gradient(120% 200% at 50% 120%, ${palette.blue11} 0%, ${palette.blue17} 50%, ${palette.blue21} 100%)`,
 });
 
 export const infoCell = style({
@@ -137,11 +138,11 @@ export const infoCell = style({
   padding: "18px 0 11px",
   border: "none",
   background: "none",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   cursor: "pointer",
   selectors: {
     "&:not(:first-child)": {
-      borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+      borderLeft: `1px solid ${palette.white4Alpha50}`,
     },
   },
 });
@@ -154,13 +155,13 @@ export const infoValue = style({
   ...text({ size: 14, weight: 600 }),
   letterSpacing: -0.33,
   lineHeight: "22px",
-  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
+  textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
   whiteSpace: "nowrap",
 });
 
 export const sectionTitle = style({
   margin: "0 0 0 29px",
-  color: "#3D3D3D",
+  color: vars.color.text.heading,
   ...text({ size: 18, weight: 600, lineHeight: 1.65 }),
 });
 
@@ -194,13 +195,13 @@ export const crown = style({
   width: 18,
   height: 18,
   borderRadius: vars.radius.full,
-  backgroundColor: "#FF46A9",
-  color: "#FFECF6",
+  backgroundColor: vars.color.course.pink.main,
+  color: vars.color.course.pink.surface,
 });
 
 export const participantName = style({
   width: "100%",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 14, weight: 600, lineHeight: 1.6 }),
   overflow: "hidden",
   textAlign: "center",
@@ -237,9 +238,9 @@ export const courseEditButton = style({
   padding: 0,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#4C9FFF",
-  boxShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
-  color: "#FFFFFF",
+  backgroundColor: vars.color.brand.badge,
+  boxShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
+  color: vars.color.text.inverse,
   cursor: "pointer",
 });
 
@@ -251,7 +252,7 @@ export const card = recipe({
     height: 206,
     padding: 0,
     border: "none",
-    boxShadow: "0 0 4px rgba(0, 0, 0, 0.1)",
+    boxShadow: `0 0 4px ${vars.color.overlay.scrim10}`,
     cursor: "pointer",
     textAlign: "left",
     textDecoration: "none",
@@ -261,7 +262,7 @@ export const card = recipe({
       course: {
         flex: "0 0 113px",
         borderRadius: 16,
-        background: "linear-gradient(166deg, #54A3FF 0%, #87BFFF 33%, #BBDAFF 98%)",
+        background: `linear-gradient(166deg, ${palette.blue18} 0%, ${palette.blue12} 33%, ${palette.blue9} 98%)`,
       },
       map: { flex: 1, borderRadius: 10 },
     },
@@ -289,7 +290,7 @@ export const mapScrim = style({
   // 지도 타일이 자체 z-index 를 쓰므로 그 위로 올린다.
   zIndex: 1,
   inset: 0,
-  background: "linear-gradient(0deg, rgba(74, 74, 74, 0.82) 0%, rgba(188, 197, 207, 0) 100%)",
+  background: `linear-gradient(0deg, ${palette.neutral20Alpha82} 0%, ${palette.gray7Alpha0} 100%)`,
 });
 
 export const cardArrow = recipe({
@@ -303,8 +304,8 @@ export const cardArrow = recipe({
     width: 28,
     height: 28,
     borderRadius: vars.radius.full,
-    backgroundColor: "rgba(0, 0, 0, 0.1)",
-    color: "#FFFFFF",
+    backgroundColor: vars.color.overlay.scrim10,
+    color: vars.color.text.inverse,
   },
   variants: {
     card: {
@@ -333,15 +334,15 @@ export const cardTexts = recipe({
 
 export const cardTitle = style({
   margin: 0,
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 16, weight: 600, lineHeight: 1.23 }),
-  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
+  textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
   whiteSpace: "nowrap",
 });
 
 export const cardDescription = style({
   margin: 0,
-  color: "#F1F8FF",
+  color: vars.color.brand.surface,
   ...text({ size: 13, weight: 500, lineHeight: 1.65 }),
   whiteSpace: "nowrap",
 });
@@ -355,7 +356,7 @@ export const footer = style({
 
 export const status = style({
   padding: "40px 20px",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });

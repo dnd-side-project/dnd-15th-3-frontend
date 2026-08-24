@@ -2,9 +2,11 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  title: "#3D3D3D",
-  description: "#707D91",
+  title: vars.color.text.heading,
+  description: vars.color.text.secondary,
 };
 
 export const root = style({

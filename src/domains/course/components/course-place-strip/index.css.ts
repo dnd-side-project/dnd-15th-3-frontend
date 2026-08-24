@@ -1,6 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
+
+import { vars } from "@/styles/theme.css";
 
 export const root = style({
   display: "flex",
@@ -13,14 +16,11 @@ export const root = style({
 
 export const place = style({
   position: "relative",
-  display: "flex",
   flexShrink: 0,
-  alignItems: "flex-end",
   width: 98,
   height: 98,
-  padding: 8,
   borderRadius: 10,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   overflow: "hidden",
 });
 
@@ -29,22 +29,24 @@ export const thumbnail = style({
   inset: 0,
   width: "100%",
   height: "100%",
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
+// 사진 위에서도 이름이 읽히도록 바닥에서 위로 옅어지는 스크림을 깐다.
 export const name = style({
-  position: "relative",
+  position: "absolute",
+  inset: 0,
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-end",
   gap: 4,
-  width: "100%",
-  color: "#FFFFFF",
+  padding: 8,
+  backgroundImage: `linear-gradient(0deg, ${palette.black4} 0%, ${palette.neutral16Alpha0} 100%)`,
+  color: vars.color.text.inverse,
   ...text({ size: 12, weight: 600, lineHeight: 1.3 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  textShadow: "0 0 4px rgba(0, 0, 0, 0.6)",
 });
 
 export const arrow = style({
@@ -52,7 +54,7 @@ export const arrow = style({
   width: 0,
   height: 0,
   border: "5px solid transparent",
-  borderLeft: "8px solid #3793FF",
+  borderLeft: `8px solid ${vars.color.brand.primary}`,
 });
 
 export const addButton = style({
@@ -64,7 +66,7 @@ export const addButton = style({
   height: 98,
   border: "none",
   borderRadius: 10,
-  backgroundColor: "#DBECFF",
-  color: "#3793FF",
+  backgroundColor: vars.color.brand.subtle,
+  color: vars.color.brand.primary,
   cursor: "pointer",
 });

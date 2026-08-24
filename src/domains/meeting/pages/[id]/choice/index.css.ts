@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -8,7 +9,7 @@ export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: "#FFFFFF",
+  background: vars.color.surface.default,
 });
 
 export const toggle = style({
@@ -30,7 +31,7 @@ export const bar = style({
 });
 
 export const count = style({
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: "22px" }),
 });
 
@@ -41,7 +42,7 @@ export const sort = style({
   padding: 0,
   border: "none",
   background: "none",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: "17px" }),
   cursor: "pointer",
 });
@@ -64,7 +65,7 @@ export const emptyPreviewCard = style({
   position: "absolute",
   width: 48,
   borderRadius: 5,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
 });
 
 export const emptyTexts = style({
@@ -77,13 +78,13 @@ export const emptyTexts = style({
 
 export const emptyTitle = style({
   margin: 0,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const emptyDescription = style({
   margin: 0,
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 
@@ -124,14 +125,14 @@ export const cardImage = style({
   display: "block",
   width: "100%",
   height: "100%",
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
 export const cardScrim = style({
   position: "absolute",
   inset: 0,
-  background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, ${"rgba(0, 0, 0, 0.59)"} 58%)`,
+  background: `linear-gradient(180deg, ${palette.black6Alpha0} 40%, ${palette.black7Alpha59} 58%)`,
 });
 
 export const cardBody = style({
@@ -163,7 +164,7 @@ export const cardName = style({
   display: "flex",
   alignItems: "center",
   gap: 6,
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 16, weight: 600, lineHeight: "20px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -171,7 +172,7 @@ export const cardName = style({
 });
 
 export const cardAddress = style({
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 12, weight: 500, lineHeight: "12px" }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -180,7 +181,7 @@ export const cardAddress = style({
 
 export const cardCaret = style({
   flexShrink: 0,
-  color: "rgba(242, 243, 247, 0.59)",
+  color: palette.gray2Alpha59,
 });
 
 export const preferences = style({
@@ -196,8 +197,8 @@ export const footer = style({
   marginTop: "auto",
   display: "flex",
   padding: "10px 20px calc(20px + env(safe-area-inset-bottom))",
-  backgroundColor: "#FFFFFF",
-  boxShadow: "0 4px 11.9px rgba(0, 0, 0, 0.25)",
+  backgroundColor: vars.color.surface.default,
+  boxShadow: `0 4px 11.9px ${vars.color.overlay.scrim25}`,
 });
 
 export const retry = style({
@@ -206,15 +207,15 @@ export const retry = style({
   padding: "0 20px",
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#ECEFF5",
-  color: "#3D4A5C",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.slate.text,
   ...text({ size: 15, weight: 600, lineHeight: 1.2 }),
   cursor: "pointer",
 });
 
 export const status = style({
   padding: "40px 20px",
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });

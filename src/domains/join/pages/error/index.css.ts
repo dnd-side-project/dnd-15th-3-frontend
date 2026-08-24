@@ -2,10 +2,12 @@ import { keyframes, style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  background: "#F1F8FF",
-  title: "#3793FF",
-  description: "#707D91",
+  background: vars.color.brand.surface,
+  title: vars.color.brand.primary,
+  description: vars.color.text.secondary,
 };
 
 const wobble = keyframes({
@@ -70,7 +72,7 @@ export const momoImage = style({
 export const momoShadow = style({
   display: "block",
   width: 144,
-  color: "#DAE1EC",
+  color: vars.color.surface.mutedStrong,
 });
 
 export const footer = style({

@@ -1,13 +1,10 @@
 import { useState } from "react";
 
+import { palette } from "@/styles/palette";
+
 import { confettiLayer, confettiPiece } from "./index.css";
 
-const CONFETTI_COLORS = [
-  "rgb(204, 214, 255)",
-  "rgb(255, 244, 192)",
-  "rgb(114, 185, 255)",
-  "rgb(255, 146, 225)",
-] as const;
+const CONFETTI_COLORS = [palette.blue29, palette.yellow3, palette.blue30, palette.purple3] as const;
 
 const CONFETTI_COUNT = 60;
 const MIN_DELAY_S = 0.4;

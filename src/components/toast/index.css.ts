@@ -1,6 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
+
+import { vars } from "@/styles/theme.css";
 
 export const viewport = style({
   position: "fixed",
@@ -19,9 +22,9 @@ export const root = style({
   zIndex: "calc(1000 - var(--toast-index))",
   padding: "8px 20px",
   borderRadius: 30,
-  backgroundColor: "rgba(62, 62, 62, 0.8)",
+  backgroundColor: palette.neutral22Alpha80,
   backdropFilter: "blur(4px)",
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 16, weight: 500, lineHeight: 1.6 }),
   whiteSpace: "nowrap",
   transform:

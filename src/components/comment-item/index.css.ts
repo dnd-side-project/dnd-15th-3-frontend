@@ -3,13 +3,15 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  bubbleIncoming: "#F1F8FF",
-  bubbleIncomingText: "#707D91",
-  bubbleMine: "#3793FF",
-  bubbleMineText: "#FFFFFF",
-  nickname: "#3D3D3D",
-  timestamp: "#A4B1C5",
+  bubbleIncoming: vars.color.brand.surface,
+  bubbleIncomingText: vars.color.text.secondary,
+  bubbleMine: vars.color.brand.primary,
+  bubbleMineText: vars.color.surface.default,
+  nickname: vars.color.text.heading,
+  timestamp: vars.color.text.tertiary,
 };
 
 export const row = recipe({

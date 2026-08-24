@@ -1,16 +1,17 @@
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  like: "#66ADFF",
-  dislike: "#FF46A9",
-  overlayBackground: "rgba(242, 243, 247, 0.34)",
-  mutedBackground: "#ECEFF5",
-  mutedForeground: "#A4B1C5",
-  foreground: "#FFFFFF",
+  like: vars.color.status.like,
+  dislike: vars.color.status.dislike,
+  overlayBackground: palette.gray5Alpha34,
+  mutedBackground: vars.color.surface.muted,
+  mutedForeground: vars.color.text.tertiary,
+  foreground: vars.color.text.inverse,
 };
 
 export const preferenceButton = recipe({

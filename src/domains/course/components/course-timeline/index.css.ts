@@ -19,9 +19,24 @@ export const list = recipe({
   },
   variants: {
     tone: {
-      blue: { vars: { [courseColor]: "#3793FF", [courseSurfaceColor]: "#F4F9FF" } },
-      pink: { vars: { [courseColor]: "#FF46A9", [courseSurfaceColor]: "#FFECF6" } },
-      purple: { vars: { [courseColor]: "#A754EB", [courseSurfaceColor]: "#F6EEFD" } },
+      blue: {
+        vars: {
+          [courseColor]: vars.color.course.blue.main,
+          [courseSurfaceColor]: vars.color.course.blue.surface,
+        },
+      },
+      pink: {
+        vars: {
+          [courseColor]: vars.color.course.pink.main,
+          [courseSurfaceColor]: vars.color.course.pink.surface,
+        },
+      },
+      purple: {
+        vars: {
+          [courseColor]: vars.color.course.purple.main,
+          [courseSurfaceColor]: vars.color.course.purple.surface,
+        },
+      },
     },
   },
   defaultVariants: {
@@ -56,7 +71,7 @@ export const badge = style({
   height: 20,
   borderRadius: vars.radius.full,
   backgroundColor: courseColor,
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   ...text({ size: 12, weight: 600, lineHeight: 1 }),
 });
 
@@ -76,8 +91,8 @@ export const place = style({
   padding: "0 11px",
   border: "none",
   borderRadius: 10,
-  backgroundColor: "#F5F6F8",
-  color: "#A4B1C5",
+  backgroundColor: vars.color.surface.app,
+  color: vars.color.text.tertiary,
   textAlign: "left",
   cursor: "pointer",
 });
@@ -87,7 +102,7 @@ export const thumbnail = style({
   width: 70,
   height: 70,
   borderRadius: 8,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
@@ -103,7 +118,7 @@ export const name = style({
   display: "flex",
   alignItems: "center",
   gap: 6,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 16, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -111,7 +126,7 @@ export const name = style({
 });
 
 export const address = style({
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 13, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",

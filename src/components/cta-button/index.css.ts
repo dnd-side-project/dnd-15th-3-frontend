@@ -3,12 +3,14 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  primary: "#66ADFF",
-  secondaryBackground: "#DAE1EC",
-  secondaryText: "#707D91",
-  icon: "#A4B1C5",
-  white: "#FFFFFF",
+  primary: vars.color.brand.strong,
+  secondaryBackground: vars.color.surface.mutedStrong,
+  secondaryText: vars.color.text.secondary,
+  icon: vars.color.text.tertiary,
+  white: vars.color.surface.default,
 };
 
 export const buttonRoot = style({});

@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -16,12 +17,12 @@ export const plan = style({
   flexDirection: "column",
   gap: 12,
   padding: "20px 20px 26px",
-  backgroundColor: "#EEF6FF",
+  backgroundColor: vars.color.brand.surfaceAlt,
 });
 
 export const planTitle = style({
   margin: 0,
-  color: "#3793FF",
+  color: vars.color.brand.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
 });
 
@@ -46,9 +47,9 @@ export const expand = style({
   height: 32,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
-  boxShadow: "0 0 4px rgba(0, 0, 0, 0.15)",
-  color: "#707D91",
+  backgroundColor: palette.white5Alpha90,
+  boxShadow: `0 0 4px ${palette.black8Alpha15}`,
+  color: vars.color.text.secondary,
   cursor: "pointer",
 });
 
@@ -61,18 +62,18 @@ export const course = style({
 
 export const courseTitle = style({
   margin: 0,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 20, weight: 600, lineHeight: 1.4 }),
 });
 
 export const courseCount = style({
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 14, weight: 500, lineHeight: 1.4 }),
 });
 
 export const status = style({
   padding: "24px 20px",
-  color: "#7D7D7D",
+  color: vars.color.text.secondaryAlt,
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
 });

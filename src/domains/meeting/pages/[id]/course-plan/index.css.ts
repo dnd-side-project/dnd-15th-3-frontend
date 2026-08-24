@@ -1,9 +1,12 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
-export const surfaceColor = "#FFFFFF";
+import { vars } from "@/styles/theme.css";
+
+export const surfaceColor = vars.color.surface.default;
 
 export const root = style({
   display: "flex",
@@ -29,13 +32,13 @@ export const editButton = recipe({
     padding: 0,
     border: "none",
     borderRadius: 16,
-    backgroundColor: "rgba(185, 185, 185, 0.14)",
+    backgroundColor: palette.neutral9Alpha14,
     cursor: "pointer",
   },
   variants: {
     editing: {
-      true: { color: "#3793FF" },
-      false: { color: "#A8A8A8" },
+      true: { color: vars.color.brand.primary },
+      false: { color: palette.neutral12 },
     },
   },
   defaultVariants: {
@@ -49,7 +52,7 @@ export const picker = style({
 
 export const status = style({
   padding: "40px 20px",
-  color: "#A8A8A8",
+  color: palette.neutral12,
   ...text({ size: 16, weight: 500, lineHeight: 1.5 }),
   textAlign: "center",
 });

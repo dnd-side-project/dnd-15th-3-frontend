@@ -2,9 +2,11 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  title: "#262626",
-  icon: "#606060",
+  title: vars.color.text.primary,
+  icon: vars.color.icon.default,
 };
 
 export const root = style({
