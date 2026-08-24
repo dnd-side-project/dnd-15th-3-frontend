@@ -1,18 +1,19 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  surface: "#FFFFFF",
-  placeholder: "#E2E2E2",
-  shadow: "rgba(0, 0, 0, 0.3)",
+  surface: vars.color.surface.default,
+  placeholder: palette.neutral5,
+  shadow: palette.black10Alpha30,
   tone: {
-    blue: "#3793FF",
-    pink: "#FF46A9",
-    purple: "#A754EB",
+    blue: vars.color.course.blue.main,
+    pink: vars.color.course.pink.main,
+    purple: vars.color.course.purple.main,
   },
 };
 

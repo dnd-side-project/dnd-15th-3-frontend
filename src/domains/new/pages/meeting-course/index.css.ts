@@ -2,13 +2,15 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  label: "#262626",
-  description: "#707D91",
-  fieldBackground: "#ECEFF5",
-  fieldText: "#3D3D3D",
-  placeholder: "#707D91",
-  icon: "#707D91",
+  label: vars.color.text.primary,
+  description: vars.color.text.secondary,
+  fieldBackground: vars.color.surface.muted,
+  fieldText: vars.color.text.heading,
+  placeholder: vars.color.text.secondary,
+  icon: vars.color.text.secondary,
 };
 
 export const location = style({

@@ -11,14 +11,16 @@ import { courseQueries } from "@/domains/course/api/queries";
 import { CourseRouteSheet, type CourseTone } from "@/domains/course/components/course-route-sheet";
 import { MapScreen } from "@/domains/meeting/components/map-screen";
 import { useMeeting, useMeetingPermissions } from "@/domains/meeting/hooks";
+import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
 
 import { editFab, tabs } from "./index.css";
 
+// Kakao Maps Polyline 의 strokeColor 는 실제 색상 문자열이 필요해 CSS 변수(vars.color.course)를 쓸 수 없다.
 const COURSE_TONES: Record<RouteMarkerTone, { primary: string; label: string }> = {
-  blue: { primary: "#3793FF", label: "A 코스" },
-  pink: { primary: "#FF46A9", label: "B 코스" },
-  purple: { primary: "#A754EB", label: "C 코스" },
+  blue: { primary: palette.blue23, label: "A 코스" },
+  pink: { primary: palette.purple2, label: "B 코스" },
+  purple: { primary: palette.indigo2, label: "C 코스" },
 };
 
 const TONES: RouteMarkerTone[] = ["blue", "pink", "purple"];

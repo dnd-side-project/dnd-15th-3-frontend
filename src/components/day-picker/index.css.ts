@@ -2,6 +2,8 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "@/styles/text";
+
+import { vars } from "@/styles/theme.css";
 export const confirmButton = recipe({
   base: {
     borderStyle: "none",
@@ -16,16 +18,16 @@ export const confirmButton = recipe({
   variants: {
     tone: {
       primary: {
-        backgroundColor: "#66ADFF",
-        color: "#FFFFFF",
+        backgroundColor: vars.color.brand.strong,
+        color: vars.color.text.inverse,
         ":active": {
           filter: "brightness(0.8)",
         },
         cursor: "pointer",
       },
       secondary: {
-        backgroundColor: "#DAE1EC",
-        color: "#707D91",
+        backgroundColor: vars.color.surface.mutedStrong,
+        color: vars.color.text.secondary,
         cursor: "not-allowed",
       },
     },
@@ -47,8 +49,8 @@ export const trigger = style({
   columnGap: 15,
   flex: 1,
   height: 54,
-  backgroundColor: "#ECEFF5",
-  color: "#707D91",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.text.secondary,
   border: 0,
   padding: "15px 13px",
   ...text({ size: 16, weight: 500 }),
@@ -62,12 +64,12 @@ export const calendar = style({
 });
 
 export const selectedDay = style({
-  backgroundColor: "#66ADFF",
+  backgroundColor: vars.color.brand.strong,
   borderRadius: 100,
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
 });
 export const monthCaption = style({
-  color: "#262626",
+  color: vars.color.text.primary,
   height: 24,
   fontWeight: 700,
   textAlign: "left",
@@ -81,14 +83,14 @@ export const navigation = style({
   insetInlineEnd: 0,
   display: "flex",
   alignItems: "center",
-  color: "#A4B1C5",
+  color: vars.color.text.tertiary,
   height: 20,
   columnGap: 15,
   paddingRight: 16,
   paddingTop: 10,
 });
 export const weekdays = style({
-  color: "#888888",
+  color: vars.color.text.placeholder,
 });
 export const weekday = style({
   fontSize: 16,
@@ -130,9 +132,9 @@ export const dayPickArea = style({
 });
 
 export const navigationButton = style({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: vars.color.surface.default,
   border: 0,
-  color: "#A4B1C5",
+  color: vars.color.text.tertiary,
   padding: 0,
   width: 20,
   height: 20,
@@ -140,5 +142,5 @@ export const navigationButton = style({
 });
 
 export const outside = style({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: vars.color.surface.default,
 });

@@ -4,10 +4,10 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  background: "#ECEFF5",
-  icon: "#A4B1C5",
-  kakaoBackground: "#FEE500",
-  kakaoIcon: "#000000",
+  background: vars.color.surface.muted,
+  icon: vars.color.text.tertiary,
+  kakaoBackground: vars.color.external.kakaoYellow,
+  kakaoIcon: vars.color.text.strong,
 };
 
 export const group = style({

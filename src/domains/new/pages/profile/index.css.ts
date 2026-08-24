@@ -5,10 +5,10 @@ import { text } from "@/styles/text";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  heading: "#3D3D3D",
-  description: "#707D91",
-  changeBackground: "#3793FF",
-  changeIcon: "#FFFFFF",
+  heading: vars.color.text.heading,
+  description: vars.color.text.secondary,
+  changeBackground: vars.color.brand.primary,
+  changeIcon: vars.color.surface.default,
 };
 
 export const root = style({

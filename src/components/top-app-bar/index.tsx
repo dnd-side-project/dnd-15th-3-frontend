@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
 
 import { iconButton, root, slot, title as titleStyle } from "./index.css";
+import { vars } from "@/styles/theme.css";
 
 export interface TopAppBarProps {
   title: string;
@@ -11,7 +12,12 @@ export interface TopAppBarProps {
   background?: string;
 }
 
-export function TopAppBar({ title, onBack, action, background = "#FFFFFF" }: TopAppBarProps) {
+export function TopAppBar({
+  title,
+  onBack,
+  action,
+  background = vars.color.surface.default,
+}: TopAppBarProps) {
   return (
     <header className={root} style={{ background }}>
       <div className={slot}>

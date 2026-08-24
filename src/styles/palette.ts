@@ -1,0 +1,124 @@
+// 코드 전반에서 실사용 중인 원시 색상값. 컴포넌트에서 직접 참조하지 말고,
+// 재사용되는 값은 theme.css.ts 의 vars.color.* 시맨틱 토큰을 통해 사용한다.
+// 값 자체는 Figma 디자인(모임 상세/코스 추천/장소 검색 등 최신 화면 기준)과 대조해 확정했다.
+
+const toRgba = (hex: string, alpha: number) => {
+  const n = parseInt(hex.slice(1), 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+export const palette = {
+  // blue
+  blue23: "#3793FF",
+  blue3: "#ECEFF5",
+  blue7: "#DAE1EC",
+  blue16: "#66ADFF",
+  blue1: "#F1F8FF",
+  blue5: "#DBECFF",
+  blue19: "#4C9FFF",
+  blue2: "#EEF6FF",
+  blue25: "#258AFF",
+  blue4: "#E5EEF9",
+  blue8: "#C5E0FF",
+  blue24Alpha25: toRgba("#3793FF", 0.25),
+  blue26: "#1E87FF",
+  blue15: "#70B7FF",
+  blue22: "#3D96FF",
+  blue13Alpha26: toRgba("#85BDFF", 0.26),
+  blue11: "#95CFFF",
+  blue17: "#55A8FF",
+  blue21: "#4498FF",
+  blue18: "#54A3FF",
+  blue12: "#87BFFF",
+  blue9: "#BBDAFF",
+  blue6: "#D7ECFF",
+  blue20: "#479BFF",
+  blue14: "#7DB9FF",
+  blue27Alpha25: toRgba("#0A7BFF", 0.25),
+  blue10: "#AAD1FF",
+  blue28: "#D2DCF1",
+  blue29: "#CCD6FF",
+  blue30: "#72B9FF",
+  // gray
+  gray9: "#707D91",
+  gray8: "#A4B1C5",
+  gray3: "#F2F3F7",
+  gray1: "#F5F6F8",
+  gray6: "#E1E6EE",
+  gray2Alpha59: toRgba("#F2F3F7", 0.59),
+  gray7Alpha0: toRgba("#BCC5CF", 0),
+  gray4Alpha69: toRgba("#F2F3F7", 0.69),
+  gray5Alpha34: toRgba("#F2F3F7", 0.34),
+  gray10: "#4D5969",
+  // neutral
+  neutral24: "#262626",
+  neutral23: "#3D3D3D",
+  neutral14: "#7D7D7D",
+  neutral15: "#6D6D6D",
+  neutral18: "#606060",
+  neutral7: "#D1D1D1",
+  neutral13: "#888888",
+  neutral10: "#B0B0B0",
+  neutral21: "#454545",
+  neutral16Alpha4: toRgba("#666666", 0.04),
+  neutral16Alpha0: toRgba("#666666", 0),
+  neutral20Alpha82: toRgba("#4A4A4A", 0.82),
+  neutral9Alpha14: toRgba("#B9B9B9", 0.14),
+  neutral12: "#A8A8A8",
+  neutral6: "#E0E0E0",
+  neutral4: "#E5E5E5",
+  neutral8: "#BBBBBB",
+  neutral5: "#E2E2E2",
+  neutral1: "#EEEEEE",
+  neutral22Alpha80: toRgba("#3E3E3E", 0.8),
+  neutral11Alpha22: toRgba("#A9A9A9", 0.22),
+  neutral3: "#E6E6E6",
+  neutral19Alpha33: toRgba("#4B4B4B", 0.33),
+  neutral2: "#E7E7E7",
+  neutral17: "#636363",
+  // white
+  white1: "#FFFFFF",
+  white2Alpha10: toRgba("#FFFFFF", 0.1),
+  white3Alpha14: toRgba("#FFFFFF", 0.14),
+  white4Alpha50: toRgba("#FFFFFF", 0.5),
+  white5Alpha90: toRgba("#FFFFFF", 0.9),
+  white6Alpha93: toRgba("#FFFFFF", 0.93),
+  white7Alpha12: toRgba("#FFFFFF", 0.12),
+  white8Alpha81: toRgba("#FFFFFF", 0.81),
+  white9Alpha30: toRgba("#FFFFFF", 0.3),
+  // black
+  black2Alpha25: toRgba("#000000", 0.25),
+  black4: "#000000",
+  black5Alpha20: toRgba("#000000", 0.2),
+  black1Alpha10: toRgba("#000000", 0.1),
+  black3Alpha60: toRgba("#000000", 0.6),
+  black6Alpha0: toRgba("#000000", 0),
+  black7Alpha59: toRgba("#000000", 0.59),
+  black8Alpha15: toRgba("#000000", 0.15),
+  black9Alpha40: toRgba("#000000", 0.4),
+  black10Alpha30: toRgba("#000000", 0.3),
+  // purple
+  purple2: "#FF46A9",
+  purple1: "#FFECF6",
+  purple3: "#FF92E1",
+  // indigo
+  indigo2: "#A754EB",
+  indigo1: "#F6EEFD",
+  // red
+  red1: "#FFFDFD",
+  red2: "#FF5A5A",
+  red3: "#FF7751",
+  // orange
+  orange1: "#FF9B04",
+  // yellow
+  yellow1: "#FEE500",
+  yellow2: "#181600",
+  yellow3: "#FFF4C0",
+  // green
+  green1: "#28C55F",
+  // teal
+  teal1: "#38C0B3",
+} as const;

@@ -1,15 +1,16 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  track: "rgba(255, 255, 255, 0.81)",
-  label: "#B0B0B0",
-  activeBackground: "#3793FF",
-  activeLabel: "#FFFFFF",
+  track: palette.white8Alpha81,
+  label: vars.color.text.disabled,
+  activeBackground: vars.color.brand.primary,
+  activeLabel: vars.color.surface.default,
 };
 
 export const root = style({

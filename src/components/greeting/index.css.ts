@@ -9,8 +9,8 @@ export const greeting = recipe({
   },
   variants: {
     tone: {
-      normal: { color: vars.color.text },
-      primary: { color: vars.color.primary },
+      normal: { color: vars.color.text.primary },
+      primary: { color: vars.color.brand.primary },
     },
     size: {
       md: { fontSize: vars.fontSize.md },

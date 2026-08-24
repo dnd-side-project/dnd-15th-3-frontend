@@ -1,8 +1,12 @@
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
+
+import { vars } from "@/styles/theme.css";
+
 export const dropdown = recipe({
   base: {
-    boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
+    boxShadow: `0px 2px 4px ${vars.color.overlay.scrim25}`,
     borderRadius: 5,
     marginBlock: 5,
   },
@@ -27,7 +31,7 @@ export const item = recipe({
     ":first-child": {
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
-      boxShadow: "inset 0px -0.5px #E6E6E6",
+      boxShadow: `inset 0px -0.5px ${palette.neutral3}`,
     },
     ":last-child": {
       borderBottomRightRadius: 5,
@@ -36,7 +40,7 @@ export const item = recipe({
     cursor: "pointer",
     lineHeight: "28.7px",
     letterSpacing: -0.4,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: vars.color.surface.default,
     fontSize: 14,
     textAlign: "center",
     fontFamily: "sans-serif",
@@ -44,10 +48,10 @@ export const item = recipe({
   variants: {
     selected: {
       true: {
-        color: "#262626",
+        color: vars.color.text.primary,
       },
       false: {
-        color: "#B0B0B0",
+        color: vars.color.text.disabled,
       },
     },
   },

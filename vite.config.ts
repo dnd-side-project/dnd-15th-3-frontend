@@ -59,6 +59,7 @@ export default defineConfig({
   },
   staged: {
     "*": "vp check --fix",
+    "src/**/*.css.ts": "node scripts/check-color-literals.mjs",
   },
   test: {
     coverage: {

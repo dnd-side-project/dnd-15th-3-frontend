@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vp dev",
     "build": "tsc -b && vp build",
-    "lint": "vp lint",
+    "lint": "vp lint && pnpm lint:colors",
+    "lint:colors": "node scripts/check-color-literals.mjs",
     "preview": "vp preview",
     "prepare": "vp config",
     "storybook": "storybook dev -p 6006",

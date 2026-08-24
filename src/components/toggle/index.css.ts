@@ -1,13 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
+
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  background: "rgba(242, 243, 247, 0.69)",
-  icon: "rgba(75, 75, 75, 0.33)",
-  selectedBackground: "#3793FF",
-  selectedIcon: "#F2F3F7",
+  background: palette.gray4Alpha69,
+  icon: palette.neutral19Alpha33,
+  selectedBackground: vars.color.brand.primary,
+  selectedIcon: vars.color.surface.pressed,
 };
 
 const PADDING = 5;

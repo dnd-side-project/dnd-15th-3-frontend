@@ -21,7 +21,7 @@ export const overlay = style({
   justifyContent: "center",
   fontFamily: vars.font.body,
   fontSize: vars.fontSize.md,
-  color: vars.color.muted,
-  backgroundColor: vars.color.background,
+  color: vars.color.text.placeholder,
+  backgroundColor: vars.color.surface.default,
   pointerEvents: "none",
 });

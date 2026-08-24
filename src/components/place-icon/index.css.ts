@@ -3,15 +3,15 @@ import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  icon: "#FFFFFF",
-  restaurant: "#FF7751",
-  activity: "#3793FF",
-  shopping: "#FF46A9",
-  walk: "#38C0B3",
-  bar: "#A754EB",
-  culture: "#28C55F",
-  cafe: "#FF9B04",
-  other: "#A4B1C5",
+  icon: vars.color.text.inverse,
+  restaurant: vars.color.category.restaurant,
+  activity: vars.color.category.activity,
+  shopping: vars.color.category.shopping,
+  walk: vars.color.category.walk,
+  bar: vars.color.category.bar,
+  culture: vars.color.category.culture,
+  cafe: vars.color.category.cafe,
+  other: vars.color.category.other,
 };
 
 export const root = recipe({

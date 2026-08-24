@@ -1,15 +1,18 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  background: "#F1F8FF",
-  pill: "rgba(255, 255, 255, 0.1)",
-  pillText: "#FFFFFF",
-  cardTitle: "#FFFFFF",
-  location: "#FFFFFF",
-  title: "#3793FF",
-  description: "#707D91",
+  background: vars.color.brand.surface,
+  pill: palette.white2Alpha10,
+  pillText: vars.color.surface.default,
+  cardTitle: vars.color.surface.default,
+  location: vars.color.surface.default,
+  title: vars.color.brand.primary,
+  description: vars.color.text.secondary,
 };
 
 export const root = style({
@@ -36,8 +39,8 @@ export const card = style({
   minHeight: 395,
   padding: 20,
   borderRadius: 15,
-  backgroundImage: "linear-gradient(180deg, #258AFF 46%, #66ADFF 100%)",
-  boxShadow: "0 5px 10px rgba(0, 0, 0, 0.25)",
+  backgroundImage: `linear-gradient(180deg, ${palette.blue25} 46%, ${vars.color.brand.strong} 100%)`,
+  boxShadow: `0 5px 10px ${vars.color.overlay.scrim25}`,
   position: "relative",
   overflow: "hidden",
 });
@@ -69,7 +72,7 @@ export const cardTitle = style({
   margin: 0,
   color: colors.cardTitle,
   textAlign: "center",
-  textShadow: "0 0 4px rgba(0, 0, 0, 0.25)",
+  textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
   ...text({ size: 24, weight: 600 }),
 });
 

@@ -1,16 +1,18 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+import { palette } from "@/styles/palette";
+
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  background: "#ECEFF5",
-  focusedBackground: "#DAE1EC",
-  pillBackground: "#FFFFFF",
-  pillBorder: "#E7E7E7",
-  mutedForeground: "#707D91",
-  focusedSendBackground: "#AAD1FF",
-  focusedSendForeground: "#4C9FFF",
+  background: vars.color.surface.muted,
+  focusedBackground: vars.color.surface.mutedStrong,
+  pillBackground: vars.color.surface.default,
+  pillBorder: palette.neutral2,
+  mutedForeground: vars.color.text.secondary,
+  focusedSendBackground: vars.color.brand.focusSurface,
+  focusedSendForeground: vars.color.brand.badge,
 };
 
 const motion = {
@@ -76,7 +78,7 @@ export const input = style({
   fontSize: "inherit",
   fontWeight: "inherit",
   lineHeight: "inherit",
-  color: vars.color.text,
+  color: vars.color.text.primary,
 
   "::placeholder": {
     color: colors.mutedForeground,

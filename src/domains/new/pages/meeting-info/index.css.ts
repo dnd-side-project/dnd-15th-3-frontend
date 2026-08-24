@@ -3,12 +3,14 @@ import { recipe } from "@vanilla-extract/recipes";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  nameLabel: "#262626",
-  cardBackground: "#ECEFF5",
-  cardLabel: "#707D91",
-  selectedBackground: "#DBECFF",
-  selectedLabel: "#3793FF",
+  nameLabel: vars.color.text.primary,
+  cardBackground: vars.color.surface.muted,
+  cardLabel: vars.color.text.secondary,
+  selectedBackground: vars.color.brand.subtle,
+  selectedLabel: vars.color.brand.primary,
 };
 
 export const name = style({

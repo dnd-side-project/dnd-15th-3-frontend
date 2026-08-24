@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
+import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
@@ -23,7 +24,7 @@ export const result = style({
   width: "100%",
   padding: "17px 20px",
   border: "none",
-  borderTop: `1px solid ${"#DAE1EC"}`,
+  borderTop: `1px solid ${vars.color.surface.mutedStrong}`,
   background: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -34,7 +35,7 @@ export const thumbnail = style({
   width: 96,
   height: 71,
   borderRadius: 5,
-  backgroundColor: "#ECEFF5",
+  backgroundColor: vars.color.surface.muted,
   objectFit: "cover",
 });
 
@@ -50,7 +51,7 @@ export const resultName = style({
   display: "flex",
   alignItems: "center",
   gap: 8,
-  color: "#262626",
+  color: vars.color.text.primary,
   ...text({ size: 18, weight: 600, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -58,7 +59,7 @@ export const resultName = style({
 });
 
 export const resultAddress = style({
-  color: "#707D91",
+  color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500, lineHeight: 1.4 }),
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -74,8 +75,8 @@ export const addButton = style({
   height: 36,
   border: "none",
   borderRadius: vars.radius.full,
-  backgroundColor: "#ECEFF5",
-  color: "#A4B1C5",
+  backgroundColor: vars.color.surface.muted,
+  color: vars.color.text.tertiary,
   cursor: "pointer",
 });
 
@@ -89,20 +90,20 @@ export const notice = style({
 
 export const noticeIcon = style({
   marginBottom: 18,
-  color: "#E0E0E0",
+  color: palette.neutral6,
 });
 
 export const noticeTitle = style({
   alignSelf: "stretch",
   margin: 0,
-  color: "#000000",
+  color: vars.color.text.strong,
   ...text({ size: 20, weight: 600, lineHeight: "30px" }),
 });
 
 export const noticeDescription = style({
   alignSelf: "stretch",
   margin: "1px 0 0",
-  color: "#6D6D6D",
+  color: vars.color.text.description,
   ...text({ size: 14, weight: 500, lineHeight: "21px" }),
 });
 

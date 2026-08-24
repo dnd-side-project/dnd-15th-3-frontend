@@ -2,18 +2,20 @@ import { style } from "@vanilla-extract/css";
 
 import { text } from "@/styles/text";
 
+import { vars } from "@/styles/theme.css";
+
 const colors = {
-  inputBackground: "#ECEFF5",
-  inputBorder: "#ECEFF5",
-  sendBackground: "#3793FF",
-  placeholder: "#707D91",
+  inputBackground: vars.color.surface.muted,
+  inputBorder: vars.color.surface.muted,
+  sendBackground: vars.color.brand.primary,
+  placeholder: vars.color.text.secondary,
 };
 
 export const list = style({
   display: "flex",
   flexDirection: "column",
   gap: 6,
-  backgroundColor: "#FFFFFF",
+  backgroundColor: vars.color.surface.default,
 });
 
 export const scrollContainer = style({
@@ -27,7 +29,7 @@ export const inputBar = style({
   alignItems: "center",
   gap: 9,
   padding: 20,
-  backgroundColor: "#FFFFFF",
+  backgroundColor: vars.color.surface.default,
   borderTop: `1px solid ${colors.inputBorder}`,
 });
 
@@ -52,7 +54,7 @@ export const input = style({
   outline: "none",
   background: "transparent",
   ...text({ size: 16, weight: 500, lineHeight: 1.2 }),
-  color: "#707D91",
+  color: vars.color.text.secondary,
   "::placeholder": {
     color: colors.placeholder,
   },
@@ -68,7 +70,7 @@ export const sendButton = style({
   border: "none",
   borderRadius: 20,
   backgroundColor: colors.sendBackground,
-  color: "#FFFFFF",
+  color: vars.color.text.inverse,
   cursor: "pointer",
   selectors: {
     "&:disabled": {

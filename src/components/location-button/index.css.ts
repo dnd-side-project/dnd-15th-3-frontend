@@ -3,10 +3,10 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  background: "#FFFFFF",
-  activeBackground: "#F2F3F7",
-  icon: "#606060",
-  shadow: "rgba(0, 0, 0, 0.2)",
+  background: vars.color.surface.default,
+  activeBackground: vars.color.surface.pressed,
+  icon: vars.color.icon.default,
+  shadow: vars.color.overlay.scrim20,
 };
 
 export const button = style({
