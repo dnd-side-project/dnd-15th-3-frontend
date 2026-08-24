@@ -69,11 +69,11 @@ export const selectedDay = style({
 export const monthCaption = style({
   color: "#262626",
   height: 24,
-  width: 83,
   fontWeight: 700,
-  textAlign: "center",
+  textAlign: "left",
   fontSize: 16,
-  paddingLeft: 8,
+  paddingLeft: 14,
+  whiteSpace: "nowrap",
 });
 export const navigation = style({
   position: "absolute",
@@ -122,6 +122,7 @@ export const dayButton = style({
   backgroundColor: "transparent",
   color: "inherit",
   cursor: "pointer",
+  fontSize: 16,
 });
 export const dayPickArea = style({
   paddingBottom: 15,
