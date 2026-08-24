@@ -1,6 +1,4 @@
-// 코드 전반에서 실사용 중인 원시 색상값. 컴포넌트에서 직접 참조하지 말고,
-// 재사용되는 값은 theme.css.ts 의 vars.color.* 시맨틱 토큰을 통해 사용한다.
-// 값 자체는 Figma 디자인(모임 상세/코스 추천/장소 검색 등 최신 화면 기준)과 대조해 확정했다.
+// 재사용되는 값은 직접 참조하지 말고 theme.css.ts 의 vars.color.* 를 통해 쓴다.
 
 const toRgba = (hex: string, alpha: number) => {
   const n = parseInt(hex.slice(1), 16);

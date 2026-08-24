@@ -33,8 +33,7 @@ export const thumbnail = style({
   objectFit: "cover",
 });
 
-// Figma의 "선택된 장소" 카드와 같은 방식으로, 텍스트 그림자 대신 바닥에서 위로
-// 옅어지는 스크림을 깔아 사진 위에서도 이름이 읽히게 한다.
+// 사진 위에서도 이름이 읽히도록 바닥에서 위로 옅어지는 스크림을 깐다.
 export const name = style({
   position: "absolute",
   inset: 0,

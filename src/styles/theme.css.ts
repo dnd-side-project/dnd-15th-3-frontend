@@ -12,7 +12,7 @@ export const vars = createGlobalTheme(":root", {
       surface: palette.blue1,
       surfaceAlt: palette.blue2,
       badge: palette.blue19,
-      // Figma에는 없는, 텍스트 입력창 전송 버튼의 포커스 상태 전용 색.
+      // 텍스트 입력창 전송 버튼 포커스 전용 색.
       focusSurface: palette.blue10,
     },
     surface: {
