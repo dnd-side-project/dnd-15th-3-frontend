@@ -94,7 +94,9 @@ export function CourseDetailPage() {
       places={places}
       tone={tone}
       routeLineColor={toneStyle.primary}
-      onSelectPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
+      onSelectPlace={(placeId) =>
+        void navigate(`/meeting/${id}/course/${courseId}/place/${placeId}`)
+      }
     >
       {canManageMeeting ? (
         <button
@@ -118,7 +120,9 @@ export function CourseDetailPage() {
         courseCandidateId={courseId}
         accessToken={accessToken}
         tone={tone}
-        onSelectPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
+        onSelectPlace={(placeId) =>
+          void navigate(`/meeting/${id}/course/${courseId}/place/${placeId}`)
+        }
         snapIndex={snapIndex}
         onSnapIndexChange={setSnapIndex}
       />
