@@ -101,7 +101,7 @@ export function CourseDetailPage() {
           aria-label="코스 수정"
           className={editFab}
           type="button"
-          onClick={() => alert("TODO: 코스 수정")}
+          onClick={() => void navigate(`/meeting/${id}/course/${courseId}/edit`)}
         >
           <PenSmallIcon aria-hidden height={32} width={32} />
         </button>
