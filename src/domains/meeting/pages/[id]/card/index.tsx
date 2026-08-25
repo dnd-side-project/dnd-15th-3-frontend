@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 import DownloadIcon from "@/assets/icon-download.svg?react";
@@ -10,6 +10,7 @@ import { MeetingCard } from "@/components/meeting-card-front";
 import { toast } from "@/components/toast/manager";
 import { TopAppBar } from "@/components/top-app-bar";
 import type { CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
+import { useCardDownload } from "@/hooks/use-card-download";
 
 import {
   cardFlipPill,
@@ -30,6 +31,10 @@ import {
   pill,
   postbox,
   postboxStage,
+  previewBack,
+  previewCard,
+  previewFront,
+  previewStage,
   root,
   shareButton,
   shareSection,
@@ -108,6 +113,13 @@ export function CardPage() {
   const reduce = useReducedMotion();
   const t = (ms: number) => (reduce ? 0 : ms);
 
+  const [preview, setPreview] = useState(false);
+  const [previewFrontFlipped, setPreviewFrontFlipped] = useState(false);
+  const [previewBackFlipped, setPreviewBackFlipped] = useState(false);
+  const frontDownloadRef = useRef<HTMLDivElement>(null);
+  const backDownloadRef = useRef<HTMLDivElement>(null);
+  const { download } = useCardDownload();
+
   const meetingUrl = typeof window !== "undefined" ? `${window.location.origin}/meeting/1` : "";
 
   const handleMailClick = () => {
@@ -142,6 +154,13 @@ export function CardPage() {
       await navigator.clipboard.writeText(meetingUrl);
       toast.add({ title: "모임링크가 클립보드에 복사되었습니다." });
     }
+  };
+
+  const handleDownload = async () => {
+    setPreview(true);
+    await download(frontDownloadRef.current, "meeting-card-front");
+    await download(backDownloadRef.current, "meeting-card-back");
+    toast.add({ title: "모임카드 이미지를 저장했습니다." });
   };
 
   const stageDuration = reduce ? 0 : TIMING.cameraUp / 1000;
@@ -217,39 +236,92 @@ export function CardPage() {
               initial={{ opacity: 0 }}
               transition={{ duration: reduce ? 0 : 0.4 }}
             >
-              <div style={{ position: "relative" }}>
-                {phase === "done" ? (
-                  <span className={cardFlipPill}>카드를 뒤집어 코스를 확인해보세요!</span>
-                ) : null}
-                <div style={{ position: "relative" }}>
-                  <div className={cardOverlay} />
+              {preview ? (
+                <div className={previewStage}>
                   <div
-                    className={flipContainer}
-                    onClick={handleCardClick}
+                    className={`${previewCard} ${previewFront}`}
+                    onClick={() => setPreviewFrontFlipped((p) => !p)}
                     role="button"
                     tabIndex={0}
                   >
                     <div
                       className={flipInner}
-                      style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0deg)" }}
+                      style={{
+                        transform: previewFrontFlipped ? "rotateY(-180deg)" : "rotateY(0deg)",
+                      }}
                     >
                       <div className={flipFace}>
-                        <MeetingCard size="large" {...cardProps} />
+                        <MeetingCard size="small" {...cardProps} />
                       </div>
                       <div className={`${flipFace} ${flipBack}`}>
-                        <MeetingCardBack meetingUrl={meetingUrl} size="large" {...cardProps} />
+                        <MeetingCardBack
+                          courseDetail={sampleCourseDetail}
+                          meetingUrl={meetingUrl}
+                          size="small"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`${previewCard} ${previewBack}`}
+                    onClick={() => setPreviewBackFlipped((p) => !p)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div
+                      className={flipInner}
+                      style={{
+                        transform: previewBackFlipped ? "rotateY(-180deg)" : "rotateY(0deg)",
+                      }}
+                    >
+                      <div className={flipFace}>
+                        <MeetingCardBack
+                          courseDetail={sampleCourseDetail}
+                          meetingUrl={meetingUrl}
+                          size="small"
+                        />
+                      </div>
+                      <div className={`${flipFace} ${flipBack}`}>
+                        <MeetingCard size="small" {...cardProps} />
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div style={{ position: "relative" }}>
+                  {phase === "done" ? (
+                    <span className={cardFlipPill}>카드를 뒤집어 코스를 확인해보세요!</span>
+                  ) : null}
+                  <div style={{ position: "relative" }}>
+                    <div className={cardOverlay} />
+                    <div
+                      className={flipContainer}
+                      onClick={handleCardClick}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div
+                        className={flipInner}
+                        style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0deg)" }}
+                      >
+                        <div className={flipFace}>
+                          <MeetingCard size="large" {...cardProps} />
+                        </div>
+                        <div className={`${flipFace} ${flipBack}`}>
+                          <MeetingCardBack meetingUrl={meetingUrl} size="large" {...cardProps} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         </div>
 
         {phase === "done" ? (
           <div className={shareSection}>
-            <button className={downloadButton} type="button">
+            <button className={downloadButton} onClick={handleDownload} type="button">
               <DownloadIcon aria-hidden width={24} height={24} />
               이미지 저장
             </button>
@@ -258,6 +330,33 @@ export function CardPage() {
             </button>
           </div>
         ) : null}
+      </div>
+
+      <div
+        ref={frontDownloadRef}
+        style={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          zIndex: -1,
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <MeetingCard size="large" {...cardProps} />
+      </div>
+      <div
+        ref={backDownloadRef}
+        style={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          zIndex: -1,
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <MeetingCardBack meetingUrl={meetingUrl} size="large" {...cardProps} />
       </div>
     </Layout>
   );

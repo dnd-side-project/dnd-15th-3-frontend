@@ -2,6 +2,7 @@ export interface RenderCardImageOptions {
   pixelRatio?: number;
   backgroundColor?: string;
   cacheBust?: boolean;
+  style?: Record<string, string>;
 }
 
 /**
@@ -12,14 +13,19 @@ export async function renderCardImage(
   node: HTMLElement,
   options: RenderCardImageOptions = {},
 ): Promise<Blob> {
-  const { pixelRatio = 2, backgroundColor = "#ffffff", cacheBust = true } = options;
+  const { pixelRatio = 2, backgroundColor = "#ffffff", cacheBust = true, style } = options;
 
   if (typeof document !== "undefined" && document.fonts) {
     await document.fonts.ready;
   }
 
   const { toPng } = await import("html-to-image");
-  const dataUrl = await toPng(node, { pixelRatio, backgroundColor, cacheBust });
+  const dataUrl = await toPng(node, {
+    pixelRatio,
+    backgroundColor,
+    cacheBust,
+    style: { opacity: "1", ...style },
+  });
 
   const response = await fetch(dataUrl);
   return await response.blob();

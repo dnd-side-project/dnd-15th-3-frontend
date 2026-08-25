@@ -242,6 +242,33 @@ export const shareButton = style({
   },
 });
 
+export const previewStage = style({
+  position: "relative",
+  width: 320,
+  height: 400,
+});
+
+export const previewCard = style({
+  position: "absolute",
+  perspective: 1000,
+  width: 177,
+  height: 247,
+});
+
+export const previewFront = style({
+  top: -40,
+  left: 0,
+  transform: "rotate(-7deg)",
+  zIndex: 2,
+});
+
+export const previewBack = style({
+  top: 130,
+  left: 130,
+  transform: "rotate(11deg)",
+  zIndex: 1,
+});
+
 export const downloadButton = style({
   display: "inline-flex",
   alignItems: "center",
