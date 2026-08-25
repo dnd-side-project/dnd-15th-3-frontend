@@ -45,6 +45,7 @@ interface FitBoundsProps {
 function FitBounds({ points, padX, padTop, padBottom }: FitBoundsProps) {
   const map = useMap();
   useEffect(() => {
+    map.invalidateSize();
     if (points.length === 0) {
       return;
     }
