@@ -2,18 +2,28 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import DownloadIcon from "@/assets/icon-download.svg?react";
 import { Layout } from "@/components/layout";
 import { MailEnvelope, type MailEnvelopePhase } from "@/components/mail-envelope";
+import { MeetingCardBack } from "@/components/meeting-card-back";
 import { MeetingCard } from "@/components/meeting-card-front";
+import { toast } from "@/components/toast/manager";
 import { TopAppBar } from "@/components/top-app-bar";
 import type { CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
 
 import {
+  cardFlipPill,
+  cardOverlay,
   cloud1,
   cloud2,
   clouds,
+  downloadButton,
   envelopeCentered,
   envelopeStage,
+  flipBack,
+  flipContainer,
+  flipFace,
+  flipInner,
   mailButton,
   mailImage,
   mailWrapper,
@@ -21,6 +31,8 @@ import {
   postbox,
   postboxStage,
   root,
+  shareButton,
+  shareSection,
   stage,
 } from "./index.css";
 
@@ -92,8 +104,11 @@ const TIMING = {
 export function CardPage() {
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("idle");
+  const [flipped, setFlipped] = useState(false);
   const reduce = useReducedMotion();
   const t = (ms: number) => (reduce ? 0 : ms);
+
+  const meetingUrl = typeof window !== "undefined" ? `${window.location.origin}/meeting/1` : "";
 
   const handleMailClick = () => {
     if (phase !== "idle") {
@@ -104,6 +119,29 @@ export function CardPage() {
     window.setTimeout(() => setPhase("card-rise"), t(TIMING.cardRise));
     window.setTimeout(() => setPhase("grow"), t(TIMING.grow));
     window.setTimeout(() => setPhase("done"), t(TIMING.done));
+  };
+
+  const handleCardClick = () => {
+    if (phase === "done") {
+      setFlipped((prev) => !prev);
+    }
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: sampleMeetingName,
+          url: meetingUrl,
+        });
+        toast.add({ title: "모임링크가 공유되었습니다." });
+      } catch {
+        // User cancelled or error
+      }
+    } else {
+      await navigator.clipboard.writeText(meetingUrl);
+      toast.add({ title: "모임링크가 클립보드에 복사되었습니다." });
+    }
   };
 
   const stageDuration = reduce ? 0 : TIMING.cameraUp / 1000;
@@ -179,10 +217,47 @@ export function CardPage() {
               initial={{ opacity: 0 }}
               transition={{ duration: reduce ? 0 : 0.4 }}
             >
-              <MeetingCard size="large" {...cardProps} />
+              <div style={{ position: "relative" }}>
+                {phase === "done" ? (
+                  <span className={cardFlipPill}>카드를 뒤집어 코스를 확인해보세요!</span>
+                ) : null}
+                <div style={{ position: "relative" }}>
+                  <div className={cardOverlay} />
+                  <div
+                    className={flipContainer}
+                    onClick={handleCardClick}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div
+                      className={flipInner}
+                      style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0deg)" }}
+                    >
+                      <div className={flipFace}>
+                        <MeetingCard size="large" {...cardProps} />
+                      </div>
+                      <div className={`${flipFace} ${flipBack}`}>
+                        <MeetingCardBack meetingUrl={meetingUrl} size="large" {...cardProps} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
+
+        {phase === "done" ? (
+          <div className={shareSection}>
+            <button className={downloadButton} type="button">
+              <DownloadIcon aria-hidden width={24} height={24} />
+              이미지 저장
+            </button>
+            <button className={shareButton} onClick={handleShare} type="button">
+              공유하기
+            </button>
+          </div>
+        ) : null}
       </div>
     </Layout>
   );

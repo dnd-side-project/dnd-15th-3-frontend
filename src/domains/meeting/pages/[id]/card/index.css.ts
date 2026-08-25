@@ -152,3 +152,104 @@ export const envelopeCentered = style({
   top: "50%",
   transform: "translate(-50%, -50%)",
 });
+
+export const flipContainer = style({
+  position: "relative",
+  perspective: 1000,
+  width: 260,
+  height: 363,
+  zIndex: 1,
+});
+
+export const flipInner = style({
+  position: "relative",
+  width: "100%",
+  height: "100%",
+  transformStyle: "preserve-3d",
+  transition: "transform 0.6s ease-in-out",
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+});
+
+export const flipFace = style({
+  position: "absolute",
+  inset: 0,
+  backfaceVisibility: "hidden",
+  WebkitBackfaceVisibility: "hidden",
+  transform: "rotateY(0deg)",
+});
+
+export const flipBack = style({
+  transform: "rotateY(-180deg)",
+});
+
+export const cardOverlay = style({
+  position: "absolute",
+  inset: 0,
+  background: "#FFFFFF",
+  filter: "blur(126.4px)",
+  pointerEvents: "none",
+});
+
+export const cardFlipPill = style({
+  position: "absolute",
+  bottom: "calc(100% + 24px)",
+  left: "50%",
+  transform: "translateX(-50%)",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+  padding: "8px 15px",
+  borderRadius: 20,
+  background: colors.pill,
+  color: colors.pillText,
+  ...text({ size: 16, weight: 600, lineHeight: 1.375 }),
+  whiteSpace: "nowrap",
+  zIndex: 3,
+  pointerEvents: "none",
+});
+
+export const shareSection = style({
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 12,
+  padding: "48px 20px 24px",
+  background: "linear-gradient(180deg, transparent 0%, rgba(184, 211, 255, 0.3) 100%)",
+});
+
+export const shareButton = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "100%",
+  height: 53,
+  border: "none",
+  borderRadius: 8,
+  backgroundColor: "#66ADFF",
+  color: "#FFFFFF",
+  ...text({ size: 18, weight: 600, lineHeight: 1.6 }),
+  cursor: "pointer",
+  transition: "background-color 0.15s ease",
+  "@media": {
+    "(prefers-reduced-motion: reduce)": { transition: "none" },
+  },
+});
+
+export const downloadButton = style({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 8,
+  padding: "0 24px 0 0",
+  border: "none",
+  background: "transparent",
+  color: "rgb(112, 125, 145)",
+  ...text({ size: 16, weight: 600, lineHeight: 1.375 }),
+  cursor: "pointer",
+});
