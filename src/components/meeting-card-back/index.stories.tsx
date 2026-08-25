@@ -118,6 +118,8 @@ const meta = {
   args: {
     courseDetail: sampleCourseDetail,
     meetingUrl: "https://momo.app/meeting/1",
+    meetingDate: "2026-08-25",
+    meetingTime: "13:00",
     size: "small",
   },
   argTypes: {
