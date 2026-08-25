@@ -106,6 +106,9 @@ export const qrCode = recipe({
     bottom: 4,
     left: 4,
     display: "block",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    padding: 4,
   },
   variants: {
     size: {
