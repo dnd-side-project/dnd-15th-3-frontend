@@ -2,7 +2,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 import MomoLogo from "@/assets/logo-momo.svg?react";
 import type { CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
-import { MeetingMap, type MeetingMapPlace } from "@/domains/meeting/components/meeting-map";
+import { MeetingMapOsm, type MeetingMapPlace } from "@/domains/meeting/components/meeting-map-osm";
 
 import { card, footer, mapArea, mapStage, qrCode } from "./index.css";
 
@@ -38,11 +38,11 @@ export function MeetingCardBack({
     <article className={card({ size })}>
       <div className={mapArea({ size })}>
         <div className={mapStage({ size })}>
-          <MeetingMap
-            interactive={false}
+          <MeetingMapOsm
             level={6}
             places={places}
             routeLineColor="#3793FF"
+            size={size}
             tone="blue"
           />
         </div>
