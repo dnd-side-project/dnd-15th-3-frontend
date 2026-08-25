@@ -118,12 +118,12 @@ const meta = {
   args: {
     courseDetail: sampleCourseDetail,
     meetingUrl: "https://momo.app/meeting/1",
-    size: "medium",
+    size: "small",
   },
   argTypes: {
     size: {
       control: "inline-radio",
-      options: ["medium", "large"],
+      options: ["small", "large"],
     },
   },
 } satisfies Meta<typeof MeetingCardBack>;

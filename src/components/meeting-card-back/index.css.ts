@@ -11,7 +11,7 @@ export const card = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 177,
         height: 247,
       },
@@ -33,7 +33,7 @@ export const mapArea = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 156,
         height: 210,
         margin: "10px 0 0",
@@ -60,7 +60,7 @@ export const mapStage = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 312,
         height: 420,
         transform: "scale(0.5)",
@@ -83,7 +83,7 @@ export const qrCode = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 32,
         height: 32,
       },
@@ -105,7 +105,7 @@ export const footer = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         padding: "0 0 6px",
       },
       large: {

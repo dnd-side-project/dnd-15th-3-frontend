@@ -10,7 +10,7 @@ export interface MeetingCardBackProps {
   courseDetail: CourseDetail;
   /** QR 에 인코딩할 모임 링크. `${origin}/meeting/${id}` */
   meetingUrl: string;
-  size?: "medium" | "large";
+  size?: "small" | "large";
 }
 
 function toMapPlace(step: CourseRouteStep): MeetingMapPlace {
@@ -26,13 +26,14 @@ function toMapPlace(step: CourseRouteStep): MeetingMapPlace {
 export function MeetingCardBack({
   courseDetail,
   meetingUrl,
-  size = "medium",
+  size = "small",
 }: MeetingCardBackProps) {
   const places = courseDetail.route.map(toMapPlace);
 
-  const logoWidth = size === "medium" ? 36 : 53;
-  const logoHeight = size === "medium" ? 9 : 13;
-  const qrSize = size === "medium" ? 32 : 47;
+  const logoWidth = size === "large" ? 53 : 36;
+  const logoHeight = size === "large" ? 13 : 9;
+  const qrSize = size === "large" ? 47 : 32;
+  const mapSize = size === "large" ? "large" : "medium";
 
   return (
     <article className={card({ size })}>
@@ -42,7 +43,7 @@ export function MeetingCardBack({
             level={6}
             places={places}
             routeLineColor="#3793FF"
-            size={size}
+            size={mapSize}
             tone="blue"
           />
         </div>
