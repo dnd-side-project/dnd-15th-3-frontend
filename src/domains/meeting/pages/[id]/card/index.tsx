@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import DownloadIcon from "@/assets/icon-download.svg?react";
 import { Layout } from "@/components/layout";
@@ -9,8 +10,11 @@ import { MeetingCardBack } from "@/components/meeting-card-back";
 import { MeetingCard } from "@/components/meeting-card-front";
 import { toast } from "@/components/toast/manager";
 import { TopAppBar } from "@/components/top-app-bar";
-import type { CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
+import { courseQueries } from "@/domains/course/api/queries";
+import { meetingQueries } from "@/domains/meeting/api/queries";
+import { useMeeting } from "@/domains/meeting/hooks";
 import { useCardDownload } from "@/hooks/use-card-download";
+import { getAccessToken } from "@/utils/access-token";
 
 import {
   cardFlipPill,
@@ -41,60 +45,6 @@ import {
   stage,
 } from "./index.css";
 
-// TODO: 실제 meeting id 에 해당하는 courseDetail 을 API 로 불러와 교체.
-const sampleRoute: CourseRouteStep[] = [
-  {
-    recommendationId: "rec-1",
-    placeId: "place-1",
-    order: 1,
-    name: "성수다이닝",
-    category: "음식",
-    categorySlug: "restaurant",
-    address: "서울 성동구 성수동",
-    primaryImageUrl: null,
-    longitude: 127.056,
-    latitude: 37.544,
-    walkDurationToNextMin: 8,
-  },
-  {
-    recommendationId: "rec-2",
-    placeId: "place-2",
-    order: 2,
-    name: "서울숲",
-    category: "문화",
-    categorySlug: "culture",
-    address: "서울 성동구 성수동",
-    primaryImageUrl: null,
-    longitude: 127.044,
-    latitude: 37.547,
-    walkDurationToNextMin: 5,
-  },
-  {
-    recommendationId: "rec-3",
-    placeId: "place-3",
-    order: 3,
-    name: "왕십리골목",
-    category: "여가",
-    categorySlug: "activity",
-    address: "서울 성동구 행당동",
-    primaryImageUrl: null,
-    longitude: 127.043,
-    latitude: 37.561,
-    walkDurationToNextMin: 3,
-  },
-];
-
-const sampleCourseDetail: CourseDetail = {
-  courseName: "성수 다이닝 코스",
-  totalDistanceKm: 2.1,
-  totalCount: 3,
-  route: sampleRoute,
-};
-
-const sampleMeetingName = "다같이 으쌰으쌰";
-const sampleMeetingDate = "2026-08-25";
-const sampleMeetingTime = "13:00";
-
 type Phase = "idle" | "camera-up" | "flap-open" | "card-rise" | "grow" | "done";
 
 // 단계별 누적 타이밍(ms). motion duration 합 + 단계 간 짧은 대기.
@@ -108,6 +58,13 @@ const TIMING = {
 
 export function CardPage() {
   const navigate = useNavigate();
+  const { id = "" } = useParams();
+  const accessToken = getAccessToken(id);
+  const { data: meeting } = useMeeting();
+  const { data: status } = useQuery(meetingQueries.status(id, accessToken));
+  const confirmedCourseId = status?.confirmedCourseCandidateId ?? "";
+  const { data: courseDetail } = useQuery(courseQueries.detail(id, confirmedCourseId, accessToken));
+
   const [phase, setPhase] = useState<Phase>("idle");
   const [flipped, setFlipped] = useState(false);
   const reduce = useReducedMotion();
@@ -120,7 +77,10 @@ export function CardPage() {
   const backDownloadRef = useRef<HTMLDivElement>(null);
   const { download } = useCardDownload();
 
-  const meetingUrl = typeof window !== "undefined" ? `${window.location.origin}/meeting/1` : "";
+  const meetingUrl =
+    typeof window !== "undefined" && meeting
+      ? `${window.location.origin}/meeting/${meeting.id}`
+      : "";
 
   const handleMailClick = () => {
     if (phase !== "idle") {
@@ -143,7 +103,7 @@ export function CardPage() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: sampleMeetingName,
+          title: meeting?.name ?? "",
           url: meetingUrl,
         });
         toast.add({ title: "모임링크가 공유되었습니다." });
@@ -177,10 +137,10 @@ export function CardPage() {
   const largeCardOpacity = phase === "grow" || phase === "done" ? 1 : 0;
 
   const cardProps = {
-    courseDetail: sampleCourseDetail,
-    meetingName: sampleMeetingName,
-    meetingDate: sampleMeetingDate,
-    meetingTime: sampleMeetingTime,
+    courseDetail: courseDetail ?? { courseName: "", totalDistanceKm: 0, totalCount: 0, route: [] },
+    meetingName: meeting?.name ?? "",
+    meetingDate: meeting?.date ?? "",
+    meetingTime: meeting?.time ?? "",
   };
 
   return (
@@ -254,11 +214,7 @@ export function CardPage() {
                         <MeetingCard size="small" {...cardProps} />
                       </div>
                       <div className={`${flipFace} ${flipBack}`}>
-                        <MeetingCardBack
-                          courseDetail={sampleCourseDetail}
-                          meetingUrl={meetingUrl}
-                          size="small"
-                        />
+                        <MeetingCardBack meetingUrl={meetingUrl} size="small" {...cardProps} />
                       </div>
                     </div>
                   </div>
@@ -275,11 +231,7 @@ export function CardPage() {
                       }}
                     >
                       <div className={flipFace}>
-                        <MeetingCardBack
-                          courseDetail={sampleCourseDetail}
-                          meetingUrl={meetingUrl}
-                          size="small"
-                        />
+                        <MeetingCardBack meetingUrl={meetingUrl} size="small" {...cardProps} />
                       </div>
                       <div className={`${flipFace} ${flipBack}`}>
                         <MeetingCard size="small" {...cardProps} />
