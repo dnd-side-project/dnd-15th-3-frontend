@@ -57,11 +57,20 @@ export const cloud2 = style({
   opacity: 0.8,
 });
 
+// stage는 postboxStage(아래, idle)와 envelopeStage(위, 카메라 상승 후) 두 장면을
+// 겹쳐 놓는 컨테이너. overflow hidden으로 벗어난 장면을 잘라낸다.
 export const stage = style({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   flex: 1,
+  overflow: "hidden",
+});
+
+// postbox + mail 버튼 장면. idle에서 보이다가 클릭하면 아래로 빠진다.
+export const postboxStage = style({
+  position: "absolute",
+  inset: 0,
 });
 
 export const postbox = style({
@@ -125,4 +134,21 @@ export const pill = style({
   whiteSpace: "nowrap",
   zIndex: 3,
   pointerEvents: "none",
+});
+
+// 편지 봉투 + 최종 카드 장면. idle에서는 stage 위쪽(-100%)에 숨어 있다가
+// 카메라 상승(y→0)하면 뷰포트로 내려온다.
+export const envelopeStage = style({
+  position: "absolute",
+  inset: 0,
+});
+
+// envelopeStage 안에서 MailEnvelope와 large 카드를 같은 중심에 겹쳐 놓는다.
+// transform은 motion이 건드리지 않는 한 유지되므로, motion.div에는 opacity만
+// 애니메이션한다(transform 충돌 방지).
+export const envelopeCentered = style({
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
 });
