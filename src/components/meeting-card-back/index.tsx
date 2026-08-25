@@ -4,12 +4,16 @@ import MomoLogo from "@/assets/logo-momo.svg?react";
 import type { CourseDetail, CourseRouteStep } from "@/domains/course/api/types";
 import { MeetingMapOsm, type MeetingMapPlace } from "@/domains/meeting/components/meeting-map-osm";
 
-import { card, footer, mapArea, mapStage, qrCode } from "./index.css";
+import { card, dateStamp, footer, mapArea, mapStage, qrCode } from "./index.css";
 
 export interface MeetingCardBackProps {
   courseDetail: CourseDetail;
   /** QR 에 인코딩할 모임 링크. `${origin}/meeting/${id}` */
   meetingUrl: string;
+  /** YYYY-MM-DD */
+  meetingDate?: string;
+  /** HH:mm */
+  meetingTime?: string;
   size?: "small" | "large";
 }
 
@@ -26,6 +30,8 @@ function toMapPlace(step: CourseRouteStep): MeetingMapPlace {
 export function MeetingCardBack({
   courseDetail,
   meetingUrl,
+  meetingDate,
+  meetingTime,
   size = "small",
 }: MeetingCardBackProps) {
   const places = courseDetail.route.map(toMapPlace);
@@ -34,6 +40,8 @@ export function MeetingCardBack({
   const logoHeight = size === "large" ? 13 : 9;
   const qrSize = size === "large" ? 47 : 32;
   const mapSize = size === "large" ? "large" : "medium";
+
+  const dateLabel = meetingDate && meetingTime ? formatDateTime(meetingDate, meetingTime) : null;
 
   return (
     <article className={card({ size })}>
@@ -55,6 +63,7 @@ export function MeetingCardBack({
           size={qrSize}
           value={meetingUrl}
         />
+        {dateLabel ? <span className={dateStamp({ size })}>{dateLabel}</span> : null}
       </div>
 
       <div className={footer({ size })}>
@@ -62,4 +71,8 @@ export function MeetingCardBack({
       </div>
     </article>
   );
+}
+
+function formatDateTime(date: string, time: string) {
+  return `${date.replace(/-/g, ".")} ${time}`;
 }

@@ -48,6 +48,32 @@ export const mapArea = recipe({
   },
 });
 
+export const dateStamp = recipe({
+  base: {
+    position: "absolute",
+    color: "#3D3D3D",
+    fontFamily: "Montserrat, sans-serif",
+    fontWeight: 400,
+    lineHeight: 1,
+    whiteSpace: "nowrap",
+    zIndex: 2,
+  },
+  variants: {
+    size: {
+      small: {
+        top: 6,
+        left: 6,
+        fontSize: 6,
+      },
+      large: {
+        top: 9,
+        left: 9,
+        fontSize: 9,
+      },
+    },
+  },
+});
+
 // RouteMarker 가 72×81 로 고정되어 있어 맵 영역엔 너무 크다.
 // MeetingMap 을 2× 로 그린 뒤 scale(0.5) 로 줄여 마커를 ~36px 로 보이게 한다.
 // QR 은 이 레이어 밖에 둬 선명도를 유지한다.
