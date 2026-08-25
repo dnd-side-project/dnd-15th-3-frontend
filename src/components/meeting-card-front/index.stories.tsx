@@ -125,7 +125,7 @@ const meta = {
   argTypes: {
     size: {
       control: "inline-radio",
-      options: ["medium", "large"],
+      options: ["small", "medium", "large"],
     },
   },
 } satisfies Meta<typeof MeetingCard>;
@@ -135,6 +135,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const Small: Story = {
+  args: {
+    size: "small",
+  },
+};
 
 export const Large: Story = {
   args: {

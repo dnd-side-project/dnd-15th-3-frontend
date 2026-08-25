@@ -13,9 +13,13 @@ export const card = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 177,
         height: 247,
+      },
+      medium: {
+        width: 210,
+        height: 292,
       },
       large: {
         width: 260,
@@ -36,10 +40,16 @@ export const photoArea = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 156,
         height: 134,
         margin: "10px 0 0",
+      },
+      medium: {
+        width: 185,
+        height: 159,
+        margin: "12px 0 0",
+        borderRadius: 6,
       },
       large: {
         width: 229,
@@ -57,11 +67,17 @@ export const confetti = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         top: 30,
         left: -22,
         width: 200,
         height: 117,
+      },
+      medium: {
+        top: 36,
+        left: -26,
+        width: 237,
+        height: 139,
       },
       large: {
         top: 44,
@@ -85,8 +101,11 @@ export const momoImage = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         bottom: -65,
+      },
+      medium: {
+        bottom: -77,
       },
       large: {
         bottom: -96,
@@ -106,10 +125,15 @@ export const dateStamp = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         top: 6,
         left: 6,
         fontSize: 6,
+      },
+      medium: {
+        top: 7,
+        left: 7,
+        fontSize: 7,
       },
       large: {
         top: 9,
@@ -128,10 +152,15 @@ export const heartDrawing = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         top: 100,
         width: 24,
         height: 19,
+      },
+      medium: {
+        top: 119,
+        width: 28,
+        height: 23,
       },
       large: {
         top: 147,
@@ -152,8 +181,11 @@ export const body = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         padding: "8px 12px 0",
+      },
+      medium: {
+        padding: "9px 14px 0",
       },
       large: {
         padding: "12px 18px 0",
@@ -172,8 +204,11 @@ export const title = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         ...text({ size: 12, weight: 600, lineHeight: 1.2 }),
+      },
+      medium: {
+        ...text({ size: 14, weight: 600, lineHeight: 1.2 }),
       },
       large: {
         ...text({ size: 18, weight: 600, lineHeight: 1.2 }),
@@ -191,9 +226,13 @@ export const routeLabel = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         marginTop: 6,
         fontSize: 6,
+      },
+      medium: {
+        marginTop: 7,
+        fontSize: 7,
       },
       large: {
         marginTop: 9,
@@ -211,9 +250,13 @@ export const route = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         gap: 4,
         marginTop: 4,
+      },
+      medium: {
+        gap: 5,
+        marginTop: 5,
       },
       large: {
         gap: 6,
@@ -231,8 +274,11 @@ export const routeItem = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         gap: 4,
+      },
+      medium: {
+        gap: 5,
       },
       large: {
         gap: 6,
@@ -247,8 +293,11 @@ export const placeName = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         ...text({ size: 8, weight: 500, lineHeight: 1.4 }),
+      },
+      medium: {
+        ...text({ size: 9, weight: 500, lineHeight: 1.4 }),
       },
       large: {
         ...text({ size: 12, weight: 500, lineHeight: 1.4 }),
@@ -264,9 +313,13 @@ export const arrow = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         width: 7,
         height: 5,
+      },
+      medium: {
+        width: 8,
+        height: 6,
       },
       large: {
         width: 10,
@@ -283,8 +336,11 @@ export const footer = recipe({
   },
   variants: {
     size: {
-      medium: {
+      small: {
         padding: "0 0 6px",
+      },
+      medium: {
+        padding: "0 0 7px",
       },
       large: {
         padding: "0 0 9px",

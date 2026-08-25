@@ -28,7 +28,7 @@ export interface MeetingCardProps {
   meetingDate?: string;
   /** HH:mm */
   meetingTime?: string;
-  size?: "medium" | "large";
+  size?: "small" | "medium" | "large";
 }
 
 function formatDateTime(date: string, time: string) {
@@ -45,8 +45,8 @@ export function MeetingCard({
   const { route: steps } = courseDetail;
   const dateLabel = meetingDate && meetingTime ? formatDateTime(meetingDate, meetingTime) : null;
 
-  const logoWidth = size === "medium" ? 36 : 53;
-  const logoHeight = size === "medium" ? 9 : 13;
+  const logoWidth = size === "small" ? 36 : size === "medium" ? 43 : 53;
+  const logoHeight = size === "small" ? 9 : size === "medium" ? 11 : 13;
 
   return (
     <article className={card({ size })}>
