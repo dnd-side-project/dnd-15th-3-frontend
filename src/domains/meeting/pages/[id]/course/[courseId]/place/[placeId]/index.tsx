@@ -106,7 +106,7 @@ export function CoursePlaceDetailPage() {
   });
 
   return (
-    <MapScreen hideToggle>
+    <MapScreen gradient hideToggle>
       <MapSheet expandable className={sheetLayout}>
         <div className={header}>
           <button

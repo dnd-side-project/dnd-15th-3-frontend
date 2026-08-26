@@ -82,7 +82,7 @@ export function PlaceDetailPage() {
   });
 
   return (
-    <MapScreen>
+    <MapScreen gradient>
       <MapSheet expandable className={sheetLayout}>
         <div className={header}>
           <button
