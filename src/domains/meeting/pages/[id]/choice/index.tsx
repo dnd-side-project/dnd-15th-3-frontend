@@ -57,14 +57,6 @@ interface PreferenceChange {
   preference: Preference;
 }
 
-interface ChoiceLocationState {
-  generationFailed: boolean;
-}
-
-function hasGenerationFailed(state: unknown): state is ChoiceLocationState {
-  return typeof state === "object" && state !== null && "generationFailed" in state;
-}
-
 /** 왼쪽·오른쪽 열이 6장 주기로 반복하는 카드 높이 */
 const CARD_HEIGHTS = [
   [249, 164, 212],
@@ -133,7 +125,7 @@ export function ChoicePage() {
   const [filter, setFilter] = useState<Filter>("all");
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(
-    () => hasGenerationFailed(location.state) && location.state.generationFailed,
+    () => (location.state as { generationFailed?: boolean } | null)?.generationFailed ?? false,
   );
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.

@@ -7,7 +7,6 @@ import { Layout } from "@/components/layout";
 import { TopAppBar } from "@/components/top-app-bar";
 import { createQuestionnaire } from "@/domains/meeting/api";
 import { meetingQueries } from "@/domains/meeting/api/queries";
-import type { Questionnaire } from "@/domains/meeting/api/types";
 import { getAccessToken } from "@/utils/access-token";
 
 import {
@@ -26,10 +25,6 @@ import {
   surfaceColor,
 } from "./index.css";
 
-function byOrder(questions: Questionnaire["questions"]) {
-  return [...questions].sort((a, b) => a.order - b.order);
-}
-
 export function QuestionnairePage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -39,15 +34,14 @@ export function QuestionnairePage() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [seed, setSeed] = useState<Questionnaire | null>(null);
 
   const {
     mutate: start,
+    data: created,
     isPending: isStarting,
     isError: isStartError,
   } = useMutation({
     mutationFn: () => createQuestionnaire(id, accessToken),
-    onSuccess: (data) => setSeed(data),
   });
 
   useEffect(() => {
@@ -60,12 +54,14 @@ export function QuestionnairePage() {
 
   const { data: polled } = useQuery({
     ...questionnaireOptions,
-    enabled: seed !== null && seed.status === "GENERATING",
+    enabled: created?.status === "GENERATING",
     refetchInterval: (query) => (query.state.data?.status === "GENERATING" ? 1500 : false),
   });
 
-  const questionnaire = polled ?? seed;
-  const questions = questionnaire ? byOrder(questionnaire.questions) : [];
+  const questionnaire = polled ?? created ?? null;
+  const questions = questionnaire
+    ? questionnaire.questions.toSorted((a, b) => a.order - b.order)
+    : [];
   const currentQuestion = questions[currentIndex] ?? null;
   const totalCount = questionnaire?.totalCount ?? 3;
   const isLastQuestion = currentIndex >= totalCount - 1;
