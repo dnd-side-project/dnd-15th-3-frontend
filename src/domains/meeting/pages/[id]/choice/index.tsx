@@ -8,13 +8,14 @@ import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
 import { PlaceIcon } from "@/components/place-icon";
+import { Popup } from "@/components/popup";
 import { PreferenceButton } from "@/components/preference-button";
 import { Toggle } from "@/components/toggle";
 import type { CategorySlug } from "@/domains/catalog/api/types";
 import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
 import { updatePlacePreference } from "@/domains/meeting/api";
 import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
-import { useMeeting } from "@/domains/meeting/hooks";
+import { useCourseGeneration, useMeeting } from "@/domains/meeting/hooks";
 import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
 
@@ -135,12 +136,24 @@ export function ChoicePage() {
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
     mutationFn: ({ recommendationId, preference }: PreferenceChange) =>
       updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
+
+  const { generate, isGenerating } = useCourseGeneration(id, {
+    onSuccess: () => {
+      // 상태 폴링 쿼리(["meeting", id, "status"])가 켜 있는 동안 prefix 무효화하면
+      // 폴링이 한 번 더 도므로 상세 쿼리만 무효화한다.
+      void queryClient.invalidateQueries({ queryKey: ["meeting", id, "detail"] });
+      void queryClient.invalidateQueries({ queryKey: ["course", id] });
+      void navigate(`/meeting/${id}/course`);
+    },
+    onError: () => setIsErrorPopupOpen(true),
   });
 
   if (isError) {
@@ -248,13 +261,20 @@ export function ChoicePage() {
 
         <div className={footer}>
           <CtaButton
-            disabled={!hasPlaces || !meeting.permissions.canSelectCourse}
-            onClick={() => void navigate(`/meeting/${id}/course`)}
+            disabled={!hasPlaces || !meeting.permissions.canSelectCourse || isGenerating}
+            onClick={() => generate()}
           >
             코스 생성하기
           </CtaButton>
         </div>
       </div>
+
+      <Popup
+        description="잠시 후 다시 시도해 주세요"
+        onOpenChange={setIsErrorPopupOpen}
+        open={isErrorPopupOpen}
+        title="코스 생성에 실패했어요"
+      />
     </Layout>
   );
 }

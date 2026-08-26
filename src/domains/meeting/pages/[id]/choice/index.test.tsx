@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
+import type { MeetingStatusKind } from "@/domains/meeting/api/types";
 import { render } from "@/test-utils";
 
 import { ChoicePage } from "./index";
@@ -87,8 +88,19 @@ function jsonResponse(body: unknown) {
 }
 
 const preferenceCalls: { url: string; body: unknown }[] = [];
+const generateCalls: { url: string; method: string }[] = [];
+const pollCalls: { url: string; status: string }[] = [];
 
-function renderChoice(meeting: typeof MEETING = MEETING, { failed = false } = {}) {
+interface RenderOptions {
+  failed?: boolean;
+  generateStatus?: MeetingStatusKind;
+  pollStatuses?: MeetingStatusKind[];
+}
+
+function renderChoice(meeting: typeof MEETING = MEETING, options: RenderOptions = {}) {
+  const { failed = false, generateStatus = "COURSE_GENERATED", pollStatuses = [] } = options;
+  let pollIndex = 0;
+
   fetchMock.mockImplementation((input, init) => {
     const url = new Request(input).url;
     if (url.includes("/categories")) {
@@ -97,6 +109,24 @@ function renderChoice(meeting: typeof MEETING = MEETING, { failed = false } = {}
     if (url.includes("/preference")) {
       preferenceCalls.push({ url, body: JSON.parse(init?.body as string) });
       return Promise.resolve(jsonResponse({ likeCount: 0, dislikeCount: 0, myPreference: null }));
+    }
+    if (url.includes("/meetings/1/courses") && init?.method === "POST") {
+      generateCalls.push({ url, method: init.method ?? "POST" });
+      return Promise.resolve(
+        jsonResponse({ status: generateStatus, confirmedCourseCandidateId: null }),
+      );
+    }
+    // getMeetingStatus: GET /api/v1/meetings/:id (복수형)
+    if (
+      url.includes("/meetings/1") &&
+      !url.includes("/courses") &&
+      init?.method !== "POST" &&
+      pollStatuses.length > 0
+    ) {
+      const status = pollStatuses[Math.min(pollIndex, pollStatuses.length - 1)]!;
+      pollIndex += 1;
+      pollCalls.push({ url, status });
+      return Promise.resolve(jsonResponse({ status, confirmedCourseCandidateId: null }));
     }
     if (failed) {
       return Promise.resolve(new Response("", { status: 500 }));
@@ -108,6 +138,10 @@ function renderChoice(meeting: typeof MEETING = MEETING, { failed = false } = {}
     [
       { path: "/meeting/:id/choice", Component: ChoicePage },
       { path: "/meeting/:id/place", Component: () => <p>지도</p> },
+      {
+        path: "/meeting/:id/course",
+        Component: () => <p data-testid="course-page">코스 페이지</p>,
+      },
     ],
     { initialEntries: ["/meeting/1/choice"] },
   );
@@ -126,6 +160,8 @@ beforeEach(() => {
 afterEach(() => {
   fetchMock.mockReset();
   preferenceCalls.length = 0;
+  generateCalls.length = 0;
+  pollCalls.length = 0;
   localStorage.clear();
 });
 
@@ -186,6 +222,45 @@ test("지도 보기로 바꾸면 지도 화면으로 간다", async () => {
   await userEvent.click(page.getByRole("button", { name: "지도로 보기" }));
 
   await expect.element(page.getByText("지도")).toBeInTheDocument();
+});
+
+test("코스 생성하기를 누르면 코스 생성 POST를 보낸 뒤 코스 페이지로 이동한다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+
+  await expect.poll(() => generateCalls).toHaveLength(1);
+  expect(generateCalls[0].url).toContain("/meetings/1/courses");
+  expect(generateCalls[0].method).toBe("POST");
+  await expect.element(page.getByTestId("course-page")).toBeInTheDocument();
+});
+
+test("코스 생성중이면 폴링 후 완료되면 코스 페이지로 이동한다", async () => {
+  renderChoice(MEETING, {
+    generateStatus: "COURSE_GENERATING",
+    pollStatuses: ["COURSE_GENERATING", "COURSE_GENERATED"],
+  });
+
+  await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeInTheDocument();
+  await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+
+  // refetchInterval(2초) 로 폴링: 첫 폴링은 생성중, 두 번째 폴링에서 완료된다.
+  await expect.poll(() => pollCalls, { timeout: 6000, interval: 100 }).toHaveLength(2);
+  expect(pollCalls[0].status).toBe("COURSE_GENERATING");
+  expect(pollCalls[1].status).toBe("COURSE_GENERATED");
+  await expect.element(page.getByTestId("course-page")).toBeInTheDocument();
+});
+
+test("코스 생성 실패 시 에러 팝업을 보여주고 이동하지 않는다", async () => {
+  renderChoice(MEETING, { generateStatus: "COURSE_GENERATION_FAILED" });
+
+  await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+
+  await expect.poll(() => generateCalls).toHaveLength(1);
+  await expect
+    .element(page.getByRole("dialog", { name: "코스 생성에 실패했어요" }))
+    .toBeInTheDocument();
+  await expect.element(page.getByTestId("course-page")).not.toBeInTheDocument();
 });
 
 test("보여줄 장소가 없으면 빈 상태를 보여주고 코스 생성을 막는다", async () => {
