@@ -16,7 +16,6 @@ function hasCustomization(state: unknown): state is GeneratingLocationState {
   return typeof state === "object" && state !== null && "customization" in state;
 }
 
-/** 코스 생성 요청을 시작하고, 완료·실패가 날 때까지 보여 주는 전용 로딩 화면. */
 export function CourseGeneratingPage() {
   const navigate = useNavigate();
   const location = useLocation();
