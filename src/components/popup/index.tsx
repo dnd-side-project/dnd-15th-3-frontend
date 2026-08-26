@@ -8,6 +8,7 @@ import {
   card,
   close,
   description as descriptionStyle,
+  footer as footerStyle,
   media as mediaStyle,
   texts,
   title as titleStyle,
@@ -20,6 +21,7 @@ export interface PopupProps {
   description?: string;
   media?: ReactNode;
   showClose?: boolean;
+  footer?: ReactNode;
 }
 
 export function Popup({
@@ -29,6 +31,7 @@ export function Popup({
   description,
   media,
   showClose = true,
+  footer,
 }: PopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -49,6 +52,7 @@ export function Popup({
               <Dialog.Description className={descriptionStyle}>{description}</Dialog.Description>
             )}
           </div>
+          {footer && <div className={footerStyle}>{footer}</div>}
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>

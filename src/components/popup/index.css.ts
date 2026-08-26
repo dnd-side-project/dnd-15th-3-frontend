@@ -110,3 +110,9 @@ export const description = style({
   fontWeight: 400,
   color: colors.description,
 });
+
+export const footer = style({
+  position: "relative",
+  zIndex: 1,
+  marginTop: 20,
+});
