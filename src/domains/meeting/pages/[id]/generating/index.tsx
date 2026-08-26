@@ -2,11 +2,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 
+import MomoShadow from "@/assets/momo-shadow.svg?react";
 import { Layout } from "@/components/layout";
 import type { CourseCustomization } from "@/domains/course/api/types";
 import { useCourseGeneration } from "@/domains/meeting/hooks";
 
-import { description, mapImage, media, pinImage, root, texts, title } from "./index.css";
+import { description, momo, momoImage, momoShadow, root, texts, title } from "./index.css";
 
 export function CourseGeneratingPage() {
   const navigate = useNavigate();
@@ -47,9 +48,15 @@ export function CourseGeneratingPage() {
           <h1 className={title}>코스를 만들고 있어요</h1>
           <p className={description}>잠시만 기다려 주세요. 곧 멋진 코스가 완성돼요!</p>
         </div>
-        <div aria-hidden className={media}>
-          <img alt="" className={mapImage} src="/static/popup-course-map.webp" />
-          <img alt="" className={pinImage} src="/static/popup-course-pin.webp" />
+        <div aria-hidden className={momo}>
+          <img
+            alt=""
+            className={momoImage}
+            height={241}
+            src="/static/momo-searching.webp"
+            width={301}
+          />
+          <MomoShadow className={momoShadow} />
         </div>
       </div>
     </Layout>
