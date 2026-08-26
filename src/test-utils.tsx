@@ -2,6 +2,21 @@ import type { ReactNode } from "react";
 import { type Root, createRoot } from "react-dom/client";
 import { afterEach } from "vite-plus/test";
 
+import type { PlacePhoto } from "@/domains/catalog/api/types";
+
+export function placePhoto(url: string): PlacePhoto {
+  return {
+    id: url,
+    url,
+    width: null,
+    height: null,
+    source: "OWNED",
+    attributions: [],
+    googleMapsUri: null,
+    flagContentUri: null,
+  };
+}
+
 const mounts: { root: Root; container: HTMLDivElement }[] = [];
 
 export function render(ui: ReactNode) {

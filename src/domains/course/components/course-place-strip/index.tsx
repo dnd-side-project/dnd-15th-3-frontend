@@ -2,6 +2,7 @@ import { Fragment } from "react";
 
 import PlusIcon from "@/assets/icon-plus.svg?react";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import type { CourseRouteStep } from "@/domains/course/api/types";
 
 import { addButton, arrow, name, place, root, thumbnail } from "./index.css";
@@ -18,11 +19,7 @@ export function CoursePlaceStrip({ route, onAdd }: CoursePlaceStripProps) {
         <Fragment key={step.recommendationId}>
           {index === 0 ? null : <span aria-hidden className={arrow} />}
           <div className={place}>
-            {step.primaryImageUrl === null ? (
-              <span className={thumbnail} />
-            ) : (
-              <img alt="" className={thumbnail} src={step.primaryImageUrl} />
-            )}
+            <PlacePhotoImage className={thumbnail} photo={step.previewPhoto} />
             <span className={name}>
               <PlaceIcon category={step.categorySlug} size={16} />
               {step.name}

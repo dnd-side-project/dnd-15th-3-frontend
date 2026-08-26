@@ -2,6 +2,7 @@ import ArrowSquareOutIcon from "@/assets/icon-arrow-square-out.svg?react";
 import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
 import FootprintsIcon from "@/assets/icon-footprints.svg?react";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import type { RouteMarkerTone } from "@/components/route-marker";
 import type { CourseRouteStep } from "@/domains/course/api/types";
 
@@ -49,11 +50,7 @@ export function CourseTimeline({ route, tone, onSelectPlace }: CourseTimelinePro
                 type="button"
                 onClick={onSelectPlace && (() => onSelectPlace(step.placeId))}
               >
-                {step.primaryImageUrl === null ? (
-                  <span className={thumbnail} />
-                ) : (
-                  <img alt="" className={thumbnail} src={step.primaryImageUrl} />
-                )}
+                <PlacePhotoImage className={thumbnail} photo={step.previewPhoto} />
                 <span className={texts}>
                   <span className={name}>
                     <PlaceIcon category={step.categorySlug} size={20} />

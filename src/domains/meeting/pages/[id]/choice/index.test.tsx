@@ -4,7 +4,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import type { MeetingStatusKind } from "@/domains/meeting/api/types";
-import { render } from "@/test-utils";
+import { placePhoto, render } from "@/test-utils";
 
 import { ChoicePage } from "./index";
 
@@ -53,8 +53,8 @@ const MEETING = {
         address: "서울 종로구",
         latitude: 1,
         longitude: 2,
-        previewUrl: "/static/popup-momo.webp",
       },
+      previewPhoto: placePhoto("/static/popup-momo.webp"),
       recommendedByParticipantId: "11",
       likeCount: 3,
       dislikeCount: 1,
@@ -69,8 +69,8 @@ const MEETING = {
         address: "서울 성동구",
         latitude: 1,
         longitude: 2,
-        previewUrl: null,
       },
+      previewPhoto: null,
       recommendedByParticipantId: "12",
       likeCount: 2,
       dislikeCount: 0,

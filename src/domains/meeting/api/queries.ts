@@ -2,14 +2,12 @@ import { queryOptions } from "@tanstack/react-query";
 
 import { filled } from "@/utils/query";
 
-import type { GetSimilarPlacesParams } from "./index";
 import {
   getCoursePlan,
   getMapPins,
   getMeetingDetail,
   getMeetingStatus,
   getRecommendations,
-  getSimilarPlaces,
 } from "./index";
 
 export const meetingQueries = {
@@ -46,25 +44,5 @@ export const meetingQueries = {
       queryKey: ["meeting", meetingId, "recommendations"] as const,
       queryFn: ({ signal }) => getRecommendations(meetingId, accessToken, signal),
       enabled: filled(meetingId, accessToken),
-    }),
-
-  similarPlaces: (
-    meetingId: string,
-    placeId: string,
-    accessToken: string,
-    params?: GetSimilarPlacesParams,
-  ) =>
-    queryOptions({
-      queryKey: [
-        "meeting",
-        meetingId,
-        "place",
-        placeId,
-        "similar",
-        params?.excludeIds,
-        params?.size,
-      ] as const,
-      queryFn: ({ signal }) => getSimilarPlaces(meetingId, placeId, accessToken, params, signal),
-      enabled: filled(meetingId, placeId, accessToken),
     }),
 };

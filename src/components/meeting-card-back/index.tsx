@@ -19,7 +19,7 @@ function toMapPlace(step: CourseRouteStep): MeetingMapPlace {
     name: step.name,
     latitude: step.latitude,
     longitude: step.longitude,
-    previewUrl: step.primaryImageUrl,
+    previewPhoto: step.previewPhoto,
   };
 }
 

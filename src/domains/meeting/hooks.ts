@@ -23,11 +23,12 @@ export function useMeeting() {
 /** 확정된 코스의 장소. 순서대로 담긴다. */
 export function useCoursePlaces() {
   const { data: meeting } = useMeeting();
-  const placeOf = new Map((meeting?.recommendations ?? []).map(({ id, place }) => [id, place]));
+  const byId = new Map((meeting?.recommendations ?? []).map((item) => [item.id, item]));
 
   return (meeting?.selectedCourse?.recommendationIds ?? [])
-    .map((recommendationId) => placeOf.get(recommendationId))
-    .filter((place) => place !== undefined);
+    .map((recommendationId) => byId.get(recommendationId))
+    .filter((item) => item !== undefined)
+    .map(({ place, previewPhoto }) => ({ ...place, previewPhoto }));
 }
 
 /** 응답 전에는 전부 false 라 수정 UI 가 깜빡이지 않는다. */

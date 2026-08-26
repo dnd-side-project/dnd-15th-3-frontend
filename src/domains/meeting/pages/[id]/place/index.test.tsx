@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import { render } from "@/test-utils";
+import { placePhoto, render } from "@/test-utils";
 
 import { PlaceSearchPage } from "./index";
 
@@ -50,7 +50,7 @@ const PLACES = {
       latitude: 37.5701,
       longitude: 126.9989,
       distanceMeters: 320,
-      previewUrl: "/static/popup-momo.webp",
+      previewPhoto: placePhoto("/static/popup-momo.webp"),
     },
   ],
   page: 0,

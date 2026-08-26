@@ -1,4 +1,4 @@
-import type { CategorySlug, ProfileAvatarId } from "@/domains/catalog/api/types";
+import type { CategorySlug, PlacePhoto, ProfileAvatarId } from "@/domains/catalog/api/types";
 import type { ParticipantRole, ViewerPreference } from "@/domains/meeting/api/types";
 
 export interface CourseCandidateSummary {
@@ -19,7 +19,7 @@ export interface CourseRouteStep {
   category: string;
   categorySlug: CategorySlug;
   address: string;
-  primaryImageUrl: string | null;
+  previewPhoto: PlacePhoto | null;
   longitude: number;
   latitude: number;
   walkDurationToNextMin: number | null;
@@ -58,10 +58,10 @@ export interface MeetingPlaceRecommendation {
   categorySlug: CategorySlug;
   name: string;
   address: string;
-  primaryImageUrl?: string;
+  previewPhoto: PlacePhoto | null;
   likeCount: number;
   dislikeCount: number;
-  myPreference: ViewerPreference;
+  myPreference: ViewerPreference | null;
 }
 
 export interface ExcludedPlaceList {

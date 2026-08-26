@@ -14,7 +14,6 @@ import type {
   MapPins,
   PlacePreferenceResponse,
   RecommendationPreview,
-  SimilarPlaceResponse,
   UpdateCoursePlanRequest,
   UpdatePlacePreferenceRequest,
 } from "./types";
@@ -79,24 +78,6 @@ export function getRecommendations(meetingId: string, accessToken: string, signa
     query: { accessToken },
     signal,
   });
-}
-
-export interface GetSimilarPlacesParams {
-  excludeIds?: string[];
-  size?: number;
-}
-
-export function getSimilarPlaces(
-  meetingId: string,
-  placeId: string,
-  accessToken: string,
-  params?: GetSimilarPlacesParams,
-  signal?: AbortSignal,
-) {
-  return request<SimilarPlaceResponse[]>(
-    `/api/v1/meetings/${meetingId}/places/${placeId}/similar`,
-    { query: { accessToken, ...params }, signal },
-  );
 }
 
 export function updatePlacePreference(

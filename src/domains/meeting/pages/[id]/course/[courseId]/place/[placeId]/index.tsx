@@ -7,6 +7,7 @@ import CaretLeftIcon from "@/assets/icon-caret-left.svg?react";
 import HeartIcon from "@/assets/icon-heart.svg?react";
 import PlusIcon from "@/assets/icon-plus.svg?react";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import { toast } from "@/components/toast/manager";
 import { catalogQueries } from "@/domains/catalog/api/queries";
 import { useCategorySlug } from "@/domains/catalog/hooks";
@@ -67,7 +68,7 @@ export function CoursePlaceDetailPage() {
   const address = detail?.address ?? recommendation?.place.address ?? routeStep?.address;
   const slug =
     detail?.categorySlug ?? routeStep?.categorySlug ?? categoryOf(recommendation?.categoryId ?? "");
-  const photoUrls = detail?.imageUrls ?? [];
+  const placePhotos = detail?.photos ?? [];
 
   const [excludeIds, setExcludeIds] = useState<string[]>([]);
   const { data: similarPlaces = [] } = useQuery(
@@ -125,15 +126,15 @@ export function CoursePlaceDetailPage() {
         ) : (
           <>
             <div className={photos}>
-              {photoUrls.length === 0 ? (
+              {placePhotos.length === 0 ? (
                 <span className={photo} />
               ) : (
-                photoUrls.map((imageUrl, index) => (
-                  <img
+                placePhotos.map((item, index) => (
+                  <PlacePhotoImage
                     alt={`${name} 사진 ${index + 1}`}
                     className={photo}
-                    key={imageUrl}
-                    src={imageUrl}
+                    key={item.id}
+                    photo={item}
                   />
                 ))
               )}
@@ -188,11 +189,7 @@ export function CoursePlaceDetailPage() {
                         void navigate(`/meeting/${id}/course/${courseId}/place/${place.id}`)
                       }
                     >
-                      {place.previewUrl === null ? (
-                        <span className={similarThumbnail} />
-                      ) : (
-                        <img alt="" className={similarThumbnail} src={place.previewUrl} />
-                      )}
+                      <PlacePhotoImage className={similarThumbnail} photo={place.previewPhoto} />
                       <span className={similarTexts}>
                         <span className={similarName}>
                           <PlaceIcon category={categoryOf(place.categoryId)} size={20} />

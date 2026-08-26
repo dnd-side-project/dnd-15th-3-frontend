@@ -52,7 +52,7 @@ const PLACES = {
       latitude: 37.57,
       longitude: 126.99,
       distanceMeters: 100,
-      previewUrl: null,
+      previewPhoto: null,
     },
   ],
   page: 0,
