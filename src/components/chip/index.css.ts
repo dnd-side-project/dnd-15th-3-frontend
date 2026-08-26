@@ -12,8 +12,12 @@ const colors = {
   unselectedIcon: vars.color.text.tertiary,
   selectedBackground: vars.color.brand.subtle,
   selectedText: vars.color.brand.primary,
-  overlayBackground: palette.white1,
-  overlayBorder: palette.neutral6,
+  solidBackground: palette.white1,
+  solidBorder: palette.neutral6,
+  solidText: vars.color.text.secondary,
+  solidIcon: vars.color.brand.primary,
+  overlayBackground: palette.white9Alpha30,
+  overlayBorder: palette.neutral11Alpha22,
   overlayText: vars.color.text.secondary,
   overlayIcon: vars.color.brand.primary,
 };
@@ -56,9 +60,17 @@ export const chipContainer = recipe({
     },
     variant: {
       filled: { minHeight: 38 },
+      solid: {
+        minHeight: 33,
+        backgroundColor: colors.solidBackground,
+        color: colors.solidText,
+        boxShadow: `inset 0 0 0 1px ${colors.solidBorder}`,
+        vars: { [iconColor]: colors.solidIcon },
+      },
       overlay: {
         minHeight: 33,
         backgroundColor: colors.overlayBackground,
+        backdropFilter: "blur(4px)",
         color: colors.overlayText,
         boxShadow: `inset 0 0 0 1px ${colors.overlayBorder}`,
         vars: { [iconColor]: colors.overlayIcon },
