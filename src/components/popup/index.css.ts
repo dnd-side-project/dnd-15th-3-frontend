@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { palette } from "@/styles/palette";
 
@@ -32,39 +33,50 @@ export const backdrop = style({
   },
 });
 
-export const card = style({
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "calc(100% - 92px)",
-  maxWidth: 300,
-  padding: "0 15px 28px",
-  overflow: "hidden",
-  borderRadius: 12,
-  backgroundColor: colors.background,
-  fontFamily: vars.font.body,
-  outline: "none",
-  transition: "opacity 0.15s ease, transform 0.15s ease",
-  selectors: {
-    "&[data-starting-style]": {
-      opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.96)",
+export const card = recipe({
+  base: {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "calc(100% - 92px)",
+    maxWidth: 300,
+    padding: "0 15px 28px",
+    overflow: "hidden",
+    borderRadius: 12,
+    backgroundColor: colors.background,
+    fontFamily: vars.font.body,
+    outline: "none",
+    transition: "opacity 0.15s ease, transform 0.15s ease",
+    selectors: {
+      "&[data-starting-style]": {
+        opacity: 0,
+        transform: "translate(-50%, -50%) scale(0.96)",
+      },
+      "&[data-ending-style]": {
+        opacity: 0,
+        transform: "translate(-50%, -50%) scale(0.96)",
+      },
     },
-    "&[data-ending-style]": {
-      opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.96)",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": {
+        transition: "none",
+      },
     },
   },
-  "@media": {
-    "(prefers-reduced-motion: reduce)": {
-      transition: "none",
-    },
+  variants: {
+    hasMedia: { true: {}, false: {} },
+    showClose: { true: {}, false: {} },
   },
+  compoundVariants: [
+    {
+      // media·닫기 버튼이 모두 없을 때는 카드 자체 padding 으로 여백을 준다 (Figma 실측값).
+      variants: { hasMedia: false, showClose: false },
+      style: { padding: "29px 20px 22px" },
+    },
+  ],
+  defaultVariants: { hasMedia: false, showClose: true },
 });
-
-/** media·닫기 버튼이 모두 없을 때, 카드 자체 padding 으로 상단 여백을 준다. */
-export const cardCompact = style([card, { padding: "29px 20px 22px" }]);
 
 export const close = style({
   position: "absolute",
@@ -90,17 +102,28 @@ export const media = style({
   height: 211,
 });
 
-export const texts = style({
-  position: "relative",
-  zIndex: 1,
-  display: "flex",
-  flexDirection: "column",
-  gap: 1,
-  textAlign: "center",
+export const texts = recipe({
+  base: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: 1,
+    textAlign: "center",
+  },
+  variants: {
+    hasMedia: { true: {}, false: {} },
+    showClose: { true: {}, false: {} },
+  },
+  compoundVariants: [
+    {
+      // media 없이 닫기 버튼만 있을 때, 버튼(top 23 + height 24)과 겹치지 않도록 위쪽 여백을 둔다.
+      variants: { hasMedia: false, showClose: true },
+      style: { marginTop: 56 },
+    },
+  ],
+  defaultVariants: { hasMedia: false, showClose: true },
 });
-
-/** media 없이 닫기 버튼만 있을 때, 버튼(top 23 + height 24)과 겹치지 않도록 위쪽 여백을 둔다. */
-export const textsBelowClose = style([texts, { marginTop: 56 }]);
 
 export const title = style({
   margin: 0,
