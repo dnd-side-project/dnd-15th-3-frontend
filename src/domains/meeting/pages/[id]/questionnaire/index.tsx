@@ -110,8 +110,8 @@ export function QuestionnairePage() {
 
   return (
     <Layout>
-      <TopAppBar background={surfaceColor} title="모임 질문" onBack={handleBack} />
       <div className={root}>
+        <TopAppBar background={surfaceColor} title="모임 질문" onBack={handleBack} />
         <div className={body}>
           {currentQuestion ? (
             <>

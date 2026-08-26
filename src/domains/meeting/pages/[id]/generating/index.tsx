@@ -54,7 +54,7 @@ export function CourseGeneratingPage() {
     <Layout>
       <div className={root}>
         <div className={texts}>
-          <p className={title}>코스를 만들고 있어요</p>
+          <h1 className={title}>코스를 만들고 있어요</h1>
           <p className={description}>잠시만 기다려 주세요. 곧 멋진 코스가 완성돼요!</p>
         </div>
         <div aria-hidden className={media}>
