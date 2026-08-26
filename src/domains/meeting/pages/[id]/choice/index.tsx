@@ -135,18 +135,6 @@ export function ChoicePage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
   });
 
-  const skipQuestionnaire = () => {
-    setIsConfirmPopupOpen(false);
-    void navigate(`/meeting/${id}/generating`, {
-      state: { customization: { type: "SKIP" } },
-    });
-  };
-
-  const startQuestionnaire = () => {
-    setIsConfirmPopupOpen(false);
-    void navigate(`/meeting/${id}/questionnaire`);
-  };
-
   if (isError) {
     return (
       <Layout>
@@ -266,8 +254,12 @@ export function ChoicePage() {
           <CtaButtonRow
             primaryLabel="좋아요!"
             secondaryLabel="괜찮아요"
-            onPrimary={startQuestionnaire}
-            onSecondary={skipQuestionnaire}
+            onPrimary={() => void navigate(`/meeting/${id}/questionnaire`)}
+            onSecondary={() =>
+              void navigate(`/meeting/${id}/generating`, {
+                state: { customization: { type: "SKIP" } },
+              })
+            }
           />
         }
         onOpenChange={setIsConfirmPopupOpen}
