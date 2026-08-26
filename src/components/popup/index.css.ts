@@ -70,7 +70,6 @@ export const card = recipe({
   },
   compoundVariants: [
     {
-      // media·닫기 버튼이 모두 없을 때는 카드 자체 padding 으로 여백을 준다 (Figma 실측값).
       variants: { hasMedia: false, showClose: false },
       style: { padding: "29px 20px 22px" },
     },
@@ -117,7 +116,6 @@ export const texts = recipe({
   },
   compoundVariants: [
     {
-      // media 없이 닫기 버튼만 있을 때, 버튼(top 23 + height 24)과 겹치지 않도록 위쪽 여백을 둔다.
       variants: { hasMedia: false, showClose: true },
       style: { marginTop: 56 },
     },
