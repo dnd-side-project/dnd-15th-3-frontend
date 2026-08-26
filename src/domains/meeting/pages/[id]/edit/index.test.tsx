@@ -55,7 +55,7 @@ const COURSE_DETAIL = {
       category: "음식점",
       categorySlug: "restaurant",
       address: "서울 종로구 예지동 6-1",
-      primaryImageUrl: null,
+      previewPhoto: null,
       longitude: 126.9989,
       latitude: 37.5701,
       walkDurationToNextMin: null,

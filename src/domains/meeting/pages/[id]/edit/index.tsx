@@ -10,6 +10,7 @@ import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import { toast } from "@/components/toast/manager";
 import { TopAppBar } from "@/components/top-app-bar";
 import type { CategorySlug } from "@/domains/catalog/api/types";
@@ -162,11 +163,7 @@ export function CourseEditPage() {
                 type="button"
                 onClick={() => addToCourse(place.recommendationId)}
               >
-                {place.primaryImageUrl === undefined ? (
-                  <span className={thumbnail} />
-                ) : (
-                  <img alt="" className={thumbnail} src={place.primaryImageUrl} />
-                )}
+                <PlacePhotoImage className={thumbnail} photo={place.previewPhoto} />
                 <span className={savedTexts}>
                   <span className={name}>
                     <PlaceIcon category={place.categorySlug} size={20} />

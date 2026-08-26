@@ -6,6 +6,7 @@ import PlusIcon from "@/assets/icon-plus.svg?react";
 import RetryLargeIcon from "@/assets/icon-retry-large.svg?react";
 import SearchIcon from "@/assets/icon-search.svg?react";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import { PlaceSearchInput } from "@/components/text-input";
 import { catalogQueries } from "@/domains/catalog/api/queries";
 import { useCategorySlug } from "@/domains/catalog/hooks";
@@ -114,11 +115,7 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
                 type="button"
                 onClick={() => onSelect(place.id)}
               >
-                {place.previewUrl === null ? (
-                  <span className={thumbnail} />
-                ) : (
-                  <img alt="" className={thumbnail} src={place.previewUrl} />
-                )}
+                <PlacePhotoImage className={thumbnail} photo={place.previewPhoto} />
                 <span className={resultTexts}>
                   <span className={resultName}>
                     <PlaceIcon category={categoryOf(place.category.id)} size={20} />

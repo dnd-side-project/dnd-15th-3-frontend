@@ -1,4 +1,9 @@
-import type { CategorySlug, MeetingTypeCode, ProfileAvatarId } from "@/domains/catalog/api/types";
+import type {
+  CategorySlug,
+  MeetingTypeCode,
+  PlacePhoto,
+  ProfileAvatarId,
+} from "@/domains/catalog/api/types";
 
 export type ParticipantRole = "HOST" | "MEMBER";
 
@@ -42,11 +47,6 @@ export interface PlaceSummary {
   address: string;
   latitude: number;
   longitude: number;
-  /**
-   * 이미지 수집 전에는 null.
-   * @deprecated 서버 `PlaceSummaryDto` 에 없는 필드입니다. 추가를 요청 중입니다.
-   */
-  previewUrl: string | null;
 }
 
 /** 첫 만남 기준 위치. 장소(PlaceSummary)와 달리 주소 검색 결과에서 온다. */
@@ -81,6 +81,7 @@ export interface RecommendationPreview {
   id: string;
   categoryId: string;
   place: PlaceSummary;
+  previewPhoto: PlacePhoto | null;
   recommendedByParticipantId: string;
   likeCount: number;
   dislikeCount: number;
@@ -184,17 +185,6 @@ export interface PlacePreferenceResponse {
   likeCount: number;
   dislikeCount: number;
   myPreference: ViewerPreference | null;
-}
-
-export interface SimilarPlaceResponse {
-  id: string;
-  categoryId: string;
-  name: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  primaryImageUrl: string | null;
-  previewUrl: string | null;
 }
 
 export interface AddRecommendationRequest {

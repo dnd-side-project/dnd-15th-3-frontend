@@ -60,15 +60,13 @@ export function MeetingCourseDetailPage() {
             interactive={false}
             level={6}
             origin={meeting.firstLocation}
-            places={route.map(
-              ({ recommendationId, name, latitude, longitude, primaryImageUrl }) => ({
-                id: recommendationId,
-                name,
-                latitude,
-                longitude,
-                previewUrl: primaryImageUrl,
-              }),
-            )}
+            places={route.map(({ recommendationId, name, latitude, longitude, previewPhoto }) => ({
+              id: recommendationId,
+              name,
+              latitude,
+              longitude,
+              previewPhoto,
+            }))}
           />
           <button
             aria-label="지도 크게 보기"

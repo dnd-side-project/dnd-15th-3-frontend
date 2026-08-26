@@ -44,6 +44,26 @@ export interface ProfileAvatarResponse {
   name: string;
 }
 
+export type PlacePhotoSource = "OWNED" | "GOOGLE";
+
+export interface PlacePhotoAttribution {
+  displayName: string;
+  uri: string | null;
+  photoUri: string | null;
+}
+
+/** `url` 은 이번 응답에서만 쓰고 영구 저장하지 않는다. */
+export interface PlacePhoto {
+  id: string;
+  url: string;
+  width: number | null;
+  height: number | null;
+  source: PlacePhotoSource;
+  attributions: PlacePhotoAttribution[];
+  googleMapsUri: string | null;
+  flagContentUri: string | null;
+}
+
 export interface PlaceSearchCategory {
   id: string;
   name: string;
@@ -59,8 +79,7 @@ export interface PlaceSearchItem {
   longitude: number;
   /** 모임 기준 위치로부터의 거리 */
   distanceMeters: number;
-  /** 이미지 수집 전에는 null */
-  previewUrl: string | null;
+  previewPhoto: PlacePhoto | null;
 }
 
 /** 검색 결과와 달리 카테고리를 id 로만 준다. */
@@ -71,8 +90,7 @@ export interface SimilarPlace {
   address: string;
   latitude: number;
   longitude: number;
-  primaryImageUrl: string | null;
-  previewUrl: string | null;
+  previewPhoto: PlacePhoto | null;
 }
 
 export type PlaceCollectionStatus = "PENDING" | "RUNNING" | "READY" | "PARTIAL" | "FAILED";
@@ -87,17 +105,14 @@ export interface PlaceSearchResponse {
   lastSyncedAt: string | null;
 }
 
-/** 장소 상세. 검색 결과와 달리 사진을 여러 장 준다. */
 export interface PlaceDetail {
   placeId: string;
   category: string;
   categorySlug: CategorySlug;
   name: string;
   address: string;
-  /** @deprecated `imageUrls` 를 사용합니다. */
-  primaryImageUrl?: string;
-  imageUrls: string[];
-  previewUrl: string;
+  photos: PlacePhoto[];
+  previewPhoto: PlacePhoto | null;
 }
 
 export interface FirstMeetingPlaceResponse {

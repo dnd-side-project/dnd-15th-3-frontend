@@ -86,7 +86,7 @@ export function MeetingMapOsm({
       <div style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}>
         <RouteMarker
           imageAlt={place.name}
-          imageUrl={place.previewUrl}
+          imageUrl={place.previewPhoto?.url}
           index={idx + 1}
           tone={tone}
         />

@@ -8,6 +8,7 @@ import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
 import { PlaceIcon } from "@/components/place-icon";
+import { PlacePhotoImage } from "@/components/place-photo";
 import { Popup } from "@/components/popup";
 import { PreferenceButton } from "@/components/preference-button";
 import { Toggle } from "@/components/toggle";
@@ -90,11 +91,7 @@ function RecommendationCard({
 
   return (
     <div className={card} style={{ height }}>
-      {place.previewUrl === null ? (
-        <span aria-hidden className={cardImage} />
-      ) : (
-        <img alt="" className={cardImage} src={place.previewUrl} />
-      )}
+      <PlacePhotoImage className={cardImage} photo={recommendation.previewPhoto} />
       <span aria-hidden className={cardScrim} />
       <button aria-label={place.name} className={cardLink} type="button" onClick={onOpen} />
       <span className={cardBody}>

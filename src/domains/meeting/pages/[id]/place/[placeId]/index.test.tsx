@@ -4,7 +4,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import { ToastProvider } from "@/components/toast";
-import { render } from "@/test-utils";
+import { placePhoto, render } from "@/test-utils";
 
 import { PlaceDetailPage } from "./index";
 
@@ -47,8 +47,8 @@ const MEETING = {
         address: "서울 종로구 예지동 6-1",
         latitude: 37.5701,
         longitude: 126.9989,
-        previewUrl: "/static/popup-momo.webp",
       },
+      previewPhoto: placePhoto("/static/popup-momo.webp"),
       recommendedByParticipantId: "11",
       likeCount: 3,
       dislikeCount: 1,
@@ -64,8 +64,8 @@ const PLACE_DETAIL = {
   categorySlug: "restaurant",
   name: "광장시장 순대볶음",
   address: "서울 종로구 예지동 6-1",
-  imageUrls: ["/static/popup-momo.webp", "/static/complete-momo.webp"],
-  previewUrl: "/static/popup-momo.webp",
+  photos: [placePhoto("/static/popup-momo.webp"), placePhoto("/static/complete-momo.webp")],
+  previewPhoto: placePhoto("/static/popup-momo.webp"),
 };
 
 function similarPlaces(names: string[]) {
@@ -74,7 +74,7 @@ function similarPlaces(names: string[]) {
     categoryId: "1",
     name,
     address: `서울 종로구 ${at + 1}`,
-    previewUrl: null,
+    previewPhoto: null,
   }));
 }
 
