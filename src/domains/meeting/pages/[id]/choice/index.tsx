@@ -176,7 +176,11 @@ export function ChoicePage() {
     <Layout>
       <div className={root}>
         <div className={toggle}>
-          <Toggle value="list" onChange={() => void navigate(`/meeting/${id}/place`)} />
+          <Toggle
+            tone="overlay"
+            value="list"
+            onChange={() => void navigate(`/meeting/${id}/place`)}
+          />
         </div>
 
         <div className={filters}>
