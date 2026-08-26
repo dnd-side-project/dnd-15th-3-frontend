@@ -12,8 +12,8 @@ const colors = {
   unselectedIcon: vars.color.text.tertiary,
   selectedBackground: vars.color.brand.subtle,
   selectedText: vars.color.brand.primary,
-  overlayBackground: palette.white9Alpha30,
-  overlayBorder: palette.neutral11Alpha22,
+  overlayBackground: palette.white1,
+  overlayBorder: palette.neutral6,
   overlayText: vars.color.text.secondary,
   overlayIcon: vars.color.brand.primary,
 };
@@ -59,7 +59,6 @@ export const chipContainer = recipe({
       overlay: {
         minHeight: 33,
         backgroundColor: colors.overlayBackground,
-        backdropFilter: "blur(4px)",
         color: colors.overlayText,
         boxShadow: `inset 0 0 0 1px ${colors.overlayBorder}`,
         vars: { [iconColor]: colors.overlayIcon },
