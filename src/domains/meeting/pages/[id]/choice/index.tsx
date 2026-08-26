@@ -248,7 +248,7 @@ export function ChoicePage() {
         <div className={footer}>
           <CtaButton
             disabled={!hasPlaces || !meeting.permissions.canSelectCourse || isGenerating}
-            onClick={() => generate()}
+            onClick={() => generate({ type: "SKIP" })}
           >
             코스 생성하기
           </CtaButton>

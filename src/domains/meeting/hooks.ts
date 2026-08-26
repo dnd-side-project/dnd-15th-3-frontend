@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 import { generateCourse } from "@/domains/course/api";
+import type { CourseCustomization } from "@/domains/course/api/types";
 import { getAccessToken } from "@/utils/access-token";
 
 import { meetingQueries } from "./api/queries";
@@ -50,7 +51,7 @@ interface CourseGenerationHandlers {
 
 /**
  * 코스 생성을 요청한 뒤, 생성중이면 완료·실패가 날 때까지 상태를 폴링한다.
- * `generate` 로 POST 하고, 응답이 `COURSE_GENERATING` 이면 상태 조회 쿼리의 `refetchInterval` 로 2초 간격으로 폴링한다.
+ * `generate(customization)` 로 POST 하고, 응답이 `COURSE_GENERATING` 이면 상태 조회 쿼리의 `refetchInterval` 로 2초 간격으로 폴링한다.
  * 터미널 상태에서는 `refetchInterval` 이 false 를 반환해 폴링이 멈추고, 완료·실패 콜백을 한 번 흘려보낸다.
  */
 export function useCourseGeneration(
@@ -63,7 +64,8 @@ export function useCourseGeneration(
   const [polling, setPolling] = useState(false);
 
   const { mutate: generate, isPending } = useMutation({
-    mutationFn: () => generateCourse(meetingId, accessToken, { customization: { type: "SKIP" } }),
+    mutationFn: (customization: CourseCustomization) =>
+      generateCourse(meetingId, accessToken, { customization }),
     onSuccess: (data) => {
       // 즉시 완료·실패면 폴링 없이 결과를 흘린다.
       if (data.status === "COURSE_GENERATED") {
