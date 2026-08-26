@@ -82,6 +82,21 @@ export interface SkipCourseCustomization {
   type: "SKIP";
 }
 
+export interface CourseGenerationAnswer {
+  questionId: string;
+  optionId: string;
+}
+
+export interface QuestionnaireCourseCustomization {
+  type: "QUESTIONNAIRE";
+  questionnaireId: string;
+  questionnaireVersion: number;
+  /** 정확히 3개 */
+  answers: CourseGenerationAnswer[];
+}
+
+export type CourseCustomization = SkipCourseCustomization | QuestionnaireCourseCustomization;
+
 export interface GenerateCourseRequest {
-  customization: SkipCourseCustomization;
+  customization: CourseCustomization;
 }
