@@ -32,7 +32,9 @@ export const scrim = style({
 export const topScrim = style({
   position: "absolute",
   inset: 0,
-  backgroundImage: `linear-gradient(180deg, ${vars.color.overlay.scrim20} 0%, ${palette.neutral16Alpha4} 36%)`,
+  zIndex: 1,
+  pointerEvents: "none",
+  backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(102, 102, 102, 0) 36%)`,
 });
 
 export const toggle = style({
