@@ -9,6 +9,7 @@ export const root = style({
   flexDirection: "column",
   alignItems: "center",
   flex: 1,
+  background: vars.color.brand.surface,
 });
 
 export const texts = style({

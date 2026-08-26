@@ -5,10 +5,13 @@ import { text } from "@/styles/text";
 
 import { vars } from "@/styles/theme.css";
 
+export const surfaceColor = vars.color.surface.default;
+
 export const root = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
+  background: surfaceColor,
 });
 
 export const body = style({
@@ -24,9 +27,16 @@ export const progress = style({
   width: "fit-content",
   padding: "4px 10px",
   borderRadius: vars.radius.full,
-  backgroundColor: vars.color.brand.surface,
-  color: vars.color.brand.primary,
+  backgroundColor: vars.color.surface.app,
   ...text({ size: 13, weight: 700 }),
+});
+
+export const progressCurrent = style({
+  color: vars.color.brand.strong,
+});
+
+export const progressTotal = style({
+  color: vars.color.text.tertiary,
 });
 
 export const question = style({
@@ -50,7 +60,7 @@ export const option = recipe({
     padding: "16px 18px",
     border: "none",
     borderRadius: 12,
-    backgroundColor: vars.color.surface.muted,
+    backgroundColor: vars.color.surface.app,
     color: vars.color.text.primary,
     textAlign: "left",
     cursor: "pointer",

@@ -18,11 +18,13 @@ import {
   optionList,
   placeholder,
   progress,
+  progressCurrent,
+  progressTotal,
   question as questionStyle,
   retry,
   root,
+  surfaceColor,
 } from "./index.css";
-import { surfaceColor } from "@/components/layout/index.css";
 
 function byOrder(questions: Questionnaire["questions"]) {
   return [...questions].sort((a, b) => a.order - b.order);
@@ -116,7 +118,8 @@ export function QuestionnairePage() {
           {currentQuestion ? (
             <>
               <span className={progress}>
-                {currentIndex + 1}/{totalCount}
+                <span className={progressCurrent}>{currentIndex + 1}</span>
+                <span className={progressTotal}>/{totalCount}</span>
               </span>
               <h1 className={questionStyle}>{currentQuestion.text}</h1>
               <div className={optionList}>
