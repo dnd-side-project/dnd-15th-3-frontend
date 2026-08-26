@@ -37,6 +37,12 @@ export function useMeetingPermissions() {
   return data?.permissions ?? NO_PERMISSIONS;
 }
 
+/** 모임 상태 (코스 생성 진행 상황) */
+export function useMeetingStatus() {
+  const { id = "" } = useParams();
+  return useQuery(meetingQueries.status(id, getAccessToken(id)));
+}
+
 interface CourseGenerationHandlers {
   onSuccess: () => void;
   onError: () => void;

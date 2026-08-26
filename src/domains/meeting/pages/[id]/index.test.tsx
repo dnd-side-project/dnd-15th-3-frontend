@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
-import type { MeetingScreen } from "@/domains/meeting/api/types";
+import type { MeetingScreen, MeetingStatus } from "@/domains/meeting/api/types";
 import { render } from "@/test-utils";
 
 import { MeetingPage } from "./index";
@@ -50,10 +50,25 @@ const MEETING_TYPES = [
   { id: "2", code: "DATING_HOBBY", name: "데이트" },
 ];
 
-function renderMeeting(meeting: MeetingScreen = MEETING) {
+const MEETING_STATUS: MeetingStatus = {
+  status: "RECOMMENDATION_COLLECTING",
+  confirmedCourseCandidateId: null,
+};
+
+function renderMeeting(
+  meeting: MeetingScreen = MEETING,
+  meetingStatus: MeetingStatus = MEETING_STATUS,
+) {
   fetchMock.mockImplementation((input) => {
     const url = new Request(input).url;
-    const body = url.includes("/meeting-types") ? MEETING_TYPES : meeting;
+    let body: unknown;
+    if (url.includes("/meeting-types")) {
+      body = MEETING_TYPES;
+    } else if (url.includes("/meetings/")) {
+      body = meetingStatus;
+    } else {
+      body = meeting;
+    }
     return Promise.resolve(
       new Response(JSON.stringify(body), {
         status: 200,
@@ -101,15 +116,15 @@ test("참여자 목록에서 방장에게만 왕관을 표시한다", async () =
   expect(document.querySelectorAll('[aria-label="방장"]').length).toBe(1);
 });
 
-test("코스 카드는 코스 순서와 지도 화면으로 연결한다", async () => {
+test("코스 카드는 코스 순서 링크와 지도 버튼으로 구성된다", async () => {
   renderMeeting();
 
   await expect
     .element(page.getByRole("link", { name: /코스 순서/ }))
     .toHaveAttribute("href", "/meeting/1/course-plan");
   await expect
-    .element(page.getByRole("link", { name: /모임 코스 자세히 보기/ }))
-    .toHaveAttribute("href", "/meeting/1/place");
+    .element(page.getByRole("button", { name: /모임 코스 자세히 보기/ }))
+    .toBeInTheDocument();
 });
 
 test("코스가 정해지기 전에는 공유하기만 보여준다", async () => {
@@ -189,4 +204,27 @@ test("모임을 관리할 수 없으면 날짜·시간·장소를 누를 수 없
   await expect.element(page.getByText("26. 08. 05")).toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: /26. 08. 05/ })).not.toBeInTheDocument();
   await expect.element(page.getByRole("button", { name: "친목" })).not.toBeInTheDocument();
+});
+
+test("코스 생성 중 맵카드를 누르면 팝업이 표시된다", async () => {
+  renderMeeting(MEETING, { status: "COURSE_GENERATING", confirmedCourseCandidateId: null });
+
+  await userEvent.click(page.getByRole("button", { name: /모임 코스 자세히 보기/ }));
+
+  await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+  await expect.element(page.getByText("코스 생성 중")).toBeInTheDocument();
+  await expect
+    .element(page.getByText("코스 생성이 완료될 때까지 기다려주세요"))
+    .toBeInTheDocument();
+});
+
+test("코스 생성 중 팝업을 닫을 수 있다", async () => {
+  renderMeeting(MEETING, { status: "COURSE_GENERATING", confirmedCourseCandidateId: null });
+
+  await userEvent.click(page.getByRole("button", { name: /모임 코스 자세히 보기/ }));
+  await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+
+  await userEvent.click(page.getByRole("button", { name: "닫기" }));
+
+  await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
 });
