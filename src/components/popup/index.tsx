@@ -11,6 +11,7 @@ import {
   footer as footerStyle,
   media as mediaStyle,
   texts,
+  textsWithoutMedia,
   title as titleStyle,
 } from "./index.css";
 
@@ -45,8 +46,8 @@ export function Popup({
               <XIcon aria-hidden height={15} width={15} />
             </Dialog.Close>
           )}
-          <div className={mediaStyle}>{media}</div>
-          <div className={texts}>
+          {media && <div className={mediaStyle}>{media}</div>}
+          <div className={media ? texts : textsWithoutMedia}>
             <Dialog.Title className={titleStyle}>{title}</Dialog.Title>
             {description && (
               <Dialog.Description className={descriptionStyle}>{description}</Dialog.Description>

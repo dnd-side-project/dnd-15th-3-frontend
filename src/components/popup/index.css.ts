@@ -95,6 +95,9 @@ export const texts = style({
   textAlign: "center",
 });
 
+/** media 없이 texts 만 있을 때, 닫기 버튼(top 23 + height 24)과 겹치지 않도록 위쪽 여백을 둔다. */
+export const textsWithoutMedia = style([texts, { marginTop: 56 }]);
+
 export const title = style({
   margin: 0,
   fontSize: 20,
