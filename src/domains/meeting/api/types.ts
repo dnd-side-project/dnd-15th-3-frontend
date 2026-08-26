@@ -195,3 +195,30 @@ export interface CourseImageResponse {
   imageUrl: string;
   uploadedAt: string;
 }
+
+export interface QuestionnaireOption {
+  optionId: string;
+  order: number;
+  emoji: string;
+  label: string;
+}
+
+export interface QuestionnaireQuestion {
+  questionId: string;
+  order: number;
+  text: string;
+  options: QuestionnaireOption[];
+}
+
+export type QuestionnaireStatus = "GENERATING" | "READY" | "FAILED";
+
+export interface Questionnaire {
+  status: QuestionnaireStatus;
+  questionnaireId: string;
+  version: number;
+  /** 완성될 전체 질문 수 */
+  totalCount: number;
+  /** 현재 응답에 포함된 질문 수 */
+  availableCount: number;
+  questions: QuestionnaireQuestion[];
+}
