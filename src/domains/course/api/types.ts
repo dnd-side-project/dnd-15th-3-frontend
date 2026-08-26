@@ -77,3 +77,11 @@ export interface AddCoursePlaceRequest {
 export interface UpdateCoursePlacesRequest {
   recommendationIds: string[];
 }
+
+export interface SkipCourseCustomization {
+  type: "SKIP";
+}
+
+export interface GenerateCourseRequest {
+  customization: SkipCourseCustomization;
+}

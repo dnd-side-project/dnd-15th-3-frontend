@@ -10,6 +10,7 @@ import type {
   CreateCourseCommentRequest,
   CreateCourseCommentResponse,
   ExcludedPlaceList,
+  GenerateCourseRequest,
   UpdateCoursePlacesRequest,
 } from "./types";
 
@@ -61,10 +62,15 @@ export function getExcludedPlaces(
   );
 }
 
-export function generateCourse(meetingId: string, accessToken: string) {
+export function generateCourse(
+  meetingId: string,
+  accessToken: string,
+  body: GenerateCourseRequest,
+) {
   return request<MeetingStatus>(`/api/v1/meetings/${meetingId}/courses`, {
     method: "POST",
     query: { accessToken },
+    body,
   });
 }
 
