@@ -1,4 +1,3 @@
-import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { palette } from "@/styles/palette";
@@ -7,6 +6,7 @@ import { vars } from "@/styles/theme.css";
 
 const colors = {
   background: palette.white1,
+  overlayBackground: palette.gray4Alpha69,
   icon: palette.neutral19Alpha33,
   selectedBackground: vars.color.brand.primary,
   selectedIcon: vars.color.surface.pressed,
@@ -15,16 +15,30 @@ const colors = {
 const PADDING = 5;
 const GAP = 10;
 
-export const root = style({
-  position: "relative",
-  display: "flex",
-  alignItems: "center",
-  gap: GAP,
-  width: 107,
-  height: 46,
-  padding: PADDING,
-  borderRadius: vars.radius.full,
-  backgroundColor: colors.background,
+export const root = recipe({
+  base: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    gap: GAP,
+    width: 107,
+    height: 46,
+    padding: PADDING,
+    borderRadius: vars.radius.full,
+  },
+  variants: {
+    tone: {
+      default: {
+        backgroundColor: colors.background,
+      },
+      overlay: {
+        backgroundColor: colors.overlayBackground,
+      },
+    },
+  },
+  defaultVariants: {
+    tone: "default",
+  },
 });
 
 export const indicator = recipe({
