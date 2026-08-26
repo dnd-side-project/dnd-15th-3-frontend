@@ -159,7 +159,9 @@ export function CompletePage() {
             <div className={share}>
               <ShareButtonGroup
                 description={`초대코드 ${invitationCode}`}
+                imageHeight={450}
                 imageUrl={`${window.location.origin}/static/momo-kakao-share.png`}
+                imageWidth={800}
                 link={invitationUrl}
                 title={getValues("name")}
                 onCopyLink={() => toast.add({ title: "링크가 복사되었습니다." })}
