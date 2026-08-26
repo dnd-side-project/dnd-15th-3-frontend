@@ -6,6 +6,7 @@ import XIcon from "@/assets/icon-x.svg?react";
 import {
   backdrop,
   card,
+  cardCompact,
   close,
   description as descriptionStyle,
   footer as footerStyle,
@@ -35,12 +36,17 @@ export function Popup({
   footer,
 }: PopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
+  const compact = !media && !showClose;
 
   return (
     <Dialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
       <Dialog.Portal>
         <Dialog.Backdrop className={backdrop} />
-        <Dialog.Popup ref={popupRef} initialFocus={popupRef} className={card}>
+        <Dialog.Popup
+          ref={popupRef}
+          initialFocus={popupRef}
+          className={compact ? cardCompact : card}
+        >
           {showClose && (
             <Dialog.Close aria-label="닫기" className={close}>
               <XIcon aria-hidden height={15} width={15} />

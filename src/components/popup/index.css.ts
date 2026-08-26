@@ -63,6 +63,9 @@ export const card = style({
   },
 });
 
+/** media·닫기 버튼이 모두 없을 때, 카드 자체 padding 으로 상단 여백을 준다. */
+export const cardCompact = style([card, { padding: "29px 20px 22px" }]);
+
 export const close = style({
   position: "absolute",
   zIndex: 1,

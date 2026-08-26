@@ -101,6 +101,7 @@ export const CourseGenerationConfirm: Story = {
     title: "이번 모임, 어떻게 보내볼까요?",
     description:
       "간단한 질문에 답해주시면 모임원들의 취향을 분석해 모임에 꼭 맞는 코스를 만들어드려요.",
+    showClose: false,
     footer: (
       <CtaButtonRow
         primaryLabel="좋아요!"
