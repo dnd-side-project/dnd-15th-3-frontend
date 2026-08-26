@@ -26,7 +26,7 @@ export const progress = style({
   display: "inline-flex",
   width: "fit-content",
   padding: "4px 10px",
-  borderRadius: vars.radius.full,
+  borderRadius: vars.radius.sm,
   backgroundColor: vars.color.surface.app,
   ...text({ size: 13, weight: 700 }),
 });
