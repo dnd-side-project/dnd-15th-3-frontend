@@ -6,7 +6,7 @@ import { palette } from "@/styles/palette";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  background: palette.gray4Alpha69,
+  background: palette.white1,
   icon: palette.neutral19Alpha33,
   selectedBackground: vars.color.brand.primary,
   selectedIcon: vars.color.surface.pressed,
