@@ -7,6 +7,7 @@ import { Layout } from "@/components/layout";
 import { TopAppBar } from "@/components/top-app-bar";
 import { createQuestionnaire } from "@/domains/meeting/api";
 import { meetingQueries } from "@/domains/meeting/api/queries";
+import type { Questionnaire } from "@/domains/meeting/api/types";
 import { getAccessToken } from "@/utils/access-token";
 
 import {
@@ -35,13 +36,15 @@ export function QuestionnairePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
+  // data·isPending 을 useMutation 에서 바로 읽으면 낙관적 렌더가 갱신되지 않아 seed 로 직접 들고 있는다.
+  const [seed, setSeed] = useState<Questionnaire | null>(null);
   const {
     mutate: start,
-    data: created,
     isPending: isStarting,
     isError: isStartError,
   } = useMutation({
     mutationFn: () => createQuestionnaire(id, accessToken),
+    onSuccess: (data) => setSeed(data),
   });
 
   useEffect(() => {
@@ -54,11 +57,11 @@ export function QuestionnairePage() {
 
   const { data: polled } = useQuery({
     ...questionnaireOptions,
-    enabled: created?.status === "GENERATING",
+    enabled: seed !== null && seed.status === "GENERATING",
     refetchInterval: (query) => (query.state.data?.status === "GENERATING" ? 1500 : false),
   });
 
-  const questionnaire = polled ?? created ?? null;
+  const questionnaire = polled ?? seed;
   const questions = questionnaire
     ? questionnaire.questions.toSorted((a, b) => a.order - b.order)
     : [];
