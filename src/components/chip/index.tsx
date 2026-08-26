@@ -13,7 +13,7 @@ import {
   chipRemoveButton,
 } from "./index.css";
 
-export type ChipVariant = "filled" | "overlay";
+export type ChipVariant = "filled" | "solid" | "overlay";
 
 export interface ChipProps {
   children: ReactNode;
@@ -33,7 +33,7 @@ export function Chip({
   onRemove,
 }: ChipProps) {
   const removable = selected && Boolean(onRemove);
-  const pressed = variant === "overlay" ? undefined : selected;
+  const pressed = variant === "overlay" || variant === "solid" ? undefined : selected;
 
   if (!removable) {
     return (

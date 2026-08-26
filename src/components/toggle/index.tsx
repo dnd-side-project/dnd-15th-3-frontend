@@ -4,13 +4,15 @@ import MapIcon from "@/assets/icon-map.svg?react";
 import { indicator, item, root } from "./index.css";
 
 export type ToggleValue = "map" | "list";
+export type ToggleTone = "default" | "overlay";
 
 export interface ToggleProps {
   value: ToggleValue;
   onChange: (value: ToggleValue) => void;
+  tone?: ToggleTone;
 }
 
-export function Toggle({ value, onChange }: ToggleProps) {
+export function Toggle({ value, onChange, tone = "default" }: ToggleProps) {
   const handleClick = (next: ToggleValue) => {
     if (next === value) {
       return;
@@ -19,7 +21,7 @@ export function Toggle({ value, onChange }: ToggleProps) {
   };
 
   return (
-    <div className={root} role="group" aria-label="보기 방식">
+    <div className={root({ tone })} role="group" aria-label="보기 방식">
       <span aria-hidden className={indicator({ value })} />
       <button
         type="button"

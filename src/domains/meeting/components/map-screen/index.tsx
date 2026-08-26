@@ -78,7 +78,7 @@ export function MapScreen({
 
         {hideChips === true ? null : (
           <div className={chips}>
-            <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="overlay" />
+            <CourseCategoryChips value={meeting?.categorySlugs ?? []} variant="solid" />
           </div>
         )}
 

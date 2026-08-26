@@ -7,7 +7,7 @@ import { text } from "@/styles/text";
 import { vars } from "@/styles/theme.css";
 
 const colors = {
-  track: palette.white8Alpha81,
+  track: palette.white1,
   label: vars.color.text.disabled,
   activeBackground: vars.color.brand.primary,
   activeLabel: vars.color.surface.default,

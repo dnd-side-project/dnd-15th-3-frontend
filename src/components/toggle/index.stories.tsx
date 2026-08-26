@@ -7,7 +7,7 @@ import { withLayout } from "@/components/layout/index.decorators";
 import type { ToggleProps } from "./index";
 import { Toggle } from "./index";
 
-function InteractiveToggle({ value: initialValue, onChange }: ToggleProps) {
+function InteractiveToggle({ value: initialValue, onChange, tone }: ToggleProps) {
   const [value, setValue] = useState(initialValue);
 
   return (
@@ -17,6 +17,7 @@ function InteractiveToggle({ value: initialValue, onChange }: ToggleProps) {
         setValue(next);
         onChange(next);
       }}
+      tone={tone}
     />
   );
 }

@@ -80,7 +80,7 @@ const meta = {
     onClick: fn(),
   },
   argTypes: {
-    variant: { control: "inline-radio", options: ["filled", "overlay"] },
+    variant: { control: "inline-radio", options: ["filled", "solid", "overlay"] },
     selected: { control: "boolean" },
   },
 } satisfies Meta<typeof Chip>;
@@ -138,7 +138,7 @@ export const CourseOrder: Story = {
     <div style={{ backgroundColor: "#DCE6D0", padding: 16 }}>
       <ChipGroup connected>
         {categories.slice(0, 5).map((category) => (
-          <Chip key={category.value} icon={category.icon} variant="overlay">
+          <Chip key={category.value} icon={category.icon} variant="solid">
             {category.label}
           </Chip>
         ))}
