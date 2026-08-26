@@ -4,6 +4,7 @@ import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import type { MeetingStatusKind } from "@/domains/meeting/api/types";
+import { CourseGeneratingPage } from "@/domains/meeting/pages/[id]/generating";
 import { placePhoto, render } from "@/test-utils";
 
 import { ChoicePage } from "./index";
@@ -138,6 +139,8 @@ function renderChoice(meeting: typeof MEETING = MEETING, options: RenderOptions 
     [
       { path: "/meeting/:id/choice", Component: ChoicePage },
       { path: "/meeting/:id/place", Component: () => <p>지도</p> },
+      { path: "/meeting/:id/questionnaire", Component: () => <p>모임 질문</p> },
+      { path: "/meeting/:id/generating", Component: CourseGeneratingPage },
       {
         path: "/meeting/:id/course",
         Component: () => <p data-testid="course-page">코스 페이지</p>,
@@ -224,15 +227,29 @@ test("지도 보기로 바꾸면 지도 화면으로 간다", async () => {
   await expect.element(page.getByText("지도")).toBeInTheDocument();
 });
 
-test("코스 생성하기를 누르면 코스 생성 POST를 보낸 뒤 코스 페이지로 이동한다", async () => {
+test("코스 생성하기를 누르면 확인 모달이 뜨고, 괜찮아요를 누르면 코스 생성 POST를 보낸 뒤 코스 페이지로 이동한다", async () => {
   renderChoice();
 
   await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+  await expect
+    .element(page.getByRole("dialog", { name: "이번 모임, 어떻게 보내볼까요?" }))
+    .toBeInTheDocument();
+  await userEvent.click(page.getByRole("button", { name: "괜찮아요" }));
 
   await expect.poll(() => generateCalls).toHaveLength(1);
   expect(generateCalls[0].url).toContain("/meetings/1/courses");
   expect(generateCalls[0].method).toBe("POST");
   await expect.element(page.getByTestId("course-page")).toBeInTheDocument();
+});
+
+test("좋아요!를 누르면 설문 페이지로 이동한다", async () => {
+  renderChoice();
+
+  await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+  await userEvent.click(page.getByRole("button", { name: "좋아요!" }));
+
+  await expect.element(page.getByText("모임 질문")).toBeInTheDocument();
+  expect(generateCalls).toHaveLength(0);
 });
 
 test("코스 생성중이면 폴링 후 완료되면 코스 페이지로 이동한다", async () => {
@@ -243,6 +260,7 @@ test("코스 생성중이면 폴링 후 완료되면 코스 페이지로 이동�
 
   await expect.element(page.getByRole("button", { name: "코스 생성하기" })).toBeInTheDocument();
   await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+  await userEvent.click(page.getByRole("button", { name: "괜찮아요" }));
 
   // refetchInterval(2초) 로 폴링: 첫 폴링은 생성중, 두 번째 폴링에서 완료된다.
   await expect.poll(() => pollCalls, { timeout: 6000, interval: 100 }).toHaveLength(2);
@@ -255,6 +273,7 @@ test("코스 생성 실패 시 에러 팝업을 보여주고 이동하지 않는
   renderChoice(MEETING, { generateStatus: "COURSE_GENERATION_FAILED" });
 
   await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+  await userEvent.click(page.getByRole("button", { name: "괜찮아요" }));
 
   await expect.poll(() => generateCalls).toHaveLength(1);
   await expect
