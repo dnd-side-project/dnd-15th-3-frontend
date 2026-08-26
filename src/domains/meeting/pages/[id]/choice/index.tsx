@@ -264,6 +264,7 @@ export function ChoicePage() {
         }
         onOpenChange={setIsConfirmPopupOpen}
         open={isConfirmPopupOpen}
+        showClose={false}
         title="이번 모임, 어떻게 보내볼까요?"
       />
 

@@ -11,7 +11,7 @@ import {
   footer as footerStyle,
   media as mediaStyle,
   texts,
-  textsWithoutMedia,
+  textsBelowClose,
   title as titleStyle,
 } from "./index.css";
 
@@ -47,7 +47,7 @@ export function Popup({
             </Dialog.Close>
           )}
           {media && <div className={mediaStyle}>{media}</div>}
-          <div className={media ? texts : textsWithoutMedia}>
+          <div className={!media && showClose ? textsBelowClose : texts}>
             <Dialog.Title className={titleStyle}>{title}</Dialog.Title>
             {description && (
               <Dialog.Description className={descriptionStyle}>{description}</Dialog.Description>
