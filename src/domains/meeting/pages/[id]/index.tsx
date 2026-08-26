@@ -19,11 +19,17 @@ import { DayPickerSheet } from "@/components/day-picker";
 import { Dropdown, Item, Trigger, createMenuHandle } from "@/components/dropdown-menu";
 import { Layout } from "@/components/layout";
 import { MomoAvatar } from "@/components/momo-avatar";
+import { Popup } from "@/components/popup";
 import { TimePickerSheet } from "@/components/time-picker";
 import { PlaceSearchSheet } from "@/domains/catalog/components/place-search-sheet";
 import { useMeetingTypes } from "@/domains/catalog/hooks";
 import { MeetingMap } from "@/domains/meeting/components/meeting-map";
-import { useCoursePlaces, useMeeting, useMeetingPermissions } from "@/domains/meeting/hooks";
+import {
+  useCoursePlaces,
+  useMeeting,
+  useMeetingPermissions,
+  useMeetingStatus,
+} from "@/domains/meeting/hooks";
 import { parseDateString, parseTimeString } from "@/utils/time";
 
 import {
@@ -108,9 +114,11 @@ export function MeetingPage() {
   const { canManageMeeting } = useMeetingPermissions();
   const meetingTypes = useMeetingTypes();
   const coursePlaces = useCoursePlaces();
+  const { data: meetingStatus } = useMeetingStatus();
   const typeMenu = createMenuHandle();
 
   const [sheet, setSheet] = useState<Sheet | null>(null);
+  const [isGeneratingPopupOpen, setIsGeneratingPopupOpen] = useState(false);
   const closeSheet = () => setSheet(null);
   // TODO: backend meeting 수정 api 구현 필요
   const save = () => {
@@ -237,11 +245,24 @@ export function MeetingPage() {
               </span>
             </Link>
 
-            <Link
+            <button
               className={card({ card: "map" })}
-              to={
-                meeting.selectedCourse === null ? `/meeting/${id}/place` : `/meeting/${id}/detail`
-              }
+              type="button"
+              onClick={() => {
+                if (meetingStatus?.status === "COURSE_GENERATING") {
+                  setIsGeneratingPopupOpen(true);
+                  return;
+                }
+                if (meetingStatus?.status === "COURSE_GENERATED") {
+                  void navigate(`/meeting/${id}/course`);
+                  return;
+                }
+                if (meeting.selectedCourse !== null) {
+                  void navigate(`/meeting/${id}/detail`);
+                  return;
+                }
+                void navigate(`/meeting/${id}/place`);
+              }}
             >
               <MeetingMap
                 interactive={false}
@@ -257,7 +278,7 @@ export function MeetingPage() {
                 <span className={cardTitle}>모임 코스 자세히 보기</span>
                 <span className={cardDescription}>정해진 코스 장소 확인</span>
               </span>
-            </Link>
+            </button>
 
             {canManageMeeting && meeting.selectedCourse !== null ? (
               <button
@@ -300,6 +321,13 @@ export function MeetingPage() {
         onConfirm={save}
       />
       <PlaceSearchSheet isOpen={sheet === "location"} onClose={closeSheet} onSelect={save} />
+
+      <Popup
+        open={isGeneratingPopupOpen}
+        onOpenChange={setIsGeneratingPopupOpen}
+        title="코스 생성 중"
+        description="코스 생성이 완료될 때까지 기다려주세요"
+      />
     </Layout>
   );
 }
