@@ -25,6 +25,7 @@ import {
   root,
   sheet,
   toggle,
+  topScrim,
 } from "./index.css";
 
 /** 지도 위에 토글·카테고리·하단 버튼을 얹고, 아래에 화면별 시트를 받는다. */
@@ -38,6 +39,7 @@ export interface MapScreenProps {
   hideToggle?: boolean;
   tone?: RouteMarkerTone;
   routeLineColor?: string;
+  gradient?: boolean;
 }
 
 export function MapScreen({
@@ -50,6 +52,7 @@ export function MapScreen({
   hideToggle,
   tone,
   routeLineColor,
+  gradient = false,
 }: MapScreenProps) {
   const navigate = useNavigate();
   const { id = "" } = useParams();
@@ -67,6 +70,8 @@ export function MapScreen({
           tone={tone}
           routeLineColor={routeLineColor}
         />
+
+        {gradient && <div className={topScrim} />}
 
         {header === undefined ? null : <div className={headerSlot}>{header}</div>}
 

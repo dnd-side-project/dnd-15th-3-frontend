@@ -94,7 +94,7 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
   });
 
   return (
-    <MapScreen header={header} places={coursePlaces} onSelectPlace={onSelect}>
+    <MapScreen gradient header={header} places={coursePlaces} onSelectPlace={onSelect}>
       <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
