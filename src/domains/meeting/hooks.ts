@@ -56,7 +56,7 @@ export function useCourseGeneration(
   const [polling, setPolling] = useState(false);
 
   const { mutate: generate, isPending } = useMutation({
-    mutationFn: () => generateCourse(meetingId, accessToken),
+    mutationFn: () => generateCourse(meetingId, accessToken, { customization: { type: "SKIP" } }),
     onSuccess: (data) => {
       // 즉시 완료·실패면 폴링 없이 결과를 흘린다.
       if (data.status === "COURSE_GENERATED") {
