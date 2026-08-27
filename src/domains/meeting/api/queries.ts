@@ -9,9 +9,17 @@ import {
   getMeetingStatus,
   getQuestionnaire,
   getRecommendations,
+  previewInvitation,
 } from "./index";
 
 export const meetingQueries = {
+  invitationPreview: (invitationCode: string) =>
+    queryOptions({
+      queryKey: ["meeting", "invitation-preview", invitationCode] as const,
+      queryFn: () => previewInvitation(invitationCode),
+      enabled: filled(invitationCode),
+    }),
+
   detail: (meetingId: string, accessToken: string) =>
     queryOptions({
       queryKey: ["meeting", meetingId, "detail"] as const,

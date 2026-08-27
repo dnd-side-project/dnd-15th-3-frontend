@@ -7,7 +7,7 @@ import LocationIcon from "@/assets/icon-marker.svg?react";
 import { Confetti } from "@/components/confetti";
 import { CtaButtonRow } from "@/components/cta-button";
 import type { JoinDraft } from "@/domains/join/types/draft";
-import { previewInvitation } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
 
 import {
   body,
@@ -30,11 +30,7 @@ export function JoinCompletePage() {
   const code = searchParams.get("code") ?? "";
   const { setValue } = useFormContext<JoinDraft>();
 
-  const { data, isError } = useQuery({
-    queryKey: ["meeting", "invitation-preview", code] as const,
-    queryFn: () => previewInvitation(code),
-    enabled: code.length > 0,
-  });
+  const { data, isError } = useQuery(meetingQueries.invitationPreview(code));
 
   useEffect(() => {
     if (data) {
