@@ -75,7 +75,7 @@ export function CardPage() {
   const [previewBackFlipped, setPreviewBackFlipped] = useState(false);
   const frontDownloadRef = useRef<HTMLDivElement>(null);
   const backDownloadRef = useRef<HTMLDivElement>(null);
-  const { download } = useCardDownload();
+  const { downloadCombined } = useCardDownload();
 
   const meetingUrl =
     typeof window !== "undefined" && meeting
@@ -118,9 +118,12 @@ export function CardPage() {
 
   const handleDownload = async () => {
     setPreview(true);
-    await download(frontDownloadRef.current, "meeting-card-front");
-    await download(backDownloadRef.current, "meeting-card-back");
-    toast.add({ title: "모임카드 이미지를 저장했습니다." });
+    const ok = await downloadCombined(
+      frontDownloadRef.current,
+      backDownloadRef.current,
+      "meeting-card",
+    );
+    toast.add({ title: ok ? "모임카드 이미지를 저장했습니다." : "이미지 저장에 실패했습니다." });
   };
 
   const stageDuration = reduce ? 0 : TIMING.cameraUp / 1000;
