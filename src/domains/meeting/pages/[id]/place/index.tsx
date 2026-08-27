@@ -115,7 +115,11 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
                 type="button"
                 onClick={() => onSelect(place.id)}
               >
-                <PlacePhotoImage className={thumbnail} photo={place.previewPhoto} />
+                <PlacePhotoImage
+                  category={categoryOf(place.category.id)}
+                  className={thumbnail}
+                  photo={place.previewPhoto}
+                />
                 <span className={resultTexts}>
                   <span className={resultName}>
                     <PlaceIcon category={categoryOf(place.category.id)} size={20} />

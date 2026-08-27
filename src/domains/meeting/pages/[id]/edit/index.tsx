@@ -163,7 +163,11 @@ export function CourseEditPage() {
                 type="button"
                 onClick={() => addToCourse(place.recommendationId)}
               >
-                <PlacePhotoImage className={thumbnail} photo={place.previewPhoto} />
+                <PlacePhotoImage
+                  category={place.categorySlug}
+                  className={thumbnail}
+                  photo={place.previewPhoto}
+                />
                 <span className={savedTexts}>
                   <span className={name}>
                     <PlaceIcon category={place.categorySlug} size={20} />

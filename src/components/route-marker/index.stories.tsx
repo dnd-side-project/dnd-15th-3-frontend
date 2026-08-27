@@ -16,6 +16,7 @@ const meta = {
   },
   args: {
     index: 1,
+    category: "cafe",
   },
 } satisfies Meta<typeof RouteMarker>;
 

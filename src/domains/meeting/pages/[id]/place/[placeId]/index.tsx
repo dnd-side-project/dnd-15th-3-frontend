@@ -103,11 +103,12 @@ export function PlaceDetailPage() {
           <>
             <div className={photos}>
               {placePhotos.length === 0 ? (
-                <span className={photo} />
+                <PlacePhotoImage category={slug} className={photo} photo={null} />
               ) : (
                 placePhotos.map((item, index) => (
                   <PlacePhotoImage
                     alt={`${name} 사진 ${index + 1}`}
+                    category={slug}
                     className={photo}
                     key={item.id}
                     photo={item}
@@ -163,7 +164,11 @@ export function PlaceDetailPage() {
                       type="button"
                       onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
                     >
-                      <PlacePhotoImage className={similarThumbnail} photo={place.previewPhoto} />
+                      <PlacePhotoImage
+                        category={categoryOf(place.categoryId)}
+                        className={similarThumbnail}
+                        photo={place.previewPhoto}
+                      />
                       <span className={similarTexts}>
                         <span className={similarName}>
                           <PlaceIcon category={categoryOf(place.categoryId)} size={20} />

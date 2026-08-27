@@ -1,9 +1,13 @@
+import type { CategorySlug } from "@/domains/catalog/api/types";
+import { placeFallbackImage } from "@/domains/catalog/place-fallback-images";
+
 import { badge, body, clickable, root, shape, tail, thumbnail } from "./index.css";
 
 export type RouteMarkerTone = "blue" | "pink" | "purple";
 
 export interface RouteMarkerProps {
   index: number;
+  category: CategorySlug;
   tone?: RouteMarkerTone;
   imageUrl?: string | null;
   imageAlt?: string;
@@ -12,6 +16,7 @@ export interface RouteMarkerProps {
 
 export function RouteMarker({
   index,
+  category,
   tone = "blue",
   imageUrl,
   imageAlt,
@@ -25,7 +30,7 @@ export function RouteMarker({
           {imageUrl ? (
             <img alt={imageAlt ?? ""} className={thumbnail} src={imageUrl} />
           ) : (
-            <div className={thumbnail} />
+            <img aria-hidden alt="" className={thumbnail} src={placeFallbackImage(category)} />
           )}
         </div>
       </div>

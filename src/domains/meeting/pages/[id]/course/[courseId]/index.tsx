@@ -73,6 +73,7 @@ export function CourseDetailPage() {
       name: step.name,
       latitude: step.latitude,
       longitude: step.longitude,
+      categorySlug: step.categorySlug,
       previewPhoto: step.previewPhoto,
     })) ?? [];
 

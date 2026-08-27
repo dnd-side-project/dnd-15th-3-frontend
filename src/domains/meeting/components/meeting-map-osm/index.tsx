@@ -85,6 +85,7 @@ export function MeetingMapOsm({
     const html = renderToStaticMarkup(
       <div style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}>
         <RouteMarker
+          category={place.categorySlug}
           imageAlt={place.name}
           imageUrl={place.previewPhoto?.url}
           index={idx + 1}
