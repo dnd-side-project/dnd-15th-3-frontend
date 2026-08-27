@@ -1,8 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { withLayout } from "@/components/layout/index.decorators";
+import type { CategorySlug } from "@/domains/catalog/api/types";
 
 import { RouteMarker } from "./index";
+
+const categories: CategorySlug[] = [
+  "restaurant",
+  "activity",
+  "shopping",
+  "walk",
+  "bar",
+  "culture",
+  "cafe",
+  "other",
+];
 
 const imageUrl =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFC98A'/%3E%3Cstop offset='1' stop-color='%23FF7A9A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='68' height='68' fill='url(%23g)'/%3E%3Ccircle cx='22' cy='22' r='8' fill='%23FFFFFF' fill-opacity='0.7'/%3E%3C/svg%3E";
@@ -58,6 +70,18 @@ export const Tones: Story = {
       <RouteMarker {...args} index={1} tone="blue" />
       <RouteMarker {...args} index={2} tone="pink" />
       <RouteMarker {...args} index={3} tone="purple" />
+    </div>
+  ),
+};
+
+// 카테고리 8종 대체 이미지를 한 번에 보여주는 쇼케이스라 단일 args 로 표현할 수 없어 컨트롤을 끈다
+export const CategoryFallback: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", padding: "24px" }}>
+      {categories.map((category, index) => (
+        <RouteMarker category={category} index={index + 1} key={category} />
+      ))}
     </div>
   ),
 };
