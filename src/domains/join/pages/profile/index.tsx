@@ -13,7 +13,8 @@ import { TopAppBar } from "@/components/top-app-bar";
 import type { ProfileAvatarId } from "@/domains/catalog/api/types";
 import { useProfileAvatars } from "@/domains/catalog/hooks";
 import type { JoinDraft } from "@/domains/join/types/draft";
-import { joinMeeting, previewInvitation } from "@/domains/meeting/api";
+import { joinMeeting } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
 import { setAccessToken } from "@/utils/access-token";
 import { getUserKey } from "@/utils/user-key";
 
@@ -52,11 +53,7 @@ export function JoinProfilePage() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [pending, setPending] = useState<ProfileAvatarId>(() => getValues("profileAvatarId"));
 
-  const { data: invitation, isError } = useQuery({
-    queryKey: ["meeting", "invitation-preview", invitationCode] as const,
-    queryFn: () => previewInvitation(invitationCode),
-    enabled: invitationCode.length > 0,
-  });
+  const { data: invitation, isError } = useQuery(meetingQueries.invitationPreview(invitationCode));
 
   const { mutate, isPending } = useMutation({
     mutationFn: joinMeeting,

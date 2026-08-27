@@ -18,18 +18,21 @@ export const catalogQueries = {
     queryOptions({
       queryKey: ["catalog", "meeting-types"] as const,
       queryFn: ({ signal }) => getMeetingTypes(signal),
+      staleTime: Infinity,
     }),
 
   categories: () =>
     queryOptions({
       queryKey: ["catalog", "categories"] as const,
       queryFn: ({ signal }) => getCategories(signal),
+      staleTime: Infinity,
     }),
 
   profileAvatars: () =>
     queryOptions({
       queryKey: ["catalog", "profile-avatars"] as const,
       queryFn: ({ signal }) => getProfileAvatars(signal),
+      staleTime: Infinity,
     }),
 
   places: (params: SearchPlacesParams) =>
