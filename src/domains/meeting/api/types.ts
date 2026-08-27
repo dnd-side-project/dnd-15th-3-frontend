@@ -136,6 +136,26 @@ export interface UpdateCoursePlanRequest {
   version: number;
 }
 
+/** 이름·날짜·시간·모임 유형 중 하나 이상을 전달한다. (서버가 minProperties:1 검증) */
+export interface UpdateMeetingDetailsRequest {
+  meetingTypeCode?: MeetingTypeCode;
+  name?: string;
+  /** YYYY-MM-DD */
+  date?: string;
+  /** HH:mm */
+  time?: string;
+}
+
+/** 모임 기본 정보 변경 응답. MeetingScreen 의 일부 필드만 담는다. */
+export interface MeetingDetailsResponse {
+  meetingId: string;
+  name: string;
+  date: string;
+  time: string;
+  meetingTypeCode: MeetingTypeCode;
+  meetingType: MeetingTypeSummary;
+}
+
 export interface MeetingInvitation {
   meetingId: string;
   invitationCode: string;
