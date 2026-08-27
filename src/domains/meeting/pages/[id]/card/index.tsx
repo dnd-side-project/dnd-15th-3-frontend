@@ -160,18 +160,22 @@ export function CardPage() {
             className={postboxStage}
             transition={{ duration: stageDuration, ease: "easeInOut" }}
           >
-            <img alt="" aria-hidden className={postbox} src="/static/postbox.svg" />
-            <span className={pill}>편지를 클릭해 확인하세요!</span>
-            <div className={mailWrapper}>
-              <button
-                aria-label="편지 확인하기"
-                className={mailButton}
-                onClick={handleMailClick}
-                type="button"
-              >
-                <img alt="" aria-hidden className={mailImage} src="/static/mail.svg" />
-              </button>
-            </div>
+            {phase === "idle" || phase === "camera-up" ? (
+              <>
+                <img alt="" aria-hidden className={postbox} src="/static/postbox.svg" />
+                <span className={pill}>편지를 클릭해 확인하세요!</span>
+                <div className={mailWrapper}>
+                  <button
+                    aria-label="편지 확인하기"
+                    className={mailButton}
+                    onClick={handleMailClick}
+                    type="button"
+                  >
+                    <img alt="" aria-hidden className={mailImage} src="/static/mail.svg" />
+                  </button>
+                </div>
+              </>
+            ) : null}
           </motion.div>
 
           <motion.div
