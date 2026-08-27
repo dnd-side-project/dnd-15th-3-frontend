@@ -1,32 +1,31 @@
 export interface RenderCardImageOptions {
-  pixelRatio?: number;
+  scale?: number;
   backgroundColor?: string;
-  cacheBust?: boolean;
+  bypassingCache?: boolean;
   style?: Record<string, string>;
 }
 
-/**
- * DOM 노드를 PNG Blob 으로 렌더링한다.
- * `html-to-image` 는 런타임에 동적 import 해 초기 번들에 포함되지 않는다.
- */
 export async function renderCardImage(
   node: HTMLElement,
   options: RenderCardImageOptions = {},
 ): Promise<Blob> {
-  const { pixelRatio = 2, backgroundColor = "#ffffff", cacheBust = true, style } = options;
+  const { scale = 2, backgroundColor = "#ffffff", bypassingCache = true, style } = options;
 
   if (typeof document !== "undefined" && document.fonts) {
     await document.fonts.ready;
   }
 
-  const { toPng } = await import("html-to-image");
-  const dataUrl = await toPng(node, {
-    pixelRatio,
+  const { domToBlob } = await import("modern-screenshot");
+  const blob = await domToBlob(node, {
+    scale,
     backgroundColor,
-    cacheBust,
-    style: { opacity: "1", ...style },
+    style: { opacity: "1", ...style } as Partial<CSSStyleDeclaration>,
+    fetch: { bypassingCache },
   });
 
-  const response = await fetch(dataUrl);
-  return await response.blob();
+  if (!blob) {
+    throw new Error("카드 이미지를 생성하지 못했습니다.");
+  }
+
+  return blob;
 }
