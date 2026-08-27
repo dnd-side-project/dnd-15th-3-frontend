@@ -140,7 +140,10 @@ export const pill = style({
 // 카메라 상승(y→0)하면 뷰포트로 내려온다.
 export const envelopeStage = style({
   position: "absolute",
-  inset: 0,
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 70,
 });
 
 // envelopeStage 안에서 MailEnvelope와 large 카드를 같은 중심에 겹쳐 놓는다.
@@ -220,7 +223,7 @@ export const shareSection = style({
   flexDirection: "column",
   alignItems: "center",
   gap: 12,
-  padding: "48px 20px 24px",
+  padding: "12px 20px 24px",
   background: "linear-gradient(180deg, transparent 0%, rgba(184, 211, 255, 0.3) 100%)",
 });
 
