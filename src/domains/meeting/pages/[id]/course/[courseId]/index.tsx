@@ -67,15 +67,7 @@ export function CourseDetailPage() {
       };
     }) ?? [];
 
-  const places =
-    courseDetail?.route.map((step) => ({
-      id: step.placeId,
-      name: step.name,
-      latitude: step.latitude,
-      longitude: step.longitude,
-      categorySlug: step.categorySlug,
-      previewPhoto: step.previewPhoto,
-    })) ?? [];
+  const places = courseDetail?.route.map(({ placeId: id, ...step }) => ({ id, ...step })) ?? [];
 
   return (
     <MapScreen

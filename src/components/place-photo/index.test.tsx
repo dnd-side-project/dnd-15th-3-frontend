@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import type { CategorySlug } from "@/domains/catalog/api/types";
+import { CATEGORY_SLUGS } from "@/domains/catalog/place-fallback-images";
 import { placePhoto, render } from "@/test-utils";
 
 import { PlacePhotoImage } from "./index";
@@ -51,20 +51,9 @@ test("대체 이미지는 장식용이라 보조기기에서 숨긴다", async (
 });
 
 test("카테고리마다 정해진 대체 이미지를 쓴다", async () => {
-  const slugs: CategorySlug[] = [
-    "restaurant",
-    "cafe",
-    "bar",
-    "walk",
-    "shopping",
-    "activity",
-    "culture",
-    "other",
-  ];
-
   render(
     <div data-testid="host">
-      {slugs.map((slug) => (
+      {CATEGORY_SLUGS.map((slug) => (
         <PlacePhotoImage category={slug} key={slug} photo={null} />
       ))}
     </div>,
@@ -79,12 +68,12 @@ test("카테고리마다 정해진 대체 이미지를 쓴다", async () => {
 
   expect(sources).toEqual([
     "/static/place-fallback-restaurant.webp",
-    "/static/place-fallback-cafe.webp",
-    "/static/place-fallback-bar.webp",
-    "/static/place-fallback-walk.webp",
-    "/static/place-fallback-shopping.webp",
     "/static/place-fallback-activity.webp",
+    "/static/place-fallback-shopping.webp",
+    "/static/place-fallback-walk.webp",
+    "/static/place-fallback-bar.webp",
     "/static/place-fallback-culture.webp",
+    "/static/place-fallback-cafe.webp",
     "/static/place-fallback-other.webp",
   ]);
 });

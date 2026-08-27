@@ -13,15 +13,8 @@ export interface MeetingCardBackProps {
   size?: "small" | "large";
 }
 
-function toMapPlace(step: CourseRouteStep): MeetingMapPlace {
-  return {
-    id: step.recommendationId,
-    name: step.name,
-    latitude: step.latitude,
-    longitude: step.longitude,
-    categorySlug: step.categorySlug,
-    previewPhoto: step.previewPhoto,
-  };
+function toMapPlace({ recommendationId: id, ...step }: CourseRouteStep): MeetingMapPlace {
+  return { id, ...step };
 }
 
 export function MeetingCardBack({

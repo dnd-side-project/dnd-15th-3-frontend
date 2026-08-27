@@ -1,22 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { withLayout } from "@/components/layout/index.decorators";
-import type { CategorySlug } from "@/domains/catalog/api/types";
+import { CATEGORY_SLUGS } from "@/domains/catalog/place-fallback-images";
 
 import { PlacePhotoImage } from "./index";
 
 import { thumbnail } from "@/domains/meeting/pages/[id]/place/index.css";
-
-const categories: CategorySlug[] = [
-  "restaurant",
-  "activity",
-  "shopping",
-  "walk",
-  "bar",
-  "culture",
-  "cafe",
-  "other",
-];
 
 const meta = {
   component: PlacePhotoImage,
@@ -47,7 +36,7 @@ export const CategoryFallback: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", padding: "20px" }}>
-      {categories.map((category) => (
+      {CATEGORY_SLUGS.map((category) => (
         <PlacePhotoImage category={category} className={thumbnail} key={category} photo={null} />
       ))}
     </div>
