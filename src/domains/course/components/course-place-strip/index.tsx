@@ -19,7 +19,11 @@ export function CoursePlaceStrip({ route, onAdd }: CoursePlaceStripProps) {
         <Fragment key={step.recommendationId}>
           {index === 0 ? null : <span aria-hidden className={arrow} />}
           <div className={place}>
-            <PlacePhotoImage className={thumbnail} photo={step.previewPhoto} />
+            <PlacePhotoImage
+              category={step.categorySlug}
+              className={thumbnail}
+              photo={step.previewPhoto}
+            />
             <span className={name}>
               <PlaceIcon category={step.categorySlug} size={16} />
               {step.name}

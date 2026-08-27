@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
+import { useCategorySlug } from "@/domains/catalog/hooks";
 import { generateCourse } from "@/domains/course/api";
 import type { CourseCustomization } from "@/domains/course/api/types";
 import { getAccessToken } from "@/utils/access-token";
@@ -24,12 +25,17 @@ export function useMeeting() {
 /** 확정된 코스의 장소. 순서대로 담긴다. */
 export function useCoursePlaces() {
   const { data: meeting } = useMeeting();
+  const slugOf = useCategorySlug();
   const byId = new Map((meeting?.recommendations ?? []).map((item) => [item.id, item]));
 
   return (meeting?.selectedCourse?.recommendationIds ?? [])
     .map((recommendationId) => byId.get(recommendationId))
     .filter((item) => item !== undefined)
-    .map(({ place, previewPhoto }) => ({ ...place, previewPhoto }));
+    .map(({ place, previewPhoto, categoryId }) => ({
+      ...place,
+      previewPhoto,
+      categorySlug: slugOf(categoryId),
+    }));
 }
 
 /** 응답 전에는 전부 false 라 수정 UI 가 깜빡이지 않는다. */

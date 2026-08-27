@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { CustomOverlayMap, Map, Polyline, useKakaoLoader, useMap } from "react-kakao-maps-sdk";
 
 import { RouteMarker, type RouteMarkerTone } from "@/components/route-marker";
-import type { PlacePhoto } from "@/domains/catalog/api/types";
+import type { CategorySlug, PlacePhoto } from "@/domains/catalog/api/types";
 import type { MeetingLocationResponse } from "@/domains/meeting/api/types";
 import type { Coordinates } from "@/hooks/use-current-position";
 
@@ -13,6 +13,7 @@ export interface MeetingMapPlace {
   name: string;
   latitude: number;
   longitude: number;
+  categorySlug: CategorySlug;
   previewPhoto?: PlacePhoto | null;
 }
 
@@ -99,6 +100,7 @@ export function MeetingMap({
         {places.map((place, index) => (
           <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
             <RouteMarker
+              category={place.categorySlug}
               imageAlt={place.name}
               imageUrl={place.previewPhoto?.url}
               index={index + 1}

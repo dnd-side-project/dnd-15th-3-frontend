@@ -50,7 +50,11 @@ export function CourseTimeline({ route, tone, onSelectPlace }: CourseTimelinePro
                 type="button"
                 onClick={onSelectPlace && (() => onSelectPlace(step.placeId))}
               >
-                <PlacePhotoImage className={thumbnail} photo={step.previewPhoto} />
+                <PlacePhotoImage
+                  category={step.categorySlug}
+                  className={thumbnail}
+                  photo={step.previewPhoto}
+                />
                 <span className={texts}>
                   <span className={name}>
                     <PlaceIcon category={step.categorySlug} size={20} />

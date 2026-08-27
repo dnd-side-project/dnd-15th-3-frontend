@@ -103,11 +103,12 @@ export function PlaceDetailPage() {
           <>
             <div className={photos}>
               {placePhotos.length === 0 ? (
-                <span className={photo} />
+                <PlacePhotoImage category={slug} className={photo} photo={null} />
               ) : (
                 placePhotos.map((item, index) => (
                   <PlacePhotoImage
                     alt={`${name} 사진 ${index + 1}`}
+                    category={slug}
                     className={photo}
                     key={item.id}
                     photo={item}
@@ -156,32 +157,40 @@ export function PlaceDetailPage() {
               <div className={similar}>
                 <h2 className={similarTitle}>이 장소와 비슷한 장소에요!</h2>
 
-                {similarPlaces.map((place) => (
-                  <div className={similarPlace} key={place.id}>
-                    <button
-                      className={similarOpen}
-                      type="button"
-                      onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
-                    >
-                      <PlacePhotoImage className={similarThumbnail} photo={place.previewPhoto} />
-                      <span className={similarTexts}>
-                        <span className={similarName}>
-                          <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
-                          {place.name}
+                {similarPlaces.map((place) => {
+                  const category = categoryOf(place.categoryId);
+
+                  return (
+                    <div className={similarPlace} key={place.id}>
+                      <button
+                        className={similarOpen}
+                        type="button"
+                        onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
+                      >
+                        <PlacePhotoImage
+                          category={category}
+                          className={similarThumbnail}
+                          photo={place.previewPhoto}
+                        />
+                        <span className={similarTexts}>
+                          <span className={similarName}>
+                            <PlaceIcon category={category} size={20} />
+                            {place.name}
+                          </span>
+                          <span className={similarAddress}>{place.address}</span>
                         </span>
-                        <span className={similarAddress}>{place.address}</span>
-                      </span>
-                    </button>
-                    <button
-                      aria-label={`${place.name} 코스에 담기`}
-                      className={similarAddButton}
-                      type="button"
-                      onClick={() => addPlace(place.id)}
-                    >
-                      <PlusIcon aria-hidden height={16} width={16} />
-                    </button>
-                  </div>
-                ))}
+                      </button>
+                      <button
+                        aria-label={`${place.name} 코스에 담기`}
+                        className={similarAddButton}
+                        type="button"
+                        onClick={() => addPlace(place.id)}
+                      >
+                        <PlusIcon aria-hidden height={16} width={16} />
+                      </button>
+                    </div>
+                  );
+                })}
 
                 <button
                   className={refresh}

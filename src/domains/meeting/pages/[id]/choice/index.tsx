@@ -80,7 +80,7 @@ function RecommendationCard({
 
   return (
     <div className={card} style={{ height }}>
-      <PlacePhotoImage className={cardImage} photo={recommendation.previewPhoto} />
+      <PlacePhotoImage category={slug} className={cardImage} photo={recommendation.previewPhoto} />
       <span aria-hidden className={cardScrim} />
       <button aria-label={place.name} className={cardLink} type="button" onClick={onOpen} />
       <span className={cardBody}>
