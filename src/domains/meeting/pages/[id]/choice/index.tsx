@@ -17,7 +17,6 @@ import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
 import { updatePlacePreference } from "@/domains/meeting/api";
 import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
 import { useCourseGeneration, useMeeting } from "@/domains/meeting/hooks";
-import { palette } from "@/styles/palette";
 import { getAccessToken } from "@/utils/access-token";
 
 import {
@@ -35,8 +34,6 @@ import {
   column,
   count as countStyle,
   emptyDescription,
-  emptyPreview,
-  emptyPreviewCard,
   emptyState,
   emptyTexts,
   emptyTitle,
@@ -64,14 +61,6 @@ interface PreferenceChange {
 const CARD_HEIGHTS = [
   [249, 164, 212],
   [212, 164, 249],
-];
-
-/** 빈 상태에 놓는 카드 모양 장식 */
-const PREVIEW_CARDS = [
-  { left: 14, top: 14, height: 82 },
-  { left: 68, top: 14, height: 44 },
-  { left: 68, top: 63, height: 68 },
-  { left: 14, top: 102, height: 44, background: palette.blue28 },
 ];
 
 function RecommendationCard({
@@ -223,11 +212,7 @@ export function ChoicePage() {
 
         {visible.length === 0 ? (
           <div className={emptyState}>
-            <div aria-hidden className={emptyPreview}>
-              {PREVIEW_CARDS.map((preview, index) => (
-                <span className={emptyPreviewCard} key={index} style={preview} />
-              ))}
-            </div>
+            <img alt="" aria-hidden src="/static/masonry.svg" />
             <div className={emptyTexts}>
               <p className={emptyTitle}>
                 {hasPlaces ? "이 카테고리에 저장된 장소가 없어요" : "아직 저장된 장소가 없어요"}

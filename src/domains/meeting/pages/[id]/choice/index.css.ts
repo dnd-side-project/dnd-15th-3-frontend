@@ -55,24 +55,14 @@ export const emptyState = style({
   marginTop: 106,
 });
 
-export const emptyPreview = style({
-  position: "relative",
-  width: 130,
-  height: 182,
-});
-
-export const emptyPreviewCard = style({
-  position: "absolute",
-  width: 48,
-  borderRadius: 5,
-  backgroundColor: vars.color.surface.muted,
-});
-
 export const emptyTexts = style({
   display: "flex",
   flexDirection: "column",
   gap: 1,
   width: 230,
+  marginTop: -23,
+  paddingTop: 23,
+  backgroundColor: vars.color.surface.default,
   textAlign: "center",
 });
 
