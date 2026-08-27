@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { palette } from "@/styles/palette";
 
@@ -32,34 +33,48 @@ export const backdrop = style({
   },
 });
 
-export const card = style({
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 259,
-  padding: "0 15px 28px",
-  overflow: "hidden",
-  borderRadius: 12,
-  backgroundColor: colors.background,
-  fontFamily: vars.font.body,
-  outline: "none",
-  transition: "opacity 0.15s ease, transform 0.15s ease",
-  selectors: {
-    "&[data-starting-style]": {
-      opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.96)",
+export const card = recipe({
+  base: {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "calc(100% - 92px)",
+    maxWidth: 300,
+    padding: "0 15px 28px",
+    overflow: "hidden",
+    borderRadius: 12,
+    backgroundColor: colors.background,
+    fontFamily: vars.font.body,
+    outline: "none",
+    transition: "opacity 0.15s ease, transform 0.15s ease",
+    selectors: {
+      "&[data-starting-style]": {
+        opacity: 0,
+        transform: "translate(-50%, -50%) scale(0.96)",
+      },
+      "&[data-ending-style]": {
+        opacity: 0,
+        transform: "translate(-50%, -50%) scale(0.96)",
+      },
     },
-    "&[data-ending-style]": {
-      opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.96)",
+    "@media": {
+      "(prefers-reduced-motion: reduce)": {
+        transition: "none",
+      },
     },
   },
-  "@media": {
-    "(prefers-reduced-motion: reduce)": {
-      transition: "none",
-    },
+  variants: {
+    hasMedia: { true: {}, false: {} },
+    showClose: { true: {}, false: {} },
   },
+  compoundVariants: [
+    {
+      variants: { hasMedia: false, showClose: false },
+      style: { padding: "29px 20px 22px" },
+    },
+  ],
+  defaultVariants: { hasMedia: false, showClose: true },
 });
 
 export const close = style({
@@ -86,13 +101,26 @@ export const media = style({
   height: 211,
 });
 
-export const texts = style({
-  position: "relative",
-  zIndex: 1,
-  display: "flex",
-  flexDirection: "column",
-  gap: 1,
-  textAlign: "center",
+export const texts = recipe({
+  base: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: 1,
+    textAlign: "center",
+  },
+  variants: {
+    hasMedia: { true: {}, false: {} },
+    showClose: { true: {}, false: {} },
+  },
+  compoundVariants: [
+    {
+      variants: { hasMedia: false, showClose: true },
+      style: { marginTop: 56 },
+    },
+  ],
+  defaultVariants: { hasMedia: false, showClose: true },
 });
 
 export const title = style({
@@ -109,4 +137,10 @@ export const description = style({
   lineHeight: 1.5,
   fontWeight: 400,
   color: colors.description,
+});
+
+export const footer = style({
+  position: "relative",
+  zIndex: 1,
+  marginTop: 20,
 });

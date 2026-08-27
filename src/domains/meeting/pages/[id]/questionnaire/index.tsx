@@ -1,0 +1,160 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+
+import { CtaButton } from "@/components/cta-button";
+import { Layout } from "@/components/layout";
+import { TopAppBar } from "@/components/top-app-bar";
+import { createQuestionnaire } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
+import type { Questionnaire } from "@/domains/meeting/api/types";
+import { getAccessToken } from "@/utils/access-token";
+
+import {
+  body,
+  footer,
+  option,
+  optionEmoji,
+  optionList,
+  placeholder,
+  progress,
+  progressCurrent,
+  progressTotal,
+  question as questionStyle,
+  retry,
+  root,
+  surfaceColor,
+} from "./index.css";
+
+export function QuestionnairePage() {
+  const navigate = useNavigate();
+  const { id = "" } = useParams();
+  const accessToken = getAccessToken(id);
+  const questionnaireOptions = meetingQueries.questionnaire(id, accessToken);
+  const startedRef = useRef(false);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+
+  // data·isPending 을 useMutation 에서 바로 읽으면 낙관적 렌더가 갱신되지 않아 seed 로 직접 들고 있는다.
+  const [seed, setSeed] = useState<Questionnaire | null>(null);
+  const {
+    mutate: start,
+    isPending: isStarting,
+    isError: isStartError,
+  } = useMutation({
+    mutationFn: () => createQuestionnaire(id, accessToken),
+    onSuccess: (data) => setSeed(data),
+  });
+
+  useEffect(() => {
+    if (startedRef.current) {
+      return;
+    }
+    startedRef.current = true;
+    start();
+  }, [start]);
+
+  const { data: polled } = useQuery({
+    ...questionnaireOptions,
+    enabled: seed !== null && seed.status === "GENERATING",
+    refetchInterval: (query) => (query.state.data?.status === "GENERATING" ? 1500 : false),
+  });
+
+  const questionnaire = polled ?? seed;
+  const questions = questionnaire
+    ? questionnaire.questions.toSorted((a, b) => a.order - b.order)
+    : [];
+  const currentQuestion = questions[currentIndex] ?? null;
+  const totalCount = questionnaire?.totalCount ?? 3;
+  const isLastQuestion = currentIndex >= totalCount - 1;
+  const nextQuestionReady = isLastQuestion || questions.length > currentIndex + 1;
+  const selectedOptionId = currentQuestion ? answers[currentQuestion.questionId] : undefined;
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((index) => index - 1);
+      return;
+    }
+    void navigate(-1);
+  };
+
+  const handleSelect = (optionId: string) => {
+    if (!currentQuestion) {
+      return;
+    }
+    setAnswers((prev) => ({ ...prev, [currentQuestion.questionId]: optionId }));
+  };
+
+  const handleNext = () => {
+    if (!currentQuestion || !selectedOptionId || questionnaire === null) {
+      return;
+    }
+    if (!isLastQuestion) {
+      setCurrentIndex((index) => index + 1);
+      return;
+    }
+    void navigate(`/meeting/${id}/generating`, {
+      state: {
+        customization: {
+          type: "QUESTIONNAIRE",
+          questionnaireId: questionnaire.questionnaireId,
+          questionnaireVersion: questionnaire.version,
+          answers: questions.map((q) => ({
+            questionId: q.questionId,
+            optionId: answers[q.questionId],
+          })),
+        },
+      },
+    });
+  };
+
+  return (
+    <Layout>
+      <div className={root}>
+        <TopAppBar background={surfaceColor} title="모임 질문" onBack={handleBack} />
+        <div className={body}>
+          {currentQuestion ? (
+            <>
+              <span className={progress}>
+                <span className={progressCurrent}>{currentIndex + 1}</span>
+                <span className={progressTotal}>/{totalCount}</span>
+              </span>
+              <h1 className={questionStyle}>{currentQuestion.text}</h1>
+              <div className={optionList}>
+                {currentQuestion.options.map((item) => (
+                  <button
+                    className={option({ selected: item.optionId === selectedOptionId })}
+                    key={item.optionId}
+                    type="button"
+                    onClick={() => handleSelect(item.optionId)}
+                  >
+                    <span aria-hidden className={optionEmoji}>
+                      {item.emoji}
+                    </span>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : isStartError ? (
+            <p className={placeholder}>
+              질문을 불러오지 못했어요.
+              <br />
+              <button className={retry} type="button" onClick={() => start()}>
+                다시 시도
+              </button>
+            </p>
+          ) : (
+            <p className={placeholder}>{isStarting ? "질문을 준비하고 있어요" : "잠시만요"}</p>
+          )}
+        </div>
+        <div className={footer}>
+          <CtaButton disabled={!selectedOptionId || !nextQuestionReady} onClick={handleNext}>
+            {isLastQuestion ? "제출" : "다음"}
+          </CtaButton>
+        </div>
+      </div>
+    </Layout>
+  );
+}

@@ -13,6 +13,7 @@ import type {
   MeetingStatus,
   MapPins,
   PlacePreferenceResponse,
+  Questionnaire,
   RecommendationPreview,
   UpdateCoursePlanRequest,
   UpdatePlacePreferenceRequest,
@@ -124,6 +125,20 @@ export function updateCourseImage(meetingId: string, accessToken: string, file: 
 
 export function downloadCourseImage(meetingId: string, accessToken: string, signal?: AbortSignal) {
   return requestBlob(`/api/v1/meetings/${meetingId}/course-image/download`, {
+    query: { accessToken },
+    signal,
+  });
+}
+
+export function createQuestionnaire(meetingId: string, accessToken: string) {
+  return request<Questionnaire>(`/api/v1/meetings/${meetingId}/questionnaire`, {
+    method: "POST",
+    query: { accessToken },
+  });
+}
+
+export function getQuestionnaire(meetingId: string, accessToken: string, signal?: AbortSignal) {
+  return request<Questionnaire>(`/api/v1/meetings/${meetingId}/questionnaire`, {
     query: { accessToken },
     signal,
   });

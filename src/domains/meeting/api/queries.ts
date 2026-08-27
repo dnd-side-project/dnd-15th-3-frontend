@@ -7,6 +7,7 @@ import {
   getMapPins,
   getMeetingDetail,
   getMeetingStatus,
+  getQuestionnaire,
   getRecommendations,
 } from "./index";
 
@@ -43,6 +44,13 @@ export const meetingQueries = {
     queryOptions({
       queryKey: ["meeting", meetingId, "recommendations"] as const,
       queryFn: ({ signal }) => getRecommendations(meetingId, accessToken, signal),
+      enabled: filled(meetingId, accessToken),
+    }),
+
+  questionnaire: (meetingId: string, accessToken: string) =>
+    queryOptions({
+      queryKey: ["meeting", meetingId, "questionnaire"] as const,
+      queryFn: ({ signal }) => getQuestionnaire(meetingId, accessToken, signal),
       enabled: filled(meetingId, accessToken),
     }),
 };

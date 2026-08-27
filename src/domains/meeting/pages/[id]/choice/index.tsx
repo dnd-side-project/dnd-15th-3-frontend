@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
 import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
 import { Chip, ChipGroup } from "@/components/chip";
-import { CtaButton } from "@/components/cta-button";
+import { CtaButton, CtaButtonRow } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
 import { PlaceIcon } from "@/components/place-icon";
 import { PlacePhotoImage } from "@/components/place-photo";
@@ -16,7 +16,7 @@ import type { CategorySlug } from "@/domains/catalog/api/types";
 import { useCategories, useCategorySlug } from "@/domains/catalog/hooks";
 import { updatePlacePreference } from "@/domains/meeting/api";
 import type { RecommendationPreview, ViewerPreference } from "@/domains/meeting/api/types";
-import { useCourseGeneration, useMeeting } from "@/domains/meeting/hooks";
+import { useMeeting } from "@/domains/meeting/hooks";
 import { getAccessToken } from "@/utils/access-token";
 
 import {
@@ -115,6 +115,7 @@ function RecommendationCard({
 
 export function ChoicePage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id = "" } = useParams();
   const queryClient = useQueryClient();
   const { data: meeting, isPending, isError, refetch } = useMeeting();
@@ -122,24 +123,16 @@ export function ChoicePage() {
   const slugOf = useCategorySlug();
 
   const [filter, setFilter] = useState<Filter>("all");
-  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+  const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(
+    () => (location.state as { generationFailed?: boolean } | null)?.generationFailed ?? false,
+  );
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
     mutationFn: ({ recommendationId, preference }: PreferenceChange) =>
       updatePlacePreference(id, recommendationId, getAccessToken(id), { preference }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
-  });
-
-  const { generate, isGenerating } = useCourseGeneration(id, {
-    onSuccess: () => {
-      // 상태 폴링 쿼리(["meeting", id, "status"])가 켜 있는 동안 prefix 무효화하면
-      // 폴링이 한 번 더 도므로 상세 쿼리만 무효화한다.
-      void queryClient.invalidateQueries({ queryKey: ["meeting", id, "detail"] });
-      void queryClient.invalidateQueries({ queryKey: ["course", id] });
-      void navigate(`/meeting/${id}/course`);
-    },
-    onError: () => setIsErrorPopupOpen(true),
   });
 
   if (isError) {
@@ -247,13 +240,33 @@ export function ChoicePage() {
 
         <div className={footer}>
           <CtaButton
-            disabled={!hasPlaces || !meeting.permissions.canSelectCourse || isGenerating}
-            onClick={() => generate()}
+            disabled={!hasPlaces || !meeting.permissions.canSelectCourse}
+            onClick={() => setIsConfirmPopupOpen(true)}
           >
             코스 생성하기
           </CtaButton>
         </div>
       </div>
+
+      <Popup
+        description="간단한 질문에 답해주시면 모임원들의 취향을 분석해 모임에 꼭 맞는 코스를 만들어드려요."
+        footer={
+          <CtaButtonRow
+            primaryLabel="좋아요!"
+            secondaryLabel="괜찮아요"
+            onPrimary={() => void navigate(`/meeting/${id}/questionnaire`)}
+            onSecondary={() =>
+              void navigate(`/meeting/${id}/generating`, {
+                state: { customization: { type: "SKIP" } },
+              })
+            }
+          />
+        }
+        onOpenChange={setIsConfirmPopupOpen}
+        open={isConfirmPopupOpen}
+        showClose={false}
+        title="이번 모임, 어떻게 보내볼까요?"
+      />
 
       <Popup
         description="잠시 후 다시 시도해 주세요"
