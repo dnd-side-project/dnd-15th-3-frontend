@@ -1,12 +1,15 @@
-export type CategorySlug =
-  | "restaurant"
-  | "cafe"
-  | "bar"
-  | "walk"
-  | "shopping"
-  | "activity"
-  | "culture"
-  | "other";
+export const CATEGORY_SLUGS = [
+  "restaurant",
+  "activity",
+  "shopping",
+  "walk",
+  "bar",
+  "culture",
+  "cafe",
+  "other",
+] as const;
+
+export type CategorySlug = (typeof CATEGORY_SLUGS)[number];
 
 export type MeetingTypeCode =
   | "SOCIAL"

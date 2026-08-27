@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { page } from "vite-plus/test/browser/context";
 
-import { CATEGORY_SLUGS } from "@/domains/catalog/place-fallback-images";
+import { CATEGORY_SLUGS } from "@/domains/catalog/api/types";
 import { placePhoto, render } from "@/test-utils";
 
 import { PlacePhotoImage } from "./index";

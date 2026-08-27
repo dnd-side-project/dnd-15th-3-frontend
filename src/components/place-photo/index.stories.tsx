@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { withLayout } from "@/components/layout/index.decorators";
-import { CATEGORY_SLUGS } from "@/domains/catalog/place-fallback-images";
+import { CATEGORY_SLUGS } from "@/domains/catalog/api/types";
 
 import { PlacePhotoImage } from "./index";
 

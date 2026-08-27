@@ -108,30 +108,34 @@ export function PlaceSearch({ header, onSelect }: PlaceSearchProps) {
           </div>
         ) : (
           <div className={results}>
-            {matched.map((place) => (
-              <button
-                className={result}
-                key={place.id}
-                type="button"
-                onClick={() => onSelect(place.id)}
-              >
-                <PlacePhotoImage
-                  category={categoryOf(place.category.id)}
-                  className={thumbnail}
-                  photo={place.previewPhoto}
-                />
-                <span className={resultTexts}>
-                  <span className={resultName}>
-                    <PlaceIcon category={categoryOf(place.category.id)} size={20} />
-                    {place.name}
+            {matched.map((place) => {
+              const category = categoryOf(place.category.id);
+
+              return (
+                <button
+                  className={result}
+                  key={place.id}
+                  type="button"
+                  onClick={() => onSelect(place.id)}
+                >
+                  <PlacePhotoImage
+                    category={category}
+                    className={thumbnail}
+                    photo={place.previewPhoto}
+                  />
+                  <span className={resultTexts}>
+                    <span className={resultName}>
+                      <PlaceIcon category={category} size={20} />
+                      {place.name}
+                    </span>
+                    <span className={resultAddress}>{place.address}</span>
                   </span>
-                  <span className={resultAddress}>{place.address}</span>
-                </span>
-                <span aria-hidden className={addButton}>
-                  <PlusIcon height={16} width={16} />
-                </span>
-              </button>
-            ))}
+                  <span aria-hidden className={addButton}>
+                    <PlusIcon height={16} width={16} />
+                  </span>
+                </button>
+              );
+            })}
           </div>
         )}
 
