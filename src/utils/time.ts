@@ -58,3 +58,21 @@ export function parseTimeString(value: string): Time | null {
   const [hours, minutes] = value.split(":").map(Number);
   return { hours: hours!, minutes: minutes! };
 }
+
+export function getNearestFutureTime(): Time {
+  const now = new Date();
+  const currentMinutes = now.getMinutes();
+  const roundedMinutes = Math.ceil((currentMinutes + 1) / MINUTE_STEP) * MINUTE_STEP;
+
+  if (roundedMinutes >= 60) {
+    return {
+      hours: (now.getHours() + 1) % 24,
+      minutes: 0,
+    };
+  }
+
+  return {
+    hours: now.getHours(),
+    minutes: roundedMinutes,
+  };
+}
