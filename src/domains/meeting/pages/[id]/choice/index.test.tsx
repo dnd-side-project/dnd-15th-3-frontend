@@ -158,6 +158,7 @@ function renderChoice(meeting: typeof MEETING = MEETING, options: RenderOptions 
 
 beforeEach(() => {
   localStorage.setItem("momo.access-token.1", "host-session-token");
+  sessionStorage.setItem("preference-info-shown-1", "true");
 });
 
 afterEach(() => {
