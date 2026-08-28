@@ -44,6 +44,7 @@ test("imageUrl이 있으면 해당 src로 이미지를 렌더링한다", async (
   const image = page.getByAltText("한강 공원");
   await expect.element(image).toBeInTheDocument();
   await expect.element(image).toHaveAttribute("src", "/static/momo-kakao-share.png");
+  await expect.element(image).toHaveAttribute("referrerpolicy", "no-referrer");
 });
 
 test("imageUrl이 없으면 카테고리 대체 이미지를 보여준다", async () => {

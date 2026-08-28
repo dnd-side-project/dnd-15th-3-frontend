@@ -18,6 +18,7 @@ test("사진이 있으면 원본 사진을 보여준다", async () => {
   const image = page.getByAltText("성수 카페");
   await expect.element(image).toBeInTheDocument();
   await expect.element(image).toHaveAttribute("src", "/static/popup-momo.webp");
+  await expect.element(image).toHaveAttribute("referrerpolicy", "no-referrer");
 });
 
 test("사진이 없으면 카테고리 대체 이미지를 보여준다", async () => {

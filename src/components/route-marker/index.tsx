@@ -28,7 +28,12 @@ export function RouteMarker({
         <div className={tail} />
         <div className={body}>
           {imageUrl ? (
-            <img alt={imageAlt ?? ""} className={thumbnail} src={imageUrl} />
+            <img
+              alt={imageAlt ?? ""}
+              className={thumbnail}
+              referrerPolicy="no-referrer"
+              src={imageUrl}
+            />
           ) : (
             <img aria-hidden alt="" className={thumbnail} src={placeFallbackImage(category)} />
           )}
