@@ -129,6 +129,7 @@ export const title = style({
   lineHeight: 1.5,
   fontWeight: 600,
   color: colors.title,
+  wordBreak: "keep-all",
 });
 
 export const description = style({
@@ -137,6 +138,7 @@ export const description = style({
   lineHeight: 1.5,
   fontWeight: 400,
   color: colors.description,
+  wordBreak: "keep-all",
 });
 
 export const footer = style({
