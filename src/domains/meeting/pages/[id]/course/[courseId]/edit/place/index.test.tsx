@@ -13,6 +13,37 @@ const fetchMock = vi.spyOn(globalThis, "fetch");
 const MEETING_ID = "1";
 const COURSE_ID = "c1";
 
+const MEETING = {
+  id: MEETING_ID,
+  meetingId: MEETING_ID,
+  invitationCode: "DNDF0R",
+  participantAccessToken: "host-session-token",
+  invitationUrl: "https://momo.example/invite/DNDF0R",
+  name: "테스트 모임",
+  date: "2026-08-05",
+  time: "18:00",
+  role: "HOST",
+  isHost: true,
+  permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
+  meetingType: { id: "1", code: "SOCIAL", name: "친목" },
+  meetingTypeCode: "SOCIAL",
+  host: { userKey: "device-1", nickname: "방장모모", profileAvatarId: "momo-blue" },
+  categorySlugs: ["restaurant", "cafe"],
+  firstLocation: {
+    id: "101",
+    displayName: "을지로3가역",
+    address: "서울 중구",
+    latitude: 37.5661,
+    longitude: 126.9917,
+    syncVersion: 1,
+  },
+  viewerParticipantId: "11",
+  participants: [],
+  categorySteps: [],
+  recommendations: [],
+  selectedCourse: null,
+};
+
 const PLACES = {
   items: [
     {
@@ -65,6 +96,9 @@ function renderAddPlace({ conflict = false } = {}) {
     }
     if (request.url.includes("/places/search")) {
       return Promise.resolve(jsonResponse(PLACES));
+    }
+    if (request.url.includes(`/meeting/${MEETING_ID}`)) {
+      return Promise.resolve(jsonResponse(MEETING));
     }
     return Promise.resolve(jsonResponse({}));
   });
