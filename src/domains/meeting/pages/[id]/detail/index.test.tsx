@@ -149,7 +149,7 @@ test("경로 안내는 다음 장소로 가는 카카오맵 길찾기를 연다"
     .element(page.getByRole("link", { name: "경로 안내" }))
     .toHaveAttribute(
       "href",
-      "https://map.kakao.com/link/to/%EC%9D%84%EC%A7%80%EB%A1%9C%20%EC%BB%A4%ED%94%BC%ED%95%9C%EC%95%BD%EB%B0%A9,37.5665,126.9915",
+      "http://m.map.kakao.com/scheme/route?sp=37.5701,126.9989&ep=37.5665,126.9915&by=foot",
     );
 });
 
