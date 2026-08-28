@@ -173,7 +173,7 @@ export function ChoicePage() {
   return (
     <Layout>
       <div className={root}>
-        {isInfoBoxVisible && (
+        {isInfoBoxVisible && !isConfirmPopupOpen && (
           <div className={infoBox} onClick={handleDismissInfoBox}>
             마음에 드는 장소에 선호도를 표시해보세요.
             {"\n"}선호도 결과에 따라 코스가 정해집니다!
