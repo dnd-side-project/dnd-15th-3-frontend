@@ -13,5 +13,5 @@ export function PlacePhotoImage({ photo, category, alt = "", className }: PlaceP
     return <img aria-hidden alt="" className={className} src={placeFallbackImage(category)} />;
   }
 
-  return <img alt={alt} className={className} src={photo.url} />;
+  return <img alt={alt} className={className} referrerPolicy="no-referrer" src={photo.url} />;
 }
