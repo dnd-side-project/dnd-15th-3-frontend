@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
+import { ToastProvider } from "@/components/toast";
 import { placePhoto, render } from "@/test-utils";
 
 import { PlaceSearchPage } from "./index";
@@ -70,10 +71,16 @@ function jsonResponse(body: unknown, status = 200) {
 
 const searchRequests: string[] = [];
 
-function renderPlaceSearch(places: unknown = PLACES, placesStatus = 200) {
+function renderPlaceSearch(
+  places: unknown = PLACES,
+  placesStatus = 200,
+  meeting: unknown = MEETING,
+  opts: { recommendationStatus?: number; recommendationBody?: unknown } = {},
+) {
   searchRequests.length = 0;
-  fetchMock.mockImplementation((input) => {
-    const url = new Request(input).url;
+  fetchMock.mockImplementation((input, init) => {
+    const request = new Request(input, init);
+    const url = request.url;
     if (url.includes("/places/search")) {
       searchRequests.push(url);
       return Promise.resolve(jsonResponse(places, placesStatus));
@@ -81,7 +88,15 @@ function renderPlaceSearch(places: unknown = PLACES, placesStatus = 200) {
     if (url.includes("/categories")) {
       return Promise.resolve(jsonResponse([{ id: "1", slug: "restaurant", name: "음식점" }]));
     }
-    return Promise.resolve(jsonResponse(MEETING));
+    if (url.includes("/recommendations") && request.method === "POST") {
+      return Promise.resolve(
+        jsonResponse(
+          opts.recommendationBody ?? { id: "r1", categoryId: "1" },
+          opts.recommendationStatus ?? 201,
+        ),
+      );
+    }
+    return Promise.resolve(jsonResponse(meeting));
   });
 
   const router = createMemoryRouter(
@@ -97,7 +112,9 @@ function renderPlaceSearch(places: unknown = PLACES, placesStatus = 200) {
     <QueryClientProvider
       client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}
     >
-      <RouterProvider router={router} />
+      <ToastProvider>
+        <RouterProvider router={router} />
+      </ToastProvider>
     </QueryClientProvider>,
   );
 }
@@ -182,4 +199,48 @@ test("목록 보기로 바꾸면 추천목록으로 간다", async () => {
   await userEvent.click(page.getByRole("button", { name: "목록으로 보기" }));
 
   await expect.element(page.getByText("추천목록")).toBeInTheDocument();
+});
+
+const MEETING_WITH_SAVED = {
+  ...MEETING,
+  recommendations: [
+    {
+      id: "r301",
+      categoryId: "1",
+      place: { id: "301", name: "광장시장 순대볶음", address: "서울 종로구 예지동 6-1" },
+      previewPhoto: null,
+      recommendedByParticipantId: "11",
+      likeCount: 0,
+      dislikeCount: 0,
+    },
+  ],
+};
+
+test("+ 버튼을 누르면 장소를 저장하고 toast를 띄운다", async () => {
+  renderPlaceSearch();
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
+
+  await expect.element(page.getByText("장소가 저장되었습니다.")).toBeInTheDocument();
+});
+
+test("이미 저장된 장소는 파란 하트로 보인다", async () => {
+  renderPlaceSearch(PLACES, 200, MEETING_WITH_SAVED);
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
+
+  await expect.element(page.getByRole("button", { name: "코스에 담김" })).toBeDisabled();
+});
+
+test("저장에 실패하면 서버 메시지를 toast로 띄운다", async () => {
+  renderPlaceSearch(PLACES, 200, MEETING, {
+    recommendationStatus: 409,
+    recommendationBody: { message: "이미 모임에 추가된 장소입니다." },
+  });
+
+  await userEvent.fill(page.getByRole("textbox", { name: "장소 검색" }), "광장시장");
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
+
+  await expect.element(page.getByText("이미 모임에 추가된 장소입니다.")).toBeInTheDocument();
 });

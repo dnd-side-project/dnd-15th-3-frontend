@@ -23,6 +23,17 @@ export class ApiError extends Error {
   }
 }
 
+/** 서버 에러 메시지를 사용자에게 보여 줄 문자열로 바꾼다. 5xx 처럼 기술적인 메시지는 고정 문구로 가린다. */
+export function getErrorMessage(error: unknown, fallback = "잠시 후 다시 시도해주세요.") {
+  if (error instanceof ApiError) {
+    if (error.status >= 500) {
+      return fallback;
+    }
+    return error.body?.message ?? fallback;
+  }
+  return fallback;
+}
+
 type QueryValue = string | number | boolean | undefined | string[];
 
 interface RequestOptions {

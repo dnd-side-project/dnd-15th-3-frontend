@@ -13,6 +13,37 @@ const fetchMock = vi.spyOn(globalThis, "fetch");
 const MEETING_ID = "1";
 const COURSE_ID = "c1";
 
+const MEETING = {
+  id: MEETING_ID,
+  meetingId: MEETING_ID,
+  invitationCode: "DNDF0R",
+  participantAccessToken: "host-session-token",
+  invitationUrl: "https://momo.example/invite/DNDF0R",
+  name: "테스트 모임",
+  date: "2026-08-05",
+  time: "18:00",
+  role: "HOST",
+  isHost: true,
+  permissions: { canManageMeeting: true, canSelectCourse: true, canShareInvitation: true },
+  meetingType: { id: "1", code: "SOCIAL", name: "친목" },
+  meetingTypeCode: "SOCIAL",
+  host: { userKey: "device-1", nickname: "방장모모", profileAvatarId: "momo-blue" },
+  categorySlugs: ["restaurant", "cafe"],
+  firstLocation: {
+    id: "101",
+    displayName: "을지로3가역",
+    address: "서울 중구",
+    latitude: 37.5661,
+    longitude: 126.9917,
+    syncVersion: 1,
+  },
+  viewerParticipantId: "11",
+  participants: [],
+  categorySteps: [],
+  recommendations: [],
+  selectedCourse: null,
+};
+
 const PLACES = {
   items: [
     {
@@ -66,6 +97,9 @@ function renderAddPlace({ conflict = false } = {}) {
     if (request.url.includes("/places/search")) {
       return Promise.resolve(jsonResponse(PLACES));
     }
+    if (request.url.includes(`/meeting/${MEETING_ID}`)) {
+      return Promise.resolve(jsonResponse(MEETING));
+    }
     return Promise.resolve(jsonResponse({}));
   });
 
@@ -78,6 +112,10 @@ function renderAddPlace({ conflict = false } = {}) {
       {
         path: "/meeting/:id/course/:courseId/edit",
         Component: () => <p>코스 수정</p>,
+      },
+      {
+        path: "/meeting/:id/place/:placeId",
+        Component: () => <p>장소 상세</p>,
       },
     ],
     { initialEntries: [`/meeting/${MEETING_ID}/course/${COURSE_ID}/edit/place`] },
@@ -101,22 +139,31 @@ afterEach(() => {
   localStorage.clear();
 });
 
-test("장소를 고르면 추천에 올린 뒤 URL 의 courseId 로 코스에 담는다", async () => {
+test("장소를 누르면 장소 상세로 간다", async () => {
   renderAddPlace();
 
   await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
   await userEvent.click(page.getByRole("button", { name: /테니스센터/ }));
 
-  await expect.element(page.getByText("코스 수정")).toBeInTheDocument();
+  await expect.element(page.getByText("장소 상세")).toBeInTheDocument();
+});
+
+test("+ 버튼을 누르면 추천에 올린 뒤 URL 의 courseId 로 코스에 담고 toast를 띄운다", async () => {
+  renderAddPlace();
+
+  await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
+
+  await expect.element(page.getByText("코스에 장소를 추가했어요")).toBeInTheDocument();
   expect(requests).toContain("POST /api/v1/meetings/1/recommendations");
   expect(requests).toContain(`POST /api/v1/meetings/1/courses/${COURSE_ID}/places`);
 });
 
-test("이미 담긴 장소면 알려 준다", async () => {
+test("이미 담긴 장소면 서버 메시지를 toast로 알려 준다", async () => {
   renderAddPlace({ conflict: true });
 
   await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
-  await userEvent.click(page.getByRole("button", { name: /테니스센터/ }));
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
 
-  await expect.element(page.getByText("이미 추가된 장소입니다.")).toBeInTheDocument();
+  await expect.element(page.getByText("이미 추가된 장소")).toBeInTheDocument();
 });

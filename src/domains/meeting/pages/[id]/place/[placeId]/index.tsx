@@ -15,6 +15,7 @@ import { addRecommendation } from "@/domains/meeting/api";
 import { MapScreen, MapSheet } from "@/domains/meeting/components/map-screen";
 import { useMeeting } from "@/domains/meeting/hooks";
 import { getAccessToken } from "@/utils/access-token";
+import { getErrorMessage } from "@/utils/http";
 
 import {
   addButton,
@@ -52,8 +53,9 @@ export function PlaceDetailPage() {
   const { data: meeting } = useMeeting();
   const categoryOf = useCategorySlug();
 
+  const [pending, setPending] = useState<Set<string>>(() => new Set());
   const recommendation = meeting?.recommendations.find((item) => item.place.id === placeId);
-  const saved = recommendation !== undefined;
+  const saved = recommendation !== undefined || pending.has(placeId);
   const { data: detail } = useQuery(catalogQueries.placeDetail(placeId, id, getAccessToken(id)));
 
   // 상세가 오기 전에는 추천 목록에 있는 이름·주소로 먼저 그린다.
@@ -73,13 +75,38 @@ export function PlaceDetailPage() {
     }),
   );
 
-  const { mutate: addPlace } = useMutation({
+  const { mutateAsync: addPlace } = useMutation({
     mutationFn: (target: string) => addRecommendation(id, getAccessToken(id), { placeId: target }),
-    onSuccess: () => {
+    onMutate: () => {
       toast.add({ title: "장소가 저장되었습니다." });
-      return queryClient.invalidateQueries({ queryKey: ["meeting", id] });
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+    onError: (error) => {
+      toast.add({ title: getErrorMessage(error, "장소를 추가하지 못했습니다.") });
     },
   });
+
+  const isSaved = (target: string) =>
+    meeting?.recommendations.some((item) => item.place.id === target) ?? false;
+
+  async function handleAdd(target: string) {
+    setPending((prev) => {
+      const next = new Set(prev);
+      next.add(target);
+      return next;
+    });
+    try {
+      await addPlace(target);
+    } catch {
+      // 실패 알림은 mutation 의 onError 가 담당한다.
+    } finally {
+      setPending((prev) => {
+        const next = new Set(prev);
+        next.delete(target);
+        return next;
+      });
+    }
+  }
 
   return (
     <MapScreen gradient>
@@ -133,7 +160,7 @@ export function PlaceDetailPage() {
                 className={addButton({ saved })}
                 disabled={saved}
                 type="button"
-                onClick={() => addPlace(placeId)}
+                onClick={() => void handleAdd(placeId)}
               >
                 {saved ? (
                   <HeartIcon aria-hidden height={20} width={20} />
@@ -158,8 +185,8 @@ export function PlaceDetailPage() {
                 <h2 className={similarTitle}>이 장소와 비슷한 장소에요!</h2>
 
                 {similarPlaces.map((place) => {
+                  const saved = isSaved(place.id) || pending.has(place.id);
                   const category = categoryOf(place.categoryId);
-
                   return (
                     <div className={similarPlace} key={place.id}>
                       <button
@@ -168,25 +195,32 @@ export function PlaceDetailPage() {
                         onClick={() => void navigate(`/meeting/${id}/place/${place.id}`)}
                       >
                         <PlacePhotoImage
-                          category={category}
                           className={similarThumbnail}
                           photo={place.previewPhoto}
+                          category={category}
                         />
                         <span className={similarTexts}>
                           <span className={similarName}>
-                            <PlaceIcon category={category} size={20} />
+                            <PlaceIcon category={categoryOf(place.categoryId)} size={20} />
                             {place.name}
                           </span>
                           <span className={similarAddress}>{place.address}</span>
                         </span>
                       </button>
                       <button
-                        aria-label={`${place.name} 코스에 담기`}
-                        className={similarAddButton}
+                        aria-label={
+                          saved ? `${place.name} 코스에 담김` : `${place.name} 코스에 담기`
+                        }
+                        className={similarAddButton({ saved })}
+                        disabled={saved}
                         type="button"
-                        onClick={() => addPlace(place.id)}
+                        onClick={() => void handleAdd(place.id)}
                       >
-                        <PlusIcon aria-hidden height={16} width={16} />
+                        {saved ? (
+                          <HeartIcon aria-hidden height={16} width={16} />
+                        ) : (
+                          <PlusIcon aria-hidden height={16} width={16} />
+                        )}
                       </button>
                     </div>
                   );

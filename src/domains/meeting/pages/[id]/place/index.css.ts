@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { palette } from "@/styles/palette";
 import { text } from "@/styles/text";
@@ -23,8 +24,17 @@ export const result = style({
   gap: 14,
   width: "100%",
   padding: "17px 20px",
-  border: "none",
   borderTop: `1px solid ${vars.color.surface.mutedStrong}`,
+});
+
+export const resultOpen = style({
+  display: "flex",
+  flex: 1,
+  alignItems: "center",
+  gap: 14,
+  minWidth: 0,
+  padding: 0,
+  border: "none",
   background: "none",
   textAlign: "left",
   cursor: "pointer",
@@ -66,18 +76,28 @@ export const resultAddress = style({
   whiteSpace: "nowrap",
 });
 
-export const addButton = style({
-  display: "flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  width: 36,
-  height: 36,
-  border: "none",
-  borderRadius: vars.radius.full,
-  backgroundColor: vars.color.surface.muted,
-  color: vars.color.text.tertiary,
-  cursor: "pointer",
+export const addButton = recipe({
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 36,
+    height: 36,
+    border: "none",
+    borderRadius: vars.radius.full,
+    cursor: "pointer",
+  },
+  variants: {
+    saved: {
+      true: {
+        backgroundColor: vars.color.brand.primary,
+        color: vars.color.text.inverse,
+        cursor: "default",
+      },
+      false: { backgroundColor: vars.color.surface.muted, color: vars.color.text.tertiary },
+    },
+  },
 });
 
 export const notice = style({

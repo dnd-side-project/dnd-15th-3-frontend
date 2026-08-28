@@ -102,6 +102,7 @@ function renderAddPlace({ conflict = false } = {}) {
     [
       { path: "/meeting/:id/edit/place", Component: CoursePlaceAddPage },
       { path: "/meeting/:id/edit", Component: () => <p>코스 수정</p> },
+      { path: "/meeting/:id/place/:placeId", Component: () => <p>장소 상세</p> },
     ],
     { initialEntries: ["/meeting/1/edit/place"] },
   );
@@ -131,22 +132,31 @@ test("코스 수정에서 열면 검색 시트를 지도 위에 띄운다", asyn
   await expect.element(page.getByPlaceholder("장소를 검색하세요")).toBeInTheDocument();
 });
 
-test("찾은 장소를 고르면 추천에 올린 뒤 코스에 담고 돌아간다", async () => {
+test("장소를 누르면 장소 상세로 간다", async () => {
   renderAddPlace();
 
   await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
   await userEvent.click(page.getByRole("button", { name: /테니스센터/ }));
 
-  await expect.element(page.getByText("코스 수정")).toBeInTheDocument();
+  await expect.element(page.getByText("장소 상세")).toBeInTheDocument();
+});
+
+test("+ 버튼을 누르면 추천에 올린 뒤 코스에 담고 toast를 띄운다", async () => {
+  renderAddPlace();
+
+  await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
+
+  await expect.element(page.getByText("코스에 장소를 추가했어요")).toBeInTheDocument();
   expect(requests).toContain("POST /api/v1/meetings/1/recommendations");
   expect(requests).toContain("POST /api/v1/meetings/1/courses/7/places");
 });
 
-test("이미 담긴 장소면 알려 준다", async () => {
+test("이미 담긴 장소면 서버 메시지를 toast로 알려 준다", async () => {
   renderAddPlace({ conflict: true });
 
   await userEvent.fill(page.getByPlaceholder("장소를 검색하세요"), "테니스");
-  await userEvent.click(page.getByRole("button", { name: /테니스센터/ }));
+  await userEvent.click(page.getByRole("button", { name: "코스에 담기" }));
 
-  await expect.element(page.getByText("이미 추가된 장소입니다.")).toBeInTheDocument();
+  await expect.element(page.getByText("이미 추가된 장소")).toBeInTheDocument();
 });
