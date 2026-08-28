@@ -38,6 +38,7 @@ import {
   filters,
   footer,
   grid,
+  infoBox,
   retry,
   preferences,
   root,
@@ -124,6 +125,14 @@ export function ChoicePage() {
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(
     () => (location.state as { generationFailed?: boolean } | null)?.generationFailed ?? false,
   );
+  const [isInfoBoxVisible, setIsInfoBoxVisible] = useState(
+    () => !sessionStorage.getItem(`preference-info-shown-${id}`),
+  );
+
+  const handleDismissInfoBox = () => {
+    setIsInfoBoxVisible(false);
+    sessionStorage.setItem(`preference-info-shown-${id}`, "true");
+  };
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
@@ -164,6 +173,12 @@ export function ChoicePage() {
   return (
     <Layout>
       <div className={root}>
+        {isInfoBoxVisible && (
+          <div className={infoBox} onClick={handleDismissInfoBox}>
+            마음에 드는 장소에 선호도를 표시해보세요.
+            {"\n"}선호도 결과에 따라 코스가 정해집니다!
+          </div>
+        )}
         <div className={toggle}>
           <Toggle
             tone="overlay"
