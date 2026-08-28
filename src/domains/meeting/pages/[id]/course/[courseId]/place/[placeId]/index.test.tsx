@@ -226,7 +226,7 @@ test("카카오맵 상세정보로 나가는 링크를 건다", async () => {
     .element(page.getByRole("link", { name: "상세정보 보러가기" }))
     .toHaveAttribute(
       "href",
-      "https://map.kakao.com/link/search/%EA%B4%91%EC%9E%A5%EC%8B%9C%EC%9E%A5%20%EC%88%9C%EB%8C%80%EB%B3%B6%EC%9D%8C",
+      "https://map.kakao.com/link/search/%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EC%98%88%EC%A7%80%EB%8F%99%206-1%20%EA%B4%91%EC%9E%A5%EC%8B%9C%EC%9E%A5%20%EC%88%9C%EB%8C%80%EB%B3%B6%EC%9D%8C",
     );
 });
 
