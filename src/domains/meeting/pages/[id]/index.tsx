@@ -461,6 +461,7 @@ export function MeetingPage() {
         isOpen={sheet === "date"}
         onClose={closeSheet}
         onConfirm={handleDate}
+        disabled={{ before: new Date() }}
       />
       <TimePickerSheet
         isOpen={sheet === "time"}

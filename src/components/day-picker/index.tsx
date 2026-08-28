@@ -1,5 +1,6 @@
 import { DayPicker as ReactDayPicker } from "@daypicker/react";
 import { Chevron as RdpChevron } from "@daypicker/react";
+import type { Matcher } from "@daypicker/react";
 import { ko } from "@daypicker/react/locale";
 import { useState, type Dispatch, type SetStateAction, type ComponentProps } from "react";
 
@@ -16,11 +17,13 @@ interface DayPickerSheetProps {
   date: Date | undefined;
   onConfirm: (date: Date | undefined) => void;
   onClose: () => void;
+  disabled?: Matcher | Matcher[];
 }
 
 interface DayPickerProps {
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
+  disabled?: Matcher | Matcher[];
 }
 
 function Chevron({ orientation, ...props }: ComponentProps<typeof RdpChevron>) {
@@ -33,7 +36,13 @@ function Chevron({ orientation, ...props }: ComponentProps<typeof RdpChevron>) {
   return <RdpChevron orientation={orientation} {...props} />;
 }
 
-export function DayPickerSheet({ isOpen, date, onConfirm, onClose }: DayPickerSheetProps) {
+export function DayPickerSheet({
+  isOpen,
+  date,
+  onConfirm,
+  onClose,
+  disabled,
+}: DayPickerSheetProps) {
   // 시트에서 고른 날짜는 확인을 눌러야 밖으로 나간다. 다시 열면 바깥 값에서 시작한다.
   const [inputDate, setInputDate] = useState(date);
   const [wasOpen, setWasOpen] = useState(isOpen);
@@ -75,6 +84,7 @@ export function DayPickerSheet({ isOpen, date, onConfirm, onClose }: DayPickerSh
             formatCaption: (date) => `${date.getFullYear()} ${date.getMonth() + 1}월`,
           }}
           defaultMonth={date}
+          disabled={disabled}
         />
         <div className={styles.confirmButtonWrapper}>
           <button
@@ -90,7 +100,7 @@ export function DayPickerSheet({ isOpen, date, onConfirm, onClose }: DayPickerSh
   );
 }
 
-export function DayPicker({ date, setDate }: DayPickerProps) {
+export function DayPicker({ date, setDate, disabled }: DayPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dateString = date
     ? `${formatTwoDigits(date.getFullYear() % 100)}.${formatTwoDigits(date.getMonth() + 1)}.${formatTwoDigits(date.getDate())}`
@@ -110,6 +120,7 @@ export function DayPicker({ date, setDate }: DayPickerProps) {
           setDate(next);
           setIsOpen(false);
         }}
+        disabled={disabled}
       />
     </>
   );

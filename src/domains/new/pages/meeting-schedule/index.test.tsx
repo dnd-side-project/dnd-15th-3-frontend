@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { expect, test } from "vite-plus/test";
+import { afterAll, beforeAll, expect, test, vi } from "vite-plus/test";
 import { page, userEvent } from "vite-plus/test/browser/context";
 
 import type { MeetingDraft } from "@/domains/new/constants";
@@ -8,6 +8,14 @@ import { formLayout } from "@/domains/new/test-utils";
 import { render } from "@/test-utils";
 
 import { MeetingSchedulePage } from "./index";
+
+beforeAll(() => {
+  vi.setSystemTime(new Date("2026-08-14"));
+});
+
+afterAll(() => {
+  vi.useRealTimers();
+});
 
 // 폼에 담긴 값을 화면으로 꺼내 확인한다.
 function DateProbe() {

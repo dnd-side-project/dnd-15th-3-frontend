@@ -40,6 +40,7 @@ export function MeetingSchedulePage() {
                   const next = typeof action === "function" ? action(selected) : action;
                   field.onChange(next === undefined ? "" : toDateString(next));
                 }}
+                disabled={{ before: new Date() }}
               />
             );
           }}
