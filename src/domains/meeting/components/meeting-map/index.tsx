@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { CustomOverlayMap, Map, Polyline, useKakaoLoader, useMap } from "react-kakao-maps-sdk";
 
+import { PlaceMarker } from "@/components/place-marker";
 import { RouteMarker, type RouteMarkerTone } from "@/components/route-marker";
 import type { CategorySlug, PlacePhoto } from "@/domains/catalog/api/types";
-import type { MeetingLocationResponse } from "@/domains/meeting/api/types";
+import type { MapPin, MeetingLocationResponse } from "@/domains/meeting/api/types";
 import type { Coordinates } from "@/hooks/use-current-position";
 
 import { currentDot, map, notice, originMarker, root } from "./index.css";
@@ -21,6 +22,7 @@ export interface MeetingMapProps {
   /** 모임 위치. 코스 마커와 다른 핀으로 그린다. */
   origin?: MeetingLocationResponse;
   places?: MeetingMapPlace[];
+  sharedPlaces?: MapPin[];
   currentPosition?: Coordinates | null;
   level?: number;
   /** 카드 안에 넣을 때는 조작을 막아 링크가 클릭을 받게 한다. */
@@ -28,6 +30,7 @@ export interface MeetingMapProps {
   /** 마커 색. 한 코스 안에서는 같은 색을 쓴다. */
   tone?: RouteMarkerTone;
   onSelectPlace?: (placeId: string) => void;
+  onSelectSharedPlace?: (placeId: string) => void;
   /** 주어지면 마커 사이를 잇는 실선을 그린다. */
   routeLineColor?: string;
 }
@@ -57,16 +60,22 @@ function CurrentPosition({ position }: { position: Coordinates }) {
 export function MeetingMap({
   origin,
   places = [],
+  sharedPlaces = [],
   currentPosition = null,
   level = 4,
   interactive = true,
   tone = "blue",
   onSelectPlace,
+  onSelectSharedPlace,
   routeLineColor,
 }: MeetingMapProps) {
   const [loading, error] = useKakaoLoader({ appkey: import.meta.env.VITE_KAKAO_MAP_KEY });
   const focus = origin ?? places[0];
   const center = currentPosition ?? (focus === undefined ? SEOUL_CITY_HALL : toCoordinates(focus));
+
+  const sharedPlaceIds = new Set(sharedPlaces.map((pin) => pin.placeId));
+  const sharedPlaceById = Object.fromEntries(sharedPlaces.map((pin) => [pin.placeId, pin]));
+  const placeIds = new Set(places.map((place) => place.id));
 
   return (
     <div className={root({ interactive })}>
@@ -97,18 +106,51 @@ export function MeetingMap({
           />
         ) : null}
 
-        {places.map((place, index) => (
-          <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
-            <RouteMarker
-              category={place.categorySlug}
-              imageAlt={place.name}
-              imageUrl={place.previewPhoto?.url}
-              index={index + 1}
-              tone={tone}
-              onClick={onSelectPlace && (() => onSelectPlace(place.id))}
-            />
-          </CustomOverlayMap>
-        ))}
+        {places.map((place, index) => {
+          const isShared = sharedPlaceIds.has(place.id);
+          const sharedPin = sharedPlaceById[place.id];
+
+          if (isShared && sharedPin) {
+            return (
+              <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
+                <PlaceMarker
+                  category={sharedPin.categorySlug}
+                  label={sharedPin.name}
+                  onClick={onSelectSharedPlace && (() => onSelectSharedPlace(place.id))}
+                />
+              </CustomOverlayMap>
+            );
+          }
+
+          return (
+            <CustomOverlayMap key={place.id} position={toCoordinates(place)} yAnchor={1}>
+              <RouteMarker
+                category={place.categorySlug}
+                imageAlt={place.name}
+                imageUrl={place.previewPhoto?.url}
+                index={index + 1}
+                tone={tone}
+                onClick={onSelectPlace && (() => onSelectPlace(place.id))}
+              />
+            </CustomOverlayMap>
+          );
+        })}
+
+        {sharedPlaces
+          .filter((pin) => !placeIds.has(pin.placeId))
+          .map((pin) => (
+            <CustomOverlayMap
+              key={pin.placeId}
+              position={{ lat: pin.latitude, lng: pin.longitude }}
+              yAnchor={1}
+            >
+              <PlaceMarker
+                category={pin.categorySlug}
+                label={pin.name}
+                onClick={onSelectSharedPlace && (() => onSelectSharedPlace(pin.placeId))}
+              />
+            </CustomOverlayMap>
+          ))}
 
         {currentPosition === null ? null : <CurrentPosition position={currentPosition} />}
       </Map>

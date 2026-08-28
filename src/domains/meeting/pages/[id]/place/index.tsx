@@ -13,6 +13,8 @@ import { toast } from "@/components/toast/manager";
 import { catalogQueries } from "@/domains/catalog/api/queries";
 import { useCategorySlug } from "@/domains/catalog/hooks";
 import { addRecommendation } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
+import type { MapPin } from "@/domains/meeting/api/types";
 import { MapScreen, MapSheet } from "@/domains/meeting/components/map-screen";
 import { useCoursePlaces, useMeeting } from "@/domains/meeting/hooks";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
@@ -74,13 +76,22 @@ function searchNotice({ failed, collecting, keyword, matchCount }: SearchState) 
 
 export interface PlaceSearchProps {
   header?: ReactNode;
+  sharedPlaces?: MapPin[];
   onSelect: (placeId: string) => void;
+  onSelectSharedPlace?: (placeId: string) => void;
   onAdd?: (placeId: string) => Promise<void>;
   isSaved?: (placeId: string) => boolean;
 }
 
 /** 지도 위에서 모임 주변 장소를 찾는 화면. 코스 수정에서도 같은 화면을 쓴다. */
-export function PlaceSearch({ header, onSelect, onAdd, isSaved }: PlaceSearchProps) {
+export function PlaceSearch({
+  header,
+  sharedPlaces,
+  onSelect,
+  onSelectSharedPlace,
+  onAdd,
+  isSaved,
+}: PlaceSearchProps) {
   const { id = "" } = useParams();
   const categoryOf = useCategorySlug();
   const coursePlaces = useCoursePlaces();
@@ -124,7 +135,14 @@ export function PlaceSearch({ header, onSelect, onAdd, isSaved }: PlaceSearchPro
   }
 
   return (
-    <MapScreen gradient header={header} places={coursePlaces} onSelectPlace={onSelect}>
+    <MapScreen
+      gradient
+      header={header}
+      places={coursePlaces}
+      sharedPlaces={sharedPlaces}
+      onSelectPlace={onSelect}
+      onSelectSharedPlace={onSelectSharedPlace}
+    >
       <MapSheet>
         <div className={search}>
           <PlaceSearchInput value={keyword} onChange={(event) => setKeyword(event.target.value)} />
@@ -193,6 +211,7 @@ export function PlaceSearchPage() {
   const { id = "" } = useParams();
   const queryClient = useQueryClient();
   const { data: meeting } = useMeeting();
+  const { data: pins } = useQuery(meetingQueries.pins(id, getAccessToken(id)));
 
   const { mutateAsync: addPlace } = useMutation({
     mutationFn: (placeId: string) => addRecommendation(id, getAccessToken(id), { placeId }),
@@ -210,7 +229,9 @@ export function PlaceSearchPage() {
 
   return (
     <PlaceSearch
+      sharedPlaces={pins?.sharedPlaces}
       onSelect={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
+      onSelectSharedPlace={(placeId) => void navigate(`/meeting/${id}/place/${placeId}`)}
       onAdd={async (placeId) => {
         await addPlace(placeId);
       }}
