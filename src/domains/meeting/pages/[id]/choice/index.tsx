@@ -266,6 +266,7 @@ export function ChoicePage() {
           <CtaButtonRow
             primaryLabel="좋아요!"
             secondaryLabel="괜찮아요"
+            fixedWidth={false}
             onPrimary={() => void navigate(`/meeting/${id}/questionnaire`)}
             onSecondary={() =>
               void navigate(`/meeting/${id}/generating`, {
