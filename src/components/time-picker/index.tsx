@@ -13,6 +13,7 @@ import {
   toTimeWithPeriod,
   togglePeriod,
   formatTime,
+  getNearestFutureTime,
 } from "@/utils/time";
 
 import * as styles from "./index.css";
@@ -32,7 +33,9 @@ function StepperButton({ stepType, onClick }: StepperButtonProps) {
   );
 }
 
-const DEFAULT_TIME: TimeWithPeriod = { hours: 12, minutes: 0, period: "AM" };
+function getDefaultTime(): TimeWithPeriod {
+  return toTimeWithPeriod(getNearestFutureTime());
+}
 
 interface TimePickerSheetProps {
   isOpen: boolean;
@@ -49,14 +52,14 @@ interface TimePickerProps {
 export function TimePickerSheet({ isOpen, time, onConfirm, onClose }: TimePickerSheetProps) {
   // 시트에서 돌린 값은 확인을 눌러야 밖으로 나간다. 다시 열면 바깥 값에서 시작한다.
   const [inputTime, setInputTime] = useState<TimeWithPeriod>(
-    time ? toTimeWithPeriod(time) : DEFAULT_TIME,
+    time ? toTimeWithPeriod(time) : getDefaultTime(),
   );
   const [wasOpen, setWasOpen] = useState(isOpen);
 
   if (isOpen !== wasOpen) {
     setWasOpen(isOpen);
     if (isOpen) {
-      setInputTime(time ? toTimeWithPeriod(time) : DEFAULT_TIME);
+      setInputTime(time ? toTimeWithPeriod(time) : getDefaultTime());
     }
   }
 
