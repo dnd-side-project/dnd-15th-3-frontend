@@ -109,6 +109,26 @@ export const title = style({
   textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
 });
 
+export const titleInput = style({
+  margin: 0,
+  minWidth: 0,
+  flex: 1,
+  width: "100%",
+  padding: 0,
+  border: "none",
+  outline: "none",
+  background: "transparent",
+  color: vars.color.text.inverse,
+  ...text({ size: 26, weight: 600, lineHeight: 1.2 }),
+  textShadow: `0 0 4px ${vars.color.overlay.scrim25}`,
+  selectors: {
+    "&::placeholder": {
+      color: vars.color.text.inverse,
+      opacity: 0.6,
+    },
+  },
+});
+
 export const editButton = style({
   display: "flex",
   flexShrink: 0,

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
 import HeaderConfetti from "@/assets/complete-confetti.svg?react";
@@ -21,8 +22,17 @@ import { Layout } from "@/components/layout";
 import { MomoAvatar } from "@/components/momo-avatar";
 import { Popup } from "@/components/popup";
 import { TimePickerSheet } from "@/components/time-picker";
+import { toast } from "@/components/toast/manager";
+import type { FirstMeetingPlaceResponse } from "@/domains/catalog/api/types";
 import { PlaceSearchSheet } from "@/domains/catalog/components/place-search-sheet";
 import { useMeetingTypes } from "@/domains/catalog/hooks";
+import { updateLocation, updateMeetingDetails } from "@/domains/meeting/api";
+import { meetingQueries } from "@/domains/meeting/api/queries";
+import type {
+  MeetingLocation,
+  MeetingScreen,
+  UpdateMeetingDetailsRequest,
+} from "@/domains/meeting/api/types";
 import { MeetingMap } from "@/domains/meeting/components/meeting-map";
 import {
   useCoursePlaces,
@@ -30,7 +40,15 @@ import {
   useMeetingPermissions,
   useMeetingStatus,
 } from "@/domains/meeting/hooks";
-import { parseDateString, parseTimeString } from "@/utils/time";
+import { getAccessToken } from "@/utils/access-token";
+import { ApiError } from "@/utils/http";
+import {
+  type Time,
+  parseDateString,
+  parseTimeString,
+  toDateString,
+  toTimeString,
+} from "@/utils/time";
 
 import {
   backButton,
@@ -63,6 +81,7 @@ import {
   sectionTitle,
   status,
   title,
+  titleInput,
   titleRow,
   typeBadge,
   typeRow,
@@ -110,6 +129,8 @@ type Sheet = "date" | "time" | "location";
 export function MeetingPage() {
   const navigate = useNavigate();
   const { id = "" } = useParams();
+  const queryClient = useQueryClient();
+  const detailQuery = meetingQueries.detail(id, getAccessToken(id));
   const { data: meeting, isPending } = useMeeting();
   const { canManageMeeting } = useMeetingPermissions();
   const meetingTypes = useMeetingTypes();
@@ -119,10 +140,115 @@ export function MeetingPage() {
 
   const [sheet, setSheet] = useState<Sheet | null>(null);
   const [isGeneratingPopupOpen, setIsGeneratingPopupOpen] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [nameDraft, setNameDraft] = useState("");
+  const nameInputRef = useRef<HTMLInputElement>(null);
   const closeSheet = () => setSheet(null);
-  // TODO: backend meeting 수정 api 구현 필요
-  const save = () => {
-    alert("TODO: backend meeting 수정 api 구현 필요");
+
+  const { mutate: mutateDetails } = useMutation({
+    mutationFn: (body: UpdateMeetingDetailsRequest) =>
+      updateMeetingDetails(id, getAccessToken(id), body),
+    onMutate: async (body) => {
+      await queryClient.cancelQueries({ queryKey: detailQuery.queryKey });
+      const previous = queryClient.getQueryData<MeetingScreen>(detailQuery.queryKey);
+      if (previous !== undefined) {
+        queryClient.setQueryData<MeetingScreen>(detailQuery.queryKey, (prev) => {
+          if (prev === undefined) {
+            return prev;
+          }
+          const meetingType =
+            body.meetingTypeCode !== undefined
+              ? (meetingTypes.find((type) => type.code === body.meetingTypeCode) ??
+                prev.meetingType)
+              : prev.meetingType;
+          return { ...prev, ...body, meetingType };
+        });
+      }
+      return { previous };
+    },
+    onError: (error, _body, context) => {
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData(detailQuery.queryKey, context.previous);
+      }
+      const message =
+        error instanceof ApiError && error.status === 409
+          ? "코스 생성이 시작되어 수정할 수 없어요."
+          : "모임 정보를 수정하지 못했습니다.";
+      toast.add({ title: message });
+    },
+    onSuccess: (saved) => {
+      queryClient.setQueryData<MeetingScreen>(detailQuery.queryKey, (prev) =>
+        prev === undefined ? prev : { ...prev, ...saved },
+      );
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
+
+  const { mutate: mutateLocation } = useMutation({
+    mutationFn: (body: MeetingLocation) => updateLocation(id, getAccessToken(id), body),
+    onSuccess: (saved) => {
+      queryClient.setQueryData<MeetingScreen>(detailQuery.queryKey, (prev) =>
+        prev === undefined ? prev : { ...prev, firstLocation: saved },
+      );
+    },
+    onError: () => {
+      toast.add({ title: "모임 정보를 수정하지 못했습니다." });
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
+  });
+
+  useEffect(() => {
+    if (isEditingName && nameInputRef.current !== null) {
+      nameInputRef.current.focus();
+      nameInputRef.current.select();
+    }
+  }, [isEditingName]);
+
+  const startEditingName = () => {
+    if (meeting === undefined) {
+      return;
+    }
+    setNameDraft(meeting.name);
+    setIsEditingName(true);
+  };
+
+  // 편집 모드 종료 + 변경분 저장. 빈 값이거나 변화가 없으면 되돌린다.
+  const commitName = () => {
+    setIsEditingName(false);
+    if (meeting === undefined) {
+      return;
+    }
+    const trimmed = nameDraft.trim();
+    if (trimmed.length === 0 || trimmed === meeting.name) {
+      return;
+    }
+    mutateDetails({ name: trimmed });
+  };
+
+  const cancelName = () => {
+    setIsEditingName(false);
+  };
+
+  const handleDate = (date: Date | undefined) => {
+    if (date !== undefined) {
+      mutateDetails({ date: toDateString(date) });
+    }
+    closeSheet();
+  };
+
+  const handleTime = (time: Time) => {
+    mutateDetails({ time: toTimeString(time) });
+    closeSheet();
+  };
+
+  const handleLocation = (place: FirstMeetingPlaceResponse) => {
+    mutateLocation({
+      displayName: place.name,
+      address: place.address,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      externalAddressId: place.externalAddressId,
+    });
     closeSheet();
   };
 
@@ -165,7 +291,7 @@ export function MeetingPage() {
                     <Item
                       key={type.code}
                       selected={type.code === meeting.meetingTypeCode}
-                      onClick={save}
+                      onClick={() => mutateDetails({ meetingTypeCode: type.code })}
                     >
                       {type.name}
                     </Item>
@@ -179,13 +305,35 @@ export function MeetingPage() {
           </div>
 
           <div className={titleRow}>
-            <h1 className={title}>{meeting.name}</h1>
-            {canManageMeeting ? (
+            {isEditingName ? (
+              <input
+                ref={nameInputRef}
+                aria-label="모임 이름"
+                className={titleInput}
+                placeholder="모임 이름"
+                type="text"
+                value={nameDraft}
+                onBlur={commitName}
+                onChange={(e) => setNameDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                  } else if (e.key === "Escape") {
+                    e.preventDefault();
+                    cancelName();
+                  }
+                }}
+              />
+            ) : (
+              <h1 className={title}>{meeting.name}</h1>
+            )}
+            {canManageMeeting && !isEditingName ? (
               <button
                 aria-label="모임 이름 수정"
                 className={editButton}
                 type="button"
-                onClick={save}
+                onClick={startEditingName}
               >
                 <PenIcon aria-hidden height={30} width={29} />
               </button>
@@ -312,15 +460,19 @@ export function MeetingPage() {
         date={parseDateString(meeting.date)}
         isOpen={sheet === "date"}
         onClose={closeSheet}
-        onConfirm={save}
+        onConfirm={handleDate}
       />
       <TimePickerSheet
         isOpen={sheet === "time"}
         time={parseTimeString(meeting.time)}
         onClose={closeSheet}
-        onConfirm={save}
+        onConfirm={handleTime}
       />
-      <PlaceSearchSheet isOpen={sheet === "location"} onClose={closeSheet} onSelect={save} />
+      <PlaceSearchSheet
+        isOpen={sheet === "location"}
+        onClose={closeSheet}
+        onSelect={handleLocation}
+      />
 
       <Popup
         open={isGeneratingPopupOpen}

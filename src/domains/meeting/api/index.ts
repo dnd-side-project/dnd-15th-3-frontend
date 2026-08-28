@@ -12,10 +12,12 @@ import type {
   MeetingScreen,
   MeetingStatus,
   MapPins,
+  MeetingDetailsResponse,
   PlacePreferenceResponse,
   Questionnaire,
   RecommendationPreview,
   UpdateCoursePlanRequest,
+  UpdateMeetingDetailsRequest,
   UpdatePlacePreferenceRequest,
 } from "./types";
 
@@ -96,6 +98,18 @@ export function updatePlacePreference(
 export function updateLocation(meetingId: string, accessToken: string, body: MeetingLocation) {
   return request<MeetingLocationResponse>(`/api/v1/meetings/${meetingId}/location`, {
     method: "PUT",
+    query: { accessToken },
+    body,
+  });
+}
+
+export function updateMeetingDetails(
+  meetingId: string,
+  accessToken: string,
+  body: UpdateMeetingDetailsRequest,
+) {
+  return request<MeetingDetailsResponse>(`/api/v1/meetings/${meetingId}`, {
+    method: "PATCH",
     query: { accessToken },
     body,
   });
