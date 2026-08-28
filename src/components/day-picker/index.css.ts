@@ -123,8 +123,16 @@ export const dayButton = style({
   width: 43,
   backgroundColor: "transparent",
   color: "inherit",
-  cursor: "pointer",
   fontSize: 16,
+  selectors: {
+    "&:not(:disabled)": {
+      cursor: "pointer",
+    },
+    "&:disabled": {
+      color: vars.color.text.disabled,
+      cursor: "not-allowed",
+    },
+  },
 });
 export const dayPickArea = style({
   paddingBottom: 15,
