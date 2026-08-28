@@ -7,6 +7,7 @@ import { LocationButton } from "@/components/location-button";
 import type { RouteMarkerTone } from "@/components/route-marker";
 import { Toggle } from "@/components/toggle";
 import { CourseCategoryChips } from "@/domains/catalog/components/course-category-chips";
+import type { MapPin } from "@/domains/meeting/api/types";
 import { MeetingMap, type MeetingMapPlace } from "@/domains/meeting/components/meeting-map";
 import { useMeeting } from "@/domains/meeting/hooks";
 import { useCurrentPosition } from "@/hooks/use-current-position";
@@ -33,7 +34,9 @@ export interface MapScreenProps {
   children: ReactNode;
   header?: ReactNode;
   places?: MeetingMapPlace[];
+  sharedPlaces?: MapPin[];
   onSelectPlace?: (placeId: string) => void;
+  onSelectSharedPlace?: (placeId: string) => void;
   bottomOffset?: number;
   hideChips?: boolean;
   hideToggle?: boolean;
@@ -46,7 +49,9 @@ export function MapScreen({
   children,
   header,
   places,
+  sharedPlaces,
   onSelectPlace,
+  onSelectSharedPlace,
   bottomOffset = 0,
   hideChips,
   hideToggle,
@@ -66,7 +71,9 @@ export function MapScreen({
           currentPosition={position}
           origin={meeting?.firstLocation}
           places={places}
+          sharedPlaces={sharedPlaces}
           onSelectPlace={onSelectPlace}
+          onSelectSharedPlace={onSelectSharedPlace}
           tone={tone}
           routeLineColor={routeLineColor}
         />
