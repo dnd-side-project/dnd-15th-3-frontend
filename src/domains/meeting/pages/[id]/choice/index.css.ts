@@ -169,11 +169,6 @@ export const cardAddress = style({
   whiteSpace: "nowrap",
 });
 
-export const cardCaret = style({
-  flexShrink: 0,
-  color: palette.gray2Alpha59,
-});
-
 export const preferences = style({
   pointerEvents: "auto",
   display: "flex",

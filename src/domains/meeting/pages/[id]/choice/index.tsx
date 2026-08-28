@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 
 import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
-import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
 import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton, CtaButtonRow } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
@@ -24,7 +23,6 @@ import {
   card,
   cardAddress,
   cardBody,
-  cardCaret,
   cardHeader,
   cardImage,
   cardLink,
@@ -92,7 +90,6 @@ function RecommendationCard({
             </span>
             <span className={cardAddress}>{place.address}</span>
           </span>
-          <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
         </span>
         <span className={preferences}>
           <PreferenceButton
