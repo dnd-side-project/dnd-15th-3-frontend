@@ -283,6 +283,21 @@ test("코스 생성 실패 시 에러 팝업을 보여주고 이동하지 않는
   await expect.element(page.getByTestId("course-page")).not.toBeInTheDocument();
 });
 
+test("코스 생성 실패 팝업에 caution 이미지가 표시된다", async () => {
+  renderChoice(MEETING, { generateStatus: "COURSE_GENERATION_FAILED" });
+
+  await userEvent.click(page.getByRole("button", { name: "코스 생성하기" }));
+  await userEvent.click(page.getByRole("button", { name: "괜찮아요" }));
+
+  await expect.poll(() => generateCalls).toHaveLength(1);
+  await expect
+    .element(page.getByRole("dialog", { name: "코스 생성에 실패했어요" }))
+    .toBeInTheDocument();
+  await expect
+    .element(page.getByTestId("caution-image"))
+    .toHaveAttribute("src", "/static/popup-caution.svg");
+});
+
 test("보여줄 장소가 없으면 빈 상태를 보여주고 코스 생성을 막는다", async () => {
   renderChoice({ ...MEETING, recommendations: [] });
 
