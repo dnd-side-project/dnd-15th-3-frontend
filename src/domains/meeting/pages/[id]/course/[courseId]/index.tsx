@@ -90,9 +90,6 @@ export function CourseDetailPage() {
       places={places}
       tone={tone}
       routeLineColor={toneStyle.primary}
-      onSelectPlace={(placeId) =>
-        void navigate(`/meeting/${id}/course/${courseId}/place/${placeId}`)
-      }
     >
       {canManageMeeting ? (
         <button
