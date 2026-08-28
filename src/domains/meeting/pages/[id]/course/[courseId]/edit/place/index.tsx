@@ -5,7 +5,7 @@ import { toast } from "@/components/toast/manager";
 import { TopAppBar } from "@/components/top-app-bar";
 import { addCoursePlace } from "@/domains/course/api";
 import { addRecommendation } from "@/domains/meeting/api";
-import { useCoursePlaces } from "@/domains/meeting/hooks";
+import { useMeeting } from "@/domains/meeting/hooks";
 import { PlaceSearch } from "@/domains/meeting/pages/[id]/place";
 import { getAccessToken } from "@/utils/access-token";
 import { getErrorMessage } from "@/utils/http";
@@ -15,8 +15,7 @@ export function CourseCandidatePlaceAddPage() {
   const { id = "", courseId = "" } = useParams();
   const queryClient = useQueryClient();
   const accessToken = getAccessToken(id);
-
-  const coursePlaces = useCoursePlaces();
+  const { data: meeting } = useMeeting();
 
   const { mutateAsync: addPlace } = useMutation({
     // 검색으로 찾은 장소는 모임 추천에 먼저 올린 뒤 코스에 넣는다.
@@ -38,7 +37,8 @@ export function CourseCandidatePlaceAddPage() {
     },
   });
 
-  const isSaved = (placeId: string) => coursePlaces.some((place) => place.id === placeId);
+  const isSaved = (placeId: string) =>
+    meeting?.recommendations.some((item) => item.place.id === placeId) ?? false;
 
   return (
     <PlaceSearch
