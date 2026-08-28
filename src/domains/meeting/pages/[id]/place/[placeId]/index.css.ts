@@ -213,18 +213,28 @@ export const similarAddress = style({
   whiteSpace: "nowrap",
 });
 
-export const similarAddButton = style({
-  display: "flex",
-  flexShrink: 0,
-  alignItems: "center",
-  justifyContent: "center",
-  width: 36,
-  height: 36,
-  border: "none",
-  borderRadius: vars.radius.full,
-  backgroundColor: vars.color.surface.muted,
-  color: vars.color.text.tertiary,
-  cursor: "pointer",
+export const similarAddButton = recipe({
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 36,
+    height: 36,
+    border: "none",
+    borderRadius: vars.radius.full,
+    cursor: "pointer",
+  },
+  variants: {
+    saved: {
+      true: {
+        backgroundColor: vars.color.brand.primary,
+        color: vars.color.text.inverse,
+        cursor: "default",
+      },
+      false: { backgroundColor: vars.color.surface.muted, color: vars.color.text.tertiary },
+    },
+  },
 });
 
 export const refresh = style({
