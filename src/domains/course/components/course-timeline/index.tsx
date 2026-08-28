@@ -21,8 +21,8 @@ import {
   walkTime,
 } from "./index.css";
 
-function routeUrl(step: CourseRouteStep) {
-  return `https://map.kakao.com/link/to/${encodeURIComponent(step.name)},${step.latitude},${step.longitude}`;
+function routeUrl(from: CourseRouteStep, to: CourseRouteStep) {
+  return `http://m.map.kakao.com/scheme/route?sp=${from.latitude},${from.longitude}&ep=${to.latitude},${to.longitude}&by=foot`;
 }
 
 export interface CourseTimelineProps {
@@ -71,7 +71,12 @@ export function CourseTimeline({ route, tone, onSelectPlace }: CourseTimelinePro
                     <FootprintsIcon aria-hidden height={14} width={14} />
                     도보 {step.walkDurationToNextMin}분
                   </span>
-                  <a className={routeLink} href={routeUrl(next)} rel="noreferrer" target="_blank">
+                  <a
+                    className={routeLink}
+                    href={routeUrl(step, next)}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     경로 안내
                     <ArrowSquareOutIcon aria-hidden height={14} width={14} />
                   </a>

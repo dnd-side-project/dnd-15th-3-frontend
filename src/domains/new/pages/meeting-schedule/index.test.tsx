@@ -48,6 +48,8 @@ test("날짜와 시간을 모두 정해야 다음으로 넘어갈 수 있다", a
   await expect.element(page.getByRole("button", { name: "다음" })).toBeDisabled();
 
   await userEvent.click(page.getByRole("button", { name: /YY.MM.DD/ }));
+  // 다음 달로 이동하여 미래 날짜 선택
+  await userEvent.click(page.getByRole("button", { name: "다음 달" }));
   await userEvent.click(page.getByRole("button", { name: "15" }));
   await userEvent.click(page.getByRole("button", { name: "확인" }));
 
