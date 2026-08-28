@@ -169,11 +169,6 @@ export const cardAddress = style({
   whiteSpace: "nowrap",
 });
 
-export const cardCaret = style({
-  flexShrink: 0,
-  color: palette.gray2Alpha59,
-});
-
 export const preferences = style({
   pointerEvents: "auto",
   display: "flex",
@@ -208,4 +203,27 @@ export const status = style({
   color: vars.color.text.secondary,
   ...text({ size: 16, weight: 500 }),
   textAlign: "center",
+});
+
+export const infoBox = style({
+  position: "fixed",
+  top: 63,
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 100,
+  maxWidth: 309,
+  width: "calc(100% - 40px)",
+  minHeight: 68,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "12px 20px",
+  borderRadius: 15,
+  backgroundColor: palette.neutral22Alpha80,
+  backdropFilter: "blur(4px)",
+  color: vars.color.text.inverse,
+  whiteSpace: "pre-wrap",
+  ...text({ size: 16, weight: 500, lineHeight: 1.6 }),
+  cursor: "pointer",
+  boxSizing: "border-box",
 });

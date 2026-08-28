@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 
 import CaretDownIcon from "@/assets/icon-caret-down.svg?react";
-import CaretRightIcon from "@/assets/icon-caret-right.svg?react";
 import { Chip, ChipGroup } from "@/components/chip";
 import { CtaButton, CtaButtonRow } from "@/components/cta-button";
 import { Layout } from "@/components/layout";
@@ -24,7 +23,6 @@ import {
   card,
   cardAddress,
   cardBody,
-  cardCaret,
   cardHeader,
   cardImage,
   cardLink,
@@ -40,6 +38,7 @@ import {
   filters,
   footer,
   grid,
+  infoBox,
   retry,
   preferences,
   root,
@@ -92,7 +91,6 @@ function RecommendationCard({
             </span>
             <span className={cardAddress}>{place.address}</span>
           </span>
-          <CaretRightIcon aria-hidden className={cardCaret} height={14} width={7} />
         </span>
         <span className={preferences}>
           <PreferenceButton
@@ -127,6 +125,14 @@ export function ChoicePage() {
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(
     () => (location.state as { generationFailed?: boolean } | null)?.generationFailed ?? false,
   );
+  const [isInfoBoxVisible, setIsInfoBoxVisible] = useState(
+    () => !sessionStorage.getItem(`preference-info-shown-${id}`),
+  );
+
+  const handleDismissInfoBox = () => {
+    setIsInfoBoxVisible(false);
+    sessionStorage.setItem(`preference-info-shown-${id}`, "true");
+  };
 
   // 반대쪽은 서버가 알아서 지우므로 고른 값만 그대로 보낸다.
   const { mutate: setPreference } = useMutation({
@@ -167,6 +173,12 @@ export function ChoicePage() {
   return (
     <Layout>
       <div className={root}>
+        {isInfoBoxVisible && !isConfirmPopupOpen && (
+          <div className={infoBox} onClick={handleDismissInfoBox}>
+            마음에 드는 장소에 선호도를 표시해보세요.
+            {"\n"}선호도 결과에 따라 코스가 정해집니다!
+          </div>
+        )}
         <div className={toggle}>
           <Toggle
             tone="overlay"

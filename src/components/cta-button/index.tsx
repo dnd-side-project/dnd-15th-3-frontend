@@ -44,7 +44,7 @@ export function CtaButtonRow({
     <div className={row}>
       <button
         aria-label={secondaryAriaLabel}
-        className={`${buttonRoot} ${button({ variant: "secondary", fixedWidth: true })}`}
+        className={`${buttonRoot} ${button({ variant: "secondary" })}`}
         type="button"
         onClick={onSecondary}
       >
