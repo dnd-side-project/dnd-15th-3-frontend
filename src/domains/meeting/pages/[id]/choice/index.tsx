@@ -283,6 +283,9 @@ export function ChoicePage() {
 
       <Popup
         description="잠시 후 다시 시도해 주세요"
+        media={
+          <img alt="" src="/static/popup-caution.svg" height={158} data-testid="caution-image" />
+        }
         onOpenChange={setIsErrorPopupOpen}
         open={isErrorPopupOpen}
         title="코스 생성에 실패했어요"
