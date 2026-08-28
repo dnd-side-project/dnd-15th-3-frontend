@@ -10,10 +10,21 @@ export const sheetLayout = style({
   display: "flex",
   flexDirection: "column",
   gap: 7,
-  overflowY: "auto",
 });
 
 globalStyle(`${sheetLayout} > *`, {
+  flexShrink: 0,
+});
+
+export const scrollContent = style({
+  overflowY: "auto",
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  gap: 7,
+});
+
+globalStyle(`${scrollContent} > *`, {
   flexShrink: 0,
 });
 
