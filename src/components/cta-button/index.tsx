@@ -30,6 +30,7 @@ export interface CtaButtonRowProps {
   primaryLabel: ReactNode;
   onPrimary: () => void;
   primaryDisabled?: boolean;
+  fixedWidth?: boolean;
 }
 
 export function CtaButtonRow({
@@ -39,12 +40,13 @@ export function CtaButtonRow({
   primaryLabel,
   onPrimary,
   primaryDisabled = false,
+  fixedWidth = true,
 }: CtaButtonRowProps) {
   return (
     <div className={row}>
       <button
         aria-label={secondaryAriaLabel}
-        className={`${buttonRoot} ${button({ variant: "secondary" })}`}
+        className={`${buttonRoot} ${button({ variant: "secondary", fixedWidth })}`}
         type="button"
         onClick={onSecondary}
       >
