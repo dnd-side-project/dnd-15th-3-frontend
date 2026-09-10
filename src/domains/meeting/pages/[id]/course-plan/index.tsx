@@ -10,6 +10,7 @@ import type { CategorySlug } from "@/domains/catalog/api/types";
 import { CourseCategoryPicker } from "@/domains/catalog/components/course-category-picker";
 import { updateCoursePlan } from "@/domains/meeting/api";
 import { meetingQueries } from "@/domains/meeting/api/queries";
+import type { CoursePlan } from "@/domains/meeting/api/types";
 import { useMeetingPermissions } from "@/domains/meeting/hooks";
 import { getAccessToken } from "@/utils/access-token";
 
@@ -29,13 +30,26 @@ export function CoursePlanPage() {
   const [pending, setPending] = useState<CategorySlug[] | null>(null);
 
   const { mutate } = useMutation({
-    mutationFn: (categorySlugs: CategorySlug[]) =>
-      updateCoursePlan(id, getAccessToken(id), { categorySlugs, version: plan?.version ?? 1 }),
+    // 같은 모임의 저장은 직렬로만 실행한다.
+    scope: { id: `course-plan-${id}` },
+    mutationFn: (categorySlugs: CategorySlug[]) => {
+      // 큐에서 실행될 때 최신 version을 읽어야 해서 클로저(plan) 대신 캐시를 본다.
+      const current = queryClient.getQueryData<CoursePlan>(planQuery.queryKey);
+      return updateCoursePlan(id, getAccessToken(id), {
+        categorySlugs,
+        version: current?.version ?? 1,
+      });
+    },
     onMutate: setPending,
     onError: () => setPending(null),
     onSuccess: (saved) => {
       queryClient.setQueryData(planQuery.queryKey, saved);
-      setPending(null);
+      // 마지막 선택이 저장됐을 때만 해제해야 큐에 남은 저장 중간에 롤백처럼 보이지 않는다.
+      setPending((prev) =>
+        prev !== null && prev.join() === saved.categorySteps.map((step) => step.slug).join()
+          ? null
+          : prev,
+      );
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: ["meeting", id] }),
   });
